@@ -368,8 +368,24 @@ export class ParceiroController {
       const { getModels } = await import('../models/loader.js');
       const models = getModels();
 
-      // Busca o parceiro com todas as relações de tema
-      const parceiro = await this.service.findByIdWithRelations(id);
+      // Verifica se é UUID ou slug/nome e busca o parceiro adequadamente
+      const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+      
+      let parceiro;
+      if (isUUID) {
+        // Busca por UUID
+        parceiro = await this.service.findByIdWithRelations(id);
+      } else {
+        // Busca por slug (par_nome normalizado)
+        const normalizedSlug = id.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const allParceiros = await models.Parceiro.findAll({
+          include: [{ association: 'temas' }],
+        });
+        parceiro = allParceiros.find(p => {
+          const parceiroSlug = p.par_nome.toLowerCase().replace(/[^a-z0-9]/g, '');
+          return parceiroSlug === normalizedSlug;
+        });
+      }
 
       if (!parceiro || parceiro.par_status !== 'ativo') {
         return res.status(404).json({
