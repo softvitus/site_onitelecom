@@ -43,7 +43,7 @@ LICENSE
 
 # ============ CONFIGURAÇÕES ============
 .babelrc
-.sequelizerc
+# .sequelizerc - NÃO IGNORAR! Necessário para migrations/seeds
 .eslintignore
 .eslintrc.json
 .prettierignore
