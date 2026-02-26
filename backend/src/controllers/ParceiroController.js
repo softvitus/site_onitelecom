@@ -483,6 +483,15 @@ export class ParceiroController {
         raw: false,
       });
 
+      // Busca todas as configurações do tema
+      const configs = await models.ConfigTema.findAll({
+        where: {
+          cfg_tem_id: temaAtivo.tem_id,
+        },
+        order: [['cfg_chave', 'ASC']],
+        raw: false,
+      });
+
       // Mapear páginas para formato público
       const paginasPublicas = paginas.map(p => ({
         id: p.pag_id,
@@ -571,6 +580,13 @@ export class ParceiroController {
         nome: f.fea_nome,
       }));
 
+      // Mapear configs para formato público
+      const configsPublicas = configs.map(c => ({
+        id: c.cfg_id,
+        chave: c.cfg_chave,
+        valor: c.cfg_valor,
+      }));
+
       return res.json({
         success: true,
         data: {
@@ -584,6 +600,7 @@ export class ParceiroController {
           links: linksPublicos,
           conteudos: conteudosPublicos,
           features: featuresPublicas,
+          configs: configsPublicas,
         },
       });
     } catch (error) {
