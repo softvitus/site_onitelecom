@@ -1,0 +1,59 @@
+node_modules
+npm-debug.log
+yarn-error.log
+.git
+.gitignore
+.env
+.env.local
+.env.development
+.env.prod
+.env.*.local
+.DS_Store
+.vscode
+.idea
+dist
+build
+coverage
+.nyc_output
+
+# ============ TESTES ============
+__tests__
+test/
+tests/
+*.test.js
+*.spec.js
+jest.config.js
+*.test.mjs
+*.spec.mjs
+.nyc_output
+coverage
+test-results/
+
+# ============ SCRIPTS ============
+scripts/
+*.sh
+Makefile
+
+# ============ DOCUMENTAÇÃO ============
+*.md
+!README.md
+docs/
+CHANGELOG.md
+LICENSE
+
+# ============ CONFIGURAÇÕES ============
+.babelrc
+.sequelizerc
+.eslintignore
+.eslintrc.json
+.prettierignore
+.prettierrc
+.editorconfig
+.git*
+.github
+.gitattributes
+
+# ============ DOCKER ============
+.dockerignore
+Dockerfile
+docker-compose.yml

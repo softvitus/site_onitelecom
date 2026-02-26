@@ -1,0 +1,8 @@
+'use strict';
+
+module.exports = {
+  config: 'src/config/database.js',
+  'migrations-path': 'database/migrations',
+  'seeders-path': 'database/seeds',
+  'models-path': 'src/models',
+};

@@ -1,0 +1,14 @@
+# ================================
+# Docker Compose - Root Proxy
+# ================================
+# Este arquivo referencia docker/docker-compose.yml
+# Permite rodar: docker-compose up
+# A partir da raiz do projeto
+#
+# Arquivos reais estão em: ./docker/
+# ================================
+
+version: '3.8'
+
+include:
+  - docker/docker-compose.yml

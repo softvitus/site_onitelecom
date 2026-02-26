@@ -1,0 +1,95 @@
+version: '3.8'
+
+# ================================
+# Docker Compose - Production Ready
+# ================================
+# Uso:
+# - Development Local: npm start (usa .env.development)
+# - Docker Development: docker-compose up (usa .env.production com DB local)
+# - Docker Production: docker-compose up (usa .env.production com DB remoto)
+#
+# IMPORTANTE:
+# - Docker SEMPRE usa .env.production
+# - .env.development é APENAS para npm start local
+# - Nenhum arquivo .env entra na imagem Docker (segurança)
+# - Variáveis injetadas via docker-compose.yml env_file
+# ================================
+
+services:
+  # Backend API - Production
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: site-oni-backend
+    env_file:
+      - ../.env.production
+    ports:
+      - "5000:3000"
+    volumes:
+      # Monta o arquivo .env.production para o container
+      - ../.env.production:/app/.env.production:ro
+      # DEV: Mount source code for hot reload
+      # PROD: Volume ignored (image is final)
+      - ../src:/app/src:${DEV_VOLUME_MODE:-cached}
+      - /app/node_modules
+    networks:
+      - site-oni-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: ${BACKEND_HEALTH_INTERVAL:-30s}
+      timeout: ${BACKEND_HEALTH_TIMEOUT:-10s}
+      retries: ${BACKEND_HEALTH_RETRIES:-3}
+      start_period: ${BACKEND_HEALTH_START:-40s}
+    restart: ${BACKEND_RESTART:-unless-stopped}
+    command: ${BACKEND_COMMAND:-npm start}
+    stdin_open: ${BACKEND_STDIN:-true}
+    tty: ${BACKEND_TTY:-true}
+    deploy:
+      resources:
+        limits:
+          cpus: ${BACKEND_CPUS_LIMIT:-4}
+          memory: ${BACKEND_MEMORY_LIMIT:-2G}
+        reservations:
+          cpus: ${BACKEND_CPUS_RESERVE:-1}
+          memory: ${BACKEND_MEMORY_RESERVE:-512M}
+
+  # Nginx Reverse Proxy
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    container_name: site-oni-nginx
+    ports:
+      - "${NGINX_PORT:-80}:80"
+      - "${NGINX_SSL_PORT:-443}:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - nginx_ssl_data:/etc/nginx/ssl
+    depends_on:
+      - backend
+    networks:
+      - site-oni-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: ${NGINX_RESTART:-unless-stopped}
+    deploy:
+      resources:
+        limits:
+          cpus: ${NGINX_CPUS_LIMIT:-1}
+          memory: ${NGINX_MEMORY_LIMIT:-512M}
+        reservations:
+          cpus: ${NGINX_CPUS_RESERVE:-0.5}
+          memory: ${NGINX_MEMORY_RESERVE:-256M}
+
+volumes:
+  nginx_ssl_data:
+    driver: local
+
+networks:
+  site-oni-network:
+    driver: bridge
