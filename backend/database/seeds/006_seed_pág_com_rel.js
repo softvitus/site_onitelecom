@@ -461,26 +461,6 @@ export default {
         updatedAt: new Date(),
       },
 
-      // ==================== PÁGINA: LOGIN ====================
-      {
-        pcr_id: '550e8400-e29b-41d4-a716-446655490050',
-        pcr_pag_id: '550e8400-e29b-41d4-a716-446655460011',
-        pcr_com_id: '550e8400-e29b-41d4-a716-446655470001', // header
-        pcr_ordem: 1,
-        pcr_habilitado: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        pcr_id: '550e8400-e29b-41d4-a716-446655490051',
-        pcr_pag_id: '550e8400-e29b-41d4-a716-446655460011',
-        pcr_com_id: '550e8400-e29b-41d4-a716-446655470002', // footer
-        pcr_ordem: 2,
-        pcr_habilitado: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-
       // ==================== PÁGINA: CARRINHO ====================
       {
         pcr_id: '550e8400-e29b-41d4-a716-446655490052',
