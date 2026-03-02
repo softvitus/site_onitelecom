@@ -1,15 +1,22 @@
 /**
- * Parceiro Service
- * Exemplo de serviço usando BaseService
+ * @module services/ParceiroService
+ * @description Serviço de gerenciamento de parceiros
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
+import { STATUS_ENUM } from '../utils/constants.js';
 import { Sequelize } from 'sequelize';
 
+/**
+ * Serviço de gerenciamento de Parceiros
+ * @extends BaseService
+ */
 export class ParceiroService extends BaseService {
   /**
    * Busca parceiro com todas as suas relações
+   * @param {string} id - ID do parceiro
+   * @returns {Promise<Object>} Parceiro com temas e páginas
    */
   async findByIdWithRelations(id) {
     return this.findById(id, {
@@ -22,13 +29,18 @@ export class ParceiroService extends BaseService {
 
   /**
    * Busca parceiros ativos
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de parceiros ativos
    */
   async findActive(pagination = {}) {
-    return this.findAll({ par_status: 'ativo' }, pagination);
+    return this.findAll({ par_status: STATUS_ENUM.ATIVO }, pagination);
   }
 
   /**
    * Busca por cidade
+   * @param {string} city - Nome da cidade
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de parceiros
    */
   async findByCity(city, pagination = {}) {
     return this.findAll({ par_cidade: city }, pagination);
@@ -36,6 +48,9 @@ export class ParceiroService extends BaseService {
 
   /**
    * Busca por domínio
+   * @param {string} domain - Domínio do parceiro
+   * @returns {Promise<Object>} Parceiro encontrado
+   * @throws {ApiError} NOT_FOUND se não existir
    */
   async findByDomain(domain) {
     const item = await this.model.findOne({
@@ -51,6 +66,9 @@ export class ParceiroService extends BaseService {
 
   /**
    * Valida e cria novo parceiro
+   * @param {Object} data - Dados do parceiro
+   * @returns {Promise<Object>} Parceiro criado
+   * @throws {ApiError} DUPLICATE_ENTRY se domínio já existir
    */
   async createPayload(data) {
     // Valida campos obrigatórios
@@ -73,6 +91,10 @@ export class ParceiroService extends BaseService {
 
   /**
    * Busca parceiros por região
+   * @param {string} region - Nome da região
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de parceiros
+   * @throws {ApiError} INVALID_INPUT se região inválida
    */
   async findByRegion(region, pagination = {}) {
     const cities = this.getCitiesByRegion(region);
@@ -89,6 +111,8 @@ export class ParceiroService extends BaseService {
 
   /**
    * Ativa/desativa parceiro
+   * @param {string} id - ID do parceiro
+   * @returns {Promise<Object>} Parceiro atualizado
    */
   async toggleStatus(id) {
     const item = await this.findById(id);
@@ -98,8 +122,13 @@ export class ParceiroService extends BaseService {
   }
 
   /**
-   * Busca parceiros próximos usando coordenadas (busca geoespacial simples)
-   * Utiliza a fórmula de Haversine para calcular distância entre pontos
+   * Busca parceiros próximos por coordenadas (Haversine)
+   * @param {number} latitude - Latitude
+   * @param {number} longitude - Longitude
+   * @param {number} radiusKm - Raio em km (padrão: 50)
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada com distância
+   * @throws {ApiError} INVALID_INPUT se coordenadas inválidas
    */
   async findNearby(latitude, longitude, radiusKm = 50, pagination = {}) {
     // Validar coordenadas
@@ -151,8 +180,12 @@ export class ParceiroService extends BaseService {
   }
 
   /**
-   * Calcula distância entre dois pontos usando fórmula de Haversine
-   * Retorna distância em km
+   * Calcula distância entre dois pontos (fórmula de Haversine)
+   * @param {number} lat1 - Latitude ponto 1
+   * @param {number} lon1 - Longitude ponto 1
+   * @param {number} lat2 - Latitude ponto 2
+   * @param {number} lon2 - Longitude ponto 2
+   * @returns {number} Distância em km
    */
   calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // Raio da Terra em km
@@ -170,6 +203,8 @@ export class ParceiroService extends BaseService {
 
   /**
    * Valida dados de localização
+   * @param {Object} data - Dados a validar
+   * @throws {ApiError} INVALID_INPUT se dados inválidos
    */
   validateLocationData(data) {
     if (data.par_latitude) {
@@ -194,6 +229,11 @@ export class ParceiroService extends BaseService {
     }
   }
 
+  /**
+   * Retorna cidades por região
+   * @param {string} region - Nome da região
+   * @returns {string[]} Lista de cidades
+   */
   getCitiesByRegion(region) {
     const regions = {
       sudeste: ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Espírito Santo'],
@@ -207,3 +247,4 @@ export class ParceiroService extends BaseService {
   }
 }
 
+export default ParceiroService;

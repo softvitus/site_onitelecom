@@ -1,14 +1,36 @@
 /**
- * Elemento Service
- * Lógica de negócio para elementos
+ * @module services/ElementoService
+ * @description Serviço de gerenciamento de elementos
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
 
+/**
+ * Serviço de gerenciamento de Elementos
+ * @extends BaseService
+ */
 export class ElementoService extends BaseService {
   /**
+   * Tipos de elementos disponíveis
+   * @type {string[]}
+   */
+  static TIPOS = [
+    'texto',
+    'imagem',
+    'botao',
+    'formulario',
+    'tabela',
+    'lista',
+    'video',
+    'audio',
+    'iframe',
+    'custom',
+  ];
+
+  /**
    * Busca elemento com todas relações
+   * @param {string} id - ID do elemento
+   * @returns {Promise<Object>} Elemento com relações
    */
   async findByIdWithRelations(id) {
     return this.findById(id, {
@@ -21,13 +43,19 @@ export class ElementoService extends BaseService {
 
   /**
    * Busca elementos de um componente
+   * @param {string} componenteId - ID do componente
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de elementos
    */
   async findByComponenteId(componenteId, pagination = {}) {
     return this.findAll({ ele_com_id: componenteId }, pagination);
   }
 
   /**
-   * Busca elemento por tipo
+   * Busca elementos por tipo
+   * @param {string} type - Tipo do elemento
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de elementos
    */
   async findByType(type, pagination = {}) {
     return this.findAll({ ele_tipo: type }, pagination);
@@ -35,28 +63,20 @@ export class ElementoService extends BaseService {
 
   /**
    * Lista tipos de elementos disponíveis
+   * @returns {string[]} Lista de tipos
    */
-  async getAvailableTypes() {
-    const tipos = [
-      'texto',
-      'imagem',
-      'botao',
-      'formulario',
-      'tabela',
-      'lista',
-      'video',
-      'audio',
-      'iframe',
-      'custom',
-    ];
-    return tipos;
+  getAvailableTypes() {
+    return ElementoService.TIPOS;
   }
 
   /**
    * Valida tipo de elemento
+   * @param {string} type - Tipo a validar
+   * @returns {boolean} True se válido
    */
-  async validateType(type) {
-    const tipos = await this.getAvailableTypes();
-    return tipos.includes(type);
+  validateType(type) {
+    return ElementoService.TIPOS.includes(type);
   }
 }
+
+export default ElementoService;

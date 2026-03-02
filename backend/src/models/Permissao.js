@@ -36,12 +36,13 @@ export default function (sequelize) {
           'elemento',
           'usuario',
           'parceiro',
-          'relatorios'
+          'relatorios',
+          'auditoria'
         ),
         allowNull: false,
       },
       perm_acao: {
-        type: DataTypes.ENUM('criar', 'listar', 'editar', 'deletar', 'visualizar'),
+        type: DataTypes.ENUM('criar', 'listar', 'editar', 'deletar', 'visualizar', 'exportar', 'estatisticas', 'filtrar'),
         allowNull: false,
       },
     },

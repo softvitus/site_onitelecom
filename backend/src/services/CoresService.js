@@ -1,14 +1,33 @@
 /**
- * Cores Service
- * Lógica de negócio para paleta de cores
+ * @module services/CoresService
+ * @description Serviço de gerenciamento de paleta de cores
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
 
+/**
+ * Serviço de gerenciamento de Cores
+ * @extends BaseService
+ */
 export class CoresService extends BaseService {
   /**
+   * Regex para validação de cor HEX
+   * @type {RegExp}
+   */
+  static HEX_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+
+  /**
+   * Regex para validação de cor RGB
+   * @type {RegExp}
+   */
+  static RGB_REGEX = /^rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)$/;
+
+  /**
    * Busca cores de um tema
+   * @param {string} temaId - ID do tema
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de cores
    */
   async findByTemaId(temaId, pagination = {}) {
     return this.findAll({ cor_tem_id: temaId }, pagination);
@@ -16,6 +35,9 @@ export class CoresService extends BaseService {
 
   /**
    * Busca cor por nome
+   * @param {string} name - Nome da cor
+   * @returns {Promise<Object>} Cor encontrada
+   * @throws {ApiError} NOT_FOUND se não existir
    */
   async findByName(name) {
     const item = await this.model.findOne({
@@ -30,29 +52,33 @@ export class CoresService extends BaseService {
   }
 
   /**
-   * Valida formato de cor (hex)
+   * Valida formato de cor HEX
+   * @param {string} hex - Cor em formato HEX
+   * @returns {boolean} True se válido
    */
   validateHexColor(hex) {
-    const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-    return hexRegex.test(hex);
+    return CoresService.HEX_REGEX.test(hex);
   }
 
   /**
    * Valida formato RGB
+   * @param {string} rgb - Cor em formato RGB
+   * @returns {boolean} True se válido
    */
   validateRGBColor(rgb) {
-    const rgbRegex = /^rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)$/;
-    return rgbRegex.test(rgb);
+    return CoresService.RGB_REGEX.test(rgb);
   }
 
   /**
    * Exporta paleta como JSON
+   * @param {string} temaId - ID do tema
+   * @returns {Promise<Object>} Paleta exportada
    */
   async exportPalette(temaId) {
-    const cores = await this.findByTemaId(temaId);
+    const result = await this.findByTemaId(temaId);
     return {
       tema_id: temaId,
-      cores: cores.map((c) => ({
+      cores: result.rows.map((c) => ({
         nome: c.cor_nome,
         hex: c.cor_hex,
         rgb: c.cor_rgb,
@@ -62,6 +88,9 @@ export class CoresService extends BaseService {
 
   /**
    * Importa paleta de cores
+   * @param {string} temaId - ID do tema
+   * @param {Object} paletaData - Dados da paleta
+   * @returns {Promise<Object[]>} Cores importadas
    */
   async importPalette(temaId, paletaData) {
     const imported = [];
@@ -77,3 +106,5 @@ export class CoresService extends BaseService {
     return imported;
   }
 }
+
+export default CoresService;

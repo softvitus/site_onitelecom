@@ -21,6 +21,20 @@ jest.mock('../../models/loader.js', () => ({
   getModels: jest.fn(() => ({})),
 }));
 
+// Mock AuditoriaService para evitar import.meta
+jest.mock('../../services/AuditoriaService.js', () => ({
+  AuditoriaService: {
+    registrar: jest.fn().mockResolvedValue({}),
+    sanitizarDados: jest.fn((d) => d),
+  },
+}));
+
+// Mock config/sequelize para evitar import.meta
+jest.mock('../../config/sequelize.js', () => ({
+  default: {},
+  sequelize: {},
+}));
+
 import { TemaController } from '../../controllers/TemaController.js';
 
 describe('TemaController - Unit Tests', () => {
@@ -29,6 +43,12 @@ describe('TemaController - Unit Tests', () => {
   let mockRes;
   let mockReq;
   let mockNext;
+
+  // Helper para criar objetos com toJSON
+  const createMockModel = (data) => ({
+    ...data,
+    toJSON: () => data,
+  });
 
   beforeEach(() => {
     mockService = {
@@ -55,6 +75,9 @@ describe('TemaController - Unit Tests', () => {
       query: {},
       body: {},
       user: { usr_id: '1', usr_role: 'admin' },
+      connection: { remoteAddress: '127.0.0.1' },
+      ip: '127.0.0.1',
+      get: jest.fn().mockReturnValue('test-user-agent'),
     };
 
     mockNext = jest.fn();
@@ -137,7 +160,8 @@ describe('TemaController - Unit Tests', () => {
         tem_par_id: 'p1',
       };
 
-      const created = { tem_id: '123', ...newData };
+      const createdData = { tem_id: '123', ...newData };
+      const created = createMockModel(createdData);
 
       mockService.create.mockResolvedValue(created);
       mockReq.body = newData;
@@ -156,8 +180,11 @@ describe('TemaController - Unit Tests', () => {
   describe('update - PUT /api/temas/:id', () => {
     it('deve atualizar tema existente', async () => {
       const updateData = { tem_nome: 'Atualizado' };
-      const updated = { tem_id: '123', ...updateData };
+      const updatedData = { tem_id: '123', ...updateData };
+      const updated = createMockModel(updatedData);
+      const anterior = createMockModel({ tem_id: '123', tem_nome: 'Original' });
 
+      mockService.findById.mockResolvedValue(anterior);
       mockService.update.mockResolvedValue(updated);
       mockReq.params = { id: '123' };
       mockReq.body = updateData;
@@ -257,7 +284,7 @@ describe('TemaController - Unit Tests', () => {
     });
 
     it('create deve retornar 201', async () => {
-      mockService.create.mockResolvedValue({ tem_id: '1' });
+      mockService.create.mockResolvedValue(createMockModel({ tem_id: '1' }));
       mockReq.body = {};
 
       await controller.create(mockReq, mockRes, mockNext);

@@ -1,6 +1,6 @@
 /**
- * Validation Middleware
- * Valida requisições contra schemas
+ * @module middleware/validation
+ * @description Middleware de validação - valida requisições contra schemas
  */
 
 /**

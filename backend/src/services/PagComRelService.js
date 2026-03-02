@@ -1,14 +1,21 @@
 /**
- * PagComRel Service
- * Lógica para relacionamento Página-Componente
+ * @module services/PagComRelService
+ * @description Serviço de gerenciamento de relacionamento Página-Componente
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
 
+/**
+ * Serviço de gerenciamento de Relacionamento Página-Componente
+ * @extends BaseService
+ */
 export class PagComRelService extends BaseService {
   /**
    * Busca componentes de uma página
+   * @param {string} paginaId - ID da página
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de relações
    */
   async findByPaginaId(paginaId, pagination = {}) {
     return this.findAll({ pcr_pag_id: paginaId }, pagination);
@@ -16,6 +23,9 @@ export class PagComRelService extends BaseService {
 
   /**
    * Busca páginas que usam um componente
+   * @param {string} componenteId - ID do componente
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de relações
    */
   async findByComponenteId(componenteId, pagination = {}) {
     return this.findAll({ pcr_com_id: componenteId }, pagination);
@@ -23,6 +33,11 @@ export class PagComRelService extends BaseService {
 
   /**
    * Adiciona componente à página em posição específica
+   * @param {string} paginaId - ID da página
+   * @param {string} componenteId - ID do componente
+   * @param {number} posicao - Posição do componente
+   * @returns {Promise<Object>} Relação criada
+   * @throws {ApiError} CONFLICT se já existir
    */
   async addComponentToPage(paginaId, componenteId, posicao = 0) {
     const existing = await this.model.findOne({
@@ -45,6 +60,9 @@ export class PagComRelService extends BaseService {
 
   /**
    * Remove componente da página
+   * @param {string} paginaId - ID da página
+   * @param {string} componenteId - ID do componente
+   * @returns {Promise<number>} Número de registros removidos
    */
   async removeComponentFromPage(paginaId, componenteId) {
     return this.model.destroy({
@@ -57,6 +75,9 @@ export class PagComRelService extends BaseService {
 
   /**
    * Reordena componentes na página
+   * @param {string} paginaId - ID da página
+   * @param {string[]} order - Array de IDs na ordem desejada
+   * @returns {Promise<boolean>} True se sucesso
    */
   async reorderComponents(paginaId, order) {
     for (let i = 0; i < order.length; i++) {
@@ -65,3 +86,5 @@ export class PagComRelService extends BaseService {
     return true;
   }
 }
+
+export default PagComRelService;

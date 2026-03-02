@@ -1,14 +1,27 @@
 /**
- * Textos Service
- * Lógica de negócio para textos/conteúdo
+ * @module services/TextosService
+ * @description Serviço de gerenciamento de textos
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
 
+/**
+ * Serviço de gerenciamento de Textos
+ * @extends BaseService
+ */
 export class TextosService extends BaseService {
   /**
+   * Tipos de texto válidos
+   * @type {string[]}
+   */
+  static VALID_TYPES = ['titulo', 'descricao', 'paragrafo', 'botao', 'label', 'placeholder', 'validacao', 'outro'];
+
+  /**
    * Busca textos de um tema
+   * @param {string} temaId - ID do tema
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de textos
    */
   async findByTemaId(temaId, pagination = {}) {
     return this.findAll({ txt_tem_id: temaId }, pagination);
@@ -16,6 +29,9 @@ export class TextosService extends BaseService {
 
   /**
    * Busca textos de uma página
+   * @param {string} paginaId - ID da página
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de textos
    */
   async findByPaginaId(paginaId, pagination = {}) {
     return this.findAll({ txt_pag_id: paginaId }, pagination);
@@ -23,6 +39,9 @@ export class TextosService extends BaseService {
 
   /**
    * Busca texto por chave
+   * @param {string} key - Chave do texto
+   * @returns {Promise<Object>} Texto encontrado
+   * @throws {ApiError} NOT_FOUND se não existir
    */
   async findByKey(key) {
     const item = await this.model.findOne({
@@ -38,40 +57,41 @@ export class TextosService extends BaseService {
 
   /**
    * Busca textos por tipo
+   * @param {string} type - Tipo do texto
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de textos
    */
   async findByType(type, pagination = {}) {
     return this.findAll({ txt_tipo: type }, pagination);
   }
 
   /**
-   * Lista tipos de textos
+   * Retorna tipos de texto válidos
+   * @returns {string[]} Lista de tipos
    */
   getValidTypes() {
-    return [
-      'titulo',
-      'descricao',
-      'paragrafo',
-      'botao',
-      'label',
-      'placeholder',
-      'validacao',
-      'outro',
-    ];
+    return TextosService.VALID_TYPES;
   }
 
   /**
    * Cria texto com validação
+   * @param {Object} data - Dados do texto
+   * @returns {Promise<Object>} Texto criado
+   * @throws {ApiError} VALIDATION_ERROR se tipo inválido
    */
   async createValidated(data) {
-    if (!this.getValidTypes().includes(data.txt_tipo)) {
-      throw new ApiError('INVALID', 'Tipo de texto inválido');
+    if (!TextosService.VALID_TYPES.includes(data.txt_tipo)) {
+      throw new ApiError('VALIDATION_ERROR', 'Tipo de texto inválido');
     }
 
     return this.create(data);
   }
 
   /**
-   * Busca por termo (search simples)
+   * Busca textos por termo
+   * @param {string} termo - Termo de busca
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de resultados
    */
   async search(termo, pagination = {}) {
     return this.query()
@@ -80,3 +100,5 @@ export class TextosService extends BaseService {
       .paginated();
   }
 }
+
+export default TextosService;

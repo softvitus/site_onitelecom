@@ -29,10 +29,10 @@ export default {
         updatedAt: new Date(),
       }));
 
-    // Usuário tem acesso apenas a listar e visualizar (9 permissões)
+    // Usuário tem acesso apenas a listar e visualizar (excluindo admin e auditoria)
     const usuarioPermissions = permissoes
       .filter(p => p.perm_nome.endsWith('_listar') || p.perm_nome.endsWith('_visualizar'))
-      .filter(p => !p.perm_nome.startsWith('usuario_') && !p.perm_nome.startsWith('parceiro_'))
+      .filter(p => !p.perm_nome.startsWith('usuario_') && !p.perm_nome.startsWith('parceiro_') && !p.perm_nome.startsWith('auditoria_'))
       .map(p => ({
         roleperm_id: uuidv4(),
         roleperm_tipo: 'usuario',

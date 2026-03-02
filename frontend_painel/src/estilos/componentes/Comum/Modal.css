@@ -1,0 +1,633 @@
+/**
+ * @file Modal CSS - Estilos Profissionais e Minimalistas
+ * @description Estilos para o componente Modal com design moderno,
+ * minimalista e ocupando 70% do espaço da tela
+ * 
+ * @module estilos/componentes/Comum/Modal.css
+ */
+
+/* ========================================================================== */
+/* VARIÁVEIS CSS E DEFINIÇÕES GLOBAIS */
+/* ========================================================================== */
+
+:root {
+  --modal-bg-color: #ffffff;
+  --modal-border-color: #e5e7eb;
+  --modal-text-color: #1f2937;
+  --modal-text-light: #6b7280;
+  --modal-text-lighter: #9ca3af;
+  --modal-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --modal-shadow-lg: 0 20px 40px -8px rgba(0, 0, 0, 0.12);
+  --modal-radius: 10px;
+  --modal-padding: 2rem;
+  --modal-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --modal-backdrop-bg: rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================================================== */
+/* BACKDROP - FUNDO SEMI-TRANSPARENTE */
+/* ========================================================================== */
+
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--modal-backdrop-bg);
+  z-index: 9998;
+  animation: modalBackdropFadeIn 0.25s ease-out;
+  backdrop-filter: blur(3px);
+}
+
+@keyframes modalBackdropFadeIn {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
+  to {
+    background-color: var(--modal-backdrop-bg);
+    backdrop-filter: blur(3px);
+  }
+}
+
+/* ========================================================================== */
+/* CONTAINER E LAYOUT DO MODAL */
+/* ========================================================================== */
+
+.modal-container-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 0;
+  animation: modalContainerFadeIn 0.25s ease-out;
+}
+
+@keyframes modalContainerFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========================================================================== */
+/* CONTEÚDO DO MODAL - 70% DA TELA */
+/* ========================================================================== */
+
+.modal-content-custom {
+  background-color: var(--modal-bg-color);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--modal-shadow-lg);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  width: 90vw;
+  animation: modalContentSlideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  border: 1px solid rgba(229, 231, 235, 0.5);
+}
+
+/* Tamanhos do modal */
+.modal-sm {
+  width: clamp(350px, 90vw, 400px);
+}
+
+.modal-md {
+  width: clamp(450px, 90vw, 550px);
+}
+
+.modal-lg {
+  width: clamp(650px, 90vw, 100%) !important;
+  /* Sem max-width para ocupar 90% da tela */
+}
+
+.modal-xl {
+  width: clamp(800px, 95vw, 100%) !important;
+  /* Sem max-width para ocupar até 95% da tela */
+}
+
+@keyframes modalContentSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ========================================================================== */
+/* HEADER DO MODAL */
+/* ========================================================================== */
+
+.modal-header-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--modal-border-color);
+  gap: 1rem;
+  background-color: #fafbfc;
+}
+
+.modal-title-custom {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--modal-text-color);
+  letter-spacing: -0.3px;
+  flex: 1;
+}
+
+.modal-close-button-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--modal-text-lighter);
+  transition: var(--modal-transition);
+  flex-shrink: 0;
+}
+
+.modal-close-button-custom:hover {
+  background-color: #f0f0f0;
+  color: var(--modal-text-light);
+  transform: scale(1.05);
+}
+
+.modal-close-button-custom:active {
+  transform: scale(0.95);
+}
+
+.modal-close-button-custom svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================================================== */
+/* BODY DO MODAL */
+/* ========================================================================== */
+
+.modal-body-custom {
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
+  color: var(--modal-text-color);
+  line-height: 1.6;
+  background-color: #ffffff;
+}
+
+/* Customizar scrollbar do body */
+.modal-body-custom::-webkit-scrollbar {
+  width: 7px;
+}
+
+.modal-body-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-body-custom::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.modal-body-custom::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+/* Suporte para formulários com grid de 4 colunas */
+.modal-body-custom form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Grid automático para campos - até 4 por linha */
+.modal-body-custom form > div[style*="grid"] {
+  gap: 1rem;
+}
+
+/* Regras para inputs, textareas e selects */
+.modal-body-custom input,
+.modal-body-custom textarea,
+.modal-body-custom select {
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--modal-text-color);
+}
+
+.modal-body-custom input::placeholder,
+.modal-body-custom textarea::placeholder {
+  color: var(--modal-text-lighter);
+}
+
+/* ========================================================================== */
+/* FOOTER DO MODAL */
+/* ========================================================================== */
+
+.modal-footer-custom {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--modal-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  background-color: #fafbfc;
+  flex-wrap: wrap;
+}
+
+/* Container para footer customizado das páginas */
+.modal-footer {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* Botões dentro do footer */
+.modal-footer-custom button {
+  padding: 0.625rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: var(--modal-transition);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-footer-custom button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ========================================================================== */
+/* BOTÕES PADRONIZADOS DO MODAL */
+/* ========================================================================== */
+
+/* Botão Cancelar - Cinza */
+.modal-btn-cancelar {
+  padding: 0.75rem 1.5rem;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-btn-cancelar:hover {
+  background-color: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.modal-btn-cancelar:active {
+  background-color: #d1d5db;
+}
+
+/* Botão Salvar - Azul */
+.modal-btn-salvar {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-btn-salvar:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(13, 110, 253, 0.3);
+}
+
+.modal-btn-salvar:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.modal-btn-salvar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Botão secundário (Cancelar) - fallback */
+.modal-footer-custom button:not([class*="btn-salvar"]):not([class*="btn-confirmar"]) {
+  background-color: #f3f4f6;
+  color: var(--modal-text-color);
+  border: 1px solid var(--modal-border-color);
+}
+
+.modal-footer-custom button:not([class*="btn-salvar"]):not([class*="btn-confirmar"]):hover {
+  background-color: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.modal-footer-custom button:not([class*="btn-salvar"]):not([class*="btn-confirmar"]):active {
+  background-color: #d1d5db;
+}
+
+/* ========================================================================== */
+/* RESPONSIVIDADE */
+/* ========================================================================== */
+
+/* Tablets - 95% da tela */
+@media (max-width: 1200px) {
+  .modal-content-custom {
+    width: 95vw;
+  }
+}
+
+/* Tablets pequenos - 90% da tela */
+@media (max-width: 768px) {
+  .modal-content-custom {
+    width: 90vw;
+    max-height: 95vh;
+  }
+
+  .modal-header-custom,
+  .modal-body-custom,
+  .modal-footer-custom {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .modal-title-custom {
+    font-size: 1.25rem;
+  }
+
+  /* Grid responsivo - 2 colunas em tablets */
+  .modal-body-custom form > div[style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .modal-footer-custom {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .modal-footer-custom button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .modal-close-button-custom {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* Celulares - 95% da tela */
+@media (max-width: 480px) {
+  .modal-content-custom {
+    width: 95vw;
+    min-width: auto;
+    max-height: 98vh;
+  }
+
+  .modal-header-custom,
+  .modal-body-custom,
+  .modal-footer-custom {
+    padding: 1rem;
+  }
+
+  .modal-title-custom {
+    font-size: 1.1rem;
+  }
+
+  /* Grid responsivo - 1 coluna em celulares */
+  .modal-body-custom form > div[style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .modal-body-custom form > div[style*="grid-template-columns: repeat(2"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .modal-close-button-custom {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .modal-close-button-custom svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .modal-footer-custom button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ========================================================================== */
+/* ANIMAÇÕES E TRANSIÇÕES */
+/* ========================================================================== */
+
+/* Animação de entrada para elementos dentro do modal */
+.modal-body-custom > * {
+  animation: fadeInUp 0.4s ease-out 0.05s backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================================================== */
+/* ACESSIBILIDADE */
+/* ========================================================================== */
+
+/* Foco visível para navegação por teclado */
+.modal-close-button-custom:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.modal-footer-custom button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Suporte para movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop-custom,
+  .modal-container-custom,
+  .modal-content-custom,
+  .modal-close-button-custom,
+  .modal-footer-custom button,
+  .modal-body-custom > * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ========================================================================== */
+/* FORMULÁRIO DO MODAL - GRID PADRONIZADO                                     */
+/* ========================================================================== */
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Linha do formulário - até 4 colunas */
+.modal-form-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+/* Variações de colunas */
+.modal-form-row.cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.modal-form-row.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.modal-form-row.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.modal-form-row.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Campo que ocupa linha inteira */
+.modal-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Grupo de campo */
+.modal-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Label */
+.modal-form-label {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.9rem;
+}
+
+.modal-form-label .required {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+/* Campos de entrada */
+.modal-form-input,
+.modal-form-select,
+.modal-form-textarea {
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.modal-form-input:focus,
+.modal-form-select:focus,
+.modal-form-textarea:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+.modal-form-input::placeholder {
+  color: #9ca3af;
+}
+
+/* Select com seta customizada */
+.modal-form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+  padding-right: 2.75rem;
+}
+
+.modal-form-select:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+  color: #9ca3af;
+}
+
+/* Textarea */
+.modal-form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Mensagem de erro */
+.modal-form-error {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* Responsivo - 2 colunas em tablets */
+@media (max-width: 992px) {
+  .modal-form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .modal-form-row.cols-3,
+  .modal-form-row.cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Responsivo - 1 coluna em mobile */
+@media (max-width: 576px) {
+  .modal-form-row,
+  .modal-form-row.cols-2,
+  .modal-form-row.cols-3,
+  .modal-form-row.cols-4 {
+    grid-template-columns: 1fr;
+  }
+}

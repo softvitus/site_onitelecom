@@ -269,65 +269,117 @@ class TestPagComRel:
         """
         POST /pag-com-rels
         Testa criação de nova relação página-componente
-        Usa última página e último componente para evitar conflitos
+        Cria uma nova página e componente para evitar conflitos com seeds
         """
         try:
-            # Obter último componente
-            componentes_response = requests.get(
-                f"{BASE_URL}/componentes",
+            import uuid
+            unique_id = str(uuid.uuid4())[:8]
+            
+            # Obter tema_id para criar página
+            temas_response = requests.get(
+                f"{BASE_URL}/temas",
                 headers=self._get_headers(),
                 timeout=5
             )
             
-            if componentes_response.status_code != 200:
+            if temas_response.status_code != 200:
                 self._print_test(
                     "POST /pag-com-rels (Criar)",
                     "SKIP",
-                    f"Não foi possível listar componentes: {componentes_response.status_code}"
+                    f"Não foi possível listar temas: {temas_response.status_code}"
                 )
                 return False
             
-            componentes = componentes_response.json().get('data', [])
-            
-            if len(componentes) < 1:
+            temas = temas_response.json().get('data', [])
+            if not temas:
                 self._print_test(
                     "POST /pag-com-rels (Criar)",
                     "SKIP",
-                    "Nenhum componente disponível para teste"
+                    "Nenhum tema disponível para teste"
                 )
                 return False
             
-            # Usar último componente (índice -1)
-            test_componente_id = componentes[-1].get('com_id')
+            tema_id = temas[0].get('tem_id')
             
-            # Obter última página
-            paginas_response = requests.get(
+            # Obter parceiro_id para criar página
+            parceiros_response = requests.get(
+                f"{BASE_URL}/parceiros",
+                headers=self._get_headers(),
+                timeout=5
+            )
+            
+            if parceiros_response.status_code != 200:
+                self._print_test(
+                    "POST /pag-com-rels (Criar)",
+                    "SKIP",
+                    f"Não foi possível listar parceiros: {parceiros_response.status_code}"
+                )
+                return False
+            
+            parceiros = parceiros_response.json().get('data', [])
+            if not parceiros:
+                self._print_test(
+                    "POST /pag-com-rels (Criar)",
+                    "SKIP",
+                    "Nenhum parceiro disponível para teste"
+                )
+                return False
+            
+            parceiro_id = parceiros[0].get('par_id')
+            
+            # Criar uma nova página para o teste (com campos corretos)
+            pagina_data = {
+                "pag_nome": f"pagina-teste-rel-{unique_id}",
+                "pag_titulo": f"Página Teste Relação {unique_id}",
+                "pag_caminho": f"/teste-rel-{unique_id}",
+                "pag_tem_id": tema_id,
+                "pag_par_id": parceiro_id,
+                "pag_status": "ativo"
+            }
+            
+            pagina_response = requests.post(
                 f"{BASE_URL}/paginas",
+                json=pagina_data,
                 headers=self._get_headers(),
                 timeout=5
             )
             
-            if paginas_response.status_code != 200:
+            if pagina_response.status_code != 201:
                 self._print_test(
                     "POST /pag-com-rels (Criar)",
                     "SKIP",
-                    f"Não foi possível listar páginas: {paginas_response.status_code}"
+                    f"Não foi possível criar página: {pagina_response.status_code}"
                 )
                 return False
             
-            paginas = paginas_response.json().get('data', [])
+            test_pagina_id = pagina_response.json().get('data', {}).get('pag_id')
             
-            if len(paginas) < 1:
+            # Criar um novo componente para o teste (com campos corretos)
+            componente_data = {
+                "com_nome": f"componente-teste-rel-{unique_id}",
+                "com_descricao": "Componente criado para teste de relação",
+                "com_tipo": "global",
+                "com_possui_elementos": False
+            }
+            
+            componente_response = requests.post(
+                f"{BASE_URL}/componentes",
+                json=componente_data,
+                headers=self._get_headers(),
+                timeout=5
+            )
+            
+            if componente_response.status_code != 201:
                 self._print_test(
                     "POST /pag-com-rels (Criar)",
                     "SKIP",
-                    "Nenhuma página disponível para teste"
+                    f"Não foi possível criar componente: {componente_response.status_code}"
                 )
                 return False
             
-            # Usar última página (índice -1)
-            test_pagina_id = paginas[-1].get('pag_id')
+            test_componente_id = componente_response.json().get('data', {}).get('com_id')
             
+            # Criar a relação
             relacao_data = {
                 "pcr_pag_id": test_pagina_id,
                 "pcr_com_id": test_componente_id,

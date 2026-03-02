@@ -1,0 +1,184 @@
+/**
+ * @file Confirm Dialog Styles
+ * @description Estilos para o componente ConfirmDialog
+ * Modal profissional para confirmações com design elegante
+ * 
+ * @module estilos/componentes/Comum/ConfirmDialog
+ */
+
+/* ========================================================================== */
+/* CONTEÚDO DO DIALOG */
+/* ========================================================================== */
+
+.confirm-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.confirm-dialog-icon {
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.confirm-dialog-message {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ========================================================================== */
+/* TIPOS DE CONFIRMAÇÃO */
+/* ========================================================================== */
+
+.confirm-dialog-content.confirm-dialog-perigo .confirm-dialog-icon {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.confirm-dialog-content.confirm-dialog-aviso .confirm-dialog-icon {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.confirm-dialog-content.confirm-dialog-info .confirm-dialog-icon {
+  background-color: #dbeafe;
+  color: #3b82f6;
+}
+
+.confirm-dialog-content.confirm-dialog-sucesso .confirm-dialog-icon {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+/* ========================================================================== */
+/* FOOTER COM BOTÕES */
+/* ========================================================================== */
+
+.confirm-dialog-footer {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.confirm-dialog-btn-cancelar,
+.confirm-dialog-btn-confirmar {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 120px;
+  justify-content: center;
+}
+
+/* Botão Cancelar */
+.confirm-dialog-btn-cancelar {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.confirm-dialog-btn-cancelar:hover:not(:disabled) {
+  background-color: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.confirm-dialog-btn-cancelar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Botão Confirmar - Variações por Tipo */
+.confirm-dialog-btn-confirmar {
+  color: white;
+  min-width: 140px;
+}
+
+.confirm-dialog-btn-confirmar.confirm-dialog-perigo {
+  background-color: #dc2626;
+}
+
+.confirm-dialog-btn-confirmar.confirm-dialog-perigo:hover:not(:disabled) {
+  background-color: #b91c1c;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  transform: translateY(-1px);
+}
+
+.confirm-dialog-btn-confirmar.confirm-dialog-aviso {
+  background-color: #d97706;
+}
+
+.confirm-dialog-btn-confirmar.confirm-dialog-aviso:hover:not(:disabled) {
+  background-color: #b45309;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+  transform: translateY(-1px);
+}
+
+.confirm-dialog-btn-confirmar.confirm-dialog-info {
+  background-color: #3b82f6;
+}
+
+.confirm-dialog-btn-confirmar.confirm-dialog-info:hover:not(:disabled) {
+  background-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+.confirm-dialog-btn-confirmar.confirm-dialog-sucesso {
+  background-color: #16a34a;
+}
+
+.confirm-dialog-btn-confirmar.confirm-dialog-sucesso:hover:not(:disabled) {
+  background-color: #15803d;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+  transform: translateY(-1px);
+}
+
+.confirm-dialog-btn-confirmar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========================================================================== */
+/* RESPONSIVIDADE */
+/* ========================================================================== */
+
+@media (max-width: 480px) {
+  .confirm-dialog-footer {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+
+  .confirm-dialog-btn-cancelar,
+  .confirm-dialog-btn-confirmar {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .confirm-dialog-message {
+    font-size: 0.9rem;
+  }
+
+  .confirm-dialog-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+  }
+}

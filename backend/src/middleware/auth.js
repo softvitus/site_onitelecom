@@ -1,6 +1,6 @@
 /**
- * Authentication Middleware
- * Valida JWT tokens e autorização
+ * @module middleware/auth
+ * @description Middleware de autenticação - valida JWT tokens e autorização
  */
 
 import jwt from 'jsonwebtoken';

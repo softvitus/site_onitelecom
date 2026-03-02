@@ -1,0 +1,376 @@
+/* ============================
+   ESTILOS GLOBAIS
+   ============================ */
+
+/* Resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* Body */
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+}
+
+/* Tipografia */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--fw-semibold);
+  margin-bottom: var(--spacing-md);
+  line-height: var(--lh-snug);
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: var(--fs-5xl);
+  font-weight: var(--fw-bold);
+}
+
+h2 {
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-bold);
+}
+
+h3 {
+  font-size: var(--fs-3xl);
+}
+
+h4 {
+  font-size: var(--fs-2xl);
+}
+
+h5 {
+  font-size: var(--fs-xl);
+}
+
+h6 {
+  font-size: var(--fs-lg);
+}
+
+p {
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
+}
+
+small {
+  font-size: var(--fs-sm);
+  color: var(--text-tertiary);
+}
+
+/* Links */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+a:active {
+  color: var(--primary-dark);
+}
+
+/* Ênfase */
+strong, b {
+  font-weight: var(--fw-bold);
+}
+
+em, i {
+  font-style: italic;
+}
+
+/* Códigos */
+code, pre {
+  font-family: var(--font-mono);
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  color: var(--text-primary);
+}
+
+pre {
+  padding: var(--spacing-md);
+  overflow-x: auto;
+  line-height: var(--lh-relaxed);
+}
+
+/* Formulários */
+.form-control,
+.form-select {
+  border-color: var(--border-color);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  outline: none;
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  background-color: var(--bg-tertiary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Inputs */
+input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Botões */
+.btn {
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--fs-base);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+}
+
+/* Tabelas */
+.table {
+  margin-bottom: 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background-color: var(--bg-tertiary);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.table thead th {
+  color: var(--text-primary);
+  font-weight: var(--fw-semibold);
+  padding: var(--spacing-md);
+  text-align: left;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--transition-base);
+}
+
+.table tbody tr:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.table tbody td {
+  padding: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+/* Cards */
+.card {
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-xl);
+  background-color: var(--bg-primary);
+  overflow: hidden;
+}
+
+.card-header {
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--spacing-md);
+  background-color: var(--bg-tertiary);
+  font-weight: var(--fw-semibold);
+}
+
+.card-body {
+  padding: var(--spacing-md);
+}
+
+.card-footer {
+  border-top: 1px solid var(--border-color);
+  padding: var(--spacing-md);
+  background-color: var(--bg-tertiary);
+}
+
+/* Badges */
+.badge {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-xs);
+  border-radius: var(--radius-full);
+  display: inline-block;
+}
+
+/* Alertas */
+.alert {
+  margin-bottom: var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-left: 4px solid var(--primary);
+}
+
+.alert-danger {
+  background-color: #fef2f2;
+  border-left-color: var(--danger);
+  color: #7f1d1d;
+}
+
+.alert-success {
+  background-color: #f0fdf4;
+  border-left-color: var(--success);
+  color: #15803d;
+}
+
+.alert-warning {
+  background-color: #fefce8;
+  border-left-color: var(--warning);
+  color: #854d0e;
+}
+
+/* Dropdowns */
+.dropdown-menu {
+  border: none;
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+}
+
+.dropdown-item {
+  color: var(--text-secondary);
+  transition: all var(--transition-base);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--bg-tertiary);
+  color: var(--primary);
+}
+
+/* Shadows */
+.shadow-sm {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.shadow {
+  box-shadow: var(--shadow-md) !important;
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.shadow-xl {
+  box-shadow: var(--shadow-xl) !important;
+}
+
+/* Utilities */
+.pointer {
+  cursor: pointer;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-400);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500);
+}
+
+/* Loading Page */
+.loading-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--bg-secondary);
+}
+
+/* Seleção de Texto */
+::selection {
+  background-color: var(--primary);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Focus Visible */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Impressão */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+}

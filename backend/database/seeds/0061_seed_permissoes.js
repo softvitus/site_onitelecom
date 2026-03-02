@@ -50,6 +50,11 @@ export default {
       // Permissões de Relatórios
       { perm_id: uuidv4(), perm_nome: 'relatorios_listar', perm_descricao: 'Listar relatórios', perm_modulo: 'relatorios', perm_acao: 'listar' },
       { perm_id: uuidv4(), perm_nome: 'relatorios_visualizar', perm_descricao: 'Visualizar relatórios', perm_modulo: 'relatorios', perm_acao: 'visualizar' },
+
+      // Permissões de Auditoria
+      { perm_id: uuidv4(), perm_nome: 'auditoria_listar', perm_descricao: 'Listar registros de auditoria', perm_modulo: 'auditoria', perm_acao: 'listar' },
+      { perm_id: uuidv4(), perm_nome: 'auditoria_visualizar', perm_descricao: 'Visualizar detalhes de auditoria', perm_modulo: 'auditoria', perm_acao: 'visualizar' },
+      { perm_id: uuidv4(), perm_nome: 'auditoria_filtrar', perm_descricao: 'Filtrar registros de auditoria', perm_modulo: 'auditoria', perm_acao: 'filtrar' },
     ];
 
     // Armazenar IDs para usar no seed de role permissoes

@@ -1,14 +1,19 @@
 /**
- * Conteúdo Service
- * Lógica de negócio para conteúdo dinâmico
+ * @module services/ConteudoService
+ * @description Serviço de gerenciamento de conteúdo dinâmico
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
 
+/**
+ * Serviço de gerenciamento de Conteúdo
+ * @extends BaseService
+ */
 export class ConteudoService extends BaseService {
   /**
    * Busca conteúdo com relações
+   * @param {string} id - ID do conteúdo
+   * @returns {Promise<Object>} Conteúdo com página, elemento e componente
    */
   async findByIdWithRelations(id) {
     return this.findById(id, {
@@ -22,6 +27,9 @@ export class ConteudoService extends BaseService {
 
   /**
    * Busca conteúdo de uma página
+   * @param {string} paginaId - ID da página
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de conteúdos
    */
   async findByPaginaId(paginaId, pagination = {}) {
     return this.findAll({ con_pag_id: paginaId }, pagination);
@@ -29,6 +37,9 @@ export class ConteudoService extends BaseService {
 
   /**
    * Busca conteúdo de um componente
+   * @param {string} componenteId - ID do componente
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de conteúdos
    */
   async findByComponenteId(componenteId, pagination = {}) {
     return this.findAll({ con_com_id: componenteId }, pagination);
@@ -36,13 +47,19 @@ export class ConteudoService extends BaseService {
 
   /**
    * Busca conteúdo de um elemento
+   * @param {string} elementoId - ID do elemento
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de conteúdos
    */
   async findByElementoId(elementoId, pagination = {}) {
     return this.findAll({ con_ele_id: elementoId }, pagination);
   }
 
   /**
-   * Versionamento: cria versão anterior antes de atualizar
+   * Atualiza com versionamento
+   * @param {string} id - ID do conteúdo
+   * @param {Object} data - Novos dados
+   * @returns {Promise<Object>} Conteúdo atualizado
    */
   async updateWithVersion(id, data) {
     const current = await this.findById(id);
@@ -54,7 +71,7 @@ export class ConteudoService extends BaseService {
       con_ele_id: current.con_ele_id,
       con_valor: current.con_valor,
       con_versao: (current.con_versao || 0) + 1,
-      con_ativo: false, // versão antiga
+      con_ativo: false,
     });
 
     // Atualizar com novos dados
@@ -66,6 +83,8 @@ export class ConteudoService extends BaseService {
 
   /**
    * Ativa conteúdo
+   * @param {string} id - ID do conteúdo
+   * @returns {Promise<Object>} Conteúdo ativado
    */
   async activate(id) {
     return this.update(id, { con_ativo: true });
@@ -73,8 +92,12 @@ export class ConteudoService extends BaseService {
 
   /**
    * Desativa conteúdo
+   * @param {string} id - ID do conteúdo
+   * @returns {Promise<Object>} Conteúdo desativado
    */
   async deactivate(id) {
     return this.update(id, { con_ativo: false });
   }
 }
+
+export default ConteudoService;

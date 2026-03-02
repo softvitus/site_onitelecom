@@ -3,6 +3,8 @@ Configuração centralizada para testes de integração
 """
 
 # URL Base da API
+# Docker: localhost:5000 (porta mapeada)
+# Local development: localhost:3000
 BASE_URL = "http://localhost:3000/api/v1"
 
 # Credenciais de teste

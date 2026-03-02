@@ -1,6 +1,6 @@
 /**
- * Error Handler Middleware
- * Centraliza tratamento de erros da aplicação
+ * @module middleware/errorHandler
+ * @description Middleware de tratamento de erros - centraliza gerenciamento de erros da aplicação
  */
 
 export const errorHandler = (err, req, res, next) => {

@@ -1,6 +1,6 @@
 /**
- * Error Codes
- * Códigos padronizados de erro da API
+ * @module utils/ErrorCodes
+ * @description Códigos padronizados de erro da API
  */
 
 export const ERROR_CODES = {

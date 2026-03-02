@@ -1,4 +1,7 @@
-// Constantes da aplicação
+/**
+ * @module utils/constants
+ * @description Constantes globais da aplicação
+ */
 
 export const HTTP_STATUS = {
   OK: 200,

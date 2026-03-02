@@ -1,13 +1,17 @@
 /**
- * Health Check Service
- * Verifica saúde dos componentes da aplicação
+ * @module services/HealthCheckService
+ * @description Serviço de verificação de saúde da aplicação
  */
 
 import sequelize from '../config/sequelize.js';
 
+/**
+ * Serviço de Health Check (métodos estáticos)
+ */
 export class HealthCheckService {
   /**
    * Verifica status geral da aplicação
+   * @returns {Promise<Object>} Status da aplicação com componentes
    */
   static async getApplicationHealth() {
     const databaseHealth = await this.checkDatabase();
@@ -35,6 +39,7 @@ export class HealthCheckService {
 
   /**
    * Verifica conexão com o banco de dados
+   * @returns {Promise<Object>} Status da conexão
    */
   static async checkDatabase() {
     try {
@@ -59,6 +64,7 @@ export class HealthCheckService {
 
   /**
    * Verifica status de prontidão (readiness probe para k8s)
+   * @returns {Promise<Object>} Status de prontidão
    */
   static async getReadinessProbe() {
     const health = await this.getApplicationHealth();
@@ -78,6 +84,7 @@ export class HealthCheckService {
 
   /**
    * Verifica status de vida (liveness probe para k8s)
+   * @returns {Object} Status de vida
    */
   static getLivenessProbe() {
     return {
@@ -87,3 +94,5 @@ export class HealthCheckService {
     };
   }
 }
+
+export default HealthCheckService;

@@ -1,14 +1,27 @@
 /**
- * Imagens Service
- * Lógica de negócio para imagens
+ * @module services/ImagensService
+ * @description Serviço de gerenciamento de imagens
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
 
+/**
+ * Serviço de gerenciamento de Imagens
+ * @extends BaseService
+ */
 export class ImagensService extends BaseService {
   /**
+   * Tipos de imagem válidos
+   * @type {string[]}
+   */
+  static VALID_TYPES = ['banner', 'logo', 'icone', 'thumbnail', 'background', 'custom'];
+
+  /**
    * Busca imagens de um tema
+   * @param {string} temaId - ID do tema
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de imagens
    */
   async findByTemaId(temaId, pagination = {}) {
     return this.findAll({ img_tem_id: temaId }, pagination);
@@ -16,38 +29,50 @@ export class ImagensService extends BaseService {
 
   /**
    * Busca imagens de uma página
+   * @param {string} paginaId - ID da página
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de imagens
    */
   async findByPaginaId(paginaId, pagination = {}) {
     return this.findAll({ img_pag_id: paginaId }, pagination);
   }
 
   /**
-   * Busca imag por tipo
+   * Busca imagens por tipo
+   * @param {string} type - Tipo da imagem
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de imagens
    */
   async findByType(type, pagination = {}) {
     return this.findAll({ img_tipo: type }, pagination);
   }
 
   /**
-   * Valida tipos de imagem permitidos
+   * Retorna tipos de imagem válidos
+   * @returns {string[]} Lista de tipos
    */
   getValidTypes() {
-    return ['banner', 'logo', 'icone', 'thumbnail', 'background', 'custom'];
+    return ImagensService.VALID_TYPES;
   }
 
   /**
    * Valida tipo de imagem
+   * @param {string} type - Tipo a validar
+   * @returns {boolean} True se válido
    */
   validateType(type) {
-    return this.getValidTypes().includes(type);
+    return ImagensService.VALID_TYPES.includes(type);
   }
 
   /**
    * Registra upload de imagem
+   * @param {Object} data - Dados da imagem
+   * @returns {Promise<Object>} Imagem criada
+   * @throws {ApiError} VALIDATION_ERROR se tipo inválido
    */
   async recordUpload(data) {
     if (!this.validateType(data.img_tipo)) {
-      throw new ApiError('INVALID', 'Tipo de imagem inválido');
+      throw new ApiError('VALIDATION_ERROR', 'Tipo de imagem inválido');
     }
 
     return this.create({
@@ -61,11 +86,14 @@ export class ImagensService extends BaseService {
   }
 
   /**
-   * Deleta imagem e limpa referências
+   * Deleta imagem
+   * @param {string} id - ID da imagem
+   * @returns {Promise<Object>} Imagem deletada
    */
   async deleteImage(id) {
-    const imagem = await this.findById(id);
-    // TODO: Deletar arquivo físico do storage
+    await this.findById(id);
     return this.delete(id);
   }
 }
+
+export default ImagensService;

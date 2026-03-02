@@ -1,15 +1,21 @@
 /**
- * Tema Service
- * Lógica de negócio para temas
+ * @module services/TemaService
+ * @description Serviço de gerenciamento de temas
  */
 
-
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
+import { Op } from 'sequelize';
 
+/**
+ * Serviço de gerenciamento de Temas
+ * @extends BaseService
+ */
 export class TemaService extends BaseService {
   /**
-   * Busca tema com todas relações (páginas, cores, imagens, etc)
+   * Busca tema com todas relações
+   * @param {string} id - ID do tema
+   * @returns {Promise<Object>} Tema com relações
    */
   async findByIdWithRelations(id) {
     return this.findById(id, {
@@ -25,6 +31,9 @@ export class TemaService extends BaseService {
 
   /**
    * Busca temas de um parceiro
+   * @param {string} parceiroId - ID do parceiro
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de temas
    */
   async findByParceiroId(parceiroId, pagination = {}) {
     return this.findAll({ tem_par_id: parceiroId }, pagination);
@@ -32,6 +41,9 @@ export class TemaService extends BaseService {
 
   /**
    * Busca tema por nome
+   * @param {string} name - Nome do tema
+   * @returns {Promise<Object>} Tema encontrado
+   * @throws {ApiError} NOT_FOUND se tema não existir
    */
   async findByName(name) {
     const item = await this.model.findOne({
@@ -46,16 +58,52 @@ export class TemaService extends BaseService {
   }
 
   /**
-   * Clona um tema existente
+   * Valida se nome é único para o parceiro
+   * @param {string} name - Nome do tema
+   * @param {string} parceiroId - ID do parceiro
+   * @param {string|null} excludeId - ID a excluir da validação
+   * @returns {Promise<boolean>} True se único
    */
-  async cloneTheme(id, newName) {
-    const theme = await this.findById(id);
-    const clone = await this.create({
-      tem_par_id: theme.tem_par_id,
-      tem_nome: `${newName} (${new Date().toLocaleDateString()})`,
-    });
+  async isNameUniqueForParceiro(name, parceiroId, excludeId = null) {
+    const where = {
+      tem_nome: name,
+      tem_par_id: parceiroId,
+    };
 
-    return clone;
+    if (excludeId) {
+      where.tem_id = { [Op.ne]: excludeId };
+    }
+
+    const existing = await this.model.findOne({ where });
+    return !existing;
   }
 
+  /**
+   * Clona um tema existente com novo nome
+   * @param {string} id - ID do tema original
+   * @param {string} newName - Nome para o tema clonado
+   * @returns {Promise<Object>} Tema clonado
+   * @throws {ApiError} NOT_FOUND se tema original não existir
+   */
+  async cloneTheme(id, newName) {
+    const original = await this.findById(id);
+
+    if (!original) {
+      throw new ApiError('NOT_FOUND', 'Tema original não encontrado');
+    }
+
+    // Formata data no padrão DD/MM/YYYY
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('pt-BR');
+    const clonedName = `${newName} (${dateStr})`;
+
+    const cloned = await this.create({
+      tem_nome: clonedName,
+      tem_par_id: original.tem_par_id,
+    });
+
+    return cloned;
+  }
 }
+
+export default TemaService;

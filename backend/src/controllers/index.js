@@ -1,15 +1,21 @@
-// Importa todos os controllers
-export * as ParceiroController from './ParceiroController.js';
-export * as TemaController from './TemaController.js';
-export * as PaginaController from './PaginaController.js';
-export * as ComponenteController from './ComponenteController.js';
-export * as ElementoController from './ElementoController.js';
-export * as PagComRelController from './PagComRelController.js';
-export * as ComEleRelController from './ComEleRelController.js';
-export * as CoresController from './CoresController.js';
-export * as ImagensController from './ImagensController.js';
-export * as LinksController from './LinksController.js';
-export * as TextosController from './TextosController.js';
-export * as ConteudoController from './ConteudoController.js';
-export * as FeaturesController from './FeaturesController.js';
-export * as ConfigTemaController from './ConfigTemaController.js';
+/**
+ * Controllers Index
+ * Export centralizado de controllers
+ */
+
+export { ParceiroController } from './ParceiroController.js';
+export { TemaController } from './TemaController.js';
+export { PaginaController } from './PaginaController.js';
+export { ComponenteController } from './ComponenteController.js';
+export { ElementoController } from './ElementoController.js';
+export { PagComRelController } from './PagComRelController.js';
+export { ComEleRelController } from './ComEleRelController.js';
+export { CoresController } from './CoresController.js';
+export { ImagensController } from './ImagensController.js';
+export { LinksController } from './LinksController.js';
+export { TextosController } from './TextosController.js';
+export { ConteudoController } from './ConteudoController.js';
+export { FeaturesController } from './FeaturesController.js';
+export { ConfigTemaController } from './ConfigTemaController.js';
+export { AuthController } from './AuthController.js';
+export { AuditoriaController } from './AuditoriaController.js';

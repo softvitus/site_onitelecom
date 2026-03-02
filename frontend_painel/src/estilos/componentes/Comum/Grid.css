@@ -1,0 +1,413 @@
+/**
+ * @file Grid Component Styles
+ * @description Estilos profissionais para o componente Grid com paginação integrada
+ * Design moderno, minimalista e elegante
+ * 
+ * @module estilos/componentes/Comum/Grid
+ */
+
+/* ========================================================================== */
+/* CONTAINER PRINCIPAL */
+/* ========================================================================== */
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ========================================================================== */
+/* WRAPPER (TABELA + FOOTER) */
+/* ========================================================================== */
+
+.grid-wrapper {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+/* ========================================================================== */
+/* TABELA */
+/* ========================================================================== */
+
+.grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+.grid-table thead {
+  background-color: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.grid-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.grid-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s ease;
+}
+
+.grid-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.grid-table td {
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+/* ========================================================================== */
+/* FOOTER (PAGINAÇÃO INTEGRADA) */
+/* ========================================================================== */
+
+.grid-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.grid-pagination-info {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.grid-items-per-page {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  background-color: #fff;
+  color: #374151;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.grid-items-per-page:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.grid-items-per-page:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ========================================================================== */
+/* BOTÕES DE PAGINAÇÃO */
+/* ========================================================================== */
+
+.grid-nav-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.grid-pagination-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #374151;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.grid-pagination-button:hover:not(:disabled) {
+  border-color: #3b82f6;
+  background-color: #f0f7ff;
+  color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.grid-pagination-button:disabled {
+  background-color: #f9fafb;
+  color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.grid-page-number {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background-color: #fff;
+  color: #374151;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.grid-page-number:hover {
+  border-color: #3b82f6;
+  background-color: #f0f7ff;
+  color: #3b82f6;
+}
+
+.grid-page-number.active {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+/* ========================================================================== */
+/* LOADING STATE */
+/* ========================================================================== */
+
+.grid-loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.grid-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: gridSpin 0.8s linear infinite;
+}
+
+@keyframes gridSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================================================== */
+/* EMPTY STATE */
+/* ========================================================================== */
+
+.grid-empty-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.grid-empty-icon {
+  font-size: 3rem;
+  opacity: 0.3;
+}
+
+.grid-empty-title {
+  margin: 0;
+  color: #6b7280;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* ========================================================================== */
+/* AÇÕES NA TABELA */
+/* ========================================================================== */
+
+.grid-acoes {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Grupo de botões de ação */
+.grid-actions-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Botão base de ação */
+.grid-btn-action {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.grid-btn-action:hover {
+  transform: translateY(-2px);
+}
+
+.grid-btn-action:active {
+  transform: translateY(0);
+}
+
+/* Editar - Azul */
+.grid-btn-action-edit {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.grid-btn-action-edit:hover {
+  background-color: #bfdbfe;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+}
+
+/* Deletar - Vermelho */
+.grid-btn-action-delete {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.grid-btn-action-delete:hover {
+  background-color: #fecaca;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+}
+
+/* Toggle Ativo (para inativar) - Vermelho */
+.grid-btn-action-toggle-ativo {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.grid-btn-action-toggle-ativo:hover {
+  background-color: #fecaca;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+}
+
+/* Toggle Inativo (para ativar) - Verde */
+.grid-btn-action-toggle-inativo {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.grid-btn-action-toggle-inativo:hover {
+  background-color: #bbf7d0;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25);
+}
+
+/* Visualizar - Cinza */
+.grid-btn-action-view {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.grid-btn-action-view:hover {
+  background-color: #e5e7eb;
+  box-shadow: 0 2px 8px rgba(75, 85, 99, 0.2);
+}
+
+/* ========================================================================== */
+/* RESPONSIVIDADE */
+/* ========================================================================== */
+
+@media (max-width: 768px) {
+  .grid-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .grid-nav-buttons {
+    width: 100%;
+  }
+
+  .grid-pagination-button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .grid-table {
+    font-size: 0.85rem;
+  }
+
+  .grid-table th,
+  .grid-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-container {
+    gap: 1rem;
+  }
+
+  .grid-footer {
+    flex-direction: column;
+    padding: 0.75rem;
+  }
+
+  .grid-pagination-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  .grid-items-per-page {
+    width: 100%;
+  }
+
+  .grid-nav-buttons {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .grid-pagination-button {
+    flex: 1;
+    min-width: 60px;
+    justify-content: center;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .grid-page-number {
+    min-width: 2rem;
+    padding: 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .grid-table {
+    font-size: 0.8rem;
+  }
+
+  .grid-table th,
+  .grid-table td {
+    padding: 0.5rem;
+  }
+
+  .grid-acoes {
+    gap: 0.25rem;
+  }
+}

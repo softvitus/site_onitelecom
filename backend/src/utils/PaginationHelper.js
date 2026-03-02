@@ -1,6 +1,6 @@
 /**
- * Pagination Helper
- * Utilitários para paginação
+ * @module utils/PaginationHelper
+ * @description Utilitários para paginação de resultados
  */
 
 export class PaginationHelper {

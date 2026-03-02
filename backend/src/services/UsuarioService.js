@@ -1,15 +1,33 @@
 /**
- * Usuario Service
- * Gerencia usuários e autenticação
+ * @module services/UsuarioService
+ * @description Serviço de gerenciamento de usuários e autenticação
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
 import bcrypt from 'bcryptjs';
 
+/**
+ * Serviço de gerenciamento de Usuários
+ * @extends BaseService
+ */
 export class UsuarioService extends BaseService {
   /**
+   * Tipos de usuário válidos
+   * @type {string[]}
+   */
+  static VALID_TIPOS = ['admin', 'gestor', 'usuario'];
+
+  /**
+   * Status de usuário válidos
+   * @type {string[]}
+   */
+  static VALID_STATUS = ['ativo', 'inativo', 'bloqueado'];
+
+  /**
    * Busca usuário com todas as relações
+   * @param {string} id - ID do usuário
+   * @returns {Promise<Object>} Usuário com logs e sessões
    */
   async findByIdWithRelations(id) {
     return this.findById(id, {
@@ -22,6 +40,9 @@ export class UsuarioService extends BaseService {
 
   /**
    * Busca usuário por email
+   * @param {string} email - Email do usuário
+   * @returns {Promise<Object>} Usuário encontrado
+   * @throws {ApiError} NOT_FOUND se não existir
    */
   async findByEmail(email) {
     const user = await this.model.findOne({
@@ -41,6 +62,8 @@ export class UsuarioService extends BaseService {
 
   /**
    * Busca usuários ativos
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de usuários ativos
    */
   async findActive(pagination = {}) {
     return this.findAll({ usu_status: 'ativo' }, pagination);
@@ -48,13 +71,19 @@ export class UsuarioService extends BaseService {
 
   /**
    * Busca usuários por tipo (role)
+   * @param {string} tipo - Tipo do usuário
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de usuários
    */
   async findByType(tipo, pagination = {}) {
     return this.findAll({ usu_tipo: tipo }, pagination);
   }
 
   /**
-   * Busca usuários de um parceiro específico
+   * Busca usuários de um parceiro
+   * @param {string} parceiroId - ID do parceiro
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de usuários
    */
   async findByParceiro(parceiroId, pagination = {}) {
     return this.findAll({ usu_parceiro_id: parceiroId }, pagination);
@@ -62,6 +91,8 @@ export class UsuarioService extends BaseService {
 
   /**
    * Busca usuários bloqueados
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de usuários bloqueados
    */
   async findBloqueados(pagination = {}) {
     return this.findAll({ usu_status: 'bloqueado' }, pagination);
@@ -69,6 +100,12 @@ export class UsuarioService extends BaseService {
 
   /**
    * Autentica usuário (login)
+   * @param {string} email - Email do usuário
+   * @param {string} senha - Senha do usuário
+   * @returns {Promise<Object>} Usuário autenticado
+   * @throws {ApiError} INVALID_CREDENTIALS se credenciais inválidas
+   * @throws {ApiError} ACCOUNT_BLOCKED se conta bloqueada
+   * @throws {ApiError} ACCOUNT_INACTIVE se conta inativa
    */
   async autenticar(email, senha) {
     // Buscar usuário
@@ -131,6 +168,10 @@ export class UsuarioService extends BaseService {
 
   /**
    * Criar novo usuário
+   * @param {Object} data - Dados do usuário
+   * @returns {Promise<Object>} Usuário criado
+   * @throws {ApiError} VALIDATION_ERROR se dados inválidos
+   * @throws {ApiError} DUPLICATE_ENTRY se email já existe
    */
   async criar(data) {
     // Validar campos obrigatórios
@@ -174,6 +215,11 @@ export class UsuarioService extends BaseService {
 
   /**
    * Atualizar usuário
+   * @param {string} id - ID do usuário
+   * @param {Object} data - Dados a atualizar
+   * @returns {Promise<Object>} Usuário atualizado
+   * @throws {ApiError} NOT_FOUND se não existir
+   * @throws {ApiError} DUPLICATE_ENTRY se email já existe
    */
   async atualizar(id, data) {
     const usuario = await this.findById(id);
@@ -202,6 +248,12 @@ export class UsuarioService extends BaseService {
 
   /**
    * Alterar senha
+   * @param {string} id - ID do usuário
+   * @param {string} senhaAtual - Senha atual
+   * @param {string} senhaNova - Nova senha
+   * @returns {Promise<Object>} Usuário atualizado
+   * @throws {ApiError} NOT_FOUND se não existir
+   * @throws {ApiError} INVALID_PASSWORD se senha atual incorreta
    */
   async alterarSenha(id, senhaAtual, senhaNova) {
     const usuario = await this.findById(id);
@@ -229,6 +281,9 @@ export class UsuarioService extends BaseService {
 
   /**
    * Bloquear usuário
+   * @param {string} id - ID do usuário
+   * @returns {Promise<Object>} Usuário bloqueado
+   * @throws {ApiError} NOT_FOUND se não existir
    */
   async bloquear(id) {
     const usuario = await this.findById(id);
@@ -242,6 +297,9 @@ export class UsuarioService extends BaseService {
 
   /**
    * Desbloquear usuário
+   * @param {string} id - ID do usuário
+   * @returns {Promise<Object>} Usuário desbloqueado
+   * @throws {ApiError} NOT_FOUND se não existir
    */
   async desbloquear(id) {
     const usuario = await this.findById(id);
@@ -257,24 +315,29 @@ export class UsuarioService extends BaseService {
   }
 
   /**
-   * Validar tipos de usuário
+   * Retorna tipos de usuário válidos
+   * @returns {string[]} Lista de tipos
    */
   getValidTipos() {
-    return ['admin', 'gestor', 'usuario'];
+    return UsuarioService.VALID_TIPOS;
   }
 
   /**
-   * Validar status de usuário
+   * Retorna status de usuário válidos
+   * @returns {string[]} Lista de status
    */
   getValidStatus() {
-    return ['ativo', 'inativo', 'bloqueado'];
+    return UsuarioService.VALID_STATUS;
   }
 
   /**
-   * Validar tipo
+   * Valida tipo de usuário
+   * @param {string} tipo - Tipo a validar
+   * @returns {boolean} True se válido
+   * @throws {ApiError} INVALID_INPUT se tipo inválido
    */
   validateTipo(tipo) {
-    if (!this.getValidTipos().includes(tipo)) {
+    if (!UsuarioService.VALID_TIPOS.includes(tipo)) {
       throw new ApiError(
         'INVALID_INPUT',
         `Tipo inválido. Tipos válidos: ${this.getValidTipos().join(', ')}`,
@@ -285,10 +348,13 @@ export class UsuarioService extends BaseService {
   }
 
   /**
-   * Validar status
+   * Valida status de usuário
+   * @param {string} status - Status a validar
+   * @returns {boolean} True se válido
+   * @throws {ApiError} INVALID_INPUT se status inválido
    */
   validateStatus(status) {
-    if (!this.getValidStatus().includes(status)) {
+    if (!UsuarioService.VALID_STATUS.includes(status)) {
       throw new ApiError(
         'INVALID_INPUT',
         `Status inválido. Status válidos: ${this.getValidStatus().join(', ')}`,
@@ -299,7 +365,11 @@ export class UsuarioService extends BaseService {
   }
 
   /**
-   * Verificar se usuário tem uma permissão específica
+   * Verifica se usuário tem permissão
+   * @param {string} usuarioId - ID do usuário
+   * @param {string} permissaoNome - Nome da permissão
+   * @returns {Promise<boolean>} True se tem permissão
+   * @throws {ApiError} NOT_FOUND se usuário não existir
    */
   async temPermissao(usuarioId, permissaoNome) {
     const usuario = await this.findById(usuarioId);
@@ -321,7 +391,10 @@ export class UsuarioService extends BaseService {
   }
 
   /**
-   * Obter todas as permissões de um usuário
+   * Obtém permissões do usuário
+   * @param {string} usuarioId - ID do usuário
+   * @returns {Promise<string[]>} Lista de nomes de permissões
+   * @throws {ApiError} NOT_FOUND se usuário não existir
    */
   async getPermissoes(usuarioId) {
     const usuario = await this.findById(usuarioId);
@@ -334,13 +407,8 @@ export class UsuarioService extends BaseService {
     const { RolePermissao } = this.model.sequelize.models;
     const rolePerms = await RolePermissao.findByTipo(usuario.usu_tipo);
 
-    return rolePerms.map(rp => ({
-      id: rp.permissao.perm_id,
-      nome: rp.permissao.perm_nome,
-      descricao: rp.permissao.perm_descricao,
-      modulo: rp.permissao.perm_modulo,
-      acao: rp.permissao.perm_acao,
-    }));
+    // Retornar apenas os nomes das permissões (array de strings)
+    return rolePerms.map(rp => rp.permissao.perm_nome);
   }
 }
 

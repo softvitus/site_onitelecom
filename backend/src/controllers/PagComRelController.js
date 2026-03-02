@@ -1,8 +1,14 @@
+/**
+ * @module controllers/PagComRelController
+ * @description Controller de gerenciamento de relações página-componente
+ */
+
 import { PagComRelService } from '../services/index.js';
+import { AuditoriaService } from '../services/AuditoriaService.js';
 import { getModels } from '../models/loader.js';
 
 /**
- * PagComRelController - Refatorado para usar Service Layer
+ * Controller de Relações Página-Componente
  */
 export class PagComRelController {
   constructor() {
@@ -66,11 +72,38 @@ export class PagComRelController {
     try {
       const item = await this.service.create(req.body);
 
+      // Registrar auditoria de criação
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'criar',
+        entidade: 'pag_com_rel',
+        entidadeId: item.pcr_id,
+        dadosAnteriores: null,
+        dadosNovos: item.toJSON(),
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'sucesso',
+        mensagemErro: null,
+      });
+
       return res.status(201).json({
         success: true,
         data: item,
       });
     } catch (error) {
+      // Registrar auditoria de erro na criação
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'criar',
+        entidade: 'pag_com_rel',
+        entidadeId: null,
+        dadosAnteriores: null,
+        dadosNovos: req.body,
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'erro',
+        mensagemErro: error.message || 'Erro ao criar relação',
+      });
       next(error);
     }
   }
@@ -82,6 +115,7 @@ export class PagComRelController {
   async update(req, res, next) {
     try {
       const { id } = req.params;
+      const itemAnterior = await this.service.findById(id);
       const item = await this.service.update(id, req.body);
 
       if (!item) {
@@ -91,11 +125,39 @@ export class PagComRelController {
         });
       }
 
+      // Registrar auditoria de atualização
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'atualizar',
+        entidade: 'pag_com_rel',
+        entidadeId: id,
+        dadosAnteriores: itemAnterior ? itemAnterior.toJSON() : null,
+        dadosNovos: item.toJSON(),
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'sucesso',
+        mensagemErro: null,
+      });
+
       return res.json({
         success: true,
         data: item,
       });
     } catch (error) {
+      // Registrar auditoria de erro na atualização
+      const { id } = req.params;
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'atualizar',
+        entidade: 'pag_com_rel',
+        entidadeId: id,
+        dadosAnteriores: null,
+        dadosNovos: req.body,
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'erro',
+        mensagemErro: error.message || 'Erro ao atualizar relação',
+      });
       next(error);
     }
   }
@@ -107,6 +169,7 @@ export class PagComRelController {
   async remove(req, res, next) {
     try {
       const { id } = req.params;
+      const itemAnterior = await this.service.findById(id);
       const success = await this.service.delete(id);
 
       if (!success) {
@@ -116,14 +179,44 @@ export class PagComRelController {
         });
       }
 
+      // Registrar auditoria de deleção
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'deletar',
+        entidade: 'pag_com_rel',
+        entidadeId: id,
+        dadosAnteriores: itemAnterior ? itemAnterior.toJSON() : null,
+        dadosNovos: null,
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'sucesso',
+        mensagemErro: null,
+      });
+
       return res.status(204).end();
     } catch (error) {
+      // Registrar auditoria de erro na deleção
+      const { id } = req.params;
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'deletar',
+        entidade: 'pag_com_rel',
+        entidadeId: id,
+        dadosAnteriores: null,
+        dadosNovos: null,
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'erro',
+        mensagemErro: error.message || 'Erro ao deletar relação',
+      });
       next(error);
     }
   }
 }
 
-// Instancia o controller
+export default PagComRelController;
+
+// Instância do controller
 export const pagComRelController = new PagComRelController();
 
 // Exporta métodos para compatibilidade com versão anterior

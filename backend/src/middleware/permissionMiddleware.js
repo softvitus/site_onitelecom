@@ -1,6 +1,6 @@
 /**
- * Permission Middleware
- * Valida permissões de usuários com base em roles
+ * @module middleware/permissionMiddleware
+ * @description Middleware de permissões - valida permissões de usuários com base em roles
  */
 
 import { ApiError } from '../utils/ErrorCodes.js';

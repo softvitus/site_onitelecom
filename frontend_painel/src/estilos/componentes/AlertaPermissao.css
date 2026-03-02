@@ -1,0 +1,200 @@
+/**
+ * Estilos para o Componente AlertaPermissao
+ */
+
+.alerta-permissao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 8px;
+}
+
+.card-alerta {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 400px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alerta-permissao .icone {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* Tipos de alerta */
+.alerta-restricao .icone {
+  color: #3498db;
+}
+
+.alerta-bloqueado .icone {
+  color: #e74c3c;
+}
+
+.alerta-aviso .icone {
+  color: #f39c12;
+}
+
+.card-alerta h2 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+  font-size: 1.8rem;
+}
+
+.card-alerta .mensagem {
+  color: #666;
+  font-size: 1rem;
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+.card-alerta .detalhes {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  border-left: 4px solid #3498db;
+}
+
+.card-alerta .detalhes p {
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+.card-alerta .detalhes code {
+  background: #e9ecef;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  color: #d63031;
+  font-weight: bold;
+}
+
+.card-alerta .detalhes .dica {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.card-alerta .acoes {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card-alerta .btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-voltar {
+  background: #3498db;
+  color: white;
+}
+
+.btn-voltar:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* Estados específicos de alerta */
+.alerta-restricao .detalhes {
+  border-left-color: #3498db;
+}
+
+.alerta-bloqueado .detalhes {
+  border-left-color: #e74c3c;
+  background: #ffe6e6;
+}
+
+.alerta-bloqueado .detalhes p {
+  color: #c0392b;
+}
+
+.alerta-aviso .detalhes {
+  border-left-color: #f39c12;
+  background: #fff8e6;
+}
+
+.alerta-aviso .detalhes p {
+  color: #d68910;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .alerta-permissao {
+    min-height: 300px;
+    padding: 1rem;
+  }
+
+  .card-alerta {
+    padding: 2rem 1.5rem;
+  }
+
+  .card-alerta h2 {
+    font-size: 1.5rem;
+  }
+
+  .card-alerta .icone {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .alerta-permissao {
+    min-height: 250px;
+    padding: 0.5rem;
+  }
+
+  .card-alerta {
+    padding: 1.5rem 1rem;
+  }
+
+  .card-alerta h2 {
+    font-size: 1.3rem;
+  }
+
+  .card-alerta .icone {
+    font-size: 2rem;
+  }
+
+  .card-alerta .mensagem {
+    font-size: 0.9rem;
+  }
+
+  .card-alerta .detalhes {
+    padding: 1rem;
+  }
+
+  .card-alerta .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}

@@ -35,6 +35,7 @@ from lib.textos import TestTextos
 from lib.conteudo import TestConteudo
 from lib.features import TestFeatures
 from lib.config_tema import TestConfigTema
+from lib.auditoria import TestAuditoria
 
 
 class TestOrchestrator:
@@ -214,6 +215,16 @@ class TestOrchestrator:
         self.results['modules']['CONFIG-TEMA'] = config_tema_tester.results
         self.results['total_passed'] += config_tema_tester.results['passed']
         self.results['total_failed'] += config_tema_tester.results['failed']
+        
+        time.sleep(3)
+        
+        # Testes de Auditoria (Rastreamento de Ações)
+        print("\n🔍 Executando testes de AUDITORIA...\n")
+        auditoria_tester = TestAuditoria()
+        auditoria_tester.run_all_tests(self.admin_token)
+        self.results['modules']['AUDITORIA'] = auditoria_tester.results
+        self.results['total_passed'] += auditoria_tester.results['passed']
+        self.results['total_failed'] += auditoria_tester.results['failed']
         
         # Relatório final
         self.print_final_report()

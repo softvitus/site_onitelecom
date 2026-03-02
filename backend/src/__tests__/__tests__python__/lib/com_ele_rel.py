@@ -273,65 +273,62 @@ class TestComEleRel:
         """
         POST /com-ele-rels
         Testa criação de nova relação componente-elemento
-        Usa último componente e último elemento para evitar conflitos
+        Cria um novo componente e elemento para evitar conflitos com seeds
         """
         try:
-            # Obter último componente
-            componentes_response = requests.get(
+            import uuid
+            unique_id = str(uuid.uuid4())[:8]
+            
+            # Criar um novo componente para o teste (com campos corretos)
+            componente_data = {
+                "com_nome": f"componente-teste-cer-{unique_id}",
+                "com_descricao": "Componente criado para teste de relação",
+                "com_tipo": "global",
+                "com_possui_elementos": True
+            }
+            
+            componente_response = requests.post(
                 f"{BASE_URL}/componentes",
+                json=componente_data,
                 headers=self._get_headers(),
                 timeout=5
             )
             
-            if componentes_response.status_code != 200:
+            if componente_response.status_code != 201:
                 self._print_test(
                     "POST /com-ele-rels (Criar)",
                     "SKIP",
-                    f"Não foi possível listar componentes: {componentes_response.status_code}"
+                    f"Não foi possível criar componente: {componente_response.status_code}"
                 )
                 return False
             
-            componentes = componentes_response.json().get('data', [])
+            test_componente_id = componente_response.json().get('data', {}).get('com_id')
             
-            if len(componentes) < 1:
-                self._print_test(
-                    "POST /com-ele-rels (Criar)",
-                    "SKIP",
-                    "Nenhum componente disponível para teste"
-                )
-                return False
+            # Criar um novo elemento para o teste (com campos corretos)
+            elemento_data = {
+                "ele_nome": f"elemento-teste-cer-{unique_id}",
+                "ele_descricao": "Elemento criado para teste de relação",
+                "ele_obrigatório": False
+            }
             
-            # Usar último componente (índice -1)
-            test_componente_id = componentes[-1].get('com_id')
-            
-            # Obter último elemento
-            elementos_response = requests.get(
+            elemento_response = requests.post(
                 f"{BASE_URL}/elementos",
+                json=elemento_data,
                 headers=self._get_headers(),
                 timeout=5
             )
             
-            if elementos_response.status_code != 200:
+            if elemento_response.status_code != 201:
                 self._print_test(
                     "POST /com-ele-rels (Criar)",
                     "SKIP",
-                    f"Não foi possível listar elementos: {elementos_response.status_code}"
+                    f"Não foi possível criar elemento: {elemento_response.status_code}"
                 )
                 return False
             
-            elementos = elementos_response.json().get('data', [])
+            test_elemento_id = elemento_response.json().get('data', {}).get('ele_id')
             
-            if len(elementos) < 1:
-                self._print_test(
-                    "POST /com-ele-rels (Criar)",
-                    "SKIP",
-                    "Nenhum elemento disponível para teste"
-                )
-                return False
-            
-            # Usar último elemento (índice -1)
-            test_elemento_id = elementos[-1].get('ele_id')
-            
+            # Criar a relação
             relacao_data = {
                 "cer_com_id": test_componente_id,
                 "cer_ele_id": test_elemento_id,

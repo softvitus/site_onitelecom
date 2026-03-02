@@ -1,6 +1,6 @@
 /**
- * Cache Manager
- * Sistema de cache em memória com expiração
+ * @module utils/CacheManager
+ * @description Sistema de cache em memória com expiração
  */
 
 class CacheManager {
@@ -99,8 +99,12 @@ class CacheManager {
 
   /**
    * Middleware para cache baseado em requisição
+   * @param {number} ttl - Time to live em segundos
+   * @returns {Function} Express middleware
    */
   middleware(ttl = 300) {
+    const cacheInstance = this;
+    
     return (req, res, next) => {
       // Apenas cache para GET requests
       if (req.method !== 'GET') {
@@ -108,20 +112,20 @@ class CacheManager {
       }
 
       const cacheKey = `${req.path}:${JSON.stringify(req.query)}`;
-      const cached = this.get(cacheKey);
+      const cached = cacheInstance.get(cacheKey);
 
       if (cached) {
         return res.json({ ...cached, _cached: true });
       }
 
       // Intercepta res.json para cachear
-      const originalJson = res.json;
-      res.json = function (data) {
+      const originalJson = res.json.bind(res);
+      res.json = (data) => {
         if (res.statusCode === 200 && data.success) {
-          this.cache.set(cacheKey, data, ttl);
+          cacheInstance.set(cacheKey, data, ttl);
         }
-        return originalJson.call(this, data);
-      }.bind({ cache: this });
+        return originalJson(data);
+      };
 
       next();
     };

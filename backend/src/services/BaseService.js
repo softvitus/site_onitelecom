@@ -1,19 +1,30 @@
 /**
- * Base Service
- * Serviço base com operações CRUD comuns
+ * @module services/BaseService
+ * @description Serviço base com operações CRUD comuns
  */
 
 import { Op } from 'sequelize';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
 import { QueryBuilder } from '../utils/QueryBuilder.js';
 
+/**
+ * Serviço base abstrato para operações CRUD
+ * @abstract
+ */
 export class BaseService {
+  /**
+   * Cria instância do serviço
+   * @param {Object} model - Model Sequelize
+   */
   constructor(model) {
     this.model = model;
   }
 
   /**
    * Cria novo registro
+   * @param {Object} data - Dados do registro
+   * @returns {Promise<Object>} Registro criado
+   * @throws {ApiError} DATABASE_ERROR se falhar
    */
   async create(data) {
     try {
@@ -27,6 +38,10 @@ export class BaseService {
 
   /**
    * Busca por ID
+   * @param {string} id - ID do registro
+   * @param {Object} options - Opções de busca (include, etc)
+   * @returns {Promise<Object>} Registro encontrado
+   * @throws {ApiError} NOT_FOUND se não existir
    */
   async findById(id, options = {}) {
     try {
@@ -45,6 +60,13 @@ export class BaseService {
 
   /**
    * Busca todos com filtros e paginação
+   * @param {Object} filters - Filtros de busca
+   * @param {Object} pagination - Opções de paginação
+   * @param {number} pagination.page - Número da página
+   * @param {number} pagination.limit - Itens por página
+   * @param {string} pagination.sort - Campo de ordenação
+   * @param {Object} options - Opções adicionais
+   * @returns {Promise<Object>} Lista paginada de registros
    */
   async findAll(filters = {}, pagination = {}, options = {}) {
     try {
@@ -77,7 +99,8 @@ export class BaseService {
   }
 
   /**
-   * Busca como builder
+   * Retorna QueryBuilder para buscas complexas
+   * @returns {QueryBuilder} Instância do QueryBuilder
    */
   query() {
     return new QueryBuilder(this.model);
@@ -85,6 +108,10 @@ export class BaseService {
 
   /**
    * Busca com pesquisa de texto
+   * @param {string} term - Termo de busca
+   * @param {string[]} fields - Campos para buscar
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de resultados
    */
   async search(term, fields, pagination = {}) {
     try {
@@ -118,6 +145,10 @@ export class BaseService {
 
   /**
    * Atualiza registro
+   * @param {string} id - ID do registro
+   * @param {Object} data - Dados a atualizar
+   * @returns {Promise<Object>} Registro atualizado
+   * @throws {ApiError} NOT_FOUND se não existir
    */
   async update(id, data) {
     try {
@@ -134,6 +165,9 @@ export class BaseService {
 
   /**
    * Deleta registro
+   * @param {string} id - ID do registro
+   * @returns {Promise<Object>} Registro deletado
+   * @throws {ApiError} NOT_FOUND se não existir
    */
   async delete(id) {
     try {
@@ -150,6 +184,8 @@ export class BaseService {
 
   /**
    * Deleta múltiplos registros
+   * @param {string[]} ids - Array de IDs
+   * @returns {Promise<number>} Quantidade deletada
    */
   async deleteMany(ids) {
     try {
@@ -165,7 +201,10 @@ export class BaseService {
   }
 
   /**
-   * Busca ou cria
+   * Busca ou cria registro
+   * @param {Object} data - Dados do registro
+   * @param {Object} options - Opções (where para busca)
+   * @returns {Promise<{item: Object, created: boolean}>} Registro e flag de criação
    */
   async findOrCreate(data, options = {}) {
     try {
@@ -183,6 +222,9 @@ export class BaseService {
 
   /**
    * Valida campos obrigatórios
+   * @param {Object} data - Dados a validar
+   * @param {string[]} requiredFields - Campos obrigatórios
+   * @throws {ApiError} VALIDATION_ERROR se falhar
    */
   validate(data, requiredFields) {
     const errors = [];
@@ -203,6 +245,8 @@ export class BaseService {
 
   /**
    * Parse do parâmetro sort
+   * @param {string} sortStr - String de ordenação
+   * @returns {Array<Array<string>>} Array de ordenação Sequelize
    */
   parseSort(sortStr) {
     if (!sortStr) return [['createdAt', 'DESC']];
@@ -219,7 +263,8 @@ export class BaseService {
   }
 
   /**
-   * Retorna estatísticas
+   * Retorna estatísticas do modelo
+   * @returns {Promise<{total: number, today: number}>} Estatísticas
    */
   async stats() {
     try {

@@ -1,0 +1,120 @@
+/* Mapa de Parceiro */
+.mapa-parceiro-container {
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid var(--cor-borda, #e0e0e0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.mapa-parceiro {
+  border-radius: 6px;
+  border: 2px solid #e5e7eb;
+  height: 280px;
+}
+
+.mapa-parceiro-coords {
+  padding: 0.75rem 1rem;
+  background-color: var(--cor-fundo-secundario, #f5f5f5);
+  border-top: 1px solid var(--cor-borda, #e0e0e0);
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.mapa-parceiro-vazio {
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f3f4f6;
+  border: 2px dashed #d1d5db;
+  border-radius: 6px;
+  color: #6b7280;
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.mapa-parceiro-vazio p {
+  margin: 0.5rem 0;
+}
+
+.mapa-parceiro-vazio p:first-of-type {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.mapa-parceiro-vazio p:last-of-type {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.mapa-parceiro-vazio strong {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Popup do Mapa */
+.mapa-parceiro-popup {
+  font-size: 0.9rem;
+}
+
+.mapa-parceiro-popup strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.mapa-parceiro-popup code {
+  font-size: 0.85rem;
+  color: #6b7280;
+  word-break: break-all;
+}
+
+/* Customizar Leaflet no dark mode */
+@media (prefers-color-scheme: dark) {
+  .mapa-parceiro {
+    border-color: #444;
+  }
+
+  .mapa-parceiro-vazio {
+    background: linear-gradient(135deg, #2a2a3e 0%, #1e1e2e 100%);
+    border-color: #444;
+    color: #bbb;
+  }
+
+  .mapa-parceiro-vazio p {
+    color: #bbb;
+  }
+
+  .mapa-parceiro-vazio p:first-of-type {
+    color: #bbb;
+  }
+
+  .mapa-parceiro-vazio p:last-of-type {
+    color: #999;
+  }
+
+  .mapa-parceiro-vazio strong {
+    color: #eee;
+  }
+
+  .mapa-parceiro-coords {
+    background-color: #2a2a3e;
+    border-color: #444;
+    color: #999;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mapa-parceiro-vazio {
+    height: 200px;
+    padding: 1.5rem 1rem;
+  }
+
+  .mapa-parceiro {
+    height: 200px !important;
+  }
+}

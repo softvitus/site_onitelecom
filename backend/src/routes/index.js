@@ -13,6 +13,7 @@ import { TextosController } from '../controllers/TextosController.js';
 import { ConteudoController } from '../controllers/ConteudoController.js';
 import { FeaturesController } from '../controllers/FeaturesController.js';
 import { ConfigTemaController } from '../controllers/ConfigTemaController.js';
+import { AuditoriaController } from '../controllers/AuditoriaController.js';
 import { AuthController } from '../controllers/AuthController.js';
 import { validate, schemas, validateTokenOnly } from '../middleware/index.js';
 import { authenticate, requirePermission } from '../middleware/index.js';
@@ -35,6 +36,7 @@ const textosController = new TextosController();
 const conteudoController = new ConteudoController();
 const featuresController = new FeaturesController();
 const configTemaController = new ConfigTemaController();
+const auditoriaController = new AuditoriaController();
 
 // ============================================================
 // ROTAS PÚBLICAS SEM AUTENTICAÇÃO
@@ -201,5 +203,24 @@ router.post('/config-temas', authenticate, requirePermission('tema_editar'), con
 router.get('/config-temas/:id', authenticate, requirePermission('tema_visualizar'), configTemaController.getById.bind(configTemaController));
 router.put('/config-temas/:id', authenticate, requirePermission('tema_editar'), configTemaController.update.bind(configTemaController));
 router.delete('/config-temas/:id', authenticate, requirePermission('tema_editar'), configTemaController.remove.bind(configTemaController));
+
+// ============================================================
+// ROTAS DE AUDITORIA (Requer permissão: auditoria_visualizar)
+// ============================================================
+
+// GET /auditoria - Lista logs de auditoria com filtros
+router.get('/auditoria', authenticate, requirePermission('auditoria_visualizar'), auditoriaController.listar.bind(auditoriaController));
+
+// GET /auditoria/estatisticas - Estatísticas dos logs
+router.get('/auditoria/estatisticas', authenticate, requirePermission('auditoria_visualizar'), auditoriaController.estatisticas.bind(auditoriaController));
+
+// GET /auditoria/usuario/:usuarioId - Logs de um usuário específico
+router.get('/auditoria/usuario/:usuarioId', authenticate, requirePermission('auditoria_visualizar'), auditoriaController.porUsuario.bind(auditoriaController));
+
+// GET /auditoria/entidade/:entidade/:entidadeId - Logs de uma entidade específica
+router.get('/auditoria/entidade/:entidade/:entidadeId', authenticate, requirePermission('auditoria_visualizar'), auditoriaController.porEntidade.bind(auditoriaController));
+
+// GET /auditoria/:id - Obtém um registro específico
+router.get('/auditoria/:id', authenticate, requirePermission('auditoria_visualizar'), auditoriaController.obter.bind(auditoriaController));
 
 export default router;

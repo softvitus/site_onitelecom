@@ -1,14 +1,21 @@
 /**
- * ComEleRel Service
- * Lógica para relacionamento Componente-Elemento
+ * @module services/ComEleRelService
+ * @description Serviço de gerenciamento de relacionamento Componente-Elemento
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
 
+/**
+ * Serviço de gerenciamento de Relacionamento Componente-Elemento
+ * @extends BaseService
+ */
 export class ComEleRelService extends BaseService {
   /**
    * Busca elementos de um componente
+   * @param {string} componenteId - ID do componente
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de relações
    */
   async findByComponenteId(componenteId, pagination = {}) {
     return this.findAll({ cer_com_id: componenteId }, pagination);
@@ -16,6 +23,9 @@ export class ComEleRelService extends BaseService {
 
   /**
    * Busca componentes que usam um elemento
+   * @param {string} elementoId - ID do elemento
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de relações
    */
   async findByElementoId(elementoId, pagination = {}) {
     return this.findAll({ cer_ele_id: elementoId }, pagination);
@@ -23,6 +33,11 @@ export class ComEleRelService extends BaseService {
 
   /**
    * Adiciona elemento ao componente
+   * @param {string} componenteId - ID do componente
+   * @param {string} elementoId - ID do elemento
+   * @param {number} posicao - Posição do elemento
+   * @returns {Promise<Object>} Relação criada
+   * @throws {ApiError} CONFLICT se já existir
    */
   async addElementToComponent(componenteId, elementoId, posicao = 0) {
     const existing = await this.model.findOne({
@@ -45,6 +60,9 @@ export class ComEleRelService extends BaseService {
 
   /**
    * Remove elemento do componente
+   * @param {string} componenteId - ID do componente
+   * @param {string} elementoId - ID do elemento
+   * @returns {Promise<number>} Número de registros removidos
    */
   async removeElementFromComponent(componenteId, elementoId) {
     return this.model.destroy({
@@ -57,6 +75,9 @@ export class ComEleRelService extends BaseService {
 
   /**
    * Reordena elementos no componente
+   * @param {string} componenteId - ID do componente
+   * @param {string[]} order - Array de IDs na ordem desejada
+   * @returns {Promise<boolean>} True se sucesso
    */
   async reorderElements(componenteId, order) {
     for (let i = 0; i < order.length; i++) {
@@ -65,3 +86,5 @@ export class ComEleRelService extends BaseService {
     return true;
   }
 }
+
+export default ComEleRelService;

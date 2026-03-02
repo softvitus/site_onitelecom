@@ -1,6 +1,6 @@
 /**
- * Query Builder
- * Helper para construir queries complexas do Sequelize
+ * @module utils/QueryBuilder
+ * @description Helper para construir queries complexas do Sequelize
  */
 
 import { Op } from 'sequelize';

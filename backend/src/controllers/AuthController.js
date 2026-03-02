@@ -1,13 +1,13 @@
 /**
- * Authentication Controller
- * Gerencia login, logout e operações de autenticação
+ * @module controllers/AuthController
+ * @description Controller de autenticação (login, logout, tokens)
  */
-
 
 import jwt from 'jsonwebtoken';
 import { getModels } from '../models/loader.js';
 import { UsuarioService } from '../services/UsuarioService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { AuditoriaService } from '../services/AuditoriaService.js';
+import { ApiError } from '../utils/ErrorCodes.js';
 
 export class AuthController {
   constructor() {
@@ -37,6 +37,23 @@ export class AuthController {
       // Autenticar usuário
       const usuario = await this.usuarioService.autenticar(email, senha);
 
+      // Registrar auditoria de login bem-sucedido
+      await AuditoriaService.registrar({
+        usuarioId: usuario.usu_id,
+        acao: 'login',
+        entidade: 'auth',
+        entidadeId: null,
+        dadosAnteriores: null,
+        dadosNovos: {
+          email: usuario.usu_email,
+          tipo: usuario.usu_tipo,
+        },
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'sucesso',
+        mensagemErro: null,
+      });
+
       // Gerar token JWT
       const token = jwt.sign(
         {
@@ -62,6 +79,21 @@ export class AuthController {
         },
       });
     } catch (error) {
+      // Registrar auditoria de login falhado
+      const email = req.body?.email || 'desconhecido';
+      await AuditoriaService.registrar({
+        usuarioId: null,
+        acao: 'login',
+        entidade: 'auth',
+        entidadeId: null,
+        dadosAnteriores: null,
+        dadosNovos: { email },
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'erro',
+        mensagemErro: error.message || 'Erro ao fazer login',
+      });
+      
       next(error);
     }
   }
@@ -72,6 +104,25 @@ export class AuthController {
    */
   async logout(req, res, next) {
     try {
+      // Registrar auditoria de logout
+      if (req.user) {
+        await AuditoriaService.registrar({
+          usuarioId: req.user.id,
+          acao: 'logout',
+          entidade: 'auth',
+          entidadeId: null,
+          dadosAnteriores: null,
+          dadosNovos: {
+            email: req.user.email,
+            tipo: req.user.tipo,
+          },
+          ip: req.ip || req.connection.remoteAddress,
+          userAgent: req.get('user-agent'),
+          status: 'sucesso',
+          mensagemErro: null,
+        });
+      }
+
       // JWT é stateless, então o logout é principalmente no frontend
       // Poderia implementar blacklist se necessário
       res.json({
@@ -255,11 +306,47 @@ export class AuthController {
       // Alterar senha
       await this.usuarioService.alterarSenha(usuarioId, senhaAtual, senhaNova);
 
+      // Registrar auditoria de mudança de senha
+      await AuditoriaService.registrar({
+        usuarioId,
+        acao: 'alterar_senha',
+        entidade: 'auth',
+        entidadeId: null,
+        dadosAnteriores: null,
+        dadosNovos: {
+          email: req.user.email,
+          tipo: req.user.tipo,
+        },
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'sucesso',
+        mensagemErro: null,
+      });
+
       res.json({
         success: true,
         message: 'Senha alterada com sucesso',
       });
     } catch (error) {
+      // Registrar auditoria de falha ao alterar senha
+      const usuarioId = req.user?.id;
+      if (usuarioId) {
+        await AuditoriaService.registrar({
+          usuarioId,
+          acao: 'alterar_senha',
+          entidade: 'auth',
+          entidadeId: null,
+          dadosAnteriores: null,
+          dadosNovos: {
+            email: req.user.email,
+            tipo: req.user.tipo,
+          },
+          ip: req.ip || req.connection.remoteAddress,
+          userAgent: req.get('user-agent'),
+          status: 'erro',
+          mensagemErro: error.message || 'Erro ao alterar senha',
+        });
+      }
       next(error);
     }
   }
@@ -293,4 +380,7 @@ export class AuthController {
   }
 }
 
+export default AuthController;
 
+// Instância do controller
+export const authController = new AuthController();

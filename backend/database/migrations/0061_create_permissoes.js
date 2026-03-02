@@ -27,13 +27,14 @@ export default {
           'elemento',
           'usuario',
           'parceiro',
-          'relatorios'
+          'relatorios',
+          'auditoria'
         ),
         allowNull: false,
         comment: 'Módulo relacionado',
       },
       perm_acao: {
-        type: Sequelize.ENUM('criar', 'listar', 'editar', 'deletar', 'visualizar'),
+        type: Sequelize.ENUM('criar', 'listar', 'editar', 'deletar', 'visualizar', 'exportar', 'estatisticas', 'filtrar'),
         allowNull: false,
         comment: 'Ação realizada',
       },

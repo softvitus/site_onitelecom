@@ -15,6 +15,7 @@ import createConfigTemaModel from './ConfigTema.js';
 import createUsuarioModel from './Usuario.js';
 import createPermissaoModel from './Permissao.js';
 import createRolePermissaoModel from './RolePermissao.js';
+import createAuditoriaModel from './Auditoria.js';
 
 /**
  * Inicializa todos os modelos com a instância do sequelize
@@ -37,6 +38,7 @@ export function loadModels(sequelize) {
   const Usuario = createUsuarioModel(sequelize);
   const Permissao = createPermissaoModel(sequelize);
   const RolePermissao = createRolePermissaoModel(sequelize);
+  const Auditoria = createAuditoriaModel(sequelize);
 
   const models = {
     Parceiro,
@@ -56,6 +58,7 @@ export function loadModels(sequelize) {
     Usuario,
     Permissao,
     RolePermissao,
+    Auditoria,
   };
 
   // Define all associations
@@ -86,4 +89,5 @@ export {
   createUsuarioModel,
   createPermissaoModel,
   createRolePermissaoModel,
+  createAuditoriaModel,
 };

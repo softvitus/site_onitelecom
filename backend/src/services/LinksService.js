@@ -1,14 +1,27 @@
 /**
- * Links Service
- * Lógica de negócio para links/referências
+ * @module services/LinksService
+ * @description Serviço de gerenciamento de links
  */
 
 import { BaseService } from './BaseService.js';
-import { ApiError, ERROR_CODES } from '../utils/ErrorCodes.js';
+import { ApiError } from '../utils/ErrorCodes.js';
 
+/**
+ * Serviço de gerenciamento de Links
+ * @extends BaseService
+ */
 export class LinksService extends BaseService {
   /**
+   * Tipos de link válidos
+   * @type {string[]}
+   */
+  static VALID_TYPES = ['social', 'externo', 'interno', 'email', 'telefone', 'download'];
+
+  /**
    * Busca links de um tema
+   * @param {string} temaId - ID do tema
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de links
    */
   async findByTemaId(temaId, pagination = {}) {
     return this.findAll({ lin_tem_id: temaId }, pagination);
@@ -16,13 +29,19 @@ export class LinksService extends BaseService {
 
   /**
    * Busca links de uma página
+   * @param {string} paginaId - ID da página
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de links
    */
   async findByPaginaId(paginaId, pagination = {}) {
     return this.findAll({ lin_pag_id: paginaId }, pagination);
   }
 
   /**
-   * Busca link por tipo
+   * Busca links por tipo
+   * @param {string} type - Tipo do link
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de links
    */
   async findByType(type, pagination = {}) {
     return this.findAll({ lin_tipo: type }, pagination);
@@ -30,6 +49,8 @@ export class LinksService extends BaseService {
 
   /**
    * Valida URL
+   * @param {string} url - URL a validar
+   * @returns {boolean} True se válida
    */
   validateUrl(url) {
     try {
@@ -41,37 +62,36 @@ export class LinksService extends BaseService {
   }
 
   /**
-   * Tipos de links suportados
+   * Retorna tipos de link válidos
+   * @returns {string[]} Lista de tipos
    */
   getValidTypes() {
-    return [
-      'social',
-      'externo',
-      'interno',
-      'email',
-      'telefone',
-      'download',
-    ];
+    return LinksService.VALID_TYPES;
   }
 
   /**
    * Valida tipo de link
+   * @param {string} type - Tipo a validar
+   * @returns {boolean} True se válido
    */
   validateType(type) {
-    return this.getValidTypes().includes(type);
+    return LinksService.VALID_TYPES.includes(type);
   }
 
   /**
    * Cria link com validação
+   * @param {Object} data - Dados do link
+   * @returns {Promise<Object>} Link criado
+   * @throws {ApiError} VALIDATION_ERROR se dados inválidos
    */
   async createValidated(data) {
     if (!this.validateType(data.lin_tipo)) {
-      throw new ApiError('INVALID', 'Tipo de link inválido');
+      throw new ApiError('VALIDATION_ERROR', 'Tipo de link inválido');
     }
 
     if (data.lin_tipo !== 'email' && data.lin_tipo !== 'telefone') {
       if (!this.validateUrl(data.lin_url)) {
-        throw new ApiError('INVALID', 'URL inválida');
+        throw new ApiError('VALIDATION_ERROR', 'URL inválida');
       }
     }
 
@@ -80,8 +100,12 @@ export class LinksService extends BaseService {
 
   /**
    * Lista links sociais
+   * @param {Object} pagination - Opções de paginação
+   * @returns {Promise<Object>} Lista paginada de links sociais
    */
   async findSocialLinks(pagination = {}) {
     return this.findByType('social', pagination);
   }
 }
+
+export default LinksService;

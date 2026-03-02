@@ -1,10 +1,12 @@
+/**
+ * @module controllers/TemaController
+ * @description Controller de gerenciamento de temas
+ */
 
 import { TemaService } from '../services/index.js';
+import { AuditoriaService } from '../services/AuditoriaService.js';
 import { getModels } from '../models/loader.js';
 
-/**
- * TemaController - Refatorado para usar Service Layer
- */
 export class TemaController {
   constructor() {
     const models = getModels();
@@ -67,11 +69,38 @@ export class TemaController {
     try {
       const item = await this.service.create(req.body);
 
+      // Registrar auditoria de criação
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'criar',
+        entidade: 'tema',
+        entidadeId: item.tem_id,
+        dadosAnteriores: null,
+        dadosNovos: item.toJSON(),
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'sucesso',
+        mensagemErro: null,
+      });
+
       return res.status(201).json({
         success: true,
         data: item,
       });
     } catch (error) {
+      // Registrar auditoria de erro na criação
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'criar',
+        entidade: 'tema',
+        entidadeId: null,
+        dadosAnteriores: null,
+        dadosNovos: req.body,
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'erro',
+        mensagemErro: error.message || 'Erro ao criar tema',
+      });
       next(error);
     }
   }
@@ -83,6 +112,7 @@ export class TemaController {
   async update(req, res, next) {
     try {
       const { id } = req.params;
+      const itemAnterior = await this.service.findById(id);
       const item = await this.service.update(id, req.body);
 
       if (!item) {
@@ -92,11 +122,39 @@ export class TemaController {
         });
       }
 
+      // Registrar auditoria de atualização
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'atualizar',
+        entidade: 'tema',
+        entidadeId: id,
+        dadosAnteriores: itemAnterior ? itemAnterior.toJSON() : null,
+        dadosNovos: item.toJSON(),
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'sucesso',
+        mensagemErro: null,
+      });
+
       return res.json({
         success: true,
         data: item,
       });
     } catch (error) {
+      // Registrar auditoria de erro na atualização
+      const { id } = req.params;
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'atualizar',
+        entidade: 'tema',
+        entidadeId: id,
+        dadosAnteriores: null,
+        dadosNovos: req.body,
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'erro',
+        mensagemErro: error.message || 'Erro ao atualizar tema',
+      });
       next(error);
     }
   }
@@ -108,6 +166,7 @@ export class TemaController {
   async remove(req, res, next) {
     try {
       const { id } = req.params;
+      const itemAnterior = await this.service.findById(id);
       const success = await this.service.delete(id);
 
       if (!success) {
@@ -117,15 +176,44 @@ export class TemaController {
         });
       }
 
+      // Registrar auditoria de deleção
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'deletar',
+        entidade: 'tema',
+        entidadeId: id,
+        dadosAnteriores: itemAnterior ? itemAnterior.toJSON() : null,
+        dadosNovos: null,
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'sucesso',
+        mensagemErro: null,
+      });
+
       return res.status(204).end();
     } catch (error) {
+      // Registrar auditoria de erro na deleção
+      const { id } = req.params;
+      await AuditoriaService.registrar({
+        usuarioId: req.user?.id,
+        acao: 'deletar',
+        entidade: 'tema',
+        entidadeId: id,
+        dadosAnteriores: null,
+        dadosNovos: null,
+        ip: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('user-agent'),
+        status: 'erro',
+        mensagemErro: error.message || 'Erro ao deletar tema',
+      });
       next(error);
     }
   }
 }
 
+export default TemaController;
 
-// Instancia o controller
+// Instância do controller
 export const temaController = new TemaController();
 // Exporta métodos para compatibilidade com versão anterior
 export const getAll = (req, res, next) => temaController.getAll(req, res, next);

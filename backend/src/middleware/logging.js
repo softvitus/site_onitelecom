@@ -1,6 +1,6 @@
 /**
- * Request Logging Middleware
- * Registra informações sobre requisições
+ * @module middleware/logging
+ * @description Middleware de logging - registra informações sobre requisições
  */
 
 /**

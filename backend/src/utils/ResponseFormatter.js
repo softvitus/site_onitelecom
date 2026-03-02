@@ -1,6 +1,6 @@
 /**
- * Response Formatter
- * Padroniza respostas da API
+ * @module utils/ResponseFormatter
+ * @description Padroniza respostas da API
  */
 
 export class ResponseFormatter {

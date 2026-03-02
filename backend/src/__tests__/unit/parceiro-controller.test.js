@@ -21,6 +21,20 @@ jest.mock('../../models/loader.js', () => ({
   getModels: jest.fn(() => ({})),
 }));
 
+// Mock AuditoriaService para evitar import.meta
+jest.mock('../../services/AuditoriaService.js', () => ({
+  AuditoriaService: {
+    registrar: jest.fn().mockResolvedValue({}),
+    sanitizarDados: jest.fn((d) => d),
+  },
+}));
+
+// Mock config/sequelize para evitar import.meta
+jest.mock('../../config/sequelize.js', () => ({
+  default: {},
+  sequelize: {},
+}));
+
 import request from 'supertest';
 import { ParceiroController } from '../../controllers/ParceiroController.js';
 
@@ -30,6 +44,12 @@ describe('ParceiroController - Unit Tests', () => {
   let mockRes;
   let mockReq;
   let mockNext;
+
+  // Helper para criar objetos com toJSON
+  const createMockModel = (data) => ({
+    ...data,
+    toJSON: () => data,
+  });
 
   beforeEach(() => {
     // Mock do serviço
@@ -57,6 +77,9 @@ describe('ParceiroController - Unit Tests', () => {
       query: {},
       body: {},
       user: { usr_id: '1', usr_role: 'admin' },
+      connection: { remoteAddress: '127.0.0.1' },
+      ip: '127.0.0.1',
+      get: jest.fn().mockReturnValue('test-user-agent'),
     };
 
     mockNext = jest.fn();
@@ -204,11 +227,14 @@ describe('ParceiroController - Unit Tests', () => {
   describe('update - PUT /api/parceiros/:id', () => {
     it('deve atualizar parceiro existente', async () => {
       const updateData = { par_nome: 'Nome Atualizado' };
-      const updated = {
+      const updatedData = {
         par_id: '123',
         ...updateData,
       };
+      const updated = createMockModel(updatedData);
+      const anterior = createMockModel({ par_id: '123', par_nome: 'Original' });
 
+      mockService.findById.mockResolvedValue(anterior);
       mockService.update.mockResolvedValue(updated);
       mockReq.params = { id: '123' };
       mockReq.body = updateData;
@@ -222,6 +248,7 @@ describe('ParceiroController - Unit Tests', () => {
     });
 
     it('deve retornar 404 se parceiro não existe', async () => {
+      mockService.findById.mockResolvedValue(null);
       mockService.update.mockResolvedValue(null);
       mockReq.params = { id: 'inexistente' };
       mockReq.body = {};
@@ -236,7 +263,10 @@ describe('ParceiroController - Unit Tests', () => {
     });
 
     it('deve chamar service.update com id e dados', async () => {
-      mockService.update.mockResolvedValue({ par_id: '123' });
+      const anterior = createMockModel({ par_id: '123', par_nome: 'Original' });
+      const updated = createMockModel({ par_id: '123', par_nome: 'Novo Nome' });
+      mockService.findById.mockResolvedValue(anterior);
+      mockService.update.mockResolvedValue(updated);
       mockReq.params = { id: '123' };
       mockReq.body = { par_nome: 'Novo Nome' };
 
@@ -247,6 +277,7 @@ describe('ParceiroController - Unit Tests', () => {
 
     it('deve chamar next com erro quando serviço falha', async () => {
       const error = new Error('Update error');
+      mockService.findById.mockResolvedValue(createMockModel({ par_id: '123' }));
       mockService.update.mockRejectedValue(error);
       mockReq.params = { id: '123' };
 
@@ -337,7 +368,7 @@ describe('ParceiroController - Unit Tests', () => {
         par_cidade: 'SP',
       };
 
-      mockService.create.mockResolvedValue({ par_id: '1', ...originalBody });
+      mockService.create.mockResolvedValue(createMockModel({ par_id: '1', ...originalBody }));
       mockReq.body = { ...originalBody };
 
       await controller.create(mockReq, mockRes, mockNext);

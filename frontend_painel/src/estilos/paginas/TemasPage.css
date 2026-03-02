@@ -1,0 +1,246 @@
+/**
+ * Estilos para TemasPage
+ * Reutiliza padrões de design do sistema
+ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.temas-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* =========================================================================
+   HEADER
+   ========================================================================= */
+
+.temas-header {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  border-radius: 10px;
+  padding: 2rem;
+  color: white;
+  box-shadow: 0 4px 16px rgba(13, 110, 253, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.temas-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.temas-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  gap: 2rem;
+}
+
+.temas-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.temas-header p {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.temas-btn-criar {
+  background: white;
+  color: #0d6efd;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.temas-btn-criar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.temas-btn-criar:active {
+  transform: translateY(0);
+}
+
+/* =========================================================================
+   ALERTA
+   ========================================================================= */
+
+.temas-alert {
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: slideDown 0.3s ease-out;
+  font-weight: 500;
+  border-left: 4px solid;
+}
+
+.temas-alert.sucesso {
+  background-color: #dcfce7;
+  color: #166534;
+  border-left-color: #198754;
+}
+
+.temas-alert.erro {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-left-color: #dc2626;
+}
+
+.temas-alert.aviso {
+  background-color: #fef08a;
+  color: #78350f;
+  border-left-color: #eab308;
+}
+
+.temas-alert.info {
+  background-color: #dbeafe;
+  color: #0c4a6e;
+  border-left-color: #0d6efd;
+}
+
+/* =========================================================================
+   FILTRO
+   ========================================================================= */
+
+.temas-filtro-input {
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  width: 100%;
+  max-width: 300px;
+  transition: all 0.2s ease;
+  margin-bottom: 1rem;
+}
+
+.temas-filtro-input:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+/* =========================================================================
+   GRID - AÇÕES
+   ========================================================================= */
+
+.temas-actions-group {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.temas-btn-action {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.temas-btn-action:hover {
+  transform: translateY(-1px);
+}
+
+.temas-btn-action-edit {
+  background: #dbeafe;
+  color: #0369a1;
+}
+
+.temas-btn-action-edit:hover {
+  background: #bfdbfe;
+}
+
+.temas-btn-action-delete {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.temas-btn-action-delete:hover {
+  background: #fecaca;
+}
+
+/* =========================================================================
+   RESPONSIVO
+   ========================================================================= */
+
+@media (max-width: 768px) {
+  .temas-page {
+    gap: 1.5rem;
+  }
+
+  .temas-header {
+    padding: 1.5rem;
+  }
+
+  .temas-header-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .temas-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .temas-btn-criar {
+    justify-content: center;
+  }
+}
