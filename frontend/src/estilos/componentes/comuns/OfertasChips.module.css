@@ -1,0 +1,168 @@
+.ofertas-container {
+  max-width: 1600px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.title {
+  text-align: center;
+  color: var(--color-primary-main);
+  margin-bottom: 20px;
+  font-size: 2.8em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slogan {
+  text-align: center;
+  color: var(--color-secondary-blue);
+  font-size: 1.5em;
+  margin-bottom: 40px;
+  font-style: italic;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.cardschip {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--box-shadow-lg);
+  padding: 30px;
+  transition: var(--transition-normal);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.cardschip::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  height: 10px;
+  background: var(--gradient-purple-primary);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.cardschip:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--box-shadow-purple-md);
+}
+
+.cardschip h3 {
+  color: var(--color-secondary-blue);
+  margin-top: 0;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.cardschip-content p {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  color: var(--color-neutral-text);
+}
+
+.cardschip-content svg {
+  margin-right: 10px;
+  color: var(--color-primary-main);
+}
+
+.preco {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: var(--color-secondary-blue);
+  margin-top: 20px;
+}
+
+.contratar-btn {
+  background: var(--gradient-purple-primary);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 20px;
+  text-transform: uppercase;
+}
+
+.contratar-btn:hover {
+  transform: scale(1.05);
+  box-shadow: var(--box-shadow-md);
+}
+
+.destaque {
+  position: absolute;
+  top: 20px;
+  right: -35px;
+  background: var(--color-status-warning);
+  color: white;
+  padding: 3px 45px;
+  transform: rotate(45deg);
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.streamer-offer {
+  width: 50px;
+  height: 50px;
+  margin: 0 5px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.streamer-offer:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.streamer-offer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.streamer-offer:hover img {
+  transform: scale(1.1);
+}
+
+.streamer-offer::after {
+  content: 'Oferta Streamer';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 8px;
+  padding: 2px;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.streamer-offer:hover::after {
+  transform: translateY(0);
+}

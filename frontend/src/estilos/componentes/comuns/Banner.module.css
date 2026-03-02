@@ -1,0 +1,135 @@
+.secao-banner {
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('https://via.placeholder.com/1920x600') no-repeat center center;
+  background-size: cover;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.secao-banner:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-purple-primary);
+  opacity: 0.4;
+  z-index: 1;
+}
+
+.bolinhas-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 2px, transparent 2px);
+  background-size: 50px 50px;
+  z-index: 2;
+  animation: moverBolinhas 15s linear infinite;
+}
+
+.bolinhas-banner:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+  background-size: 30px 30px;
+  background-position: 15px 15px;
+  z-index: 2;
+  animation: moverBolinhas 12s linear infinite reverse;
+}
+
+@keyframes moverBolinhas {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 100px 100px;
+  }
+}
+
+.secao-banner :global(.container) {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.secao-banner h1 {
+  font-weight: 800;
+  margin-bottom: 25px;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.secao-banner p {
+  font-size: 1.5rem;
+  margin-bottom: 35px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.botao-oni {
+  background: var(--gradient-purple-primary);
+  color: white;
+  padding: 12px 28px;
+  font-weight: 600;
+  transition: var(--transition-normal);
+  border: none;
+  box-shadow: var(--shadow-medium);
+}
+
+.botao-oni:hover {
+  background: var(--gradient-purple-hover);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-large);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  .secao-banner {
+    height: auto;
+    min-height: 70vh;
+    padding: 50px 0;
+  }
+
+  .secao-banner h1 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+  }
+
+  .secao-banner p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+
+  .botao-oni {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .secao-banner h1 {
+    font-size: 1.8rem;
+  }
+
+  .secao-banner p {
+    font-size: 1rem;
+  }
+}

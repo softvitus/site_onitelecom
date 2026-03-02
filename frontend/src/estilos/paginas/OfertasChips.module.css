@@ -1,0 +1,10 @@
+.mainContent {
+  position: relative;
+  background: var(--gradient-purple-deep);
+  overflow: hidden;
+}
+
+.faixa {
+  background-color: var(--color-neutral-background);
+  padding: 1px 0;
+}

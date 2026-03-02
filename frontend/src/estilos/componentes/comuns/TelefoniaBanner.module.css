@@ -1,0 +1,134 @@
+.banner-container {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  background-color: var(--color-neutral-background);
+  overflow: hidden;
+  display: flex;
+  padding: 40px 20px;
+  flex-direction: row;
+}
+
+.banner-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: var(--transition-normal);
+}
+
+.banner-container:hover .banner-image {
+  transform: scale(1.05);
+}
+
+.overlay-content {
+  position: relative;
+  /* Mudado de absolute para relative */
+  z-index: 1;
+  max-width: 450px;
+  width: 100%;
+}
+
+.card-custom {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  padding: 25px;
+  box-shadow: var(--box-shadow-lg);
+  margin-bottom: 20px;
+  transition: var(--transition-normal);
+}
+
+.card-custom:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--box-shadow-purple-md);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: var(--color-neutral-dark);
+}
+
+.card-text {
+  color: var(--color-neutral-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.btn-custom {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: var(--radius-xl);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: var(--transition-normal);
+  text-decoration: none;
+  text-align: center;
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: var(--color-secondary-blue);
+  color: var(--color-neutral-white);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-secondary-blue-dark);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-secondary-blue);
+  border: 2px solid var(--color-secondary-blue);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-blue);
+  color: var(--color-neutral-white);
+}
+
+.icon {
+  margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .banner-container {
+    padding: 30px 15px;
+  }
+
+  .banner-image {
+    opacity: 0.2;
+    /* Reduzir a opacidade para melhor legibilidade em telas menores */
+  }
+
+  .overlay-content {
+    max-width: 100%;
+  }
+
+  .card-custom {
+    background-color: rgba(255, 255, 255, 0.98);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-custom {
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .btn-custom {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}

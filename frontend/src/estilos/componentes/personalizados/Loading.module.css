@@ -1,0 +1,305 @@
+/* ============================================================================
+ * Loading Screen - Profissional e Minimalista
+ * ============================================================================
+ * Tela de carregamento fullscreen com suporte a tema dinâmico.
+ * Usa CSS Variables globais aplicadas em :root pelo initTemaEarly().
+ * Formato: --color-{categoria}-{nome} (ex: --color-primaria-Roxo Principal)
+ * ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
+
+/* ===== CONTAINER PRINCIPAL ===== */
+.loadingContainer {
+  /* Usa variáveis CSS globais (aplicadas em :root por initTemaEarly) */
+  /* Formato: --color-{categoria}-{nome-kebab-case} */
+  --loading-primary: var(--color-primaria-roxo-principal, #8a1ce5);
+  --loading-primary-dark: var(--color-primaria-roxo-escuro, #4a00e0);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--color-neutral-white) 0%, var(--color-neutral-50) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeInIn 0.5s ease-out;
+  overflow: hidden;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
+
+/* Padrão sutil de fundo */
+.loadingContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+@keyframes fadeInIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.loadingContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+}
+
+/* ===== LOGO DO PARCEIRO ===== */
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInBrand 0.6s ease-out both;
+}
+
+.logo {
+  max-width: 200px;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* ===== SPINNER MINIMALISTA ===== */
+.spinnerContainer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+}
+
+.spinner {
+  width: 5px;
+  height: 40px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--loading-primary), var(--loading-primary-dark));
+  animation: spinnerPulse 1.4s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+.spinner:nth-child(1) {
+  animation-delay: -0.8s;
+  height: 25px;
+}
+
+.spinner:nth-child(2) {
+  animation-delay: -0.6s;
+  height: 35px;
+}
+
+.spinner:nth-child(3) {
+  animation-delay: -0.4s;
+  height: 40px;
+}
+
+.spinner:nth-child(4) {
+  animation-delay: -0.2s;
+  height: 38px;
+}
+
+.spinner:nth-child(5) {
+  animation-delay: 0s;
+  height: 30px;
+}
+
+@keyframes spinnerPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    height: 25px;
+  }
+  50% {
+    opacity: 1;
+    height: 40px;
+  }
+}
+
+/* ===== BRANDING E TEXTO ===== */
+.brandSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: fadeInBrand 0.8s ease-out 0.2s both;
+}
+
+.brandName {
+  margin: 0;
+  padding: 0;
+}
+
+.brand {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  color: var(--color-neutral-900);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.loadingText {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-neutral-500);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.2px;
+  animation: dotPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%,
+  20% {
+    content: 'Carregando';
+  }
+  33% {
+    content: 'Carregando.';
+  }
+  66% {
+    content: 'Carregando..';
+  }
+  100% {
+    content: 'Carregando...';
+  }
+}
+
+@keyframes fadeInBrand {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+  .loadingContent {
+    gap: 28px;
+  }
+
+  .logo {
+    max-width: 160px;
+    max-height: 60px;
+  }
+
+  .spinnerContainer {
+    height: 50px;
+  }
+
+  .spinner {
+    width: 4px;
+    height: 32px;
+  }
+
+  .spinner:nth-child(1) {
+    height: 18px;
+  }
+
+  .spinner:nth-child(2) {
+    height: 28px;
+  }
+
+  .spinner:nth-child(3) {
+    height: 32px;
+  }
+
+  .spinner:nth-child(4) {
+    height: 30px;
+  }
+
+  .spinner:nth-child(5) {
+    height: 24px;
+  }
+
+  .brand {
+    font-size: 1.75rem;
+    letter-spacing: -0.6px;
+  }
+
+  .loadingText {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .loadingContent {
+    gap: 24px;
+    padding: 15px;
+  }
+
+  .logo {
+    max-width: 120px;
+    max-height: 50px;
+  }
+
+  .spinnerContainer {
+    gap: 6px;
+    height: 45px;
+  }
+
+  .spinner {
+    width: 3px;
+    height: 28px;
+  }
+
+  .spinner:nth-child(1) {
+    height: 16px;
+  }
+
+  .spinner:nth-child(2) {
+    height: 24px;
+  }
+
+  .spinner:nth-child(3) {
+    height: 28px;
+  }
+
+  .spinner:nth-child(4) {
+    height: 26px;
+  }
+
+  .spinner:nth-child(5) {
+    height: 20px;
+  }
+
+  .brand {
+    font-size: 1.4rem;
+    letter-spacing: -0.4px;
+  }
+
+  .loadingText {
+    font-size: 0.85rem;
+  }
+}

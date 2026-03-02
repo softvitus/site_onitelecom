@@ -1,0 +1,67 @@
+# ================================
+# Docker Ignore - Frontend React
+# ================================
+
+# Dependencies (IMPORTANTE - reduz contexto drasticamente)
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output (será gerado dentro do container)
+build
+dist
+.next
+out
+
+# Git
+.git
+.gitignore
+
+# Environment files (variáveis vêm do docker-compose)
+.env
+.env.local
+.env.development
+.env.*.local
+# .env.production é permitido para o build
+
+# IDE / Editor
+.vscode
+.idea
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Tests (não necessários para build de produção)
+**/__tests__
+**/*.test.js
+**/*.test.jsx
+**/*.spec.js
+**/*.spec.jsx
+coverage
+jest.config.js
+setupTests.js
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Docker files (não precisam entrar no contexto de build)
+docker/Dockerfile
+docker/docker-compose.yml
+docker/.dockerignore
+docker-compose*.yml
+Dockerfile*
+
+# Cache e Logs
+.eslintcache
+.cache
+*.log
+*.tsbuildinfo
+
+# Temporários
+tmp/
+temp/
+*.tmp

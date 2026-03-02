@@ -1,0 +1,165 @@
+.secaoPrincipal {
+  padding: 40px 20px;
+  background-color: var(--color-neutral-background);
+  color: var(--color-neutral-text);
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.conteudoPrincipal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.textoContainer {
+  max-width: 600px;
+}
+
+.tituloPrincipal {
+  color: var(--color-secondary-blue);
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.descricaoPrincipal {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.destaque {
+  color: var(--color-primary-main);
+  font-weight: 600;
+}
+
+.botaoAcao {
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin: 30px auto 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: var(--color-primary-main);
+  color: var(--color-neutral-white);
+  padding: 15px 25px;
+  border: none;
+  border-radius: 30px;
+  transition: var(--transition-normal);
+  cursor: pointer;
+}
+
+.botaoAcao:hover {
+  background-color: var(--color-secondary-blue);
+}
+
+.wrapperImagem {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.wrapperImagem img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0);
+}
+
+.secaoInfo {
+  margin-top: 40px;
+  background-color: var(--color-secondary-blue-light);
+  padding: 30px 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.infoBox h3 {
+  color: var(--color-secondary-blue);
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.infoBox ul {
+  list-style: none;
+  padding: 0;
+}
+
+.infoBox ul li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  position: relative;
+  padding-left: 25px;
+}
+
+.infoBox ul li::before {
+  content: '✔';
+  color: var(--color-primary-main);
+  position: absolute;
+  left: 0;
+}
+
+@media (min-width: 768px) {
+  .secaoPrincipal {
+    padding: 60px 30px;
+  }
+
+  .conteudoPrincipal {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .textoContainer {
+    flex: 1;
+    max-width: none;
+  }
+
+  .tituloPrincipal,
+  .descricaoPrincipal {
+    text-align: left;
+  }
+
+  .botaoAcao {
+    margin: 30px 0 0;
+  }
+
+  .wrapperImagem {
+    flex: 1;
+    max-width: none;
+  }
+
+  .infoContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .infoBox {
+    flex: 1;
+    max-width: 48%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tituloPrincipal {
+    font-size: 2.5rem;
+  }
+
+  .descricaoPrincipal {
+    font-size: 1.1rem;
+  }
+}

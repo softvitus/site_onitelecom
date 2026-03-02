@@ -1,0 +1,129 @@
+.oni-theme-variables {
+  --primary-color: var(--color-secondary-blue);
+  --text-color: var(--color-neutral-black);
+  --header-font-size: 30px;
+  --title-font-size: 55px;
+  --highlight-font-size: 48px;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.banner-logo img {
+  width: 200%;
+  transition: var(--transition-normal);
+  margin: 0 auto;
+  display: block;
+}
+
+.img-fluid {
+  max-width: 200%;
+  height: auto;
+}
+
+.banner-logo img:hover {
+  transform: scale(1.1);
+}
+
+.banner-text {
+  font-size: var(--header-font-size);
+  color: var(--text-color);
+  text-align: center;
+}
+
+.banner-text a {
+  text-decoration: none;
+  color: var(--text-color);
+  transition: var(--transition-normal);
+}
+
+.banner-text a:hover {
+  color: var(--primary-color);
+}
+
+.banner-text a strong {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.image-container {
+  text-align: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  transition: var(--transition-normal);
+}
+
+.image-container img:hover {
+  transform: scale(1.05);
+}
+
+.text-content {
+  text-align: center;
+}
+
+.text-content h1 {
+  font-size: var(--title-font-size);
+  color: var(--text-color);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  font-size: var(--highlight-font-size);
+  font-weight: bold;
+  color: var(--primary-color);
+  line-height: 1.2;
+}
+
+.controls {
+  animation: moveIcons 2s infinite ease-in-out;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.controls img {
+  width: 40px;
+  height: 40px;
+  transition: var(--transition-normal);
+}
+
+.controls img:hover {
+  transform: scale(1.2);
+}
+
+@keyframes moveIcons {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .oni-theme-variables {
+    --header-font-size: 25px;
+    --title-font-size: 32px;
+    --highlight-font-size: 36px;
+  }
+
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .banner-logo img {
+    width: 150%;
+  }
+
+  .controls img {
+    width: 30px;
+    height: 30px;
+  }
+}

@@ -1,0 +1,142 @@
+.secao {
+  padding: 6rem 0;
+}
+
+.texto-oni-azul {
+  color: var(--color-secondary-blue);
+}
+
+.fundo-claro {
+  background-color: var(--color-neutral-background) !important;
+}
+
+.grade-servicos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.cartao {
+  border: none;
+  box-shadow: var(--box-shadow-md);
+  transition: var(--transition-slow);
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cartao:hover {
+  transform: translateY(-15px);
+  box-shadow: var(--box-shadow-lg);
+}
+
+.cartao:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--gradient-purple-primary);
+}
+
+.corpo-cartao {
+  padding: 2.5rem 2rem;
+}
+
+/* Correção para os ícones com gradiente */
+.icone-wrapper {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-purple-primary);
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  transition: var(--transition-normal);
+}
+
+.icone-cartao {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.cartao:hover .icone-wrapper {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.titulo-cartao {
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: var(--color-secondary-blue);
+  font-size: 1.6rem;
+}
+
+.cartao ul {
+  margin: 1.5rem 0;
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.cartao ul li {
+  margin-bottom: 0.8rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.cartao ul li:before {
+  content: '✓';
+  color: var(--color-primary-main);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.botao-oni {
+  background: var(--gradient-purple-primary);
+  color: white;
+  padding: 12px 28px;
+  font-weight: 600;
+  transition: var(--transition-normal);
+  border: none;
+  box-shadow: var(--box-shadow-md);
+}
+
+.botao-oni:hover {
+  background: var(--gradient-purple-light);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: var(--box-shadow-lg);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  .grade-servicos {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  .corpo-cartao {
+    padding: 1.8rem 1.5rem;
+  }
+
+  .icone-wrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+  .icone-cartao {
+    font-size: 2rem;
+  }
+
+  .titulo-cartao {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grade-servicos {
+    grid-template-columns: 1fr;
+  }
+}

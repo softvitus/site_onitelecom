@@ -1,0 +1,146 @@
+.login_container {
+  --primary-color: var(--color-primary-main);
+  --secondary-color: var(--color-secondary-blue);
+  --text-color: var(--color-neutral-white);
+  --bg-gradient: var(--gradient-purple-primary);
+}
+
+.container_login {
+  background: var(--bg-gradient);
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.inner-container_login {
+  max-width: 450px;
+  width: 100%;
+  padding: 20px;
+}
+
+.card_login {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-large);
+  transition: var(--transition-normal);
+}
+
+.card_login:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-purple-deep);
+}
+
+.card-body_login {
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.logo_login {
+  margin-bottom: 2rem;
+  transition: var(--transition-normal);
+}
+
+.logo_login img {
+  height: auto;
+  max-width: 100%;
+  width: 160px;
+  filter: none;
+}
+
+.divider_login {
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  width: 60%;
+  margin: 1.5rem auto;
+  border-radius: 2px;
+}
+
+.title_login {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form-select_login {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: rgba(255, 255, 255, 0.1);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.5rem;
+  transition: var(--transition-normal);
+}
+
+.form-select_login:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(0, 0, 255, 0.2);
+}
+
+.btn_login {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: var(--radius-lg);
+  transition: var(--transition-normal);
+}
+
+.btn-primary_login {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary_login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary_login {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: var(--text-color);
+}
+
+.btn-secondary_login:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.loading-indicator_login {
+  color: var(--text-color);
+}
+
+.alert-info_login {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: var(--text-color);
+  border-radius: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .card-body_login {
+    padding: 2rem;
+  }
+
+  .title_login {
+    font-size: 1.5rem;
+  }
+
+  .form-select_login,
+  .btn_login {
+    font-size: 0.9rem;
+  }
+}
