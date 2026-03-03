@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Run ESLint
         working-directory: ./backend
@@ -68,7 +68,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Run unit tests
         working-directory: ./backend
@@ -110,7 +110,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Audit npm packages
         working-directory: ./backend
@@ -133,7 +133,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Validate build
         working-directory: ./backend
