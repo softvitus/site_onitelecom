@@ -67,11 +67,13 @@ export const authenticate = (req, res, next) => {
 
     // Verifica o token
     const decoded = verifyToken(token);
-    
+
     // Armazena o usuário decodificado para uso posterior
     req.user = decoded;
-    
-    console.log('[AUTH] Token verificado para usuário:', decoded.id);
+
+    if (process.env.DEBUG_AUTH === 'true') {
+      console.log('[AUTH] Token verificado para usuário:', decoded.id);
+    }
     next();
   } catch (error) {
     res.status(error.statusCode || 401).json({

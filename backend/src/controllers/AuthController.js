@@ -30,7 +30,7 @@ export class AuthController {
         throw new ApiError(
           'VALIDATION_ERROR',
           'Email e senha são obrigatórios',
-          400
+          400,
         );
       }
 
@@ -63,7 +63,7 @@ export class AuthController {
           parceiroId: usuario.usu_parceiro_id || null,
         },
         process.env.JWT_SECRET || 'your-secret-key-change-in-production',
-        { expiresIn: '24h' }
+        { expiresIn: '24h' },
       );
 
       // Atualizar último acesso
@@ -148,7 +148,7 @@ export class AuthController {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
@@ -176,7 +176,7 @@ export class AuthController {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
@@ -194,7 +194,7 @@ export class AuthController {
           tipo: usuario.usu_tipo,
         },
         process.env.JWT_SECRET || 'your-secret-key-change-in-production',
-        { expiresIn: '24h' }
+        { expiresIn: '24h' },
       );
 
       res.json({
@@ -222,13 +222,13 @@ export class AuthController {
         throw new ApiError(
           'VALIDATION_ERROR',
           'Token é obrigatório',
-          400
+          400,
         );
       }
 
       const decoded = jwt.verify(
         token,
-        process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+        process.env.JWT_SECRET || 'your-secret-key-change-in-production',
       );
 
       res.json({

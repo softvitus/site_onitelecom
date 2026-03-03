@@ -68,14 +68,12 @@ export class PermissoesController {
   async create(req, res, next) {
     try {
       // Gerar perm_nome automaticamente: modulo_acao
-      console.log('[PermissoesController.create] req.body completo:', JSON.stringify(req.body, null, 2));
       const { perm_modulo, perm_acao, perm_descricao } = req.body;
-      console.log('[PermissoesController.create] Extraído:', { perm_modulo, perm_acao, perm_descricao });
 
       if (!perm_modulo || !perm_acao) {
-        console.error('[PermissoesController.create] ERRO 400 - perm_modulo ou perm_acao vazios/indefinidos');
-        console.error('[PermissoesController.create] perm_modulo:', perm_modulo, 'type:', typeof perm_modulo);
-        console.error('[PermissoesController.create] perm_acao:', perm_acao, 'type:', typeof perm_acao);
+        if (process.env.DEBUG_PERMISSOES === 'true') {
+          console.error('[PermissoesController.create] ERRO 400 - perm_modulo ou perm_acao vazios/indefinidos');
+        }
         return res.status(400).json({
           success: false,
           error: 'perm_modulo e perm_acao são obrigatórios',

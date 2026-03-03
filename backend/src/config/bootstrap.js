@@ -27,7 +27,7 @@ if (result.error && result.error.code !== 'ENOENT') {
   throw new Error(`[ENV] Erro ao carregar: ${result.error.message}`);
 }
 
-if (node_env === 'development') {
+if (node_env === 'development' && process.env.DEBUG_CONFIG === 'true') {
   console.log(`[CONFIG] ✓ Ambiente carregado: ${node_env}`);
 }
 

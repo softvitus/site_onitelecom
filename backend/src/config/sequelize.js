@@ -23,7 +23,7 @@ const sequelize = new Sequelize(
     dialect: config.dialect,
     logging: config.logging,
     pool: config.pool,
-  }
+  },
 );
 
 // Carrega modelos e associações
