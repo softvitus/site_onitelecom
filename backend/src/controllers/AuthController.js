@@ -365,7 +365,7 @@ export class AuthController {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
