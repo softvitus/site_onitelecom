@@ -72,6 +72,7 @@ export const authenticate = (req, res, next) => {
     req.user = decoded;
 
     if (process.env.DEBUG_AUTH === 'true') {
+      // eslint-disable-next-line no-console
       console.log('[AUTH] Token verificado para usuário:', decoded.id);
     }
     next();

@@ -28,6 +28,7 @@ if (result.error && result.error.code !== 'ENOENT') {
 }
 
 if (node_env === 'development' && process.env.DEBUG_CONFIG === 'true') {
+  // eslint-disable-next-line no-console
   console.log(`[CONFIG] ✓ Ambiente carregado: ${node_env}`);
 }
 

@@ -8,7 +8,7 @@ export default {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT,
-    logging: process.env.DB_LOGGING === 'true' ? console.log : false,
+    logging: process.env.DB_LOGGING === 'true' ? /* eslint-disable-next-line no-console */ console.log : false,
     pool: {
       max: 5,
       min: 0,

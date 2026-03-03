@@ -21,13 +21,16 @@ export const requestLogger = (req, res, next) => {
     const reset = '\x1b[0m';
 
     if (process.env.REQUEST_LOGGING !== 'false') {
+      // eslint-disable-next-line no-console
       console.log(
         `${color}[${logLevel}]${reset} ${req.method} ${req.path} - ${statusCode} - ${duration}ms`,
       );
     }
 
     if (process.env.VERBOSE_LOGGING === 'true') {
+      // eslint-disable-next-line no-console
       console.log(`  Body:`, req.body);
+      // eslint-disable-next-line no-console
       console.log(`  Query:`, req.query);
     }
 
@@ -48,6 +51,7 @@ export const performanceLogger = (req, res, next) => {
     const ms = (diff[0] * 1000 + diff[1] / 1000000).toFixed(2);
 
     if (ms > 1000 && process.env.PERFORMANCE_LOGGING !== 'false') {
+      // eslint-disable-next-line no-console
       console.warn(`[PERFORMANCE] ${req.method} ${req.path} levou ${ms}ms (lento!)`);
     }
   });
@@ -64,6 +68,7 @@ export const detailedLogger = (req, res, next) => {
   req.id = requestId;
 
   if (process.env.DETAILED_LOGGING === 'true') {
+    // eslint-disable-next-line no-console
     console.log(`
 [REQUEST] ${requestId}
   Method: ${req.method}
@@ -90,18 +95,19 @@ function generateRequestId() {
 export const databaseLogger = (sequelize) => {
   if (process.env.DB_LOGGING !== 'false') {
     sequelize.addHook('beforeConnect', (config) => {
+      // eslint-disable-next-line no-console
       console.log('[DB] Conectando ao banco de dados...');
     });
 
     sequelize.addHook('afterConnect', () => {
+      // eslint-disable-next-line no-console
       console.log('[DB] ✓ Conectado ao banco de dados');
     });
   }
 
   if (process.env.VERBOSE_LOGGING === 'true') {
-    sequelize.options.logging = (sql) => {
-      console.log('[SQL]', sql);
-    };
+    // eslint-disable-next-line no-console
+    sequelize.options.logging = (sql) => console.log('[SQL]', sql);
   } else {
     sequelize.options.logging = false;
   }
@@ -125,6 +131,7 @@ export const coloredStatusLogger = (req, res, next) => {
     const reset = '\x1b[0m';
 
     if (process.env.STATUS_LOGGING !== 'false') {
+      // eslint-disable-next-line no-console
       console.log(
         `${statusColor}${res.statusCode} ${statusColor}${req.method.padEnd(6)}${reset} ${req.originalUrl}`,
       );
