@@ -13,8 +13,8 @@ WORKDIR /app
 # Copia package*.json PRIMEIRO para instalar dependências
 COPY package*.json ./
 
-# Instala dependências (npm ci é mais confiável em Docker)
-RUN npm ci
+# Instala dependências
+RUN npm install --legacy-peer-deps
 
 # Copia o resto do código
 COPY . .
