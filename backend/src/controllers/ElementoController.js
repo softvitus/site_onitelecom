@@ -18,14 +18,24 @@ export class ElementoController {
 
   /**
    * GET /api/elementos
-   * Lista todos os elementos com paginação
+   * Lista elementos com paginação
+   * Filtra por parceiro se usuário não for admin
    */
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
       
+      // Construir filtros
+      const filtros = {};
+      
+      // Se não é admin e tem parceiroId, filtrar por parceiro
+      // Elementos são vinculados a componentes, que estão vinculados a páginas com parceiro
+      if (req.user?.tipo !== 'admin' && req.user?.parceiroId) {
+        filtros.parceiroId = req.user.parceiroId;
+      }
+      
       const result = await this.service.findAll(
-        {},
+        filtros,
         { page: parseInt(page), limit: parseInt(limit) }
       );
 

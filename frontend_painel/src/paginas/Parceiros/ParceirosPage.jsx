@@ -40,6 +40,7 @@ const STATUS_PARCEIRO = {
 const FORM_INICIAL = {
   nome: '',
   dominio: '',
+  dominioPainel: '',
   cidade: '',
   estado: '',
   endereco: '',
@@ -138,7 +139,7 @@ const validarFormulario = (dados) => {
  */
 const ParceirosPage = () => {
   // Autenticação e Permissões
-  const { temPermissao } = useAuth();
+  const { temPermissao, usuario } = useAuth();
   
   // Estado
   const [parceiros, setParceiros] = useState([]);
@@ -185,9 +186,16 @@ const ParceirosPage = () => {
     setErro(null);
 
     try {
-      const resultado = await ParceirosService.listar(pagina, itensPorPagina, {
+      const filtros = {
         search: filtro,
-      });
+      };
+
+      // Se não é admin, filtra apenas seu parceiro
+      if (usuario?.tipo !== 'admin' && usuario?.parceiroId) {
+        filtros.parceiroId = usuario.parceiroId;
+      }
+
+      const resultado = await ParceirosService.listar(pagina, itensPorPagina, filtros);
 
       if (resultado.sucesso) {
         setParceiros(resultado.dados);
@@ -224,6 +232,7 @@ const ParceirosPage = () => {
     setFormData({
       nome: parceiro.nome || '',
       dominio: parceiro.dominio || '',
+      dominioPainel: parceiro.dominioPainel || '',
       cidade: parceiro.cidade || '',
       estado: parceiro.estado || '',
       endereco: parceiro.endereco || '',
@@ -510,10 +519,23 @@ const ParceirosPage = () => {
                 className="modal-form-input"
                 value={formData.dominio}
                 onChange={(e) => setFormData({ ...formData, dominio: e.target.value })}
-                placeholder="parceiro.com.br"
+                placeholder="https://parceiro.com.br"
               />
               {errosForm.dominio && (
                 <span className="modal-form-error">{errosForm.dominio}</span>
+              )}
+            </div>
+            <div className="modal-form-group">
+              <label className="modal-form-label">Domínio do Painel</label>
+              <input
+                type="text"
+                className="modal-form-input"
+                value={formData.dominioPainel}
+                onChange={(e) => setFormData({ ...formData, dominioPainel: e.target.value })}
+                placeholder="https://admin.parceiro.com.br"
+              />
+              {errosForm.dominioPainel && (
+                <span className="modal-form-error">{errosForm.dominioPainel}</span>
               )}
             </div>
             <div className="modal-form-group">

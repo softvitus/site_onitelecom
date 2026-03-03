@@ -16,13 +16,22 @@ export class TemaController {
   /**
    * GET /api/temas
    * Lista todos os temas com paginação
+   * Filtra por parceiro se usuário não for admin
    */
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
       
+      // Construir filtros
+      const filtros = {};
+      
+      // Se não é admin e tem parceiroId, filtrar por parceiro
+      if (req.user?.tipo !== 'admin' && req.user?.parceiroId) {
+        filtros.tem_par_id = req.user.parceiroId;
+      }
+      
       const result = await this.service.findAll(
-        {},
+        filtros,
         { page: parseInt(page), limit: parseInt(limit) }
       );
 

@@ -127,6 +127,8 @@ const criarServicoGenerico = (endpoint) => {
      */
     criar: async (dados) => {
       try {
+        console.log('[servicoBase.criar] Dados a enviar:', dados);
+        console.log('[servicoBase.criar] Endpoint:', endpoint);
         const response = await api.post(endpoint, dados);
 
         if (response.data.success) {
@@ -142,6 +144,7 @@ const criarServicoGenerico = (endpoint) => {
           detalhes: response.data.details,
         };
       } catch (error) {
+        console.error('[servicoBase.criar] Erro na requisição:', error);
         return {
           sucesso: false,
           erro: extrairMensagemErro(error.response?.data?.error || error.message),

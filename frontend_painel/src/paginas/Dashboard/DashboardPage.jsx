@@ -7,54 +7,57 @@
  * @module paginas/Dashboard/DashboardPage
  */
 
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { FaUsers, FaPalette, FaFile, FaTools, FaWaveSquare } from 'react-icons/fa';
+import ParceirosService from '../../servicos/parceiros';
+import TemasService from '../../servicos/temas';
+import PaginasService from '../../servicos/paginas';
+import ComponentesService from '../../servicos/componentes';
 import '../../estilos/paginas/DashboardPage.css';
 
 // ============================================================================
 // CONSTANTES
 // ============================================================================
 
-const DASHBOARD_CARDS = [
+const DASHBOARD_CARDS_CONFIG = [
   {
     id: 'parceiros',
     titulo: 'Parceiros',
     subtitulo: 'Cadastros ativos',
-    valor: 0,
     icone: FaUsers,
     corFundo: '#e7f1ff',
     corIcone: '#0d6efd',
+    servico: ParceirosService,
   },
   {
     id: 'temas',
     titulo: 'Temas',
     subtitulo: 'Temas disponíveis',
-    valor: 0,
     icone: FaPalette,
     corFundo: '#f0e7ff',
     corIcone: '#6f42c1',
+    servico: TemasService,
   },
   {
     id: 'paginas',
     titulo: 'Páginas',
     subtitulo: 'Páginas criadas',
-    valor: 0,
     icone: FaFile,
     corFundo: '#e7fff0',
     corIcone: '#198754',
+    servico: PaginasService,
   },
   {
     id: 'componentes',
     titulo: 'Componentes',
     subtitulo: 'Componentes registrados',
-    valor: 0,
     icone: FaTools,
     corFundo: '#fff0e7',
     corIcone: '#fd7e14',
+    servico: ComponentesService,
   },
 ];
-
-const MENSAGEM_SEM_ATIVIDADES = 'Nenhuma atividade registrada ainda';
 
 // ============================================================================
 // COMPONENTE PRINCIPAL
@@ -75,6 +78,37 @@ const MENSAGEM_SEM_ATIVIDADES = 'Nenhuma atividade registrada ainda';
  */
 const DashboardPage = () => {
   const { usuario } = useAuth();
+  const [cards, setCards] = useState(DASHBOARD_CARDS_CONFIG.map(c => ({ ...c, valor: 0, carregando: true })));
+
+  // Carregar estatísticas ao montar
+  useEffect(() => {
+    const carregarEstatisticas = async () => {
+      const novasCards = [];
+
+      for (const card of DASHBOARD_CARDS_CONFIG) {
+        try {
+          const resultado = await card.servico.listar(1, 1000);
+          const total = resultado.paginacao?.total || resultado.dados?.length || 0;
+          novasCards.push({
+            ...card,
+            valor: total,
+            carregando: false,
+          });
+        } catch (erro) {
+          console.error(`Erro ao carregar ${card.id}:`, erro);
+          novasCards.push({
+            ...card,
+            valor: 0,
+            carregando: false,
+          });
+        }
+      }
+
+      setCards(novasCards);
+    };
+
+    carregarEstatisticas();
+  }, []);
 
   return (
     <div className="dashboard-page">
@@ -82,11 +116,11 @@ const DashboardPage = () => {
         <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           Bem-vindo ao Dashboard! <FaWaveSquare color="#0d6efd" size={24} />
         </h1>
-        <p>Olá, {usuario?.usr_nome || 'Usuário'}! Aqui você gerencia toda a plataforma.</p>
+        <p>Olá, {usuario?.usu_nome || 'Usuário'}! Aqui você gerencia toda a plataforma.</p>
       </div>
 
       <div className="dashboard-grid">
-        {DASHBOARD_CARDS.map((card) => {
+        {cards.map((card) => {
           const IconeCard = card.icone;
           return (
             <div key={card.id} className="dashboard-card">
@@ -97,19 +131,12 @@ const DashboardPage = () => {
                 <h3>{card.titulo}</h3>
                 <small>{card.subtitulo}</small>
               </div>
-              <div className="card-value">{card.valor}</div>
+              <div className="card-value">
+                {card.carregando ? '...' : card.valor}
+              </div>
             </div>
           );
         })}
-      </div>
-
-      <div className="dashboard-section">
-        <h2>Últimas Atividades</h2>
-        <div className="activity-list">
-          <p style={{ color: '#6c757d', textAlign: 'center', padding: '2rem' }}>
-            {MENSAGEM_SEM_ATIVIDADES}
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -28,6 +28,38 @@ export class ElementoService extends BaseService {
   ];
 
   /**
+   * Override findAll para filtrar por parceiro através de componentes e páginas
+   * @param {Object} filters - Filtros de busca
+   * @param {Object} pagination - Opções de paginação
+   * @param {Object} options - Opções adicionais
+   * @returns {Promise<Object>} Lista paginada de elementos
+   */
+  async findAll(filters = {}, pagination = {}, options = {}) {
+    // Se filtrar por parceiroId, fazer include dos componentes -> páginas para filtrar pelo parceiro
+    if (filters.parceiroId) {
+      options.include = options.include || [];
+      options.include.push({
+        association: 'componentes',
+        through: { attributes: [] },
+        attributes: [],
+        include: [
+          {
+            association: 'paginas',
+            where: { pag_par_id: filters.parceiroId },
+            attributes: [],
+            through: { attributes: [] },
+            required: true,
+          }
+        ],
+        required: true,
+      });
+      delete filters.parceiroId;
+    }
+    
+    return super.findAll(filters, pagination, options);
+  }
+
+  /**
    * Busca elemento com todas relações
    * @param {string} id - ID do elemento
    * @returns {Promise<Object>} Elemento com relações

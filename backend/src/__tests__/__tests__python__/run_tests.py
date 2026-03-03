@@ -21,6 +21,9 @@ if sys.platform == 'win32':
 
 from config import BASE_URL, TEST_ADMIN
 from lib.auth import TestAuth
+from lib.usuarios import TestUsuarios
+from lib.permissoes import TestPermissoes
+from lib.role_permissoes import TestRolePermissoes
 from lib.parceiro import TestParceiro
 from lib.tema import TestTema
 from lib.pagina import TestPagina
@@ -91,7 +94,35 @@ class TestOrchestrator:
         # Obter token do auth_tester e compartilhar com outros módulos
         self.shared_token = auth_tester.token
         
-        # Testes de Parceiro
+        # Testes de Usuários
+        print("\n👥 Executando testes de USUÁRIOS...\n")
+        usuarios_tester = TestUsuarios()
+        usuarios_tester.run_all_tests(self.admin_token)
+        self.results['modules']['USUÁRIOS'] = usuarios_tester.results
+        self.results['total_passed'] += usuarios_tester.results['passed']
+        self.results['total_failed'] += usuarios_tester.results['failed']
+        
+        time.sleep(2)
+        
+        # Testes de Permissões
+        print("\n🔑 Executando testes de PERMISSÕES...\n")
+        permissoes_tester = TestPermissoes()
+        permissoes_tester.run_all_tests(self.admin_token)
+        self.results['modules']['PERMISSÕES'] = permissoes_tester.results
+        self.results['total_passed'] += permissoes_tester.results['passed']
+        self.results['total_failed'] += permissoes_tester.results['failed']
+        
+        time.sleep(2)
+        
+        # Testes de Role-Permissões
+        print("\n👑 Executando testes de ROLE-PERMISSÕES...\n")
+        role_permissoes_tester = TestRolePermissoes()
+        role_permissoes_tester.run_all_tests(self.admin_token)
+        self.results['modules']['ROLE-PERMISSÕES'] = role_permissoes_tester.results
+        self.results['total_passed'] += role_permissoes_tester.results['passed']
+        self.results['total_failed'] += role_permissoes_tester.results['failed']
+        
+        time.sleep(2)
         print("\n🏢 Executando testes de PARCEIRO...\n")
         parceiro_tester = TestParceiro()
         parceiro_tester.run_all_tests(self.admin_token)

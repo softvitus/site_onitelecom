@@ -19,5 +19,7 @@ export { ConteudoService } from './ConteudoService.js';
 export { FeaturesService } from './FeaturesService.js';
 export { ConfigTemaService } from './ConfigTemaService.js';
 export { UsuarioService } from './UsuarioService.js';
+export { PermissaoService } from './PermissaoService.js';
+export { RolePermissaoService } from './RolePermissaoService.js';
 export { AuditoriaService } from './AuditoriaService.js';
 export { HealthCheckService } from './HealthCheckService.js';

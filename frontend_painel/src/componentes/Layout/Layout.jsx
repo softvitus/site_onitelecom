@@ -9,7 +9,6 @@
 import { useState } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
 import '../../estilos/componentes/layout/Layout.css';
 
 // ============================================================================
@@ -49,7 +48,6 @@ const Layout = ({ children }) => {
           <div className="layout-content">
             {children}
           </div>
-          <Footer />
         </div>
       </div>
     </div>

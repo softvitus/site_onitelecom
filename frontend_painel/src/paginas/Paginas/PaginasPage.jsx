@@ -132,7 +132,7 @@ const validarFormulario = (dados) => {
  */
 const PaginasPage = () => {
   // Autenticação e Permissões
-  const { temPermissao } = useAuth();
+  const { usuario, temPermissao } = useAuth();
   
   // Estado
   const [paginas, setPaginas] = useState([]);
@@ -162,7 +162,10 @@ const PaginasPage = () => {
 
   // Carregar páginas e relacionamentos ao montar o componente
   useEffect(() => {
-    carregarParceiros();
+    // Só carrega parceiros se tiver permissão
+    if (temPermissao('parceiro_listar')) {
+      carregarParceiros();
+    }
     carregarTemas();
     carregarDadosGrid(PAGINACAO.PAGINA_INICIAL, PAGINACAO.ITENS_POR_PAGINA);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -214,9 +217,16 @@ const PaginasPage = () => {
     setErro(null);
 
     try {
-      const resultado = await PaginasService.listar(pagina, itensPorPagina, {
+      const filtros = {
         search: filtro,
-      });
+      };
+
+      // Se não é admin, filtra apenas seu parceiro
+      if (usuario?.tipo !== 'admin' && usuario?.parceiroId) {
+        filtros.parceiroId = usuario.parceiroId;
+      }
+
+      const resultado = await PaginasService.listar(pagina, itensPorPagina, filtros);
 
       if (resultado.sucesso) {
         // Mapear páginas para adicionar nomes de relacionamentos

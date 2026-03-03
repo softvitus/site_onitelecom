@@ -60,6 +60,7 @@ export class AuthController {
           id: usuario.usu_id,
           email: usuario.usu_email,
           tipo: usuario.usu_tipo,
+          parceiroId: usuario.usu_parceiro_id || null,
         },
         process.env.JWT_SECRET || 'your-secret-key-change-in-production',
         { expiresIn: '24h' }

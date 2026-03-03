@@ -11,6 +11,28 @@ import { BaseService } from './BaseService.js';
  */
 export class ConteudoService extends BaseService {
   /**
+   * Override findAll para filtrar por parceiro através do tema
+   * @param {Object} filters - Filtros de busca
+   * @param {Object} pagination - Opções de paginação
+   * @param {Object} options - Opções adicionais
+   * @returns {Promise<Object>} Lista paginada de conteúdos
+   */
+  async findAll(filters = {}, pagination = {}, options = {}) {
+    // Se filtrar por parceiroId, fazer include do tema para filtrar pelo parceiro
+    if (filters.parceiroId) {
+      options.include = options.include || [];
+      options.include.push({
+        association: 'tema',
+        where: { tem_par_id: filters.parceiroId },
+        required: true,
+      });
+      delete filters.parceiroId;
+    }
+    
+    return super.findAll(filters, pagination, options);
+  }
+
+  /**
    * Busca conteúdo com relações
    * @param {string} id - ID do conteúdo
    * @returns {Promise<Object>} Conteúdo com página, elemento e componente

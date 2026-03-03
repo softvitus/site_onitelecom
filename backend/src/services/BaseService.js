@@ -1,6 +1,7 @@
 /**
  * @module services/BaseService
  * @description Serviço base com operações CRUD comuns
+ * @updated 2026-03-02
  */
 
 import { Op } from 'sequelize';
@@ -28,10 +29,13 @@ export class BaseService {
    */
   async create(data) {
     try {
+      console.log(`[BaseService.create] Criando ${this.model.name} com data:`, data);
       const item = await this.model.create(data);
       console.log(`[SERVICE] ${this.model.name} criado:`, item.id);
       return item;
     } catch (error) {
+      console.error(`[BaseService.create] ERRO ao criar ${this.model.name}:`, error.message);
+      console.error(`[BaseService.create] Stack:`, error.stack);
       throw new ApiError('DATABASE_ERROR', `Erro ao criar ${this.model.name}`, error.message);
     }
   }
