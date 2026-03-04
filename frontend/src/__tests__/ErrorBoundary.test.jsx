@@ -16,15 +16,14 @@ const ProblematicComponent = ({ shouldError }) => {
 
 describe('ErrorBoundary', () => {
   // Silencia console.error durante os testes
+  // eslint-disable-next-line no-console
   const originalError = console.error;
   beforeAll(() => {
     // eslint-disable-next-line no-console
-
     console.error = jest.fn();
   });
   afterAll(() => {
     // eslint-disable-next-line no-console
-
     console.error = originalError;
   });
 
@@ -100,4 +99,5 @@ describe('ErrorBoundary', () => {
     expect(homeButton.tagName).toBe('BUTTON');
   });
 });
+
 

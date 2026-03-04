@@ -68,6 +68,7 @@ const isElementEnabled = (elementName) => {
     // eslint-disable-next-line no-console
     // eslint-disable-next-line no-console
 
+    // eslint-disable-next-line no-console
     console.error(`Erro ao verificar elemento '${elementName}':`, error);
     return false;
   }
@@ -438,6 +439,7 @@ const Contato = () => {
       } catch (error) {
         // eslint-disable-next-line no-console
 
+        // eslint-disable-next-line no-console
         console.error('Erro ao carregar parceiros:', error);
       }
     };
@@ -500,6 +502,7 @@ const Contato = () => {
     } catch (error) {
       // eslint-disable-next-line no-console
 
+      // eslint-disable-next-line no-console
       console.error('Erro ao inicializar mapa:', error);
     }
   }, [parceiros]);
@@ -587,6 +590,7 @@ const Contato = () => {
       } catch (error) {
         // eslint-disable-next-line no-console
 
+        // eslint-disable-next-line no-console
         console.error('Erro ao enviar:', error);
         setFormMessage({
           type: 'error',
@@ -631,5 +635,6 @@ const Contato = () => {
 };
 
 export default Contato;
+
 
 

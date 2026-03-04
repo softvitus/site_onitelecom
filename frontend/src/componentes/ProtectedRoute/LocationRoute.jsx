@@ -79,7 +79,9 @@ const log = (type, message) => {
   };
 
   const prefix = prefixes[type] || '[LOG]';
+  // eslint-disable-next-line no-console
   const logFn = type === 'error' ? console.error : type === 'warn' ? console.warn : console.log;
+  // eslint-disable-next-line no-console
   logFn(`${prefix} LocationRoute: ${message}`);
 };
 

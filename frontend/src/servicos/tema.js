@@ -66,6 +66,7 @@ export const getAllParceirosFromAPI = async () => {
       return response.data;
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao buscar parceiros da API:', error);
   }
 
@@ -78,6 +79,7 @@ export const getAllParceirosFromAPI = async () => {
       return data;
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar parceiros do localStorage:', error);
   }
 
@@ -116,6 +118,7 @@ export const detectTenant = async () => {
     }
   }
 
+  // eslint-disable-next-line no-console
   console.warn(`[Tema] Nenhum parceiro encontrado para ${currentUrl}, usando fallback: onitelecom`);
   return 'onitelecom';
 };
@@ -129,6 +132,7 @@ export const initializeConfig = async () => {
     const tenant = await detectTenant();
     return { success: true, tenant, config: {} };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('[Tema] Erro ao inicializar configuração:', error);
     return { success: false, tenant: 'onitelecom', config: {}, error: error.message };
   }
@@ -331,6 +335,7 @@ const darkenColor = (hex, amount) => {
 export const buscarTemaParceiro = async (parceiroId) => {
   try {
     if (!parceiroId) {
+      // eslint-disable-next-line no-console
       console.error('[Tema] ID do parceiro não fornecido');
       return { success: false, data: null, error: 'ID do parceiro não fornecido' };
     }
@@ -342,9 +347,11 @@ export const buscarTemaParceiro = async (parceiroId) => {
       return response;
     }
 
+    // eslint-disable-next-line no-console
     console.error('[Tema] Erro ao carregar tema:', response.error);
     return { success: false, data: null, error: 'Tema não encontrado' };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('[Tema] Exceção ao buscar tema:', error.message);
     return { success: false, data: null, error: error.message };
   }
@@ -402,6 +409,7 @@ export const cacheTemaParceiro = (parceiroId, tema) => {
     });
     setTemaAtivoMemoria(tema);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao cachear tema:', error);
   }
 };
@@ -427,6 +435,7 @@ export const getTemaCached = (parceiroId) => {
 
     return tema;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar cache:', error);
     return null;
   }
@@ -463,6 +472,7 @@ export const getCurrentParceiroId = () => {
       return id;
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar ID do parceiro:', error);
   }
   return null;
@@ -479,6 +489,7 @@ export const getCurrentParceiro = () => {
       return JSON.parse(currentParceiro);
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar dados do parceiro:', error);
   }
   return null;
@@ -504,6 +515,7 @@ export const getTemaCores = () => {
     const tema = getTemaAtivoMemoria();
     return tema?.cores || [];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar cores:', error);
     return [];
   }
@@ -564,6 +576,7 @@ export const applyTemaCoresCSS = () => {
     const cores = getTemaCores();
 
     if (!cores || cores.length === 0) {
+      // eslint-disable-next-line no-console
       console.warn('[Tema] Nenhuma cor encontrada para aplicar');
       return false;
     }
@@ -751,6 +764,7 @@ export const applyTemaCoresCSS = () => {
 
     return true;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('[Tema] Erro ao aplicar cores CSS:', error);
     return false;
   }
@@ -769,6 +783,7 @@ export const getTemaImagens = () => {
     const tema = getTemaAtivoMemoria();
     return tema?.imagens || [];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar imagens:', error);
     return [];
   }
@@ -847,6 +862,7 @@ export const getTemaTextos = () => {
     const tema = getTemaAtivoMemoria();
     return tema?.textos || [];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar textos:', error);
     return [];
   }
@@ -916,6 +932,7 @@ export const getTemaLinks = () => {
     const tema = getTemaAtivoMemoria();
     return tema?.links || [];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar links:', error);
     return [];
   }
@@ -984,6 +1001,7 @@ export const getMenuLinks = (menuName) => {
 
     return typeof link.valor === 'string' ? JSON.parse(link.valor) : link.valor;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn(`[Tema] Erro ao parsear menu '${menuName}':`, error);
     return null;
   }
@@ -1002,6 +1020,7 @@ export const getTemaConteudos = () => {
     const tema = getTemaAtivoMemoria();
     return tema?.conteudos || [];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar conteúdos:', error);
     return [];
   }
@@ -1072,6 +1091,7 @@ export const getTemaFeatures = () => {
     const tema = getTemaAtivoMemoria();
     return tema?.features || [];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar features:', error);
     return [];
   }
@@ -1119,6 +1139,7 @@ export const getTemaConfigs = () => {
     const tema = getTemaAtivoMemoria();
     return tema?.configs || [];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar configs:', error);
     return [];
   }
@@ -1173,6 +1194,7 @@ export const getTemaPaginas = () => {
     const tema = getTemaAtivoMemoria();
     return tema?.paginas || [];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao recuperar páginas:', error);
     return [];
   }
@@ -1428,6 +1450,7 @@ export const applyTemaMetaTags = () => {
 
     return true;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao aplicar meta tags:', error);
     return false;
   }
@@ -1459,6 +1482,7 @@ export const initTemaEarly = async () => {
     const resultado = await buscarOuCachearTemaParceiro(tenant);
 
     if (!resultado.success) {
+      // eslint-disable-next-line no-console
       console.warn('[Tema] Falha ao buscar tema, usando fallback CSS');
       return { success: false, tenant, error: 'Falha ao buscar tema' };
     }
@@ -1471,6 +1495,7 @@ export const initTemaEarly = async () => {
 
     return { success: true, tenant };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('[Tema] Erro na inicialização early:', error);
     return { success: false, tenant: null, error: error.message };
   }
@@ -1480,7 +1505,7 @@ export const initTemaEarly = async () => {
 // EXPORTS
 // ============================================================================
 
-export default {
+const temaService = {
   // Inicialização
   initTemaEarly,
   applyTemaMetaTags,
@@ -1547,4 +1572,7 @@ export default {
   getTemaElementosByComponente,
 };
 
+export default temaService;
+
 export { CACHE_TTL, STORAGE_KEY_PARCEIRO, CAMINHO_MAP, DEFAULT_ORDER };
+

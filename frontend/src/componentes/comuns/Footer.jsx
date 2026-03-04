@@ -161,6 +161,7 @@ const isElementEnabled = (elementName) => {
   } catch (error) {
     // eslint-disable-next-line no-console
 
+    // eslint-disable-next-line no-console
     console.error(`Erro ao verificar elemento '${elementName}':`, error);
     return false;
   }
@@ -536,5 +537,6 @@ const Footer = () => {
 };
 
 export default Footer;
+
 
 

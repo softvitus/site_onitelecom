@@ -47,7 +47,9 @@ class ErrorBoundary extends Component {
       // TODO: Integrar com serviço de monitoramento
       // logger.error({ error, errorInfo });
     } else {
+      // eslint-disable-next-line no-console
       console.error('ErrorBoundary capturou um erro:', error);
+      // eslint-disable-next-line no-console
       console.error('Informações do componente:', errorInfo);
     }
   }
@@ -187,3 +189,4 @@ const styles = {
 };
 
 export default ErrorBoundary;
+
