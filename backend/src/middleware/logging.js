@@ -123,10 +123,15 @@ export const coloredStatusLogger = (req, res, next) => {
     const statusCode = res.statusCode;
     let statusColor;
 
-    if (statusCode < 300) statusColor = '\x1b[32m'; // Verde (sucesso)
-    else if (statusCode < 400) statusColor = '\x1b[36m'; // Cyan (redirecionamento)
-    else if (statusCode < 500) statusColor = '\x1b[33m'; // Amarelo (cliente erro)
-    else statusColor = '\x1b[31m'; // Vermelho (servidor erro)
+    if (statusCode < 300) {
+      statusColor = '\x1b[32m'; // Verde (sucesso)
+    } else if (statusCode < 400) {
+      statusColor = '\x1b[36m'; // Cyan (redirecionamento)
+    } else if (statusCode < 500) {
+      statusColor = '\x1b[33m'; // Amarelo (cliente erro)
+    } else {
+      statusColor = '\x1b[31m'; // Vermelho (servidor erro)
+    }
 
     const reset = '\x1b[0m';
 
