@@ -564,16 +564,29 @@ jobs:
 
             # Clone or update repository
             if [ -d ".git" ]; then
-              echo "📦 Updating repository..."
+              echo "📦 Repository exists, updating..."
               git pull origin main
             else
-              echo "📦 Cloning repository..."
-              # Try to clone; if fails because dir exists, clean it up first (keeping data/logs/backups)
-              git clone -b main https://github.com/softvitus/site_onitelecom.git . 2>/dev/null || {
-                echo "Directory not empty, cleaning up..."
-                find . -maxdepth 1 ! -name 'data' ! -name 'logs' ! -name 'backups' ! -name '.' -exec rm -rf {} +
-                git clone -b main https://github.com/softvitus/site_onitelecom.git .
-              }
+              echo "📦 Repository does not exist, cloning..."
+              # Backup important directories first
+              [ -d "data" ] && mv data /tmp/site-oni-data.bak 2>/dev/null || true
+              [ -d "logs" ] && mv logs /tmp/site-oni-logs.bak 2>/dev/null || true
+              [ -d "backups" ] && mv backups /tmp/site-oni-backups.bak 2>/dev/null || true
+              
+              # Remove directory and recreate clean
+              cd ..
+              rm -rf site-oni
+              mkdir -p site-oni
+              cd site-oni
+              
+              # Clone fresh
+              git clone -b main https://github.com/softvitus/site_onitelecom.git .
+              
+              # Create and restore important directories
+              mkdir -p data logs backups
+              [ -d "/tmp/site-oni-data.bak" ] && cp -r /tmp/site-oni-data.bak/* data/ 2>/dev/null || true
+              [ -d "/tmp/site-oni-logs.bak" ] && cp -r /tmp/site-oni-logs.bak/* logs/ 2>/dev/null || true
+              [ -d "/tmp/site-oni-backups.bak" ] && cp -r /tmp/site-oni-backups.bak/* backups/ 2>/dev/null || true
             fi
 
             # Copy environment files if not exist
