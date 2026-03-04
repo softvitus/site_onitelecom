@@ -141,6 +141,7 @@ export const BrandingProvider = ({ children }) => {
       setLoading(false);
       setRequestInProgress(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**
