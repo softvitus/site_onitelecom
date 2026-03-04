@@ -1,0 +1,150 @@
+version: '3.8'
+
+services:
+  # ═════════════════════════════════════════════════════════════════════════════
+  # PostgreSQL Database - Compartilhado por Backend
+  # ═════════════════════════════════════════════════════════════════════════════
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: site-oni-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-site_oni}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    networks:
+      - site-oni-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # Backend API - Node.js/Express
+  # ═════════════════════════════════════════════════════════════════════════════
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile
+    container_name: site-oni-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3000
+      DB_DIALECT: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-site_oni}
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      JWT_SECRET: ${JWT_SECRET:-sua-chave-secreta-super-segura-aqui-mude-em-producao}
+      API_URL: http://localhost:5000
+      CORS_ORIGINS: "http://localhost:3000,http://localhost:3001,http://localhost:5173"
+    ports:
+      - "5000:3000"
+    volumes:
+      - ./backend/src:/app/src:cached
+      - /app/node_modules
+    networks:
+      - site-oni-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    command: npm start
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # Frontend Principal - React
+  # ═════════════════════════════════════════════════════════════════════════════
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: docker/Dockerfile
+    container_name: site-oni-frontend
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api/v1
+      REACT_APP_ENVIRONMENT: ${REACT_APP_ENVIRONMENT:-development}
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend/src:/app/src:cached
+      - /app/node_modules
+    networks:
+      - site-oni-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # Frontend Painel - React + Vite
+  # ═════════════════════════════════════════════════════════════════════════════
+
+  frontend-painel:
+    build:
+      context: ./frontend_painel
+      dockerfile: docker/Dockerfile
+    container_name: site-oni-frontend-painel
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:5000/api/v1
+      VITE_ENVIRONMENT: ${VITE_ENVIRONMENT:-development}
+    ports:
+      - "3001:80"
+    volumes:
+      - ./frontend_painel/src:/app/src:cached
+      - /app/node_modules
+    networks:
+      - site-oni-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # Reverse Proxy (Opcional - comentado por padrão)
+  # ═════════════════════════════════════════════════════════════════════════════
+
+  # nginx:
+  #   image: nginx:1.25-alpine
+  #   container_name: site-oni-nginx
+  #   depends_on:
+  #     - backend
+  #     - frontend
+  #     - frontend-painel
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  #   networks:
+  #     - site-oni-network
+  #   restart: unless-stopped
+
+networks:
+  site-oni-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
