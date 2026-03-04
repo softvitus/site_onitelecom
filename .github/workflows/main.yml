@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Build, Test & Security
 
 on:
   push:
@@ -9,6 +9,9 @@ on:
     branches:
       - main
       - develop
+  schedule:
+    # Security scan diariamente às 2 AM UTC (22 PM BRT)
+    - cron: '0 2 * * *'
 
 env:
   DB_USER: postgres
@@ -305,6 +308,151 @@ jobs:
           retention-days: 7
 
   # ─────────────────────────────────────────────────────────────
+  # DEPENDENCY SCANNING
+  # ─────────────────────────────────────────────────────────────
+
+  dependency-check:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [backend, frontend, frontend_painel]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run npm audit
+        working-directory: ${{ matrix.project }}
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Generate advisory report
+        working-directory: ${{ matrix.project }}
+        run: npm audit --json > audit-report.json
+        continue-on-error: true
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-${{ matrix.project }}
+          path: ${{ matrix.project }}/audit-report.json
+          retention-days: 7
+
+  # ─────────────────────────────────────────────────────────────
+  # CODE SCANNING WITH CODEQL
+  # ─────────────────────────────────────────────────────────────
+
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          npm ci --workspaces
+          npm ci --workspace=backend
+          npm ci --workspace=frontend
+          npm ci --workspace=frontend_painel
+        continue-on-error: true
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  # ─────────────────────────────────────────────────────────────
+  # SAST - TRIVY SCANNER
+  # ─────────────────────────────────────────────────────────────
+
+  trivy-scan:
+    name: Trivy Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          skip-dirs: 'node_modules,dist,build,coverage'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+          category: 'trivy'
+
+  # ─────────────────────────────────────────────────────────────
+  # SECRET SCANNING
+  # ─────────────────────────────────────────────────────────────
+
+  secret-scan:
+    name: Secret Detection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+  # ─────────────────────────────────────────────────────────────
+  # OWASP DEPENDENCY CHECK
+  # ─────────────────────────────────────────────────────────────
+
+  owasp-dependency-check:
+    name: OWASP Dependency Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run dependency check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'Site ONI'
+          path: '.'
+          format: 'SARIF'
+          args: >
+            --enableExperimental
+            --skip-remote-validation
+            --scan ./backend
+            --scan ./frontend
+            --scan ./frontend_painel
+
+      - name: Upload dependency check results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'reports/dependency-check-report.sarif'
+        continue-on-error: true
+
+  # ─────────────────────────────────────────────────────────────
   # FINAL STATUS
   # ─────────────────────────────────────────────────────────────
 
@@ -321,6 +469,11 @@ jobs:
       - frontend-build
       - painel-lint
       - painel-build
+      - dependency-check
+      - codeql
+      - trivy-scan
+      - secret-scan
+      - owasp-dependency-check
     if: always()
     steps:
       - name: Check pipeline status
@@ -335,3 +488,40 @@ jobs:
             exit 1
           fi
           echo "✅ Pipeline passed"
+
+      - name: Create unified report
+        if: always()
+        run: |
+          echo "# 🔒 Build & Security Scan Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Build Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Backend Lint: ${{ needs.backend-lint.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Backend Test: ${{ needs.backend-test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Backend Build: ${{ needs.backend-build.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend Lint: ${{ needs.frontend-lint.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend Test: ${{ needs.frontend-test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend Build: ${{ needs.frontend-build.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Painel Lint: ${{ needs.painel-lint.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Painel Build: ${{ needs.painel-build.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Security Scan Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Dependency Scan: ${{ needs.dependency-check.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- CodeQL Analysis: ${{ needs.codeql.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Trivy Scan: ${{ needs.trivy-scan.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Secret Scan: ${{ needs.secret-scan.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- OWASP Check: ${{ needs.owasp-dependency-check.result }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ **Build & Security Pipeline Completed**\n\nSee results in the workflow run or in the [Security tab](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/security)'
+            })
