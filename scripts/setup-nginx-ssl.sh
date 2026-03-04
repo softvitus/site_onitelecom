@@ -26,7 +26,7 @@ cat > /etc/nginx/sites-available/site-oni << 'EOF'
 # Frontend - site.onitelecom.com.br
 server {
     listen 80;
-    server_name site.onitelecom.com.br www.site.onitelecom.com.br;
+    server_name site.onitelecom.com.br;
     
     location / {
         proxy_pass http://localhost:3000;
@@ -41,7 +41,7 @@ server {
 # Painel - sitepainel.onitelecom.com.br
 server {
     listen 80;
-    server_name sitepainel.onitelecom.com.br www.sitepainel.onitelecom.com.br;
+    server_name sitepainel.onitelecom.com.br;
     
     location / {
         proxy_pass http://localhost:3001;
@@ -56,7 +56,7 @@ server {
 # Backend API - backend.onitelecom.com.br
 server {
     listen 80;
-    server_name backend.onitelecom.com.br www.backend.onitelecom.com.br;
+    server_name backend.onitelecom.com.br;
     
     location / {
         proxy_pass http://localhost:5000;
@@ -94,11 +94,8 @@ echo ""
 echo "🔐 Generating SSL certificates..."
 certbot --nginx \
   -d site.onitelecom.com.br \
-  -d www.site.onitelecom.com.br \
   -d sitepainel.onitelecom.com.br \
-  -d www.sitepainel.onitelecom.com.br \
   -d backend.onitelecom.com.br \
-  -d www.backend.onitelecom.com.br \
   --non-interactive \
   --agree-tos \
   -m softvirtus.server@gmail.com \
