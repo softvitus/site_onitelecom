@@ -633,7 +633,6 @@ export const applyTemaCoresCSS = () => {
       'status/erro-vermelho-escuro': 'status-error-dark',
       'status/aviso-amarelo': 'status-warning',
       'status/perigo-vermelho': 'status-danger',
-      'secundaria/ciano': 'status-info', // ciano também é usado como info
     };
 
     /**

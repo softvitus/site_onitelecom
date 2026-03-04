@@ -29,7 +29,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
+// PropTypes import removido conforme não utilizado
 
 // ----------------------------------------------------------------------------
 // Ícones
