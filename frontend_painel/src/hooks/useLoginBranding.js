@@ -69,7 +69,7 @@ export const useLoginBranding = (parceiroId) => {
       setCarregando(true);
       setErro(null);
 
-      const apiUrl = globalThis.process?.env?.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
+      const apiUrl = import.meta.env.VITE_API_URL;
       const response = await fetch(`${apiUrl}/public/parceiros/${id}/tema`);
 
       if (!response.ok) {

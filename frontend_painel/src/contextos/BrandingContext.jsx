@@ -68,7 +68,7 @@ export const BrandingProvider = ({ children }) => {
       setErro(null);
 
       // Buscar tema via endpoint público
-      const apiUrl = globalThis.process?.env?.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
+      const apiUrl = import.meta.env.VITE_API_URL;
       const response = await fetch(
         `${apiUrl}/public/parceiros/${parceiroId}/tema`
       );
