@@ -574,11 +574,20 @@ jobs:
               git checkout origin/main -b main
             fi
 
-            # Copy environment files if not exist
-            if [ ! -f ".env.production" ]; then
-              echo "⚠️  .env.production not found! Please create it manually."
+            # Verify environment files exist in each project
+            if [ ! -f "backend/.env.production" ]; then
+              echo "⚠️  backend/.env.production not found!"
               exit 1
             fi
+            if [ ! -f "frontend/.env.production" ]; then
+              echo "⚠️  frontend/.env.production not found!"
+              exit 1
+            fi
+            if [ ! -f "frontend_painel/.env.production" ]; then
+              echo "⚠️  frontend_painel/.env.production not found!"
+              exit 1
+            fi
+            echo "✅ All .env.production files found"
 
             # Pull latest Docker images
             echo "🐳 Pulling Docker images..."
