@@ -141,7 +141,7 @@ export const BrandingProvider = ({ children }) => {
       setLoading(false);
       setRequestInProgress(false);
     }
-  }, [requestInProgress]);
+  }, []);
 
   /**
    * Obtém cor do tema
