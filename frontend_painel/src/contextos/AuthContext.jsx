@@ -6,7 +6,6 @@ import authService from '../servicos/auth';
  * Context para autenticação e permissões
  * Fornece dados do usuário, token, permissões e funções de autenticação
  */
-// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -141,7 +140,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 /**
  * Hook para usar AuthContext
  * @returns {Object} Objeto com dados de autenticação

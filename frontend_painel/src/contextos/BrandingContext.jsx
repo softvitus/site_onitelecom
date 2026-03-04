@@ -13,7 +13,6 @@ import { useAuth } from '../hooks/useAuth';
 // CONTEXTO
 // ============================================================================
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const BrandingContext = createContext();
 
 // ============================================================================
@@ -253,7 +252,6 @@ export const BrandingProvider = ({ children }) => {
 };
 
 export default BrandingContext;
-// eslint-disable-next-line react-refresh/only-export-components
 /**
  * Hook para usar BrandingContext
  * @returns {Object} Objeto com branding do parceiro
