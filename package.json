@@ -1,0 +1,31 @@
+{
+  "name": "site-oni-monorepo",
+  "version": "1.0.0",
+  "description": "ONI Telecom - Site Institucional",
+  "private": true,
+  "scripts": {
+    "lint:all": "npm run lint --workspace=backend & npm run lint --workspace=frontend & npm run lint --workspace=frontend_painel"
+  },
+  "lint-staged": {
+    "backend/**/*.{js,json}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "frontend/**/*.{js,jsx,json}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "frontend_painel/**/*.{js,jsx,json}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{md,yml,yaml,json}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "prettier": "^3.8.1"
+  }
+}
