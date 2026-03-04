@@ -568,7 +568,12 @@ jobs:
               git pull origin main
             else
               echo "📦 Cloning repository..."
-              git clone -b main https://github.com/softvitus/site_onitelecom.git .
+              # Try to clone; if fails because dir exists, clean it up first (keeping data/logs/backups)
+              git clone -b main https://github.com/softvitus/site_onitelecom.git . 2>/dev/null || {
+                echo "Directory not empty, cleaning up..."
+                find . -maxdepth 1 ! -name 'data' ! -name 'logs' ! -name 'backups' ! -name '.' -exec rm -rf {} +
+                git clone -b main https://github.com/softvitus/site_onitelecom.git .
+              }
             fi
 
             # Copy environment files if not exist
