@@ -112,7 +112,7 @@ const PermissoesPage = () => {
   // Estado
   const [permissoes, setPermissoes] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState(null);
+  const [_erro, _setErro] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [editando, setEditando] = useState(null);
   const [salvando, setSalvando] = useState(false);
@@ -150,7 +150,7 @@ const PermissoesPage = () => {
   // Carregar dados para o Grid
   const carregarDadosGrid = async (pagina, itensPorPagina) => {
     setCarregando(true);
-    setErro(null);
+    //     _setErro(null);
 
     try {
       const resultado = await PermissoesService.listar(pagina, itensPorPagina, {
@@ -166,10 +166,10 @@ const PermissoesPage = () => {
           setTotalPaginas(resultado.paginacao.pages);
         }
       } else {
-        setErro(resultado.erro || 'Erro ao carregar permissões');
+        //         _setErro(resultado.erro || 'Erro ao carregar permissões');
       }
     } catch (err) {
-      setErro('Erro inesperado ao carregar permissões');
+      //       _setErro('Erro inesperado ao carregar permissões');
       console.error('[ERRO]', err);
     } finally {
       setCarregando(false);

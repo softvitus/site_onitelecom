@@ -137,7 +137,7 @@ const PaginasPage = () => {
   // Estado
   const [paginas, setPaginas] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState(null);
+  const [_erro, _setErro] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [editando, setEditando] = useState(null);
   const [salvando, setSalvando] = useState(false);
@@ -214,7 +214,7 @@ const PaginasPage = () => {
   // Carregar dados para o Grid
   const carregarDadosGrid = async (pagina, itensPorPagina) => {
     setCarregando(true);
-    setErro(null);
+    //     _setErro(null);
 
     try {
       const filtros = {
@@ -243,10 +243,10 @@ const PaginasPage = () => {
           setTotalPaginas(resultado.paginacao.pages);
         }
       } else {
-        setErro(resultado.erro || 'Erro ao carregar páginas');
+        //         _setErro(resultado.erro || 'Erro ao carregar páginas');
       }
     } catch (err) {
-      setErro('Erro inesperado ao carregar páginas');
+      //       _setErro('Erro inesperado ao carregar páginas');
       console.error('[ERRO]', err);
     } finally {
       setCarregando(false);

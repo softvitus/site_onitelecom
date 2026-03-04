@@ -144,7 +144,7 @@ const ParceirosPage = () => {
   // Estado
   const [parceiros, setParceiros] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState(null);
+  const [_erro, _setErro] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [editando, setEditando] = useState(null);
   const [salvando, setSalvando] = useState(false);
@@ -183,7 +183,7 @@ const ParceirosPage = () => {
   // Carregar dados para o Grid
   const carregarDadosGrid = async (pagina, itensPorPagina) => {
     setCarregando(true);
-    setErro(null);
+    //     _setErro(null);
 
     try {
       const filtros = {
@@ -206,10 +206,10 @@ const ParceirosPage = () => {
           setTotalPaginas(resultado.paginacao.pages);
         }
       } else {
-        setErro(resultado.erro || 'Erro ao carregar parceiros');
+        //         _setErro(resultado.erro || 'Erro ao carregar parceiros');
       }
     } catch (err) {
-      setErro('Erro inesperado ao carregar parceiros');
+      //       _setErro('Erro inesperado ao carregar parceiros');
       console.error('[ERRO]', err);
     } finally {
       setCarregando(false);

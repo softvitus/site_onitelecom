@@ -116,7 +116,7 @@ const LinksPage = () => {
   const [temas, setTemas] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [carregandoTemas, setCarregandoTemas] = useState(false);
-  const [erro, setErro] = useState(null);
+  const [_erro, _setErro] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [editando, setEditando] = useState(null);
   const [salvando, setSalvando] = useState(false);
@@ -155,7 +155,7 @@ const LinksPage = () => {
   // Carregar dados para o Grid
   const carregarDadosGrid = async (pagina, itensPorPagina) => {
     setCarregando(true);
-    setErro(null);
+    //     _setErro(null);
 
     try {
       const filtros = { search: filtro };
@@ -176,10 +176,10 @@ const LinksPage = () => {
           setTotalPaginas(resultado.paginacao.pages);
         }
       } else {
-        setErro(resultado.erro || 'Erro ao carregar links');
+        //         _setErro(resultado.erro || 'Erro ao carregar links');
       }
     } catch (err) {
-      setErro('Erro inesperado ao carregar links');
+      //       _setErro('Erro inesperado ao carregar links');
       console.error('[ERRO]', err);
     } finally {
       setCarregando(false);

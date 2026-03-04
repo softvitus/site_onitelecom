@@ -157,7 +157,7 @@ const UsuariosPage = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [parceiros, setParceiros] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState(null);
+  const [_erro, _setErro] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [editando, setEditando] = useState(null);
   const [salvando, setSalvando] = useState(false);
@@ -211,7 +211,7 @@ const UsuariosPage = () => {
   // Carregar dados para o Grid
   const carregarDadosGrid = async (pagina, itensPorPagina) => {
     setCarregando(true);
-    setErro(null);
+    //     _setErro(null);
 
     try {
       const resultado = await UsuariosService.listar(pagina, itensPorPagina, {
@@ -227,10 +227,10 @@ const UsuariosPage = () => {
           setTotalPaginas(resultado.paginacao.pages);
         }
       } else {
-        setErro(resultado.erro || 'Erro ao carregar usuários');
+        //         _setErro(resultado.erro || 'Erro ao carregar usuários');
       }
     } catch (err) {
-      setErro('Erro inesperado ao carregar usuários');
+      //       _setErro('Erro inesperado ao carregar usuários');
       console.error('[ERRO]', err);
     } finally {
       setCarregando(false);

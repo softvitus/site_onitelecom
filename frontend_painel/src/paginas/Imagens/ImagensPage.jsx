@@ -117,7 +117,7 @@ const ImagensPage = () => {
   const [temas, setTemas] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [carregandoTemas, setCarregandoTemas] = useState(false);
-  const [erro, setErro] = useState(null);
+  const [_erro, _setErro] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [editando, setEditando] = useState(null);
   const [salvando, setSalvando] = useState(false);
@@ -157,7 +157,7 @@ const ImagensPage = () => {
   // Carregar dados para o Grid
   const carregarDadosGrid = async (pagina, itensPorPagina) => {
     setCarregando(true);
-    setErro(null);
+    //     _setErro(null);
 
     try {
       const filtros = { search: filtro };
@@ -178,10 +178,10 @@ const ImagensPage = () => {
           setTotalPaginas(resultado.paginacao.pages);
         }
       } else {
-        setErro(resultado.erro || 'Erro ao carregar imagens');
+        //         _setErro(resultado.erro || 'Erro ao carregar imagens');
       }
     } catch (err) {
-      setErro('Erro inesperado ao carregar imagens');
+      //       _setErro('Erro inesperado ao carregar imagens');
       console.error('[ERRO]', err);
     } finally {
       setCarregando(false);

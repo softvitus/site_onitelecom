@@ -4,7 +4,7 @@
  * Apenas para usuários com permissão 'auditoria_visualizar'
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { FaHistory, FaFilter } from 'react-icons/fa';
 import {
   FiPlus,
@@ -99,7 +99,8 @@ const criarAlerta = (tipo, mensagem) => ({ tipo, mensagem });
 // ============================================================================
 
 function AuditoriaPage() {
-  const { usuario, temPermissao } = useAuth();
+  const { _usuario, temPermissao } = useAuth();
+  const podeVisualizar = temPermissao('auditoria_visualizar');
 
   // Estado
   const [logs, setLogs] = useState([]);
@@ -111,7 +112,7 @@ function AuditoriaPage() {
   const [alerta, setAlerta] = useState(null);
   
   // Filtros
-  const [filtro, setFiltro] = useState('');
+  const [_filtro, _setFiltro] = useState('');
   const [filtros, setFiltros] = useState({
     acao: '',
     entidade: '',
@@ -119,38 +120,8 @@ function AuditoriaPage() {
     dataFim: '',
   });
 
-  // Verificar permissão
-  if (!temPermissao('auditoria_visualizar')) {
-    return (
-      <div className="auditoria-page">
-        <div className="auditoria-header">
-          <div className="auditoria-header-content">
-            <div>
-              <h1><FaHistory /> Auditoria</h1>
-              <p>Rastreamento de ações do sistema</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="auditoria-restricao">
-          <FaFilter className="icone" />
-          <h2>Acesso Restrito</h2>
-          <p>Você não tem permissão para visualizar registros de auditoria.</p>
-          <p className="detalhes">
-            Permissão necessária: <code>auditoria_visualizar</code>
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Carregar dados
-  useEffect(() => {
-    carregarLogs();
-    carregarEstatisticas();
-  }, [pagina, filtros]);
-
-  const carregarLogs = async () => {
+  // Carregar logs de auditoria
+  const carregarLogs = useCallback(async () => {
     try {
       setLoading(true);
       const resposta = await AuditoriaService.listar({
@@ -183,16 +154,50 @@ function AuditoriaPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [pagina, filtros]);
 
-  const carregarEstatisticas = async () => {
+  // Carregar estatísticas de auditoria
+  const carregarEstatisticas = useCallback(async () => {
     try {
       const resposta = await AuditoriaService.estatisticas(filtros);
       setStats(resposta.data || null);
     } catch (erro) {
       console.error('Erro ao carregar estatísticas:', erro);
     }
-  };
+  }, [filtros]);
+
+  // Carregar dados
+  useEffect(() => {
+    if (podeVisualizar) {
+      carregarLogs();
+      carregarEstatisticas();
+    }
+  }, [pagina, filtros, podeVisualizar, carregarLogs, carregarEstatisticas]);
+
+  // Verificar permissão
+  if (!podeVisualizar) {
+    return (
+      <div className="auditoria-page">
+        <div className="auditoria-header">
+          <div className="auditoria-header-content">
+            <div>
+              <h1><FaHistory /> Auditoria</h1>
+              <p>Rastreamento de ações do sistema</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="auditoria-restricao">
+          <FaFilter className="icone" />
+          <h2>Acesso Restrito</h2>
+          <p>Você não tem permissão para visualizar registros de auditoria.</p>
+          <p className="detalhes">
+            Permissão necessária: <code>auditoria_visualizar</code>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const handleFiltroMudar = (campo, valor) => {
     setFiltros(prev => ({

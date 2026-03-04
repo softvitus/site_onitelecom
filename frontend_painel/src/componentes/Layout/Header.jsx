@@ -31,7 +31,7 @@ import '../../estilos/componentes/layout/Header.css';
  */
 const Header = ({ onToggleSidebar }) => {
   const { usuario, logout } = useAuth();
-  const { logo, nomeParceiro, loading } = useBreanding();
+  const { _logo, _nomeParceiro, _loading } = useBreanding();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {

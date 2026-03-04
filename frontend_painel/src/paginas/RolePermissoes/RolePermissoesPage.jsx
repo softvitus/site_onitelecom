@@ -104,7 +104,7 @@ const RolePermissoesPage = () => {
   const [permissoes, setPermissoes] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [carregandoPermissoes, setCarregandoPermissoes] = useState(false);
-  const [erro, setErro] = useState(null);
+  const [_erro, _setErro] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [editando, setEditando] = useState(null);
   const [salvando, setSalvando] = useState(false);
@@ -143,7 +143,7 @@ const RolePermissoesPage = () => {
   // Carregar dados para o Grid
   const carregarDadosGrid = async (pagina, itensPorPagina) => {
     setCarregando(true);
-    setErro(null);
+    //     _setErro(null);
 
     try {
       const resultado = await RolePermissoesService.listar(pagina, itensPorPagina, {
@@ -159,10 +159,10 @@ const RolePermissoesPage = () => {
           setTotalPaginas(resultado.paginacao.pages);
         }
       } else {
-        setErro(resultado.erro || 'Erro ao carregar role permissões');
+        //         _setErro(resultado.erro || 'Erro ao carregar role permissões');
       }
     } catch (err) {
-      setErro('Erro inesperado ao carregar role permissões');
+      //       _setErro('Erro inesperado ao carregar role permissões');
       console.error('[ERRO]', err);
     } finally {
       setCarregando(false);

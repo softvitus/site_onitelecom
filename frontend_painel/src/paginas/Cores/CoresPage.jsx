@@ -118,7 +118,7 @@ const CoresPage = () => {
   const [temas, setTemas] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [carregandoTemas, setCarregandoTemas] = useState(false);
-  const [erro, setErro] = useState(null);
+  const [_erro, _setErro] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [editando, setEditando] = useState(null);
   const [salvando, setSalvando] = useState(false);
@@ -157,7 +157,7 @@ const CoresPage = () => {
   // Carregar dados para o Grid
   const carregarDadosGrid = async (pagina, itensPorPagina) => {
     setCarregando(true);
-    setErro(null);
+    //     _setErro(null);
 
     try {
       const resultado = await CoresService.listar(pagina, itensPorPagina, {
@@ -173,10 +173,10 @@ const CoresPage = () => {
           setTotalPaginas(resultado.paginacao.pages);
         }
       } else {
-        setErro(resultado.erro || 'Erro ao carregar cores');
+        //         _setErro(resultado.erro || 'Erro ao carregar cores');
       }
     } catch (err) {
-      setErro('Erro inesperado ao carregar cores');
+      //       _setErro('Erro inesperado ao carregar cores');
       console.error('[ERRO]', err);
     } finally {
       setCarregando(false);

@@ -93,8 +93,8 @@ export const authService = {
   logout: async () => {
     try {
       await api.post('/auth/logout');
-    } catch (error) {
-      console.error('Erro ao fazer logout:', error);
+    } catch {
+      // Ignora erro ao fazer logout
     } finally {
       localStorage.removeItem(LOCALSTORAGE_CHAVES.TOKEN);
       localStorage.removeItem(LOCALSTORAGE_CHAVES.USUARIO);
@@ -170,7 +170,7 @@ export const authService = {
     try {
       const response = await api.post('/auth/verify', { token });
       return response.data.data?.valid || false;
-    } catch (error) {
+    } catch {
       return false;
     }
   },

@@ -6,26 +6,9 @@
  * @module contextos/BrandingContext
  */
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
-
-// ============================================================================
-// CONTEXTO
-// ============================================================================
-
-const BrandingContext = createContext();
-
-/**
- * Hook para usar BrandingContext
- * @returns {Object} Objeto com branding do parceiro
- */
-export const useBreanding = () => {
-  const context = useContext(BrandingContext);
-  if (!context) {
-    throw new Error('useBreanding deve ser usado dentro de BrandingProvider');
-  }
-  return context;
-};
+import { BrandingContext } from './BrandingContexts';
 
 // ============================================================================
 // PROVIDER
@@ -54,8 +37,8 @@ export const BrandingProvider = ({ children }) => {
     paginas: [],         // Páginas do tema
   });
 
-  const [loading, setLoading] = useState(false);
-  const [erro, setErro] = useState(null);
+  const [_loading, setLoading] = useState(false);
+  const [_erro, setErro] = useState(null);
   const [requestInProgress, setRequestInProgress] = useState(false);
 
   /**
@@ -80,8 +63,9 @@ export const BrandingProvider = ({ children }) => {
       setErro(null);
 
       // Buscar tema via endpoint público
+      const apiUrl = globalThis.process?.env?.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1'}/public/parceiros/${parceiroId}/tema`
+        `${apiUrl}/public/parceiros/${parceiroId}/tema`
       );
 
       if (!response.ok) {
@@ -152,7 +136,7 @@ export const BrandingProvider = ({ children }) => {
       setLoading(false);
       setRequestInProgress(false);
     }
-  }, []);
+  }, [requestInProgress]);
 
   /**
    * Obtém cor do tema
@@ -243,8 +227,8 @@ export const BrandingProvider = ({ children }) => {
   const value = {
     // Estado
     branding,
-    loading,
-    erro,
+    loading: _loading,
+    erro: _erro,
 
     // Dados principais
     logo: branding.logo,
@@ -263,3 +247,5 @@ export const BrandingProvider = ({ children }) => {
 };
 
 export default BrandingContext;
+// eslint-disable-next-line react-refresh/only-export-components
+export { useBreanding } from './BrandingContexts';

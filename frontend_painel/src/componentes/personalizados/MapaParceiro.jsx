@@ -133,11 +133,10 @@ const MapaParceiro = ({ latitude, longitude, nomeParceiro, onMarkerDrag }) => {
 
   const markerRef = useRef(null);
 
-  useEffect(() => {
-    if (coordenadasValidas) {
-      setCoordenatasMarcador([latitude, longitude]);
-    }
-  }, [latitude, longitude, coordenadasValidas]);
+  // Sincronizar estado quando as coordenadas iniciais mudam
+  if (coordenadasValidas && (coordenatasMarcador[0] !== latitude || coordenatasMarcador[1] !== longitude)) {
+    setCoordenatasMarcador([latitude, longitude]);
+  }
 
   /**
    * Handler para quando o marcador é arrastado
