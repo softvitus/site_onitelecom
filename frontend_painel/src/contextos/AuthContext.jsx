@@ -1,15 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../servicos/auth';
-import { AuthContext } from './AuthContexts';
 
 /**
  * Context para autenticação e permissões
  * Fornece dados do usuário, token, permissões e funções de autenticação
- * 
- * @note Este arquivo exporta o provider.
- * Para usar o hook, importe useAuth de './AuthContexts'
  */
+// eslint-disable-next-line react-refresh/only-export-components
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -144,4 +142,14 @@ export const AuthProvider = ({ children }) => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export { useAuth } from './AuthContexts';
+/**
+ * Hook para usar AuthContext
+ * @returns {Object} Objeto com dados de autenticação
+ */
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth deve ser usado dentro de AuthProvider');
+  }
+  return context;
+};

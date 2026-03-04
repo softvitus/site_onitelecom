@@ -6,9 +6,15 @@
  * @module contextos/BrandingContext
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { BrandingContext } from './BrandingContexts';
+
+// ============================================================================
+// CONTEXTO
+// ============================================================================
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const BrandingContext = createContext();
 
 // ============================================================================
 // PROVIDER
@@ -248,4 +254,14 @@ export const BrandingProvider = ({ children }) => {
 
 export default BrandingContext;
 // eslint-disable-next-line react-refresh/only-export-components
-export { useBreanding } from './BrandingContexts';
+/**
+ * Hook para usar BrandingContext
+ * @returns {Object} Objeto com branding do parceiro
+ */
+export const useBreanding = () => {
+  const context = useContext(BrandingContext);
+  if (!context) {
+    throw new Error('useBreanding deve ser usado dentro de BrandingProvider');
+  }
+  return context;
+};
