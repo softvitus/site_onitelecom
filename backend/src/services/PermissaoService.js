@@ -135,8 +135,10 @@ export class PermissaoService extends BaseService {
    * @returns {Promise<Object>} Permissão criada
    */
   async createPayload(data) {
+    // eslint-disable-next-line no-console
     console.log('[PermissaoService.createPayload] Iniciando com data:', data);
     this.validatePayload(data);
+    // eslint-disable-next-line no-console
     console.log('[PermissaoService.createPayload] Validação passou, chamando create');
     return this.create(data);
   }

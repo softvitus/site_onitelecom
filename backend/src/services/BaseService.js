@@ -29,8 +29,10 @@ export class BaseService {
    */
   async create(data) {
     try {
+      // eslint-disable-next-line no-console
       console.log(`[BaseService.create] Criando ${this.model.name} com data:`, data);
       const item = await this.model.create(data);
+      // eslint-disable-next-line no-console
       console.log(`[SERVICE] ${this.model.name} criado:`, item.id);
       return item;
     } catch (error) {
@@ -161,6 +163,7 @@ export class BaseService {
       const item = await this.findById(id);
       await item.update(data);
 
+      // eslint-disable-next-line no-console
       console.log(`[SERVICE] ${this.model.name} atualizado:`, id);
       return item;
     } catch (error) {
@@ -182,6 +185,7 @@ export class BaseService {
       const item = await this.findById(id);
       await item.destroy();
 
+      // eslint-disable-next-line no-console
       console.log(`[SERVICE] ${this.model.name} deletado:`, id);
       return item;
     } catch (error) {
@@ -203,6 +207,7 @@ export class BaseService {
         where: { id: ids },
       });
 
+      // eslint-disable-next-line no-console
       console.log(`[SERVICE] ${result} ${this.model.name}(s) deletado(s)`);
       return result;
     } catch (error) {
@@ -223,6 +228,7 @@ export class BaseService {
         defaults: data,
       });
 
+      // eslint-disable-next-line no-console
       console.log(`[SERVICE] ${this.model.name} ${created ? 'criado' : 'encontrado'}:`, item.id);
       return { item, created };
     } catch (error) {

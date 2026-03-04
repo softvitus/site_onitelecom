@@ -94,7 +94,7 @@ function generateRequestId() {
  */
 export const databaseLogger = (sequelize) => {
   if (process.env.DB_LOGGING !== 'false') {
-    sequelize.addHook('beforeConnect', (config) => {
+    sequelize.addHook('beforeConnect', (_config) => {
       // eslint-disable-next-line no-console
       console.log('[DB] Conectando ao banco de dados...');
     });
@@ -123,16 +123,10 @@ export const coloredStatusLogger = (req, res, next) => {
     const statusCode = res.statusCode;
     let statusColor;
 
-    if (statusCode < 300) {
-      statusColor = '\x1b[32m';
-    } // Verde (sucesso)
-    else if (statusCode < 400) {
-      statusColor = '\x1b[36m';
-    } // Cyan (redirecionamento)
-    else if (statusCode < 500) {
-      statusColor = '\x1b[33m';
-    } // Amarelo (cliente erro)
-    else {
+    if (statusCode < 300) statusColor = '\x1b[32m'; // Verde (sucesso)
+    else if (statusCode < 400) statusColor = '\x1b[36m'; // Cyan (redirecionamento)
+    else if (statusCode < 500) statusColor = '\x1b[33m'; // Amarelo (cliente erro)
+    else statusColor = '\x1b[31m'; // Vermelho (servidor erro)
       statusColor = '\x1b[31m';
     } // Vermelho (servidor erro)
 

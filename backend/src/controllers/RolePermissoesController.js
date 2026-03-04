@@ -218,7 +218,7 @@ export class RolePermissoesController {
       // Construir filtros
       const filters = {};
       if (search) {
-        const models = getModels();
+        const _models = getModels();
         const { Op } = require('sequelize');
         filters[Op.or] = [
           { roleperm_tipo: { [Op.like]: `%${search}%` } },
