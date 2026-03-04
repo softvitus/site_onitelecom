@@ -332,13 +332,13 @@ const MainNav = () => (
             >
               {getTexto('header', 'buttons_assineAgora', 'Assine Agora')}
             </a>
-            <a
+            {/* <a
               href={`tel:${getLink('telefone', 'Support')}`}
               className={styles['phone-number']}
               title={`Ligar: ${getLink('telefone', 'Support Formatted')}`}
             >
               <FaPhone /> {getLink('telefone', 'Support Formatted')}
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
