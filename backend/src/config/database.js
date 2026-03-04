@@ -1,5 +1,8 @@
 import './bootstrap.js';
 
+// eslint-disable-next-line no-console
+const databaseLogger = process.env.DB_LOGGING === 'true' ? console.log : false;
+
 export default {
   development: {
     username: process.env.DB_USER,
@@ -8,7 +11,7 @@ export default {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT,
-    logging: process.env.DB_LOGGING === 'true' ? /* eslint-disable-next-line no-console */ console.log : false,
+    logging: databaseLogger,
     pool: {
       max: 5,
       min: 0,
