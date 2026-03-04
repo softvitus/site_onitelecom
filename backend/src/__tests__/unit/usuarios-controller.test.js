@@ -135,7 +135,7 @@ describe('UsuariosController - Unit Tests', () => {
 
       expect(mockService.findAll).toHaveBeenCalledWith(
         {},
-        { page: 1, limit: 10 }
+        { page: 1, limit: 10 },
       );
     });
 
@@ -420,7 +420,7 @@ describe('UsuariosController - Unit Tests', () => {
 
       expect(mockService.findByType).toHaveBeenCalledWith(
         'gestor',
-        { page: 1, limit: 10 }
+        { page: 1, limit: 10 },
       );
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,

@@ -50,17 +50,17 @@ const rolePermissoesController = new RolePermissoesController();
 
 // GET /public/parceiros - Lista todos os parceiros ativos (sem autenticação)
 router.get('/public/parceiros', (req, res, next) =>
-  parceiroController.getPublicAll(req, res, next)
+  parceiroController.getPublicAll(req, res, next),
 );
 
 // GET /public/parceiros/:id/tema - Busca o tema de um parceiro (sem autenticação)
 router.get('/public/parceiros/:id/tema', (req, res, next) =>
-  parceiroController.getPublicTemaById(req, res, next)
+  parceiroController.getPublicTemaById(req, res, next),
 );
 
 // GET /public/parceiros/proximos/:latitude/:longitude - Busca parceiros próximos (usa geolocalização do modal)
 router.get('/public/parceiros/proximos/:latitude/:longitude', (req, res, next) =>
-  parceiroController.getPublicNearby(req, res, next)
+  parceiroController.getPublicNearby(req, res, next),
 );
 
 // ============================================================
@@ -69,7 +69,7 @@ router.get('/public/parceiros/proximos/:latitude/:longitude', (req, res, next) =
 
 // GET /public/parceiros/por-cidade/:cidade - Busca parceiros ativos por cidade
 router.get('/public/parceiros/por-cidade/:cidade', validateTokenOnly, (req, res, next) =>
-  parceiroController.getPublicByCity(req, res, next)
+  parceiroController.getPublicByCity(req, res, next),
 );
 
 // ============================================================
@@ -78,37 +78,37 @@ router.get('/public/parceiros/por-cidade/:cidade', validateTokenOnly, (req, res,
 
 // POST /auth/login - Autentica usuário e gera token JWT
 router.post('/auth/login', (req, res, next) =>
-  authController.login(req, res, next)
+  authController.login(req, res, next),
 );
 
 // POST /auth/verify - Verifica se um token é válido
 router.post('/auth/verify', (req, res, next) =>
-  authController.verifyToken(req, res, next)
+  authController.verifyToken(req, res, next),
 );
 
 // POST /auth/logout - Faz logout do usuário
 router.post('/auth/logout', authenticate, (req, res, next) =>
-  authController.logout(req, res, next)
+  authController.logout(req, res, next),
 );
 
 // GET /auth/me - Retorna dados do usuário autenticado
 router.get('/auth/me', authenticate, (req, res, next) =>
-  authController.getCurrentUser(req, res, next)
+  authController.getCurrentUser(req, res, next),
 );
 
 // GET /auth/me/permissoes - Retorna permissões do usuário
 router.get('/auth/me/permissoes', authenticate, (req, res, next) =>
-  authController.getMyPermissions(req, res, next)
+  authController.getMyPermissions(req, res, next),
 );
 
 // POST /auth/refresh - Gera novo token JWT
 router.post('/auth/refresh', authenticate, (req, res, next) =>
-  authController.refreshToken(req, res, next)
+  authController.refreshToken(req, res, next),
 );
 
 // POST /auth/change-password - Altera senha do usuário
 router.post('/auth/change-password', authenticate, (req, res, next) =>
-  authController.changePassword(req, res, next)
+  authController.changePassword(req, res, next),
 );
 
 // Rotas para Parceiro

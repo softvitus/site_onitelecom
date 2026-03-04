@@ -49,7 +49,7 @@ export class ElementoService extends BaseService {
             attributes: [],
             through: { attributes: [] },
             required: true,
-          }
+          },
         ],
         required: true,
       });

@@ -23,7 +23,7 @@ export class PermissoesController {
       
       const result = await this.service.findAll(
         {},
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({
@@ -215,7 +215,7 @@ export class PermissoesController {
 
       const result = await this.service.findByModulo(
         modulo,
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({
@@ -239,7 +239,7 @@ export class PermissoesController {
 
       const result = await this.service.findByAcao(
         acao,
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({

@@ -26,7 +26,7 @@ export class ConfigTemaController {
       
       const result = await this.service.findAll(
         {},
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({

@@ -53,7 +53,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'NOT_FOUND',
         'Usuário não encontrado',
-        404
+        404,
       );
     }
 
@@ -117,7 +117,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'INVALID_CREDENTIALS',
         'Email ou senha inválidos',
-        401
+        401,
       );
     }
 
@@ -126,7 +126,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'ACCOUNT_BLOCKED',
         'Conta bloqueada. Contate o administrador.',
-        403
+        403,
       );
     }
 
@@ -134,7 +134,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'ACCOUNT_INACTIVE',
         'Conta inativa',
-        403
+        403,
       );
     }
 
@@ -144,7 +144,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'ACCOUNT_BLOCKED',
         'Muitas tentativas de login. Conta bloqueada.',
-        403
+        403,
       );
     }
 
@@ -156,7 +156,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'INVALID_CREDENTIALS',
         'Email ou senha inválidos',
-        401
+        401,
       );
     }
 
@@ -187,7 +187,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'VALIDATION_ERROR',
         'Gestores e usuários devem estar vinculados a um parceiro',
-        400
+        400,
       );
     }
 
@@ -200,7 +200,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'DUPLICATE_ENTRY',
         'Este email já está cadastrado',
-        409
+        409,
       );
     }
 
@@ -238,7 +238,7 @@ export class UsuarioService extends BaseService {
         throw new ApiError(
           'DUPLICATE_ENTRY',
           'Este email já está cadastrado',
-          409
+          409,
         );
       }
     }
@@ -269,7 +269,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'INVALID_PASSWORD',
         'Senha atual incorreta',
-        401
+        401,
       );
     }
 
@@ -341,7 +341,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'INVALID_INPUT',
         `Tipo inválido. Tipos válidos: ${this.getValidTipos().join(', ')}`,
-        400
+        400,
       );
     }
     return true;
@@ -358,7 +358,7 @@ export class UsuarioService extends BaseService {
       throw new ApiError(
         'INVALID_INPUT',
         `Status inválido. Status válidos: ${this.getValidStatus().join(', ')}`,
-        400
+        400,
       );
     }
     return true;

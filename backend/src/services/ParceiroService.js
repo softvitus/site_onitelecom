@@ -122,7 +122,7 @@ export class ParceiroService extends BaseService {
 
     return this.findAll(
       { par_cidade: cities },
-      pagination
+      pagination,
     );
   }
 
@@ -174,7 +174,7 @@ export class ParceiroService extends BaseService {
           latitude,
           longitude,
           parseFloat(parceiro.par_latitude),
-          parseFloat(parceiro.par_longitude)
+          parseFloat(parceiro.par_longitude),
         ),
       }))
       .filter(p => p.distancia <= radiusKm)

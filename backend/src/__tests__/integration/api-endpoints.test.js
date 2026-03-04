@@ -195,7 +195,7 @@ describe('API Endpoints - Fluxos de Integração', () => {
 
       // Remover
       rolesPermissoes.gestor = rolesPermissoes.gestor.filter(
-        (p) => p !== 'relatorios_exportar'
+        (p) => p !== 'relatorios_exportar',
       );
 
       expect(rolesPermissoes.gestor).not.toContain('relatorios_exportar');

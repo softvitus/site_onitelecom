@@ -27,7 +27,9 @@ export const validate = (schema) => {
         }
 
         // Se não é obrigatório e está vazio, pular validações
-        if (!value) continue;
+        if (!value) {
+          continue;
+        }
 
         // Verificar tipo
         if (rules.type) {

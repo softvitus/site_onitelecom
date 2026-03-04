@@ -19,7 +19,7 @@ export const authMiddleware = (req, res, next) => {
       throw new ApiError(
         'UNAUTHORIZED',
         'Token de autenticação não fornecido',
-        401
+        401,
       );
     }
 
@@ -30,7 +30,7 @@ export const authMiddleware = (req, res, next) => {
       throw new ApiError(
         'INVALID_TOKEN_FORMAT',
         'Formato de token inválido. Use: Bearer <token>',
-        401
+        401,
       );
     }
 
@@ -39,7 +39,7 @@ export const authMiddleware = (req, res, next) => {
     // Verificar e decodificar token
     const decoded = jwt.verify(
       token,
-      process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+      process.env.JWT_SECRET || 'your-secret-key-change-in-production',
     );
 
     // Adicionar dados do usuário ao request
@@ -52,8 +52,8 @@ export const authMiddleware = (req, res, next) => {
         new ApiError(
           'INVALID_TOKEN',
           'Token inválido',
-          401
-        )
+          401,
+        ),
       );
     }
 
@@ -62,8 +62,8 @@ export const authMiddleware = (req, res, next) => {
         new ApiError(
           'TOKEN_EXPIRED',
           'Token expirado',
-          401
-        )
+          401,
+        ),
       );
     }
 
@@ -82,7 +82,7 @@ export const requireRole = (allowedRoles = []) => {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
@@ -90,7 +90,7 @@ export const requireRole = (allowedRoles = []) => {
         throw new ApiError(
           'FORBIDDEN',
           'Acesso negado. Permissão insuficiente.',
-          403
+          403,
         );
       }
 
@@ -110,7 +110,7 @@ export const requireAdmin = (req, res, next) => {
       throw new ApiError(
         'UNAUTHORIZED',
         'Usuário não autenticado',
-        401
+        401,
       );
     }
 
@@ -118,7 +118,7 @@ export const requireAdmin = (req, res, next) => {
       throw new ApiError(
         'FORBIDDEN',
         'Acesso restrito a administradores',
-        403
+        403,
       );
     }
 
@@ -137,7 +137,7 @@ export const requireGestor = (req, res, next) => {
       throw new ApiError(
         'UNAUTHORIZED',
         'Usuário não autenticado',
-        401
+        401,
       );
     }
 
@@ -145,7 +145,7 @@ export const requireGestor = (req, res, next) => {
       throw new ApiError(
         'FORBIDDEN',
         'Acesso restrito a gestores',
-        403
+        403,
       );
     }
 
@@ -168,7 +168,7 @@ export const validateTokenOnly = (req, res, next) => {
       throw new ApiError(
         'UNAUTHORIZED',
         'Token de autenticação não fornecido',
-        401
+        401,
       );
     }
 
@@ -179,7 +179,7 @@ export const validateTokenOnly = (req, res, next) => {
       throw new ApiError(
         'INVALID_TOKEN_FORMAT',
         'Formato de token inválido. Use: Bearer <token>',
-        401
+        401,
       );
     }
 
@@ -188,7 +188,7 @@ export const validateTokenOnly = (req, res, next) => {
     // Verificar e decodificar token
     const decoded = jwt.verify(
       token,
-      process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+      process.env.JWT_SECRET || 'your-secret-key-change-in-production',
     );
 
     // Adicionar dados do usuário ao request
@@ -201,8 +201,8 @@ export const validateTokenOnly = (req, res, next) => {
         new ApiError(
           'INVALID_TOKEN',
           'Token inválido',
-          401
-        )
+          401,
+        ),
       );
     }
 
@@ -211,8 +211,8 @@ export const validateTokenOnly = (req, res, next) => {
         new ApiError(
           'TOKEN_EXPIRED',
           'Token expirado',
-          401
-        )
+          401,
+        ),
       );
     }
 

@@ -24,7 +24,7 @@ export class UsuariosController {
       
       const result = await this.service.findAll(
         {},
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       // Remover senhas da resposta
@@ -267,7 +267,7 @@ export class UsuariosController {
 
       const result = await this.service.findByType(
         tipo,
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       const dados = result.rows.map(u => {

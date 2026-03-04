@@ -32,7 +32,7 @@ export class ParceiroController {
       
       const result = await this.service.findAll(
         filtros,
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({
@@ -230,7 +230,7 @@ export class ParceiroController {
 
       const result = await this.service.findByCity(
         cidade,
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({
@@ -304,7 +304,7 @@ export class ParceiroController {
         parseFloat(latitude),
         parseFloat(longitude),
         parseFloat(radius),
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({
@@ -375,7 +375,7 @@ export class ParceiroController {
 
       const result = await this.service.findByCity(
         cidade,
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       // Filtrar apenas parceiros ativos e retornar dados públicos
@@ -421,7 +421,7 @@ export class ParceiroController {
         parseFloat(latitude),
         parseFloat(longitude),
         parseFloat(radius),
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       // Filtrar apenas parceiros ativos e retornar dados públicos

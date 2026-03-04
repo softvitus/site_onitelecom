@@ -68,7 +68,7 @@ export class AuditoriaService {
       console.log(
         `[AUDITORIA] ${dados.acao.toUpperCase()} ${dados.entidade}:${
           dados.entidadeId || 'novo'
-        } por usuário ${dados.usuarioId}`
+        } por usuário ${dados.usuarioId}`,
       );
 
       return auditoria;
@@ -259,7 +259,7 @@ export class AuditoriaService {
           } catch (err) {
             return item;
           }
-        })
+        }),
       );
 
       // Total de erros

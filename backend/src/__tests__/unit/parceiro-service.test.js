@@ -67,7 +67,7 @@ describe('ParceiroService - Unit Tests', () => {
       expect(mockModel.findAndCountAll).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({ par_status: 'ativo' }),
-        })
+        }),
       );
     });
 
@@ -89,7 +89,7 @@ describe('ParceiroService - Unit Tests', () => {
         expect.objectContaining({
           limit: 20,
           offset: 20, // (2-1)*20
-        })
+        }),
       );
     });
   });
@@ -146,7 +146,7 @@ describe('ParceiroService - Unit Tests', () => {
       expect(mockModel.findAndCountAll).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({ par_status: 'ativo' }),
-        })
+        }),
       );
     });
   });
@@ -163,7 +163,7 @@ describe('ParceiroService - Unit Tests', () => {
       expect(mockModel.findAndCountAll).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({ par_cidade: 'São Paulo' }),
-        })
+        }),
       );
     });
   });
@@ -255,7 +255,7 @@ describe('ParceiroService - Unit Tests', () => {
       const mockItem = { 
         par_id: '123', 
         ...updateData,
-        update: jest.fn().mockResolvedValue(true)
+        update: jest.fn().mockResolvedValue(true),
       };
 
       mockModel.findByPk.mockResolvedValue(mockItem);
@@ -328,7 +328,7 @@ describe('ParceiroService - Unit Tests', () => {
       expect(mockModel.findAndCountAll).toHaveBeenCalledWith(
         expect.objectContaining({
           limit: 10,
-        })
+        }),
       );
     });
   });

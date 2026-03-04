@@ -119,7 +119,7 @@ describe('PermissoesController - Unit Tests', () => {
 
       expect(mockService.findAll).toHaveBeenCalledWith(
         {},
-        { page: 1, limit: 50 }
+        { page: 1, limit: 50 },
       );
     });
 
@@ -229,7 +229,7 @@ describe('PermissoesController - Unit Tests', () => {
           acao: 'criar',
           entidade: 'permissao',
           status: 'sucesso',
-        })
+        }),
       );
     });
 
@@ -304,7 +304,7 @@ describe('PermissoesController - Unit Tests', () => {
           acao: 'atualizar',
           entidade: 'permissao',
           status: 'sucesso',
-        })
+        }),
       );
     });
   });
@@ -365,7 +365,7 @@ describe('PermissoesController - Unit Tests', () => {
 
       expect(mockService.findByModulo).toHaveBeenCalledWith(
         'tema',
-        { page: 1, limit: 50 }
+        { page: 1, limit: 50 },
       );
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
@@ -387,7 +387,7 @@ describe('PermissoesController - Unit Tests', () => {
 
       expect(mockService.findByModulo).toHaveBeenCalledWith(
         'tema',
-        { page: 1, limit: 50 }
+        { page: 1, limit: 50 },
       );
     });
   });
@@ -413,7 +413,7 @@ describe('PermissoesController - Unit Tests', () => {
 
       expect(mockService.findByAcao).toHaveBeenCalledWith(
         'editar',
-        { page: 1, limit: 50 }
+        { page: 1, limit: 50 },
       );
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
@@ -435,7 +435,7 @@ describe('PermissoesController - Unit Tests', () => {
 
       expect(mockService.findByAcao).toHaveBeenCalledWith(
         'editar',
-        { page: 2, limit: 50 }
+        { page: 2, limit: 50 },
       );
     });
   });

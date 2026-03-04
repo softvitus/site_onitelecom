@@ -67,7 +67,7 @@ export default function (sequelize) {
       tableName: '0060_Usuarios',
       timestamps: true,
       underscored: false,
-    }
+    },
   );
 
   /**

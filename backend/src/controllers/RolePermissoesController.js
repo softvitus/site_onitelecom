@@ -43,7 +43,7 @@ export class RolePermissoesController {
 
       const rolePermissao = await this.service.atribuirPermissao(
         tipo,
-        permissaoId
+        permissaoId,
       );
 
       await AuditoriaService.registrar({
@@ -96,7 +96,7 @@ export class RolePermissoesController {
 
       const rolePermissao = await this.service.removerPermissao(
         tipo,
-        permissaoId
+        permissaoId,
       );
 
       if (!rolePermissao) {
@@ -368,12 +368,12 @@ export class RolePermissoesController {
       if (permissaoId && permissaoId !== rolePermissao.roleperm_perm_id) {
         await this.service.removerPermissao(
           rolePermissao.roleperm_tipo,
-          rolePermissao.roleperm_perm_id
+          rolePermissao.roleperm_perm_id,
         );
 
         const novaRolePermissao = await this.service.atribuirPermissao(
           tipo || rolePermissao.roleperm_tipo,
-          permissaoId
+          permissaoId,
         );
 
         await AuditoriaService.registrar({
@@ -433,7 +433,7 @@ export class RolePermissoesController {
 
       await this.service.removerPermissao(
         rolePermissao.roleperm_tipo,
-        rolePermissao.roleperm_perm_id
+        rolePermissao.roleperm_perm_id,
       );
 
       await AuditoriaService.registrar({

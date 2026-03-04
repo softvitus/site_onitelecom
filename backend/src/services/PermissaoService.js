@@ -32,7 +32,7 @@ export class PermissaoService extends BaseService {
     'features',
     'config_tema',
     'role_permissoes',
-    'permissoes'
+    'permissoes',
   ];
 
   /**
@@ -56,7 +56,7 @@ export class PermissaoService extends BaseService {
       throw new ApiError(
         'NOT_FOUND',
         'Permissão não encontrada',
-        404
+        404,
       );
     }
 
@@ -101,7 +101,7 @@ export class PermissaoService extends BaseService {
       throw new ApiError(
         'NOT_FOUND',
         `Permissão não encontrada para ${modulo}/${acao}`,
-        404
+        404,
       );
     }
 

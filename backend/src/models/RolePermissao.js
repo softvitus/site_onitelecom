@@ -32,7 +32,7 @@ export default function (sequelize) {
       tableName: '0062_RolePermissoes',
       timestamps: true,
       underscored: false,
-    }
+    },
   );
 
   /**

@@ -36,7 +36,7 @@ export class ConteudoController {
       
       const result = await this.service.findAll(
         filtros,
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({

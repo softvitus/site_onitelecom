@@ -29,7 +29,7 @@ export const generalLimiter = rateLimit({
  * Em dev/test: 100 tentativas por 15 minutos
  * Previne força bruta
  */
-export const authLimiter = rateLimit({
+export const _authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: isDev ? 100 : 5, // tentativas
   message: 'muitas-tentativas-login',
@@ -42,7 +42,7 @@ export const authLimiter = rateLimit({
  * Limitador para API endpoints - 1000 requisições por hora (produção)
  * Em dev/test: 10000 requisições por hora
  */
-export const apiLimiter = rateLimit({
+export const _apiLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hora
   max: isDev ? 10000 : 1000,
   message: 'limite-api-excedido',

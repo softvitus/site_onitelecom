@@ -3,7 +3,7 @@
  * @description Middleware de tratamento de erros - centraliza gerenciamento de erros da aplicação
  */
 
-export const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, _next) => {
   const isDevelopment = process.env.NODE_ENV === 'development';
 
   // Status code: usar do erro ou 500
@@ -25,6 +25,7 @@ export const errorHandler = (err, req, res, next) => {
     errorResponse.error.details = err;
   }
 
+  // eslint-disable-next-line no-console
   console.error('[ERROR]', {
     status: statusCode,
     message: err.message,
@@ -40,7 +41,7 @@ export const errorHandler = (err, req, res, next) => {
 /**
  * Catch-All Middleware para rotas não encontradas
  */
-export const notFoundHandler = (req, res, next) => {
+export const notFoundHandler = (req, res, _next) => {
   res.status(404).json({
     success: false,
     error: {

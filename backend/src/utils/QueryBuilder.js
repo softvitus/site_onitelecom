@@ -168,7 +168,7 @@ export class QueryBuilder {
   toSQL() {
     return this.model.sequelize.getQueryInterface().queryGenerator.selectQuery(
       this.model.tableName,
-      this.query
+      this.query,
     );
   }
 }

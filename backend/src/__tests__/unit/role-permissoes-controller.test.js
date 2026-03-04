@@ -164,7 +164,7 @@ describe('RolePermissoesController - Unit Tests', () => {
           acao: 'atribuir',
           entidade: 'role_permissao',
           status: 'sucesso',
-        })
+        }),
       );
     });
 
@@ -220,7 +220,7 @@ describe('RolePermissoesController - Unit Tests', () => {
           acao: 'remover',
           entidade: 'role_permissao',
           status: 'sucesso',
-        })
+        }),
       );
     });
 
@@ -317,7 +317,7 @@ describe('RolePermissoesController - Unit Tests', () => {
           acao: 'substituir_permissoes',
           entidade: 'role_permissao',
           status: 'sucesso',
-        })
+        }),
       );
     });
 

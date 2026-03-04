@@ -31,7 +31,7 @@ describe('Concurrency - Simultaneous Requests', () => {
       }),
       findByPk: jest.fn().mockResolvedValue({ id: '1', name: 'Test' }),
       create: jest.fn().mockImplementation((data) =>
-        Promise.resolve({ id: Math.random(), ...data })
+        Promise.resolve({ id: Math.random(), ...data }),
       ),
       update: jest.fn().mockResolvedValue([1]),
       destroy: jest.fn().mockResolvedValue(1),

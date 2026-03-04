@@ -37,7 +37,7 @@ export default function (sequelize) {
           'usuario',
           'parceiro',
           'relatorios',
-          'auditoria'
+          'auditoria',
         ),
         allowNull: false,
       },
@@ -50,7 +50,7 @@ export default function (sequelize) {
       tableName: '0061_Permissoes',
       timestamps: true,
       underscored: false,
-    }
+    },
   );
 
   /**

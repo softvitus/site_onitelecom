@@ -120,7 +120,7 @@ describe('Autenticação - Unit Tests', () => {
     });
 
     it('deve bloquear conta após 5 tentativas', () => {
-      let tentativas = 5;
+      const tentativas = 5;
       const MAX_TENTATIVAS = 5;
       const contaBloqueada = tentativas >= MAX_TENTATIVAS;
 
