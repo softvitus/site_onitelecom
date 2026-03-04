@@ -636,7 +636,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
+          username: root
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
           script: |
@@ -649,19 +649,8 @@ jobs:
               exit 0
             fi
 
-            # Download and run setup script as root
-            # Try with full path sudo, fallback to su if needed
-            if [ -x /usr/bin/sudo ]; then
-              /usr/bin/sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash'
-            elif command -v sudo &>/dev/null; then
-              sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash'
-            else
-              echo "⚠️  sudo not found, will try downloading script and checking permissions..."
-              curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash || {
-                echo "❌ Failed to run without sudo. Need root permissions for Nginx setup."
-                exit 1
-              }
-            fi
+            # Download and run setup script directly as root
+            bash -c 'curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash'
 
             echo "✅ Nginx + SSL setup completed"
         continue-on-error: true
