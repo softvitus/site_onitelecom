@@ -101,7 +101,7 @@ certbot --nginx \
   -d www.backend.onitelecom.com.br \
   --non-interactive \
   --agree-tos \
-  -m seu-email@example.com \
+  -m softvirtus.server@gmail.com \
   --redirect
 
 # Setup auto-renewal
