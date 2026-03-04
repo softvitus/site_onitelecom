@@ -19,6 +19,12 @@ env:
   JWT_SECRET: test-secret-key
   NODE_VERSION: '20'
 
+permissions:
+  contents: read
+  security-events: write
+  issues: write
+  pull-requests: write
+
 jobs:
   # ─────────────────────────────────────────────────────────────
   # BACKEND - Lint, Test, Security, Build
@@ -350,9 +356,6 @@ jobs:
   codeql:
     name: CodeQL Analysis
     runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -463,10 +466,6 @@ jobs:
   status:
     name: Pipeline Status
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-      pull-requests: write
     needs:
       - backend-lint
       - backend-test
