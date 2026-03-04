@@ -650,7 +650,18 @@ jobs:
             fi
 
             # Download and run setup script as root
-            sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash'
+            # Try with full path sudo, fallback to su if needed
+            if [ -x /usr/bin/sudo ]; then
+              /usr/bin/sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash'
+            elif command -v sudo &>/dev/null; then
+              sudo bash -c 'curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash'
+            else
+              echo "⚠️  sudo not found, will try downloading script and checking permissions..."
+              curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash || {
+                echo "❌ Failed to run without sudo. Need root permissions for Nginx setup."
+                exit 1
+              }
+            fi
 
             echo "✅ Nginx + SSL setup completed"
         continue-on-error: true
