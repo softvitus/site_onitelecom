@@ -636,7 +636,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
-          username: root
+          username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
           script: |
@@ -649,8 +649,8 @@ jobs:
               exit 0
             fi
 
-            # Download and run setup script directly as root
-            bash -c 'curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash'
+            # Download and run setup script as root using su
+            su root -c 'bash -c "curl -fsSL https://raw.githubusercontent.com/softvitus/site_onitelecom/main/scripts/setup-nginx-ssl.sh | bash"'
 
             echo "✅ Nginx + SSL setup completed"
         continue-on-error: true
