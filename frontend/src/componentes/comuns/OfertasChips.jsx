@@ -195,7 +195,7 @@ const PlanoCard = ({ plano, index }) => (
 const PlanosGrid = ({ planos }) => (
   <div
     className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"
-    role="list"
+   
     aria-label="Lista de planos disponíveis"
   >
     {planos.map((plano, index) => (
@@ -227,7 +227,7 @@ const Ofertaschips = () => {
     <section
       id={SECTION_ID}
       className={styles['ofertas-container']}
-      role="region"
+     
       aria-labelledby="ofertas-chips-title"
     >
       {/* Cabeçalho */}
@@ -240,3 +240,5 @@ const Ofertaschips = () => {
 };
 
 export default Ofertaschips;
+
+

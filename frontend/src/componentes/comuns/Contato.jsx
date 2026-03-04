@@ -71,23 +71,6 @@ const isElementEnabled = (elementName) => {
 };
 
 /**
- * Obtém um texto dinâmico da API
- * @param {string} categoria - Categoria do texto
- * @param {string} chave - Chave do texto
- * @param {string} fallback - Valor padrão
- * @returns {string} Valor do texto ou fallback
- */
-const getTextoLocal = (categoria, chave, fallback = '') => {
-  try {
-    const texto = getTemaTexto(categoria, chave);
-    return texto?.valor || fallback;
-  } catch (error) {
-    console.warn(`Texto não encontrado: ${categoria}.${chave}`);
-    return fallback;
-  }
-};
-
-/**
  * Valida formato de email
  * @param {string} email - Email a validar
  * @returns {boolean} true se email é válido
@@ -377,7 +360,7 @@ const MapSection = ({ mapRef }) =>
       <div
         className={styles['map-container']}
         ref={mapRef}
-        role="region"
+       
         aria-label="Mapa interativo de localizações dos parceiros"
       />
       <p className={styles['map-attribution']}>
@@ -639,3 +622,4 @@ const Contato = () => {
 };
 
 export default Contato;
+

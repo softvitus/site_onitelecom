@@ -314,7 +314,7 @@ const OffersGrid = ({ offers }) => (
  * @returns {React.ReactElement}
  */
 const CategorySection = ({ category, offers }) => (
-  <section className={styles[category.id]} role="region" aria-labelledby={category.id}>
+  <section className={styles[category.id]} aria-labelledby={category.id}>
     {/* Header da seção */}
     <div className={styles['section-headline']}>
       <div className={styles['container']}>

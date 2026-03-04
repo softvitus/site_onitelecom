@@ -187,9 +187,6 @@ const extrairLogoDoTema = (imagensArray) => {
     return null;
   }
 
-  // Filtrar apenas logos (categoria 'logos' - com S)
-  const todasLogos = imagensArray.filter((img) => img.categoria === 'logos');
-
   // Prioridade 1: Logo "Main"
   const logoMain = imagensArray.find(
     (img) => img.categoria === 'logos' && img.nome?.toLowerCase() === 'main'

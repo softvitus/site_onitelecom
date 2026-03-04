@@ -110,7 +110,7 @@ const FaixaPlanos = () => {
 
   return (
     <div className="container">
-      <div className={styles['faixa']} role="region" aria-label="Monte seu próprio plano">
+      <div className={styles['faixa']} aria-label="Monte seu próprio plano">
         {/* Partículas decorativas */}
         <ParticlesBackground />
 
@@ -130,3 +130,4 @@ const FaixaPlanos = () => {
 };
 
 export default FaixaPlanos;
+

@@ -15,7 +15,6 @@ import {
   getTexto,
   getImagem,
   getTemaConteudosByCategoria,
-  getTemaImagensByCategoria,
 } from '../../servicos/tema';
 
 // ═════════════════════════════════════════════════════════════════════════════════════
@@ -144,7 +143,7 @@ const ServicosEssenciais = () => {
     <div
       id={SECTION_ID}
       className={styles['container-custom']}
-      role="region"
+     
       aria-labelledby="servicos-essenciais-title"
     >
       {/* Título da seção */}
@@ -157,3 +156,4 @@ const ServicosEssenciais = () => {
 };
 
 export default ServicosEssenciais;
+

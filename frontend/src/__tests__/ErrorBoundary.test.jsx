@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ErrorBoundary from '../componentes/ErrorBoundary/ErrorBoundary';
 
 // Componente que propositalmente lança um erro

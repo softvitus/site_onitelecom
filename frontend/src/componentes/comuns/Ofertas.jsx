@@ -421,7 +421,7 @@ const Ofertas = () => {
         <div
           className={styles['card-container']}
           style={{ transform: `translateX(-${currentIndex * (100 / visibleCards)}%)` }}
-          role="region"
+         
           aria-label="Carrossel de ofertas"
         >
           {/* Renderização dos cards */}
@@ -446,3 +446,4 @@ const Ofertas = () => {
 };
 
 export default Ofertas;
+

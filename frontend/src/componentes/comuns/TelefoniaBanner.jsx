@@ -14,7 +14,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMobileAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import styles from '../../estilos/componentes/comuns/TelefoniaBanner.module.css';
-import { getTexto, getImagem, getLink, getTemaTextosByCategoria } from '../../servicos/tema';
+import { getImagem, getLink, getTemaTextosByCategoria } from '../../servicos/tema';
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // 🔧 EFEITOS
@@ -132,7 +132,7 @@ const TelefoniaBanner = () => {
     <div
       id={SECTION_ID}
       className={styles['banner-container']}
-      role="region"
+     
       aria-labelledby="telefonia-title"
     >
       {/* Imagem de Fundo */}
@@ -166,3 +166,4 @@ const TelefoniaBanner = () => {
 };
 
 export default TelefoniaBanner;
+
