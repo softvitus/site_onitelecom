@@ -130,7 +130,7 @@ jobs:
   # OWASP Dependency Check
   # ─────────────────────────────────────────────────────────────
 
-  dependency-check:
+  owasp-dependency-check:
     name: OWASP Dependency Check
     runs-on: ubuntu-latest
     steps:
@@ -163,7 +163,7 @@ jobs:
     name: Generate Security Report
     runs-on: ubuntu-latest
     if: always()
-    needs: [dependency-check, codeql, trivy-scan, secret-scan]
+    needs: [dependency-check, codeql, trivy-scan, secret-scan, owasp-dependency-check]
     steps:
       - uses: actions/checkout@v4
 
@@ -176,6 +176,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Scan Results" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Dependency Check: ${{ needs.dependency-check.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ OWASP Dependency Check: ${{ needs.owasp-dependency-check.result }}" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ CodeQL Analysis: ${{ needs.codeql.result }}" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Trivy Scan: ${{ needs.trivy-scan.result }}" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Secret Scanning: ${{ needs.secret-scan.result }}" >> $GITHUB_STEP_SUMMARY
