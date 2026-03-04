@@ -236,7 +236,7 @@ describe('PermissoesController - Unit Tests', () => {
     it('deve chamar next com erro quando createPayload falha', async () => {
       const error = new Error('Validation error');
       mockService.createPayload.mockRejectedValue(error);
-      mockReq.body = { perm_nome: 'invalid' };
+      mockReq.body = { perm_modulo: 'usuario', perm_acao: 'criar' };
 
       await controller.create(mockReq, mockRes, mockNext);
 

@@ -97,19 +97,23 @@ export class ParceiroController {
         data: item,
       });
     } catch (error) {
-      // Registrar auditoria de erro na criação
-      await AuditoriaService.registrar({
-        usuarioId: req.user?.id,
-        acao: 'criar',
-        entidade: 'parceiro',
-        entidadeId: null,
-        dadosAnteriores: null,
-        dadosNovos: req.body,
-        ip: req.ip || req.connection.remoteAddress,
-        userAgent: req.get('user-agent'),
-        status: 'erro',
-        mensagemErro: error.message || 'Erro ao criar parceiro',
-      });
+      try {
+        // Registrar auditoria de erro na criação
+        await AuditoriaService.registrar({
+          usuarioId: req.user?.id,
+          acao: 'criar',
+          entidade: 'parceiro',
+          entidadeId: null,
+          dadosAnteriores: null,
+          dadosNovos: req.body,
+          ip: req.ip || req.connection.remoteAddress,
+          userAgent: req.get('user-agent'),
+          status: 'erro',
+          mensagemErro: error.message || 'Erro ao criar parceiro',
+        });
+      } catch {
+        // Ignora erros ao registrar auditoria
+      }
       next(error);
     }
   }

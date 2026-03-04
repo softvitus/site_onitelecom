@@ -107,18 +107,22 @@ export class PermissoesController {
         data: item,
       });
     } catch (error) {
-      await AuditoriaService.registrar({
-        usuarioId: req.user?.id,
-        acao: 'criar',
-        entidade: 'permissao',
-        entidadeId: null,
-        dadosAnteriores: null,
-        dadosNovos: req.body,
-        ip: req.ip || req.connection.remoteAddress,
-        userAgent: req.get('user-agent'),
-        status: 'erro',
-        mensagemErro: error.message,
-      });
+      try {
+        await AuditoriaService.registrar({
+          usuarioId: req.user?.id,
+          acao: 'criar',
+          entidade: 'permissao',
+          entidadeId: null,
+          dadosAnteriores: null,
+          dadosNovos: req.body,
+          ip: req.ip || req.connection.remoteAddress,
+          userAgent: req.get('user-agent'),
+          status: 'erro',
+          mensagemErro: error.message,
+        });
+      } catch {
+        // Ignora erros ao registrar auditoria
+      }
 
       next(error);
     }
