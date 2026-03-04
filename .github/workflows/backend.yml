@@ -160,8 +160,14 @@ jobs:
       - name: Push Docker image
         if: github.event_name == 'push'
         run: |
+          if [ -z "$DOCKER_USERNAME" ]; then
+            echo "Docker Hub credentials not configured. Skipping push."
+            exit 0
+          fi
           docker tag site-oni-backend:latest ${{ secrets.DOCKER_USERNAME }}/site-oni-backend:latest
           docker tag site-oni-backend:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/site-oni-backend:${{ github.sha }}
           docker push ${{ secrets.DOCKER_USERNAME }}/site-oni-backend:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/site-oni-backend:${{ github.sha }}
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         continue-on-error: true
