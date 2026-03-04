@@ -24,7 +24,7 @@ import {
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from '../../estilos/componentes/comuns/Contato.module.css';
-import { getTemaPaginas, getTemaTexto, getTexto, getLink } from '../../servicos/tema';
+import { getTemaPaginas, getTexto, getLink } from '../../servicos/tema';
 import { buscarTodosParceiros } from '../../servicos/parceiro';
 
 // ═════════════════════════════════════════════════════════════════════════════════════
@@ -65,6 +65,9 @@ const isElementEnabled = (elementName) => {
         el.nome === elementName && el.habilitado === true && el.habilitadoNoComponente === true
     );
   } catch (error) {
+    // eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console
+
     console.error(`Erro ao verificar elemento '${elementName}':`, error);
     return false;
   }
@@ -433,6 +436,8 @@ const Contato = () => {
           setParceiros(parceirosComLocalizacao);
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
+
         console.error('Erro ao carregar parceiros:', error);
       }
     };
@@ -493,6 +498,8 @@ const Contato = () => {
 
       mapInstanceRef.current = map;
     } catch (error) {
+      // eslint-disable-next-line no-console
+
       console.error('Erro ao inicializar mapa:', error);
     }
   }, [parceiros]);
@@ -578,6 +585,8 @@ const Contato = () => {
           setFormMessage({ type: null, text: '' });
         }, MESSAGE_TIMEOUT);
       } catch (error) {
+        // eslint-disable-next-line no-console
+
         console.error('Erro ao enviar:', error);
         setFormMessage({
           type: 'error',
@@ -622,4 +631,5 @@ const Contato = () => {
 };
 
 export default Contato;
+
 

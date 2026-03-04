@@ -61,7 +61,7 @@ const getServiceCards = () => {
  * @returns {React.ReactElement}
  */
 const SectionHeader = () => (
-  <h2 className={styles['clique']} role="heading" aria-level="2">
+  <h2 className={styles['clique']} aria-level="2">
     {getTexto('servicosEssenciais', 'title', 'Soluções rápidas ao seu alcance')}
   </h2>
 );

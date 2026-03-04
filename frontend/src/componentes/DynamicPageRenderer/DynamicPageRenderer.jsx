@@ -151,6 +151,7 @@ const logger = (type, message, data = null, debug = false) => {
 
   const icons = { info: '[OK]', warn: '[WARN]', error: '[ERROR]' };
 
+  // eslint-disable-next-line no-console
   console[type](`%c${icons[type]} ${message}`, styles[type], data || '');
 };
 

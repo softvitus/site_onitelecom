@@ -13,7 +13,7 @@
 
 import React from 'react';
 import styles from '../../estilos/componentes/comuns/QuemSomos.module.css';
-import { getTexto, getImagem, getTemaTextosByCategoria } from '../../servicos/tema';
+import { getImagem, getTemaTextosByCategoria } from '../../servicos/tema';
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // 🔧 EFEITOS

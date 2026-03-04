@@ -159,6 +159,8 @@ const isElementEnabled = (elementName) => {
         el.nome === elementName && el.habilitado === true && el.habilitadoNoComponente === true
     );
   } catch (error) {
+    // eslint-disable-next-line no-console
+
     console.error(`Erro ao verificar elemento '${elementName}':`, error);
     return false;
   }
@@ -227,7 +229,7 @@ const Footer = () => {
         setSelectedCity(stateCities[0].id);
       }
     }
-  }, [selectedState]);
+  }, [selectedState, selectedCity]);
 
   /**
    * Detecta e persiste geolocalização do usuário
@@ -534,4 +536,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
 

@@ -113,6 +113,8 @@ const getMenuItemsFromAPI = (menuName) => {
       external: item.external || false,
     }));
   } catch (error) {
+    // eslint-disable-next-line no-console
+
     console.error(`Erro ao obter menu '${menuName}':`, error);
     return [];
   }
@@ -143,6 +145,8 @@ const getMenuItems = () => {
         iconName: pagina.icone, // Guarda o nome do ícone da API
       }));
   } catch (error) {
+    // eslint-disable-next-line no-console
+
     console.error('Erro ao obter itens do menu:', error);
     return [];
   }
@@ -169,6 +173,8 @@ const isElementEnabled = (elementName) => {
         el.nome === elementName && el.habilitado === true && el.habilitadoNoComponente === true
     );
   } catch (error) {
+    // eslint-disable-next-line no-console
+
     console.error(`Erro ao verificar elemento '${elementName}':`, error);
     return false;
   }
@@ -487,3 +493,4 @@ const Header = () => {
 };
 
 export default Header;
+

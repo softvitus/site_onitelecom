@@ -372,6 +372,8 @@ const CardsEntretenimento = () => {
    */
   const handleSearch = useCallback(() => {
     // TODO: Implementar busca nas ofertas
+    // eslint-disable-next-line no-console
+
     console.log('Buscando por:', searchTerm);
   }, [searchTerm]);
 
@@ -402,3 +404,4 @@ const CardsEntretenimento = () => {
 };
 
 export default CardsEntretenimento;
+

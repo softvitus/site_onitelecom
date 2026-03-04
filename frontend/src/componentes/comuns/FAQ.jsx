@@ -401,7 +401,7 @@ function FAQ() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [searchTerm]);
+  }, [searchTerm, categories]);
 
   // ─────────────────────────────────────────────────────────────────────────
   // Handlers

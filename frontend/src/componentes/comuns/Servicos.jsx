@@ -132,13 +132,14 @@ const ServicoCard = ({ servico, index }) => (
       <ServicoRecursos recursos={servico.recursos} />
 
       {/* Botão de ação */}
-      <a
-        href="#"
+      <button
         className={`btn ${styles['botao-oni']} mt-3`}
         aria-label={`Saiba mais sobre ${servico.titulo}`}
+        // eslint-disable-next-line no-console
+        onClick={() => console.log('Saiba mais:', servico.titulo)}
       >
         {getTexto('servicos', 'buttonText', 'Saiba Mais')}
-      </a>
+      </button>
     </div>
   </div>
 );

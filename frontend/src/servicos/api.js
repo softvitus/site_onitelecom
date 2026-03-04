@@ -221,7 +221,7 @@ export const checkApiHealth = async (timeout = 5000) => {
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const response = await fetch(`${API_BASE_URL}/public/parceiros`, {
+    await fetch(`${API_BASE_URL}/public/parceiros`, {
       method: 'GET',
       signal: controller.signal,
     });
@@ -257,7 +257,7 @@ export const checkApiHealth = async (timeout = 5000) => {
 // EXPORTS
 // ============================================================================
 
-export default {
+const apiService = {
   API_BASE_URL,
   get,
   post,
@@ -267,5 +267,7 @@ export default {
   checkApiHealth,
   isConnectionError,
 };
+
+export default apiService;
 
 export { API_BASE_URL, DEFAULT_HEADERS };
