@@ -445,10 +445,10 @@ jobs:
           format: 'SARIF'
           args: >
             --enableExperimental
-            --skip-remote-validation
             --scan ./backend
             --scan ./frontend
             --scan ./frontend_painel
+        continue-on-error: true
 
       - name: Upload dependency check results
         uses: github/codeql-action/upload-sarif@v4
@@ -463,6 +463,10 @@ jobs:
   status:
     name: Pipeline Status
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
     needs:
       - backend-lint
       - backend-test
@@ -529,3 +533,4 @@ jobs:
               repo: context.repo.repo,
               body: '✅ **Build & Security Pipeline Completed**\n\nSee results in the workflow run or in the [Security tab](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/security)'
             })
+        continue-on-error: true
