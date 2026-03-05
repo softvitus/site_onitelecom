@@ -15,15 +15,24 @@ export class ParceiroController {
 
   /**
    * GET /api/parceiros
-   * Lista todos os parceiros com paginação
+   * Lista parceiros com paginação
+   * Filtra apenas o parceiro do usuário se não for admin
    */
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
       
+      // Construir filtros
+      const filtros = {};
+      
+      // Se não é admin e tem parceiroId, mostrar apenas seu parceiro
+      if (req.user?.tipo !== 'admin' && req.user?.parceiroId) {
+        filtros.par_id = req.user.parceiroId;
+      }
+      
       const result = await this.service.findAll(
-        {},
-        { page: parseInt(page), limit: parseInt(limit) }
+        filtros,
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({
@@ -88,19 +97,23 @@ export class ParceiroController {
         data: item,
       });
     } catch (error) {
-      // Registrar auditoria de erro na criação
-      await AuditoriaService.registrar({
-        usuarioId: req.user?.id,
-        acao: 'criar',
-        entidade: 'parceiro',
-        entidadeId: null,
-        dadosAnteriores: null,
-        dadosNovos: req.body,
-        ip: req.ip || req.connection.remoteAddress,
-        userAgent: req.get('user-agent'),
-        status: 'erro',
-        mensagemErro: error.message || 'Erro ao criar parceiro',
-      });
+      try {
+        // Registrar auditoria de erro na criação
+        await AuditoriaService.registrar({
+          usuarioId: req.user?.id,
+          acao: 'criar',
+          entidade: 'parceiro',
+          entidadeId: null,
+          dadosAnteriores: null,
+          dadosNovos: req.body,
+          ip: req.ip || req.connection.remoteAddress,
+          userAgent: req.get('user-agent'),
+          status: 'erro',
+          mensagemErro: error.message || 'Erro ao criar parceiro',
+        });
+      } catch {
+        // Ignora erros ao registrar auditoria
+      }
       next(error);
     }
   }
@@ -221,7 +234,7 @@ export class ParceiroController {
 
       const result = await this.service.findByCity(
         cidade,
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({
@@ -295,7 +308,7 @@ export class ParceiroController {
         parseFloat(latitude),
         parseFloat(longitude),
         parseFloat(radius),
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({
@@ -333,6 +346,7 @@ export class ParceiroController {
         id: p.par_id,
         nome: p.par_nome,
         dominio: p.par_dominio,
+        dominioPainel: p.par_dominio_painel,
         endereco: p.par_endereco,
         cidade: p.par_cidade,
         estado: p.par_estado,
@@ -365,7 +379,7 @@ export class ParceiroController {
 
       const result = await this.service.findByCity(
         cidade,
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       // Filtrar apenas parceiros ativos e retornar dados públicos
@@ -411,7 +425,7 @@ export class ParceiroController {
         parseFloat(latitude),
         parseFloat(longitude),
         parseFloat(radius),
-        { page: parseInt(page), limit: parseInt(limit) }
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       // Filtrar apenas parceiros ativos e retornar dados públicos
@@ -693,9 +707,19 @@ export class ParceiroController {
       return res.json({
         success: true,
         data: {
-          id: temaAtivo.tem_id,
-          nome: temaAtivo.tem_nome,
-          parceiroId: temaAtivo.tem_par_id,
+          parceiro: {
+            id: parceiro.par_id,
+            nome: parceiro.par_nome,
+            dominio: parceiro.par_dominio,
+            dominioPainel: parceiro.par_dominio_painel,
+            cidade: parceiro.par_cidade,
+            estado: parceiro.par_estado,
+          },
+          tema: {
+            id: temaAtivo.tem_id,
+            nome: temaAtivo.tem_nome,
+            parceiroId: temaAtivo.tem_par_id,
+          },
           paginas: paginasPublicas,
           cores: coresPublicas,
           imagens: imagensPublicas,

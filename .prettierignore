@@ -1,0 +1,14 @@
+node_modules
+dist
+build
+coverage
+.next
+out
+.cache
+.DS_Store
+*.lock
+*.log
+.env
+.env.*
+!.env.example
+docker-compose.override.yml

@@ -73,7 +73,7 @@ const getRecursosWithIcons = () => {
  * @returns {React.ReactElement}
  */
 const SectionHeader = () => (
-  <h2 className={`text-center ${styles['texto-oni-azul']} mb-5`} role="heading" aria-level="2">
+  <h2 className={`text-center ${styles['texto-oni-azul']} mb-5`}>
     {getTexto('porQueEscolher', 'titulo', DEFAULT_SECTION_TITLE)}
   </h2>
 );
@@ -125,7 +125,7 @@ const RecursoCard = ({ recurso, index }) => (
  * @returns {React.ReactElement}
  */
 const RecursosGrid = ({ recursos }) => (
-  <div className="row" role="region" aria-label="Lista de diferenciais">
+  <div className="row" aria-label="Lista de diferenciais">
     {recursos.map((recurso, index) => (
       <RecursoCard key={recurso.id || index} recurso={recurso} index={index} />
     ))}
@@ -155,7 +155,7 @@ const PorQueEscolher = () => {
     <section
       id={SECTION_ID}
       className={styles['secao']}
-      role="region"
+     
       aria-labelledby="por-que-escolher-title"
     >
       <div className="container">
@@ -170,3 +170,4 @@ const PorQueEscolher = () => {
 };
 
 export default PorQueEscolher;
+

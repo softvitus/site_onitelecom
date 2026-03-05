@@ -4,8 +4,8 @@ FROM node:20-alpine
 ENV NODE_ENV=development
 ENV PORT=3000
 
-# Instala curl para health checks
-RUN apk add --no-cache curl
+# Instala curl e netcat para health checks e verificação de porta
+RUN apk add --no-cache curl netcat-openbsd
 
 # Define diretório de trabalho
 WORKDIR /app
@@ -13,11 +13,15 @@ WORKDIR /app
 # Copia package*.json PRIMEIRO para instalar dependências
 COPY package*.json ./
 
-# Instala dependências (npm ci é mais confiável em Docker)
-RUN npm ci
+# Instala dependências
+RUN npm install --legacy-peer-deps
 
 # Copia o resto do código
 COPY . .
+
+# Copia entrypoint script
+COPY docker/entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 # Remove TODOS os .env* files (segurança - virão apenas do docker-compose.yml/volumes)
 RUN find /app -maxdepth 1 -name ".env*" -type f -delete
@@ -37,5 +41,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:3000/health || exit 1
 
-# Inicia aplicação
-CMD ["npm", "start"]
+# Inicia aplicação via entrypoint (executa migrations + seeds + npm start)
+ENTRYPOINT ["/app/entrypoint.sh"]

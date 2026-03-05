@@ -65,10 +65,11 @@ export class AuditoriaService {
         aud_mensagem_erro: dados.mensagemErro || null,
       });
 
+      // eslint-disable-next-line no-console
       console.log(
         `[AUDITORIA] ${dados.acao.toUpperCase()} ${dados.entidade}:${
           dados.entidadeId || 'novo'
-        } por usuário ${dados.usuarioId}`
+        } por usuário ${dados.usuarioId}`,
       );
 
       return auditoria;
@@ -209,10 +210,9 @@ export class AuditoriaService {
 
   /**
    * Retorna estatísticas de auditoria
-   * @param {Object} filtros - Critérios de busca
    * @returns {Promise<Object>} Estatísticas
    */
-  static async estatisticas(filtros = {}) {
+  static async estatisticas() {
     try {
       const models = getModels();
 
@@ -259,7 +259,7 @@ export class AuditoriaService {
           } catch (err) {
             return item;
           }
-        })
+        }),
       );
 
       // Total de erros

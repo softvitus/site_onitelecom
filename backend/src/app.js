@@ -6,7 +6,7 @@ import { swaggerSpec } from './config/swagger.js';
 import apiRoutes from './routes/index.js';
 import { errorHandler, notFoundHandler, requestLogger, coloredStatusLogger } from './middleware/index.js';
 import { captureAuditData } from './middleware/audit.js';
-import { generalLimiter, authLimiter, apiLimiter } from './middleware/rateLimiter.js';
+import { generalLimiter } from './middleware/rateLimiter.js';
 import { HealthCheckService } from './services/HealthCheckService.js';
 import { ResponseFormatter } from './utils/ResponseFormatter.js';
 import { errorCodeMiddleware } from './utils/ErrorCodes.js';

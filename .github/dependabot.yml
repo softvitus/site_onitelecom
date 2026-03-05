@@ -1,0 +1,66 @@
+version: 2
+updates:
+  # Backend dependencies
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "softvitus"
+    labels:
+      - "dependencies"
+      - "backend"
+    allow:
+      - dependency-type: "all"
+    ignore:
+      # Ignore major version updates for these packages
+      - dependency-name: "express"
+        update-types: ["version-update:semver-major"]
+
+  # Frontend dependencies
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:30"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "softvitus"
+    labels:
+      - "dependencies"
+      - "frontend"
+    allow:
+      - dependency-type: "all"
+
+  # Frontend Painel dependencies
+  - package-ecosystem: "npm"
+    directory: "/frontend_painel"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "softvitus"
+    labels:
+      - "dependencies"
+      - "frontend-painel"
+    allow:
+      - dependency-type: "all"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:30"
+    reviewers:
+      - "softvitus"
+    labels:
+      - "ci-cd"
+      - "github-actions"

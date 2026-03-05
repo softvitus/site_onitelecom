@@ -40,7 +40,7 @@ export const requirePermission = (permissionName) => {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
@@ -58,7 +58,7 @@ export const requirePermission = (permissionName) => {
         throw new ApiError(
           'FORBIDDEN',
           `Permissão negada: ${permissionName}`,
-          403
+          403,
         );
       }
 
@@ -80,7 +80,7 @@ export const requireAnyPermission = (permissionNames) => {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
@@ -99,7 +99,7 @@ export const requireAnyPermission = (permissionNames) => {
         throw new ApiError(
           'FORBIDDEN',
           `Permissão negada. Requeridas: ${permissionNames.join(', ')}`,
-          403
+          403,
         );
       }
 
@@ -121,7 +121,7 @@ export const requireAllPermissions = (permissionNames) => {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
@@ -140,7 +140,7 @@ export const requireAllPermissions = (permissionNames) => {
         throw new ApiError(
           'FORBIDDEN',
           `Permissão negada. Requeridas: ${permissionNames.join(', ')}`,
-          403
+          403,
         );
       }
 

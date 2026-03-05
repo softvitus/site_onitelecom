@@ -25,6 +25,9 @@ export const parceiroCreateSchema = Joi.object({
     'string.empty': 'Domínio é obrigatório',
     'string.max': 'Domínio deve ter no máximo 255 caracteres',
   }),
+  par_dominio_painel: Joi.string().max(255).optional().allow(null, '').messages({
+    'string.max': 'Domínio do painel deve ter no máximo 255 caracteres',
+  }),
   par_cidade: Joi.string().max(100).required().messages({
     'string.empty': 'Cidade é obrigatória',
   }),
@@ -42,6 +45,7 @@ export const parceiroCreateSchema = Joi.object({
 export const parceiroUpdateSchema = Joi.object({
   par_nome: Joi.string().min(2).max(255).optional(),
   par_dominio: Joi.string().max(255).optional(),
+  par_dominio_painel: Joi.string().max(255).optional().allow(null, ''),
   par_cidade: Joi.string().max(100).optional(),
   par_estado: Joi.string().length(2).optional(),
   par_cep: Joi.string().max(10).optional(),

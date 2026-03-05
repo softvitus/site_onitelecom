@@ -45,7 +45,7 @@ const DecorativeDots = () => <div className={styles['bolinhas-divisor']} aria-hi
  * @returns {React.ReactElement}
  */
 const DivisorTitle = ({ titulo }) => (
-  <h3 role="heading" aria-level="3">
+  <h3>
     {titulo}
   </h3>
 );

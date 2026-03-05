@@ -314,7 +314,7 @@ const OffersGrid = ({ offers }) => (
  * @returns {React.ReactElement}
  */
 const CategorySection = ({ category, offers }) => (
-  <section className={styles[category.id]} role="region" aria-labelledby={category.id}>
+  <section className={styles[category.id]} aria-labelledby={category.id}>
     {/* Header da seção */}
     <div className={styles['section-headline']}>
       <div className={styles['container']}>
@@ -372,6 +372,9 @@ const CardsEntretenimento = () => {
    */
   const handleSearch = useCallback(() => {
     // TODO: Implementar busca nas ofertas
+    // eslint-disable-next-line no-console
+
+    // eslint-disable-next-line no-console
     console.log('Buscando por:', searchTerm);
   }, [searchTerm]);
 
@@ -402,3 +405,5 @@ const CardsEntretenimento = () => {
 };
 
 export default CardsEntretenimento;
+
+

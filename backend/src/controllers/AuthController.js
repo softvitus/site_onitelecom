@@ -30,7 +30,7 @@ export class AuthController {
         throw new ApiError(
           'VALIDATION_ERROR',
           'Email e senha são obrigatórios',
-          400
+          400,
         );
       }
 
@@ -60,9 +60,10 @@ export class AuthController {
           id: usuario.usu_id,
           email: usuario.usu_email,
           tipo: usuario.usu_tipo,
+          parceiroId: usuario.usu_parceiro_id || null,
         },
         process.env.JWT_SECRET || 'your-secret-key-change-in-production',
-        { expiresIn: '24h' }
+        { expiresIn: '24h' },
       );
 
       // Atualizar último acesso
@@ -147,7 +148,7 @@ export class AuthController {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
@@ -175,7 +176,7 @@ export class AuthController {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
@@ -193,7 +194,7 @@ export class AuthController {
           tipo: usuario.usu_tipo,
         },
         process.env.JWT_SECRET || 'your-secret-key-change-in-production',
-        { expiresIn: '24h' }
+        { expiresIn: '24h' },
       );
 
       res.json({
@@ -221,13 +222,13 @@ export class AuthController {
         throw new ApiError(
           'VALIDATION_ERROR',
           'Token é obrigatório',
-          400
+          400,
         );
       }
 
       const decoded = jwt.verify(
         token,
-        process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+        process.env.JWT_SECRET || 'your-secret-key-change-in-production',
       );
 
       res.json({
@@ -241,8 +242,8 @@ export class AuthController {
           new ApiError(
             'INVALID_TOKEN',
             'Token inválido',
-            401
-          )
+            401,
+          ),
         );
       }
       if (error.name === 'TokenExpiredError') {
@@ -250,8 +251,8 @@ export class AuthController {
           new ApiError(
             'TOKEN_EXPIRED',
             'Token expirado',
-            401
-          )
+            401,
+          ),
         );
       }
       next(error);
@@ -272,7 +273,7 @@ export class AuthController {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 
@@ -281,7 +282,7 @@ export class AuthController {
         throw new ApiError(
           'VALIDATION_ERROR',
           'Todos os campos de senha são obrigatórios',
-          400
+          400,
         );
       }
 
@@ -290,7 +291,7 @@ export class AuthController {
         throw new ApiError(
           'VALIDATION_ERROR',
           'As senhas novas não conferem',
-          400
+          400,
         );
       }
 
@@ -299,7 +300,7 @@ export class AuthController {
         throw new ApiError(
           'VALIDATION_ERROR',
           'A nova senha deve ter pelo menos 6 caracteres',
-          400
+          400,
         );
       }
 
@@ -364,7 +365,7 @@ export class AuthController {
         throw new ApiError(
           'UNAUTHORIZED',
           'Usuário não autenticado',
-          401
+          401,
         );
       }
 

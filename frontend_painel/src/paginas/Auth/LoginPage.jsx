@@ -7,9 +7,10 @@
  * @module paginas/Auth/LoginPage
  */
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { useBreanding } from '../../contextos/BrandingContext';
 import Button from '../../componentes/Comum/Button';
 import Alert from '../../componentes/Comum/Alert';
 import { MdEmail, MdLock, MdErrorOutline, MdVisibility, MdVisibilityOff } from 'react-icons/md';
@@ -21,7 +22,22 @@ import '../../estilos/paginas/LoginPage.css';
 
 const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const TAMANHO_MINIMO_SENHA = 6;
-const ROTA_POS_LOGIN = '/dashboard';
+
+// Rotas disponíveis com suas permissões necessárias
+const ROTAS_DISPONIVEIS = [
+  { path: '/parceiros', permission: 'parceiro_listar' },
+  { path: '/temas', permission: 'tema_listar' },
+  { path: '/paginas', permission: 'pagina_listar' },
+  { path: '/componentes', permission: 'componente_listar' },
+  { path: '/elementos', permission: 'elemento_listar' },
+  { path: '/imagens', permission: 'imagens_listar' },
+  { path: '/links', permission: 'links_listar' },
+  { path: '/textos', permission: 'textos_listar' },
+  { path: '/conteudo', permission: 'conteudo_listar' },
+  { path: '/cores', permission: 'cores_listar' },
+  { path: '/features', permission: 'features_listar' },
+  { path: '/usuarios', permission: 'usuario_listar' },
+];
 
 const MENSAGENS_VALIDACAO = {
   EMAIL_OBRIGATORIO: 'Email é obrigatório',
@@ -37,6 +53,29 @@ const MENSAGENS_ERRO = {
 // ============================================================================
 // FUNÇÕES AUXILIARES
 // ============================================================================
+
+/**
+ * Obtém a primeira rota disponível para o usuário
+ * @param {Function} temPermissao - Função para verificar permissões
+ * @param {Object} usuario - Dados do usuário
+ * @returns {string} Caminho da rota
+ */
+const obterPrimeiraRotaDisponivel = (temPermissao, usuario) => {
+  // Admin vai para dashboard
+  if (usuario?.usu_tipo === 'admin') {
+    return '/dashboard';
+  }
+
+  // Buscar a primeira rota que o usuário tem permissão
+  for (const rota of ROTAS_DISPONIVEIS) {
+    if (temPermissao(rota.permission)) {
+      return rota.path;
+    }
+  }
+
+  // Fallback (não deveria acontecer)
+  return '/dashboard';
+};
 
 /**
  * Valida o email
@@ -96,13 +135,34 @@ const validarFormularioLogin = (email, senha) => {
  */
 function LoginPage() {
   const navigate = useNavigate();
-  const { login, carregando, erro } = useAuth();
+  const [searchParams] = useSearchParams();
+  const { login, carregando, erro, temPermissao, usuario } = useAuth();
+  const { logo, nomeParceiro, carregarBreanding } = useBreanding();
+
+  // Obter parceiroId da URL ou usar padrão
+  const parceiroIdFromUrl = searchParams.get('parceiroId') || '550e8400-e29b-41d4-a716-446655440001'; // Oni Telecom como padrão
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [mostraSenha, setMostraSenha] = useState(false);
   const [erros, setErros] = useState({});
   const [erroGeral, setErroGeral] = useState(null);
+  const [loginRealizado, setLoginRealizado] = useState(false);
+
+  // Carregar branding do parceiro na tela de login
+  useEffect(() => {
+    if (parceiroIdFromUrl) {
+      carregarBreanding(parceiroIdFromUrl);
+    }
+  }, [parceiroIdFromUrl, carregarBreanding]);
+
+  // Redirecionar para primeira rota disponível após login bem-sucedido
+  useEffect(() => {
+    if (loginRealizado && usuario) {
+      const rotaDisponivel = obterPrimeiraRotaDisponivel(temPermissao, usuario);
+      navigate(rotaDisponivel);
+    }
+  }, [loginRealizado, usuario, temPermissao, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -118,7 +178,7 @@ function LoginPage() {
     const sucesso = await login(email, senha);
 
     if (sucesso) {
-      navigate(ROTA_POS_LOGIN);
+      setLoginRealizado(true);
     } else {
       setErroGeral(erro || MENSAGENS_ERRO.LOGIN_FALHOU);
     }
@@ -240,6 +300,18 @@ function LoginPage() {
         {/* Lado Direito - Conteúdo */}
         <div className="login-right">
           <div className="login-right-content">
+            {/* Logo */}
+            {logo && (
+              <div className="login-logo-container">
+                <img 
+                  src={logo} 
+                  alt={`Logo ${nomeParceiro}`}
+                  className="login-logo"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            
             <h2 className="login-right-title">
               Faça o login em nossa
               <br />

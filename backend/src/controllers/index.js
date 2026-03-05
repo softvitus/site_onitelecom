@@ -19,3 +19,6 @@ export { FeaturesController } from './FeaturesController.js';
 export { ConfigTemaController } from './ConfigTemaController.js';
 export { AuthController } from './AuthController.js';
 export { AuditoriaController } from './AuditoriaController.js';
+export { UsuariosController } from './UsuariosController.js';
+export { PermissoesController } from './PermissoesController.js';
+export { RolePermissoesController } from './RolePermissoesController.js';

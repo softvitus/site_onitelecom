@@ -50,7 +50,9 @@ export class PaginationHelper {
    * Formato: field ou -field para descendente
    */
   static parseSort(sortStr) {
-    if (!sortStr) return [['createdAt', 'DESC']];
+    if (!sortStr) {
+      return [['createdAt', 'DESC']];
+    }
 
     const sorts = sortStr.split(',').map((s) => {
       s = s.trim();

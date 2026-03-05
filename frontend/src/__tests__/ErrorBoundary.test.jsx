@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ErrorBoundary from '../componentes/ErrorBoundary/ErrorBoundary';
 
 // Componente que propositalmente lança um erro
@@ -16,11 +16,14 @@ const ProblematicComponent = ({ shouldError }) => {
 
 describe('ErrorBoundary', () => {
   // Silencia console.error durante os testes
+  // eslint-disable-next-line no-console
   const originalError = console.error;
   beforeAll(() => {
+    // eslint-disable-next-line no-console
     console.error = jest.fn();
   });
   afterAll(() => {
+    // eslint-disable-next-line no-console
     console.error = originalError;
   });
 
@@ -96,3 +99,5 @@ describe('ErrorBoundary', () => {
     expect(homeButton.tagName).toBe('BUTTON');
   });
 });
+
+

@@ -99,7 +99,7 @@ describe('Permissões (RBAC) - Unit Tests', () => {
 
     it('Usuário deve ter apenas leitura', () => {
       const todasLeitura = permissoesPorRole.usuario.every(
-        p => p.endsWith('_listar') || p.endsWith('_visualizar')
+        p => p.endsWith('_listar') || p.endsWith('_visualizar'),
       );
       expect(todasLeitura).toBe(true);
     });

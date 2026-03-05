@@ -52,7 +52,7 @@ const formatAuthorSignature = (name, location) => {
  * @returns {React.ReactElement}
  */
 const DepoimentosHeader = () => (
-  <h2 className={`text-center ${styles['texto-oni-azul']} mb-5`} role="heading" aria-level="2">
+  <h2 className={`text-center ${styles['texto-oni-azul']} mb-5`}>
     {getTexto('depoimentos', 'titulo', 'Depoimentos')}
   </h2>
 );
@@ -114,7 +114,6 @@ const Depoimentos = () => {
     <section
       id={SECTION_ID}
       className={`${styles['secao']} py-5 ${styles['fundo-claro']}`}
-      role="region"
       aria-labelledby="depoimentos-title"
     >
       <div className="container">

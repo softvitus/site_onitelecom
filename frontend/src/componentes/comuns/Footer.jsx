@@ -159,6 +159,9 @@ const isElementEnabled = (elementName) => {
         el.nome === elementName && el.habilitado === true && el.habilitadoNoComponente === true
     );
   } catch (error) {
+    // eslint-disable-next-line no-console
+
+    // eslint-disable-next-line no-console
     console.error(`Erro ao verificar elemento '${elementName}':`, error);
     return false;
   }
@@ -227,7 +230,7 @@ const Footer = () => {
         setSelectedCity(stateCities[0].id);
       }
     }
-  }, [selectedState]);
+  }, [selectedState, selectedCity]);
 
   /**
    * Detecta e persiste geolocalização do usuário
@@ -338,7 +341,7 @@ const Footer = () => {
             {/* Coluna: Institucional */}
             <div className={styles['footer-column']}>
               <h3>{getTexto('footer', 'columns_institucional_title', 'Institucional')}</h3>
-              <ul role="list">
+              <ul>
                 {getTemaLinksByCategoria('footerMenu').map((link, index) => (
                   <li key={index}>
                     <a href={link.href || '#'} title={link.nome}>
@@ -352,7 +355,7 @@ const Footer = () => {
             {/* Coluna: Planos */}
             <div className={styles['footer-column']}>
               <h3>{getTexto('footer', 'columns_planosServicos_title', 'Planos')}</h3>
-              <ul role="list">
+              <ul>
                 {getTemaLinksByCategoria('footerMenuPlanos').map((link, index) => (
                   <li key={index}>
                     <a href={link.href || '#'} title={link.nome}>
@@ -366,7 +369,7 @@ const Footer = () => {
             {/* Coluna: Contato */}
             <div className={styles['footer-column']}>
               <h3>{getTexto('footer', 'columns_contato_title', 'Contato')}</h3>
-              <ul role="list">
+              <ul>
                 {getTemaLinksByCategoria('footerMenuContato').map((link, index) => (
                   <li key={index}>
                     <a href={link.href || '#'} title={link.nome}>
@@ -534,3 +537,6 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+

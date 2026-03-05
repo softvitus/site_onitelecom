@@ -174,7 +174,7 @@ const AppExclusivo = () => {
     <div
       id={SECTION_ID}
       className={styles['oni-theme-variables']}
-      role="region"
+     
       aria-labelledby="app-exclusivo-title"
     >
       {/* Banner superior */}
@@ -195,3 +195,4 @@ const AppExclusivo = () => {
 };
 
 export default AppExclusivo;
+

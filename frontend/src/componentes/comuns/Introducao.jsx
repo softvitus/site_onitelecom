@@ -42,7 +42,7 @@ const getIntroducaoTexts = () => ({
  * @returns {React.ReactElement}
  */
 const IntroducaoTitle = ({ title }) => (
-  <h2 className={styles['texto-oni-azul']} role="heading" aria-level="2">
+  <h2 className={styles['texto-oni-azul']}>
     {title}
   </h2>
 );
@@ -82,7 +82,6 @@ const Introducao = () => {
     <section
       id={SECTION_ID}
       className={styles['secao']}
-      role="region"
       aria-labelledby="introducao-title"
     >
       <div className="container">

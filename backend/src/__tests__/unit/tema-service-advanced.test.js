@@ -52,7 +52,7 @@ describe('TemaService - Cobertura Avançada', () => {
             expect.objectContaining({ association: 'imagens' }),
             expect.objectContaining({ association: 'configTemas' }),
           ]),
-        })
+        }),
       );
       expect(result).toEqual(mockTheme);
     });
@@ -124,7 +124,7 @@ describe('TemaService - Cobertura Avançada', () => {
         expect.objectContaining({
           tem_par_id: 5,
           tem_nome: expect.stringContaining('Cópia'),
-        })
+        }),
       );
       expect(result).toEqual(clonedTema);
     });
@@ -141,7 +141,7 @@ describe('TemaService - Cobertura Avançada', () => {
       expect(temaService.create).toHaveBeenCalledWith(
         expect.objectContaining({
           tem_nome: 'Cópia (01/12/2024)',
-        })
+        }),
       );
     });
   });

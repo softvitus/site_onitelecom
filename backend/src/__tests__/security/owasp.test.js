@@ -38,7 +38,7 @@ describe('Security - OWASP Protection', () => {
   describe('SQL Injection Prevention', () => {
     it('deve rejeitar payloads SQL injection em filtros', async () => {
       const maliciousFilters = {
-        par_nome: "'; DROP TABLE parceiros; --",
+        par_nome: '\'; DROP TABLE parceiros; --',
       };
 
       // O serviço deve não executar SQL perigoso
@@ -55,7 +55,7 @@ describe('Security - OWASP Protection', () => {
 
     it('deve escapar caracteres especiais em queries', async () => {
       const filters = {
-        par_nome: "Test' OR '1'='1",
+        par_nome: 'Test\' OR \'1\'=\'1',
       };
 
       parceiroService.model.findAndCountAll.mockResolvedValue({
@@ -122,7 +122,9 @@ describe('Security - OWASP Protection', () => {
 
       // Simulando middleware que valida user
       expect(() => {
-        if (!req.user) throw new Error('Unauthorized');
+        if (!req.user) {
+          throw new Error('Unauthorized');
+        }
       }).toThrow('Unauthorized');
     });
 
@@ -132,7 +134,7 @@ describe('Security - OWASP Protection', () => {
       // JWT inválido deve ser detectado
       expect(() => {
         const decoded = JSON.parse(
-          Buffer.from(expiredToken.split('.')[1], 'base64').toString()
+          Buffer.from(expiredToken.split('.')[1], 'base64').toString(),
         );
         if (decoded.exp && decoded.exp < Date.now() / 1000) {
           throw new Error('Token expired');
@@ -197,7 +199,7 @@ describe('Security - OWASP Protection', () => {
 
       expect(allowedPattern.test('valid_email@domain.com')).toBe(true);
       expect(allowedPattern.test('invalid<script>')).toBe(false);
-      expect(allowedPattern.test("invalid'; DROP"  )).toBe(false);
+      expect(allowedPattern.test('invalid\'; DROP'  )).toBe(false);
     });
   });
 

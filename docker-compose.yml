@@ -1,0 +1,133 @@
+version: '3.8'
+
+# ================================
+# Docker Compose - Production Ready
+# ================================
+# Uso:
+# - Development Local: npm start (usa .env.development)
+# - Docker Development: docker-compose up (usa .env.production com DB remoto)
+# - Docker Production: docker-compose up (usa .env.production com DB remoto)
+#
+# IMPORTANTE:
+# - Docker SEMPRE usa .env.production
+# - .env.development é APENAS para npm start local
+# - Nenhum arquivo .env entra na imagem Docker (segurança)
+# - Variáveis injetadas via docker-compose.yml env_file
+# ================================
+
+services:
+  # ================================
+  # Backend API - Node.js/Express
+  # ================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile
+    container_name: site-oni-backend
+    env_file:
+      - ./backend/.env.production
+    ports:
+      - "5000:3000"
+    volumes:
+      # Monta o arquivo .env.production para o container
+      - ./backend/.env.production:/app/.env.production:ro
+      # DEV: Mount source code for hot reload
+      # PROD: Volume ignored (image is final)
+      - ./backend/src:/app/src:${DEV_VOLUME_MODE:-cached}
+      - /app/node_modules
+    networks:
+      - site-oni-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: ${BACKEND_HEALTH_INTERVAL:-30s}
+      timeout: ${BACKEND_HEALTH_TIMEOUT:-10s}
+      retries: ${BACKEND_HEALTH_RETRIES:-3}
+      start_period: ${BACKEND_HEALTH_START:-40s}
+    restart: ${BACKEND_RESTART:-unless-stopped}
+    command: ${BACKEND_COMMAND:-npm start}
+    stdin_open: ${BACKEND_STDIN:-true}
+    tty: ${BACKEND_TTY:-true}
+    deploy:
+      resources:
+        limits:
+          cpus: ${BACKEND_CPUS_LIMIT:-4}
+          memory: ${BACKEND_MEMORY_LIMIT:-2G}
+        reservations:
+          cpus: ${BACKEND_CPUS_RESERVE:-1}
+          memory: ${BACKEND_MEMORY_RESERVE:-512M}
+
+  # ================================
+  # Frontend - React + Nginx
+  # ================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: docker/Dockerfile
+    container_name: site-oni-frontend
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env.production
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend/.env.production:/app/.env.production:ro
+      - ./frontend/src:/app/src:${DEV_VOLUME_MODE:-cached}
+      - /app/node_modules
+    networks:
+      - site-oni-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: ${FRONTEND_HEALTH_INTERVAL:-30s}
+      timeout: ${FRONTEND_HEALTH_TIMEOUT:-10s}
+      retries: ${FRONTEND_HEALTH_RETRIES:-3}
+      start_period: ${FRONTEND_HEALTH_START:-10s}
+    restart: ${FRONTEND_RESTART:-unless-stopped}
+    deploy:
+      resources:
+        limits:
+          cpus: ${FRONTEND_CPUS_LIMIT:-1}
+          memory: ${FRONTEND_MEMORY_LIMIT:-1G}
+        reservations:
+          cpus: ${FRONTEND_CPUS_RESERVE:-0.5}
+          memory: ${FRONTEND_MEMORY_RESERVE:-512M}
+
+  # ================================
+  # Frontend Painel - React (Vite) + Nginx
+  # ================================
+  frontend-painel:
+    build:
+      context: ./frontend_painel
+      dockerfile: docker/Dockerfile
+    container_name: site-oni-frontend-painel
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend_painel/.env.production
+    ports:
+      - "3001:80"
+    volumes:
+      - ./frontend_painel/.env.production:/app/.env.production:ro
+      - ./frontend_painel/src:/app/src:${DEV_VOLUME_MODE:-cached}
+      - /app/node_modules
+    networks:
+      - site-oni-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: ${FRONTEND_PAINEL_HEALTH_INTERVAL:-30s}
+      timeout: ${FRONTEND_PAINEL_HEALTH_TIMEOUT:-10s}
+      retries: ${FRONTEND_PAINEL_HEALTH_RETRIES:-3}
+      start_period: ${FRONTEND_PAINEL_HEALTH_START:-10s}
+    restart: ${FRONTEND_PAINEL_RESTART:-unless-stopped}
+    deploy:
+      resources:
+        limits:
+          cpus: ${FRONTEND_PAINEL_CPUS_LIMIT:-1}
+          memory: ${FRONTEND_PAINEL_MEMORY_LIMIT:-1G}
+        reservations:
+          cpus: ${FRONTEND_PAINEL_CPUS_RESERVE:-0.5}
+          memory: ${FRONTEND_PAINEL_MEMORY_RESERVE:-512M}
+
+networks:
+  site-oni-network:
+    driver: bridge

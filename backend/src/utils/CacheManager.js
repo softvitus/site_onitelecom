@@ -34,6 +34,7 @@ class CacheManager {
       this.timers.set(key, timer);
     }
 
+    // eslint-disable-next-line no-console
     console.log(`[CACHE] Set: ${key} (TTL: ${ttl}s)`);
   }
 
@@ -45,10 +46,12 @@ class CacheManager {
     const cached = this.cache.get(key);
 
     if (!cached) {
+      // eslint-disable-next-line no-console
       console.log(`[CACHE] Miss: ${key}`);
       return null;
     }
 
+    // eslint-disable-next-line no-console
     console.log(`[CACHE] Hit: ${key}`);
     return cached.value;
   }
@@ -71,6 +74,7 @@ class CacheManager {
 
     const deleted = this.cache.delete(key);
     if (deleted) {
+      // eslint-disable-next-line no-console
       console.log(`[CACHE] Deleted: ${key}`);
     }
     return deleted;
@@ -83,6 +87,7 @@ class CacheManager {
     this.timers.forEach((timer) => clearTimeout(timer));
     this.cache.clear();
     this.timers.clear();
+    // eslint-disable-next-line no-console
     console.log('[CACHE] Cleared');
   }
 

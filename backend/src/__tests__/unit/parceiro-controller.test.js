@@ -124,7 +124,7 @@ describe('ParceiroController - Unit Tests', () => {
 
       expect(mockService.findAll).toHaveBeenCalledWith(
         {},
-        { page: 1, limit: 10 }
+        { page: 1, limit: 10 },
       );
     });
 
@@ -140,7 +140,7 @@ describe('ParceiroController - Unit Tests', () => {
 
       expect(mockService.findAll).toHaveBeenCalledWith(
         {},
-        { page: 2, limit: 20 }
+        { page: 2, limit: 20 },
       );
     });
 
@@ -409,7 +409,7 @@ describe('ParceiroController - Unit Tests', () => {
         -7.115556, // convertido para número
         -34.878056, // convertido para número
         50, // convertido para número
-        { page: 1, limit: 10 }
+        { page: 1, limit: 10 },
       );
     });
 
@@ -437,7 +437,7 @@ describe('ParceiroController - Unit Tests', () => {
           success: true,
           data: mockResponse.rows,
           pagination: mockResponse.pagination,
-        })
+        }),
       );
     });
 
@@ -458,7 +458,7 @@ describe('ParceiroController - Unit Tests', () => {
         expect.objectContaining({
           success: true,
           data: [],
-        })
+        }),
       );
     });
 
@@ -477,7 +477,7 @@ describe('ParceiroController - Unit Tests', () => {
         -7.115556,
         -34.878056,
         50, // raio padrão
-        { page: 1, limit: 10 }
+        { page: 1, limit: 10 },
       );
     });
 
@@ -496,7 +496,7 @@ describe('ParceiroController - Unit Tests', () => {
         -7.115556,
         -34.878056,
         100, // convertido para número
-        { page: 1, limit: 10 }
+        { page: 1, limit: 10 },
       );
     });
 
@@ -515,7 +515,7 @@ describe('ParceiroController - Unit Tests', () => {
         -7.115556,
         -34.878056,
         50,
-        { page: 2, limit: 20 }
+        { page: 2, limit: 20 },
       );
     });
 
@@ -535,7 +535,7 @@ describe('ParceiroController - Unit Tests', () => {
       expect(mockRes.json).toHaveBeenCalledWith(
         expect.objectContaining({
           pagination: mockResponse.pagination,
-        })
+        }),
       );
     });
 
@@ -583,7 +583,7 @@ describe('ParceiroController - Unit Tests', () => {
             expect.objectContaining({ distancia: 0 }),
             expect.objectContaining({ distancia: 27.5 }),
           ]),
-        })
+        }),
       );
     });
   });

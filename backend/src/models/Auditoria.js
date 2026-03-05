@@ -29,7 +29,7 @@ export default function (sequelize) {
           'inativar',
           'ativar',
           'login',
-          'logout'
+          'logout',
         ),
         allowNull: false,
         comment: 'Tipo de ação realizada',
@@ -80,7 +80,7 @@ export default function (sequelize) {
       tableName: '0063_Auditoria',
       timestamps: true,
       underscored: false,
-    }
+    },
   );
 
   /**

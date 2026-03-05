@@ -18,15 +18,25 @@ export class TextosController {
 
   /**
    * GET /api/textos
-   * Lista todos os textos com paginação
+   * Lista textos com paginação
+   * Filtra por parceiro se usuário não for admin
    */
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
       
+      // Construir filtros
+      const filtros = {};
+      
+      // Se não é admin e tem parceiroId, filtrar por parceiro
+      // Textos estão vinculados a temas, que têm relação com parceiro
+      if (req.user?.tipo !== 'admin' && req.user?.parceiroId) {
+        filtros.parceiroId = req.user.parceiroId;
+      }
+      
       const result = await this.service.findAll(
-        {},
-        { page: parseInt(page), limit: parseInt(limit) }
+        filtros,
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({

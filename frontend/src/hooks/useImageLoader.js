@@ -44,7 +44,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 const DEFAULT_CACHE_MAX_AGE = 1000 * 60 * 60;
 
 /** @constant {boolean} IS_DEV - Flag de ambiente de desenvolvimento */
-const IS_DEV = process.env.NODE_ENV === 'development';
+
 
 // ============================================================================
 // CACHE

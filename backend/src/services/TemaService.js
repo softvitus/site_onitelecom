@@ -13,6 +13,23 @@ import { Op } from 'sequelize';
  */
 export class TemaService extends BaseService {
   /**
+   * Override findAll para converter parceiroId para tem_par_id
+   * @param {Object} filters - Filtros de busca
+   * @param {Object} pagination - Opções de paginação
+   * @param {Object} options - Opções adicionais
+   * @returns {Promise<Object>} Lista paginada de temas
+   */
+  async findAll(filters = {}, pagination = {}, options = {}) {
+    // Converter parceiroId para tem_par_id se presente
+    if (filters.parceiroId) {
+      filters.tem_par_id = filters.parceiroId;
+      delete filters.parceiroId;
+    }
+    
+    return super.findAll(filters, pagination, options);
+  }
+
+  /**
    * Busca tema com todas relações
    * @param {string} id - ID do tema
    * @returns {Promise<Object>} Tema com relações

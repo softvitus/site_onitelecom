@@ -82,12 +82,12 @@ const validarFormulario = (dados) => {
  */
 const TemasPage = () => {
   // Autenticação e Permissões
-  const { temPermissao } = useAuth();
+  const { usuario, temPermissao } = useAuth();
   
   // Estado
   const [temas, setTemas] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState(null);
+  const [_erro, _setErro] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [editando, setEditando] = useState(null);
   const [salvando, setSalvando] = useState(false);
@@ -110,7 +110,10 @@ const TemasPage = () => {
 
   // Carregar temas e parceiros ao montar o componente
   useEffect(() => {
-    carregarParceiros();
+    // Só carrega parceiros se tiver permissão
+    if (temPermissao('parceiro_listar')) {
+      carregarParceiros();
+    }
     carregarDadosGrid(PAGINACAO.PAGINA_INICIAL, PAGINACAO.ITENS_POR_PAGINA);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -143,12 +146,19 @@ const TemasPage = () => {
   // Carregar dados para o Grid
   const carregarDadosGrid = async (pagina, itensPorPagina) => {
     setCarregando(true);
-    setErro(null);
+    //     _setErro(null);
 
     try {
-      const resultado = await TemasService.listar(pagina, itensPorPagina, {
+      const filtros = {
         search: filtro,
-      });
+      };
+
+      // Se não é admin, filtra apenas seu parceiro
+      if (usuario?.tipo !== 'admin' && usuario?.parceiroId) {
+        filtros.parceiroId = usuario.parceiroId;
+      }
+
+      const resultado = await TemasService.listar(pagina, itensPorPagina, filtros);
 
       if (resultado.sucesso) {
         // Mapear temas para adicionar nome do parceiro
@@ -164,10 +174,10 @@ const TemasPage = () => {
           setTotalPaginas(resultado.paginacao.pages);
         }
       } else {
-        setErro(resultado.erro || 'Erro ao carregar temas');
+        //         _setErro(resultado.erro || 'Erro ao carregar temas');
       }
     } catch (err) {
-      setErro('Erro inesperado ao carregar temas');
+      //       _setErro('Erro inesperado ao carregar temas');
       console.error('[ERRO]', err);
     } finally {
       setCarregando(false);

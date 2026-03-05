@@ -14,7 +14,9 @@ const fakeParceiroModel = {
         par_id: '1', 
         par_nome: 'Telecom Plus', 
         par_dominio: 'telecomplus.com',
-        destroy: async () => { return 1; }
+        destroy: async () => {
+          return 1; 
+        },
       };
     }
     if (where.par_nome === 'Telecom Plus') {
@@ -22,7 +24,9 @@ const fakeParceiroModel = {
         par_id: '1', 
         par_nome: 'Telecom Plus', 
         par_dominio: 'telecomplus.com',
-        destroy: async () => { return 1; }
+        destroy: async () => {
+          return 1; 
+        },
       };
     }
     return null;
@@ -31,7 +35,9 @@ const fakeParceiroModel = {
     par_id: '1', 
     par_nome: 'Telecom Plus', 
     par_dominio: 'telecomplus.com',
-    destroy: async () => { return 1; }
+    destroy: async () => {
+      return 1; 
+    },
   } : null,
   create: async (data) => ({ par_id: '2', ...data }),
   update: async () => [1],

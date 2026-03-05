@@ -11,9 +11,9 @@
  * @returns {React.ReactElement} Seção "Quem Somos" completa
  */
 
-import React, { useCallback } from 'react';
+import React from 'react';
 import styles from '../../estilos/componentes/comuns/QuemSomos.module.css';
-import { getTexto, getImagem, getTemaTextosByCategoria } from '../../servicos/tema';
+import { getImagem, getTemaTextosByCategoria } from '../../servicos/tema';
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // 🔧 EFEITOS
@@ -74,7 +74,7 @@ const getImage = () => getImagem('about', 'img', '');
 const SectionHeader = ({ texts }) => (
   <div className={styles.textoContainer}>
     {/* Título */}
-    <h1 className={styles.tituloPrincipal} role="heading" aria-level="1">
+    <h1 className={styles.tituloPrincipal}>
       {texts.titulo} <br /> {texts.subtitulo}
     </h1>
 
@@ -110,11 +110,11 @@ const TeamImage = ({ src }) => (
  * @returns {React.ReactElement}
  */
 const InfoBox = ({ title, items, id }) => (
-  <div className={styles.infoBox} role="region" aria-labelledby={`info-box-${id}`}>
+  <div className={styles.infoBox} aria-labelledby={`info-box-${id}`}>
     <h3 id={`info-box-${id}`}>{title}</h3>
-    <ul role="list">
+    <ul>
       {items.map((item, index) => (
-        <li key={index} role="listitem">
+        <li key={index}>
           {item}
         </li>
       ))}
@@ -168,7 +168,7 @@ const Quemsomos = () => {
     <section
       id={SECTION_ID}
       className={styles.secaoPrincipal}
-      role="region"
+     
       aria-labelledby="quem-somos-title"
     >
       <div className={styles.container}>
@@ -189,3 +189,5 @@ const Quemsomos = () => {
 };
 
 export default Quemsomos;
+
+

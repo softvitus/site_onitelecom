@@ -18,6 +18,11 @@ export default {
         allowNull: false,
         unique: true,
       },
+      par_dominio_painel: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+        comment: 'Domínio para acesso ao painel administrativo (ex: admin.parceiro.com)',
+      },
       par_cidade: {
         type: Sequelize.STRING(255),
         allowNull: false,

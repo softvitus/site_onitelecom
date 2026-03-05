@@ -82,7 +82,7 @@ export const createError = (errorCode, message, details) => {
 /**
  * Middleware para converter ApiError em resposta
  */
-export const errorCodeMiddleware = (err, req, res, next) => {
+export const errorCodeMiddleware = (err, req, res, _next) => {
   if (err instanceof ApiError) {
     return res.status(err.statusCode).json(err.toJSON());
   }

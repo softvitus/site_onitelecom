@@ -78,8 +78,6 @@ const Modal = ({
     }
   };
 
-  const dimensao = MODAL_DIMENSOES[tamanho] || MODAL_DIMENSOES.md;
-
   return (
     <>
       {/* Backdrop com transição */}
@@ -93,7 +91,7 @@ const Modal = ({
       <div
         className="modal-container-custom"
         role="dialog"
-        aria-labelledby="modalLabel"
+        style={{ width: MODAL_DIMENSOES[tamanho] || MODAL_DIMENSOES.md }}
         aria-hidden={!aberto}
         {...props}
       >

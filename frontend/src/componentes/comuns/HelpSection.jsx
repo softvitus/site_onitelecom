@@ -234,7 +234,7 @@ const HelpCardsGrid = ({ caminhoPagina }) => {
   const cards = getHelpCards();
 
   return (
-    <div className="row g-4 mt-4" role="region" aria-label="Opções de ajuda">
+    <div className="row g-4 mt-4" aria-label="Opções de ajuda">
       {cards.map((card, index) => (
         <HelpCard key={card.id || index} card={card} />
       ))}
@@ -257,7 +257,7 @@ const HelpSection = ({ caminhoPagina = '/inicio' }) => {
     <section
       id={SECTION_ID}
       className={styles['custom-section']}
-      role="region"
+     
       aria-labelledby="help-section-title"
     >
       <div className={`container ${styles['content-wrapper']} py-5`}>
@@ -275,3 +275,4 @@ const HelpSection = ({ caminhoPagina = '/inicio' }) => {
 };
 
 export default HelpSection;
+

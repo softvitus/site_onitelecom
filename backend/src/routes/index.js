@@ -15,6 +15,9 @@ import { FeaturesController } from '../controllers/FeaturesController.js';
 import { ConfigTemaController } from '../controllers/ConfigTemaController.js';
 import { AuditoriaController } from '../controllers/AuditoriaController.js';
 import { AuthController } from '../controllers/AuthController.js';
+import { UsuariosController } from '../controllers/UsuariosController.js';
+import { PermissoesController } from '../controllers/PermissoesController.js';
+import { RolePermissoesController } from '../controllers/RolePermissoesController.js';
 import { validate, schemas, validateTokenOnly } from '../middleware/index.js';
 import { authenticate, requirePermission } from '../middleware/index.js';
 
@@ -37,6 +40,9 @@ const conteudoController = new ConteudoController();
 const featuresController = new FeaturesController();
 const configTemaController = new ConfigTemaController();
 const auditoriaController = new AuditoriaController();
+const usuariosController = new UsuariosController();
+const permissoesController = new PermissoesController();
+const rolePermissoesController = new RolePermissoesController();
 
 // ============================================================
 // ROTAS PÚBLICAS SEM AUTENTICAÇÃO
@@ -44,17 +50,17 @@ const auditoriaController = new AuditoriaController();
 
 // GET /public/parceiros - Lista todos os parceiros ativos (sem autenticação)
 router.get('/public/parceiros', (req, res, next) =>
-  parceiroController.getPublicAll(req, res, next)
+  parceiroController.getPublicAll(req, res, next),
 );
 
 // GET /public/parceiros/:id/tema - Busca o tema de um parceiro (sem autenticação)
 router.get('/public/parceiros/:id/tema', (req, res, next) =>
-  parceiroController.getPublicTemaById(req, res, next)
+  parceiroController.getPublicTemaById(req, res, next),
 );
 
 // GET /public/parceiros/proximos/:latitude/:longitude - Busca parceiros próximos (usa geolocalização do modal)
 router.get('/public/parceiros/proximos/:latitude/:longitude', (req, res, next) =>
-  parceiroController.getPublicNearby(req, res, next)
+  parceiroController.getPublicNearby(req, res, next),
 );
 
 // ============================================================
@@ -63,7 +69,7 @@ router.get('/public/parceiros/proximos/:latitude/:longitude', (req, res, next) =
 
 // GET /public/parceiros/por-cidade/:cidade - Busca parceiros ativos por cidade
 router.get('/public/parceiros/por-cidade/:cidade', validateTokenOnly, (req, res, next) =>
-  parceiroController.getPublicByCity(req, res, next)
+  parceiroController.getPublicByCity(req, res, next),
 );
 
 // ============================================================
@@ -72,37 +78,37 @@ router.get('/public/parceiros/por-cidade/:cidade', validateTokenOnly, (req, res,
 
 // POST /auth/login - Autentica usuário e gera token JWT
 router.post('/auth/login', (req, res, next) =>
-  authController.login(req, res, next)
+  authController.login(req, res, next),
 );
 
 // POST /auth/verify - Verifica se um token é válido
 router.post('/auth/verify', (req, res, next) =>
-  authController.verifyToken(req, res, next)
+  authController.verifyToken(req, res, next),
 );
 
 // POST /auth/logout - Faz logout do usuário
 router.post('/auth/logout', authenticate, (req, res, next) =>
-  authController.logout(req, res, next)
+  authController.logout(req, res, next),
 );
 
 // GET /auth/me - Retorna dados do usuário autenticado
 router.get('/auth/me', authenticate, (req, res, next) =>
-  authController.getCurrentUser(req, res, next)
+  authController.getCurrentUser(req, res, next),
 );
 
 // GET /auth/me/permissoes - Retorna permissões do usuário
 router.get('/auth/me/permissoes', authenticate, (req, res, next) =>
-  authController.getMyPermissions(req, res, next)
+  authController.getMyPermissions(req, res, next),
 );
 
 // POST /auth/refresh - Gera novo token JWT
 router.post('/auth/refresh', authenticate, (req, res, next) =>
-  authController.refreshToken(req, res, next)
+  authController.refreshToken(req, res, next),
 );
 
 // POST /auth/change-password - Altera senha do usuário
 router.post('/auth/change-password', authenticate, (req, res, next) =>
-  authController.changePassword(req, res, next)
+  authController.changePassword(req, res, next),
 );
 
 // Rotas para Parceiro
@@ -203,6 +209,90 @@ router.post('/config-temas', authenticate, requirePermission('tema_editar'), con
 router.get('/config-temas/:id', authenticate, requirePermission('tema_visualizar'), configTemaController.getById.bind(configTemaController));
 router.put('/config-temas/:id', authenticate, requirePermission('tema_editar'), configTemaController.update.bind(configTemaController));
 router.delete('/config-temas/:id', authenticate, requirePermission('tema_editar'), configTemaController.remove.bind(configTemaController));
+
+// ============================================================
+// ROTAS DE USUÁRIOS
+// ============================================================
+
+// GET /usuarios - Lista todos os usuários
+router.get('/usuarios', authenticate, requirePermission('usuario_listar'), usuariosController.getAll.bind(usuariosController));
+
+// POST /usuarios - Cria novo usuário
+router.post('/usuarios', authenticate, requirePermission('usuario_criar'), usuariosController.create.bind(usuariosController));
+
+// GET /usuarios/:id - Busca usuário por ID
+router.get('/usuarios/:id', authenticate, requirePermission('usuario_visualizar'), usuariosController.getById.bind(usuariosController));
+
+// PUT /usuarios/:id - Atualiza usuário
+router.put('/usuarios/:id', authenticate, requirePermission('usuario_editar'), usuariosController.update.bind(usuariosController));
+
+// DELETE /usuarios/:id - Deleta usuário
+router.delete('/usuarios/:id', authenticate, requirePermission('usuario_deletar'), usuariosController.remove.bind(usuariosController));
+
+// GET /usuarios/tipo/:tipo - Lista usuários por tipo (role)
+router.get('/usuarios/tipo/:tipo', authenticate, requirePermission('usuario_listar'), usuariosController.getByType.bind(usuariosController));
+
+// PUT /usuarios/:id/status - Atualiza status do usuário
+router.put('/usuarios/:id/status', authenticate, requirePermission('usuario_editar'), usuariosController.updateStatus.bind(usuariosController));
+
+// ============================================================
+// ROTAS DE PERMISSÕES
+// ============================================================
+
+// GET /permissoes - Lista todas as permissões
+router.get('/permissoes', authenticate, requirePermission('permissao_listar'), permissoesController.getAll.bind(permissoesController));
+
+// POST /permissoes - Cria nova permissão
+router.post('/permissoes', authenticate, requirePermission('permissao_criar'), permissoesController.create.bind(permissoesController));
+
+// GET /permissoes/:id - Busca permissão por ID
+router.get('/permissoes/:id', authenticate, requirePermission('permissao_visualizar'), permissoesController.getById.bind(permissoesController));
+
+// PUT /permissoes/:id - Atualiza permissão
+router.put('/permissoes/:id', authenticate, requirePermission('permissao_editar'), permissoesController.update.bind(permissoesController));
+
+// DELETE /permissoes/:id - Deleta permissão
+router.delete('/permissoes/:id', authenticate, requirePermission('permissao_deletar'), permissoesController.remove.bind(permissoesController));
+
+// GET /permissoes/modulo/:modulo - Lista permissões por módulo
+router.get('/permissoes/modulo/:modulo', authenticate, requirePermission('permissao_visualizar'), permissoesController.getByModulo.bind(permissoesController));
+
+// GET /permissoes/acao/:acao - Lista permissões por ação
+router.get('/permissoes/acao/:acao', authenticate, requirePermission('permissao_visualizar'), permissoesController.getByAcao.bind(permissoesController));
+
+// ============================================================
+// ROTAS DE ROLE-PERMISSÕES
+// ============================================================
+
+// GET /role-permissoes - Lista todas as role-permissões com paginação
+router.get('/role-permissoes', authenticate, requirePermission('usuario_visualizar'), rolePermissoesController.getAll.bind(rolePermissoesController));
+
+// POST /role-permissoes - Cria nova role-permissão
+router.post('/role-permissoes', authenticate, requirePermission('auditoria_visualizar'), rolePermissoesController.create.bind(rolePermissoesController));
+
+// GET /role-permissoes/:tipo - Lista permissões de um role (admin, gestor, usuario)
+router.get('/role-permissoes/:tipo([a-z]+)', authenticate, requirePermission('usuario_visualizar'), rolePermissoesController.getByTipo.bind(rolePermissoesController));
+
+// GET /role-permissoes/:id - Busca role-permissão por ID
+router.get('/role-permissoes/:id([a-f0-9\\-]+)', authenticate, requirePermission('usuario_visualizar'), rolePermissoesController.getById.bind(rolePermissoesController));
+
+// PUT /role-permissoes/:id - Atualiza role-permissão
+router.put('/role-permissoes/:id', authenticate, requirePermission('auditoria_visualizar'), rolePermissoesController.update.bind(rolePermissoesController));
+
+// DELETE /role-permissoes/:id - Deleta role-permissão
+router.delete('/role-permissoes/:id', authenticate, requirePermission('auditoria_visualizar'), rolePermissoesController.remove.bind(rolePermissoesController));
+
+// GET /role-permissoes/:tipo/tem/:permissaoNome - Verifica se role tem permissão
+router.get('/role-permissoes/:tipo/tem/:permissaoNome', authenticate, requirePermission('usuario_visualizar'), rolePermissoesController.temPermissao.bind(rolePermissoesController));
+
+// POST /role-permissoes/:tipo/permissoes/:permissaoId - Atribui permissão ao role
+router.post('/role-permissoes/:tipo/permissoes/:permissaoId', authenticate, requirePermission('auditoria_visualizar'), rolePermissoesController.atribuirPermissao.bind(rolePermissoesController));
+
+// DELETE /role-permissoes/:tipo/permissoes/:permissaoId - Remove permissão do role
+router.delete('/role-permissoes/:tipo/permissoes/:permissaoId', authenticate, requirePermission('auditoria_visualizar'), rolePermissoesController.removerPermissao.bind(rolePermissoesController));
+
+// PUT /role-permissoes/:tipo/permissoes - Substitui todas as permissões do role
+router.put('/role-permissoes/:tipo/permissoes', authenticate, requirePermission('auditoria_visualizar'), rolePermissoesController.replacePermissoes.bind(rolePermissoesController));
 
 // ============================================================
 // ROTAS DE AUDITORIA (Requer permissão: auditoria_visualizar)

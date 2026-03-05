@@ -18,6 +18,28 @@ export class TextosService extends BaseService {
   static VALID_TYPES = ['titulo', 'descricao', 'paragrafo', 'botao', 'label', 'placeholder', 'validacao', 'outro'];
 
   /**
+   * Override findAll para filtrar por parceiro através do tema
+   * @param {Object} filters - Filtros de busca
+   * @param {Object} pagination - Opções de paginação
+   * @param {Object} options - Opções adicionais
+   * @returns {Promise<Object>} Lista paginada de textos
+   */
+  async findAll(filters = {}, pagination = {}, options = {}) {
+    // Se filtrar por parceiroId, fazer include do tema para filtrar pelo parceiro
+    if (filters.parceiroId) {
+      options.include = options.include || [];
+      options.include.push({
+        association: 'tema',
+        where: { tem_par_id: filters.parceiroId },
+        required: true,
+      });
+      delete filters.parceiroId;
+    }
+    
+    return super.findAll(filters, pagination, options);
+  }
+
+  /**
    * Busca textos de um tema
    * @param {string} temaId - ID do tema
    * @param {Object} pagination - Opções de paginação

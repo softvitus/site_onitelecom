@@ -13,12 +13,10 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
 import styles from '../../estilos/componentes/comuns/Carrinho.module.css';
 import {
   getTexto,
@@ -225,7 +223,7 @@ const ProductCard = ({ card, onAddToCart }) => (
  * @returns {React.ReactElement}
  */
 const ProductGrid = ({ products, onAddToCart }) => (
-  <div className="row" role="list" aria-label="Lista de produtos">
+  <div className="row" aria-label="Lista de produtos">
     {products.map((card) => (
       <ProductCard key={card.id} card={card} onAddToCart={onAddToCart} />
     ))}
@@ -248,7 +246,7 @@ const CartItem = ({ id, item, onIncrease, onDecrease, onRemove }) => {
   return (
     <div
       className={`${styles['cart-item']} p-2 mb-2 animate__animated animate__fadeIn`}
-      role="listitem"
+     
     >
       <div className="d-flex justify-content-between">
         <div>
@@ -903,7 +901,7 @@ const Carrinho = () => {
   // COMPUTED VALUES
   // ─────────────────────────────────────────────────────────────────────────────────
 
-  const { subtotal, discount, total, itemsCount, hasDiscount } = calculateTotal();
+  const { discount, total, itemsCount, hasDiscount } = calculateTotal();
   const hasItems = Object.keys(cartItems).length > 0;
 
   // ─────────────────────────────────────────────────────────────────────────────────
@@ -965,7 +963,7 @@ const Carrinho = () => {
               </h5>
             </div>
             <div className="card-body">
-              <div id="cart-items" role="list" aria-label="Itens no carrinho">
+              <div id="cart-items" aria-label="Itens no carrinho">
                 {!hasItems ? (
                   <EmptyCart />
                 ) : (
@@ -1073,3 +1071,4 @@ const Carrinho = () => {
 };
 
 export default Carrinho;
+

@@ -29,7 +29,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
+// PropTypes import removido conforme não utilizado
 
 // ----------------------------------------------------------------------------
 // Ícones
@@ -186,9 +186,6 @@ const extrairLogoDoTema = (imagensArray) => {
   if (!Array.isArray(imagensArray) || imagensArray.length === 0) {
     return null;
   }
-
-  // Filtrar apenas logos (categoria 'logos' - com S)
-  const todasLogos = imagensArray.filter((img) => img.categoria === 'logos');
 
   // Prioridade 1: Logo "Main"
   const logoMain = imagensArray.find(

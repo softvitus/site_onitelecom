@@ -11,7 +11,7 @@
   },
   "rules": {
     "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
+    "linebreak-style": "off",
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
@@ -22,5 +22,16 @@
     "comma-dangle": ["error", "always-multiline"],
     "no-var": "error",
     "prefer-const": "error"
-  }
+  },
+  "globals": {
+    "fail": "readonly"
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.test.js", "src/**/*.spec.js", "src/__tests__/**/*.js"],
+      "rules": {
+        "no-unused-vars": "off"
+      }
+    }
+  ]
 }

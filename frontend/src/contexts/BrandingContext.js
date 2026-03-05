@@ -114,6 +114,9 @@ export const BrandingProvider = ({ children }) => {
         try {
           await checkApiHealth(8000); // 8 segundos de timeout
         } catch (healthError) {
+          // eslint-disable-next-line no-console
+
+          // eslint-disable-next-line no-console
           console.error('[BrandingContext] API não está acessível:', healthError.message);
           redirectToErrorPage();
           return;
@@ -139,14 +142,23 @@ export const BrandingProvider = ({ children }) => {
           setConfig(result.config);
         } else {
           // Fallback para config vazio - tema vem da API via tema.js
+          // eslint-disable-next-line no-console
+
+          // eslint-disable-next-line no-console
           console.warn('[BrandingContext] initializeConfig falhou, usando config vazio');
           setConfig({});
         }
       } catch (err) {
+        // eslint-disable-next-line no-console
+
+        // eslint-disable-next-line no-console
         console.error('[BrandingContext] Erro ao inicializar branding:', err);
         
         // Se for erro de conexão com API, redireciona para página de erro
         if (isConnectionError(err)) {
+          // eslint-disable-next-line no-console
+
+          // eslint-disable-next-line no-console
           console.error('[BrandingContext] Erro de conexão com API - redirecionando para página de erro');
           redirectToErrorPage();
           return;
@@ -180,6 +192,9 @@ export const BrandingProvider = ({ children }) => {
         window.location.href = novoParceiro.dominio;
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
+
+      // eslint-disable-next-line no-console
       console.error('[BrandingContext] Erro ao trocar parceiro:', err);
     }
   }, []);
@@ -200,6 +215,9 @@ export const BrandingProvider = ({ children }) => {
         setParceiroId(result.tenant);
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
+
+      // eslint-disable-next-line no-console
       console.error('[BrandingContext] Erro ao atualizar config:', err);
       setError(err.message);
     } finally {
@@ -332,3 +350,5 @@ export const useBrandingError = () => {
 
 export default BrandingContext;
 export { MIN_LOADING_TIME, CONTEXT_ERROR_MESSAGE };
+
+

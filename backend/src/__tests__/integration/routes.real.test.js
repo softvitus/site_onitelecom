@@ -94,7 +94,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
       const responseBody = {
         status: 'healthy',
         environment: 'production',
-        version: 'v1'
+        version: 'v1',
       };
 
       expect(responseBody).toHaveProperty('status');

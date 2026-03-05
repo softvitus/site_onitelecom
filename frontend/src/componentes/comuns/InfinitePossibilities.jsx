@@ -9,7 +9,7 @@
  * @returns {React.ReactElement} Seção de possibilidades infinitas
  */
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from '../../estilos/componentes/comuns/InfinitePossibilities.module.css';
 import { getTexto, getTemaImagensByCategoria } from '../../servicos/tema';
 
@@ -65,7 +65,7 @@ const getLogosData = () => {
  */
 const SectionHeader = () => (
   <>
-    <h1 className="mb-4" role="heading" aria-level="1">
+    <h1 className="mb-4">
       {getTexto('infinitePossibilities', 'titulo', 'Possibilidades Infinitas')}
     </h1>
     <div className={styles['line-custom']} aria-hidden="true" />
@@ -141,7 +141,7 @@ const InfinitePossibilities = () => {
     <div
       id={SECTION_ID}
       className={styles['container-custom']}
-      role="region"
+     
       aria-labelledby="infinite-possibilities-title"
     >
       <div className="row">
@@ -158,3 +158,4 @@ const InfinitePossibilities = () => {
 };
 
 export default InfinitePossibilities;
+

@@ -8,19 +8,9 @@
 
 import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import { FaBars, FaSignOutAlt, FaCog, FaBell, FaChevronDown } from 'react-icons/fa';
+import { useBreanding } from '../../contextos/BrandingContext';
+import { FaBars, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
 import '../../estilos/componentes/layout/Header.css';
-
-// ============================================================================
-// CONSTANTES
-// ============================================================================
-
-const HEADER_CONFIG = {
-  LOGO_TEXTO: 'Site Oni',
-  LOGO_SUBTITULO: 'Admin',
-  NOTIFICACOES_INICIAL: 3,
-  NOTIFICACOES_TIMEOUT: 500,
-};
 
 // ============================================================================
 // COMPONENTE PRINCIPAL
@@ -41,6 +31,7 @@ const HEADER_CONFIG = {
  */
 const Header = ({ onToggleSidebar }) => {
   const { usuario, logout } = useAuth();
+  const { _logo, _nomeParceiro, _loading } = useBreanding();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -55,34 +46,22 @@ const Header = ({ onToggleSidebar }) => {
         <button className="header-toggle" onClick={onToggleSidebar} title="Menu">
           <FaBars size={18} />
         </button>
-        
-        <div className="header-logo">
-          <span className="logo-text">{HEADER_CONFIG.LOGO_TEXTO}</span>
-          <span className="logo-subtitle">{HEADER_CONFIG.LOGO_SUBTITULO}</span>
-        </div>
       </div>
-
       {/* Right Section */}
       <div className="header-right">
-        {/* Notifications */}
-        <button className="header-icon-btn" title="Notificações">
-          <FaBell size={16} />
-          <span className="notification-badge">{HEADER_CONFIG.NOTIFICACOES_INICIAL}</span>
-        </button>
-
         {/* User Menu Dropdown */}
         <div className="header-user-menu">
           <button
             className="header-user-btn"
             onClick={() => setMenuOpen(!menuOpen)}
-            title={usuario?.usr_nome || 'Usuário'}
+            title={usuario?.usu_nome || 'Usuário'}
           >
             <div className="user-avatar">
-              {usuario?.usr_nome?.charAt(0).toUpperCase() || 'U'}
+              {usuario?.usu_nome?.charAt(0).toUpperCase() || 'U'}
             </div>
             <div className="user-info">
-              <span className="user-name">{usuario?.usr_nome || 'Usuário'}</span>
-              <span className="user-role">{usuario?.rol_nome || 'Usuário'}</span>
+              <span className="user-name">{usuario?.usu_nome || 'Usuário'}</span>
+              <span className="user-role">{usuario?.usu_tipo || 'Usuário'}</span>
             </div>
             <FaChevronDown size={12} className={`chevron ${menuOpen ? 'open' : ''}`} />
           </button>
@@ -90,11 +69,6 @@ const Header = ({ onToggleSidebar }) => {
           {/* Dropdown Menu */}
           {menuOpen && (
             <div className="dropdown-menu">
-              <button className="dropdown-item">
-                <FaCog size={14} />
-                <span>Configurações</span>
-              </button>
-              <div className="dropdown-divider"></div>
               <button className="dropdown-item logout" onClick={handleLogout}>
                 <FaSignOutAlt size={14} />
                 <span>Sair</span>

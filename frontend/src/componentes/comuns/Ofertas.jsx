@@ -75,7 +75,7 @@ const createCardStateMap = (cards, isOpen) => {
  * @param {Object} props - Props do componente
  * @returns {React.ReactElement}
  */
-const OfertasHeader = ({}) => (
+const OfertasHeader = () => (
   <div className={styles['offer-headline-container']}>
     <div className={styles['offer-headline']}>
       <h2>{getTexto('ofertas', 'titulo', 'Turbine sua conexão')}</h2>
@@ -186,7 +186,6 @@ const OfertaCard = ({ card, index, isOpen, onToggleContent, isVisible }) => (
   <div
     className={`${styles['card-oferta']} ${isVisible ? styles.visible : styles.hidden}`}
     id={`card-oferta-${card.id}`}
-    role="article"
     aria-expanded={isOpen}
   >
     {card.seal && <img src={card.seal} alt="Selo" className={styles.selo} loading="lazy" />}
@@ -336,7 +335,7 @@ const Ofertas = () => {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [cards.length]);
+  }, [cards]);
 
   // ─────────────────────────────────────────────────────────────────────────────────
   // HANDLERS
@@ -421,7 +420,7 @@ const Ofertas = () => {
         <div
           className={styles['card-container']}
           style={{ transform: `translateX(-${currentIndex * (100 / visibleCards)}%)` }}
-          role="region"
+         
           aria-label="Carrossel de ofertas"
         >
           {/* Renderização dos cards */}
@@ -446,3 +445,4 @@ const Ofertas = () => {
 };
 
 export default Ofertas;
+

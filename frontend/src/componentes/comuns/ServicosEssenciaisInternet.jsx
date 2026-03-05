@@ -99,7 +99,7 @@ const ServiceCard = ({ item, images }) => (
  * @returns {React.ReactElement}
  */
 const ServicesGrid = ({ items, images }) => (
-  <div className={styles['row']} role="list" aria-label="Lista de serviços essenciais de internet">
+  <div className={styles['row']} aria-label="Lista de serviços essenciais de internet">
     {items.map((item, index) => (
       <ServiceCard key={index} item={item} images={images} />
     ))}
@@ -130,7 +130,7 @@ const ServicosEssenciaisInternet = () => {
     <section
       id={SECTION_ID}
       className={styles['container16']}
-      role="region"
+     
       aria-labelledby="servicos-internet-title"
     >
       <div className={styles['container']}>
@@ -142,3 +142,5 @@ const ServicosEssenciaisInternet = () => {
 };
 
 export default ServicosEssenciaisInternet;
+
+

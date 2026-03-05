@@ -106,8 +106,10 @@ const createEmptyResponse = () => ({
 // EXPORTS
 // ============================================================================
 
-export default {
+const parceiroService = {
   buscarTodosParceiros,
 };
+
+export default parceiroService;
 
 export { ENDPOINT_PARCEIROS, DEFAULT_PAGE, DEFAULT_LIMIT };

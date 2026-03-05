@@ -18,15 +18,24 @@ export class PaginaController {
 
   /**
    * GET /api/paginas
-   * Lista todas as páginas com paginação
+   * Lista páginas com paginação
+   * Filtra por parceiro se usuário não for admin
    */
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
       
+      // Construir filtros
+      const filtros = {};
+      
+      // Se não é admin e tem parceiroId, filtrar por parceiro
+      if (req.user?.tipo !== 'admin' && req.user?.parceiroId) {
+        filtros.pag_par_id = req.user.parceiroId;
+      }
+      
       const result = await this.service.findAll(
-        {},
-        { page: parseInt(page), limit: parseInt(limit) }
+        filtros,
+        { page: parseInt(page), limit: parseInt(limit) },
       );
 
       return res.json({

@@ -74,7 +74,7 @@ const getServicosWithIcons = () => {
  * @returns {React.ReactElement}
  */
 const ServicosHeader = () => (
-  <h2 className={`text-center ${styles['texto-oni-azul']} mb-5`} role="heading" aria-level="2">
+  <h2 className={`text-center ${styles['texto-oni-azul']} mb-5`}>
     {getTexto('servicos', 'title', 'Nossos Serviços')}
   </h2>
 );
@@ -98,9 +98,9 @@ const ServicoIcon = ({ icon }) => (
  * @returns {React.ReactElement}
  */
 const ServicoRecursos = ({ recursos }) => (
-  <ul className="list-unstyled" role="list">
+  <ul className="list-unstyled">
     {recursos.map((recurso, idx) => (
-      <li key={idx} role="listitem">
+      <li key={idx}>
         {recurso}
       </li>
     ))}
@@ -132,13 +132,14 @@ const ServicoCard = ({ servico, index }) => (
       <ServicoRecursos recursos={servico.recursos} />
 
       {/* Botão de ação */}
-      <a
-        href="#"
+      <button
         className={`btn ${styles['botao-oni']} mt-3`}
         aria-label={`Saiba mais sobre ${servico.titulo}`}
+        // eslint-disable-next-line no-console
+        onClick={() => console.log('Saiba mais:', servico.titulo)}
       >
         {getTexto('servicos', 'buttonText', 'Saiba Mais')}
-      </a>
+      </button>
     </div>
   </div>
 );
@@ -150,7 +151,7 @@ const ServicoCard = ({ servico, index }) => (
  * @returns {React.ReactElement}
  */
 const ServicosGrid = ({ servicos }) => (
-  <div className={styles['grade-servicos']} role="region" aria-label="Lista de serviços">
+  <div className={styles['grade-servicos']} aria-label="Lista de serviços">
     {servicos.map((servico, index) => (
       <ServicoCard key={servico.id || index} servico={servico} index={index} />
     ))}
@@ -180,7 +181,7 @@ const Servicos = () => {
     <section
       id={SECTION_ID}
       className={`${styles['secao']} py-5 ${styles['fundo-claro']}`}
-      role="region"
+     
       aria-labelledby="servicos-title"
     >
       <div className="container">
@@ -195,3 +196,4 @@ const Servicos = () => {
 };
 
 export default Servicos;
+

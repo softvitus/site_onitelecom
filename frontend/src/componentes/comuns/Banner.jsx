@@ -55,7 +55,7 @@ const BannerBackground = () => <div className={styles['bolinhas-banner']} aria-h
  * @returns {React.ReactElement}
  */
 const BannerTitle = ({ title }) => (
-  <h1 className="display-4" role="heading" aria-level="1">
+  <h1 className="display-4" aria-level="1">
     {title}
   </h1>
 );
@@ -85,7 +85,6 @@ const BannerButton = ({ text, targetId, onClick }) => (
     className={`btn btn-lg ${styles['botao-oni']} mt-3`}
     onClick={onClick}
     aria-label={`Navegar para ${targetId}`}
-    role="button"
   >
     {text}
   </button>
@@ -123,7 +122,6 @@ const Banner = () => {
     <section
       className={styles['secao-banner']}
       id={BANNER_SECTION_ID}
-      role="region"
       aria-label="Banner principal"
     >
       {/* Fundo decorativo */}

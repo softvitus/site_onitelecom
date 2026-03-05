@@ -57,6 +57,9 @@ const IS_DEV = false;
  */
 const log = (message) => {
   if (IS_DEV) {
+    // eslint-disable-next-line no-console
+
+    // eslint-disable-next-line no-console
     console.log(`[LocationGuard] ${message}`);
   }
 };
@@ -134,3 +137,5 @@ const useLocationGuard = (options = {}) => {
 
 export default useLocationGuard;
 export { useLocationGuard, verificarLocalizacao, STORAGE_KEY, REDIRECT_PATH };
+
+

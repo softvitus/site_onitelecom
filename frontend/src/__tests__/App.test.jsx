@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 // Import após os mocks
 import App from '../App';
@@ -33,6 +33,7 @@ describe('App', () => {
   it('contém ErrorBoundary', () => {
     // Verifica que o App usa ErrorBoundary verificando a estrutura
     const { container } = render(<App />);
+    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeTruthy();
   });
 });

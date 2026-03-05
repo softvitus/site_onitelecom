@@ -54,7 +54,7 @@ describe('TemaService - Unit Tests', () => {
       expect(mockModel.findAndCountAll).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({ tem_par_id: 'p1' }),
-        })
+        }),
       );
     });
 
@@ -119,7 +119,7 @@ describe('TemaService - Unit Tests', () => {
             expect.objectContaining({ association: 'imagens' }),
             expect.objectContaining({ association: 'configTemas' }),
           ]),
-        })
+        }),
       );
     });
 
@@ -189,7 +189,7 @@ describe('TemaService - Unit Tests', () => {
         expect.objectContaining({
           tem_par_id: 'p1',
           tem_nome: expect.stringMatching('Clonado'),
-        })
+        }),
       );
     });
 
@@ -235,7 +235,7 @@ describe('TemaService - Unit Tests', () => {
       expect(mockModel.create).toHaveBeenCalledWith(
         expect.objectContaining({
           tem_par_id: 'parceiro-especial',
-        })
+        }),
       );
     });
   });
@@ -267,7 +267,7 @@ describe('TemaService - Unit Tests', () => {
       const mockItem = { 
         tem_id: '123', 
         ...updateData,
-        update: jest.fn().mockResolvedValue(true)
+        update: jest.fn().mockResolvedValue(true),
       };
 
       mockModel.findByPk.mockResolvedValue(mockItem);

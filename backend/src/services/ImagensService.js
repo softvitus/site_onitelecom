@@ -18,6 +18,28 @@ export class ImagensService extends BaseService {
   static VALID_TYPES = ['banner', 'logo', 'icone', 'thumbnail', 'background', 'custom'];
 
   /**
+   * Override findAll para filtrar por parceiro através do tema
+   * @param {Object} filters - Filtros de busca
+   * @param {Object} pagination - Opções de paginação
+   * @param {Object} options - Opções adicionais
+   * @returns {Promise<Object>} Lista paginada de imagens
+   */
+  async findAll(filters = {}, pagination = {}, options = {}) {
+    // Se filtrar por parceiroId, fazer include do tema para filtrar pelo parceiro
+    if (filters.parceiroId) {
+      options.include = options.include || [];
+      options.include.push({
+        association: 'tema',
+        where: { tem_par_id: filters.parceiroId },
+        required: true,
+      });
+      delete filters.parceiroId;
+    }
+    
+    return super.findAll(filters, pagination, options);
+  }
+
+  /**
    * Busca imagens de um tema
    * @param {string} temaId - ID do tema
    * @param {Object} pagination - Opções de paginação

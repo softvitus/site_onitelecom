@@ -3,21 +3,29 @@
    ============================ */
 
 :root {
-  /* Cores Primárias */
-  --primary: #ffffff;
-  --primary-dark: #ffffff;
-  --primary-light: #ffffff;
+  /* Cores Primárias - Azul */
+  --primary: #0d6efd;
+  --primary-dark: #0a58ca;
+  --primary-light: #0dcaf0;
   
-  /* Cores Secundárias */
-  --secondary: #ffffff;
-  --secondary-dark: #ffffff;
-  --secondary-light: #ffffff;
+  /* Cores Secundárias - Roxo */
+  --secondary: #667eea;
+  --secondary-dark: #5568d3;
+  --secondary-light: #8b9ef6;
   
   /* Status Colors */
-  --success: #198754;
-  --danger: #dc3545;
-  --warning: #ffc107;
-  --info: #0dcaf0;
+  --success: #10b981;
+  --success-light: #d1fae5;
+  --success-dark: #065f46;
+  --danger: #ef4444;
+  --danger-light: #fee2e2;
+  --danger-dark: #991b1b;
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --warning-dark: #b45309;
+  --info: #3b82f6;
+  --info-light: #dbeafe;
+  --info-dark: #1e40af;
   
   /* Grays */
   --gray-50: #f9fafb;

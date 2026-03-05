@@ -11,7 +11,7 @@
  * @returns {React.ReactElement} Seção completa de plano controle
  */
 
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../../estilos/componentes/comuns/PlanoControle.module.css';
 import { getTexto, getImagem, getLink } from '../../servicos/tema';
@@ -80,14 +80,14 @@ const BeneficiosList = () => {
   const beneficios = getBeneficios();
 
   return (
-    <div className={styles['subtext7']} role="list" aria-label="Benefícios do plano">
-      <h3 role="listitem">{beneficios.ligacoes}</h3>
-      <h3 role="listitem">{beneficios.ilimitadas}</h3>
-      <h3 role="listitem">
+    <div className={styles['subtext7']} aria-label="Benefícios do plano">
+      <h3>{beneficios.ligacoes}</h3>
+      <h3>{beneficios.ilimitadas}</h3>
+      <h3>
         <span className={styles['span27']}>{beneficios.mais}</span> {beneficios.internet}
       </h3>
-      <h3 role="listitem">{beneficios.movel}</h3>
-      <h3 role="listitem">{beneficios.apartir}</h3>
+      <h3>{beneficios.movel}</h3>
+      <h3>{beneficios.apartir}</h3>
     </div>
   );
 };
@@ -241,7 +241,7 @@ const PlanoControle = () => {
   // ─────────────────────────────────────────────────────────────────────────────────
 
   return (
-    <section id={SECTION_ID} role="region" aria-label="Plano Controle">
+    <section id={SECTION_ID} aria-label="Plano Controle">
       {/* Seção Hero com banner principal */}
       <HeroSection />
 
@@ -252,3 +252,5 @@ const PlanoControle = () => {
 };
 
 export default PlanoControle;
+
+

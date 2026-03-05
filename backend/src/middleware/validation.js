@@ -27,7 +27,9 @@ export const validate = (schema) => {
         }
 
         // Se não é obrigatório e está vazio, pular validações
-        if (!value) continue;
+        if (!value) {
+          continue;
+        }
 
         // Verificar tipo
         if (rules.type) {
@@ -156,8 +158,17 @@ export const schemas = {
     par_dominio: { 
       type: 'string', 
       required: true,
+      minLength: 3,
+      maxLength: 255,
+      patternMessage: 'par_dominio deve ser um domínio válido',
+    },
+    par_dominio_painel: { 
+      type: 'string', 
+      required: false,
       pattern: /^https?:\/\/.+/,
-      patternMessage: 'par_dominio deve ser uma URL válida',
+      patternMessage: 'par_dominio_painel deve ser uma URL válida (ex: https://admin.parceiro.com.br)',
+      allowNull: true,
+      allowEmpty: true,
     },
     par_cidade: { type: 'string', required: true, minLength: 1, maxLength: 255 },
     par_endereco: { type: 'string', required: false, maxLength: 500 },

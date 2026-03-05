@@ -8,8 +8,10 @@
 import '../../src/config/sequelize.js';
 
 // Mock console.error para reduzir ruído
+// eslint-disable-next-line no-console
 global.console.error = jest.fn((...args) => {
   if (args[0]?.includes?.('error') || args[0]?.includes?.('Error')) {
+    // eslint-disable-next-line no-console
     console.log(...args);
   }
 });

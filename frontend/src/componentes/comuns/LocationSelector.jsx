@@ -11,7 +11,7 @@
  * @returns {React.ReactElement} Formulário de seleção de localização
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from '../../estilos/componentes/comuns/LocationSelector.module.css';
 import { getTexto, getImagem, getTemaTextosGrouped } from '../../servicos/tema';
 
@@ -262,7 +262,7 @@ const LocationSelector = () => {
    * @param {number} latitude - Latitude
    * @param {number} longitude - Longitude
    */
-  const getLocationData = (latitude, longitude) => {
+  const getLocationData = useCallback((latitude, longitude) => {
     const url = `${GEOCODE_API_URL}?latitude=${latitude}&longitude=${longitude}&localityLanguage=pt`;
 
     fetch(url)
@@ -285,11 +285,14 @@ const LocationSelector = () => {
         setLoading(false);
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
+
+        // eslint-disable-next-line no-console
         console.error('Error fetching location data:', error);
         setLoading(false);
         setMessage(texts.erroGeo || 'Erro ao obter localização');
       });
-  };
+  }, [texts]);
 
   /**
    * Obtém localização do usuário via geolocalização
@@ -305,6 +308,9 @@ const LocationSelector = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => getLocationData(position.coords.latitude, position.coords.longitude),
       (error) => {
+        // eslint-disable-next-line no-console
+
+        // eslint-disable-next-line no-console
         console.error('Error getting user location:', error);
         setLoading(false);
         setMessage(texts.erroGeo || 'Erro ao obter localização');
@@ -346,16 +352,35 @@ const LocationSelector = () => {
   // EFFECTS
   // ─────────────────────────────────────────────────────────────────────────────────
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Verifica permissão de geolocalização na montagem
     if ('geolocation' in navigator) {
       navigator.permissions.query({ name: 'geolocation' }).then((result) => {
         if (result.state === 'granted') {
-          handleGetUserLocation();
+          // Chama a função de geolocalização aqui
+          if (!('geolocation' in navigator)) {
+            return;
+          }
+
+          setLoading(true);
+
+          navigator.geolocation.getCurrentPosition(
+            (position) => getLocationData(position.coords.latitude, position.coords.longitude),
+            (error) => {
+              // eslint-disable-next-line no-console
+
+              // eslint-disable-next-line no-console
+              console.error('Error getting user location:', error);
+              setLoading(false);
+              setMessage(texts.erroGeo || 'Erro ao obter localização');
+            },
+            GEO_OPTIONS
+          );
         }
       });
     }
-  }, []);
+  }, [getLocationData, texts.erroGeo]);  // Inclui dependências necessárias
 
   // ─────────────────────────────────────────────────────────────────────────────────
   // RENDER
@@ -404,3 +429,5 @@ const LocationSelector = () => {
 };
 
 export default LocationSelector;
+
+

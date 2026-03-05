@@ -12,6 +12,29 @@ import { ApiError } from '../utils/ErrorCodes.js';
  */
 export class ComponenteService extends BaseService {
   /**
+   * Override findAll para filtrar por parceiro através de páginas
+   * @param {Object} filters - Filtros de busca
+   * @param {Object} pagination - Opções de paginação
+   * @param {Object} options - Opções adicionais
+   * @returns {Promise<Object>} Lista paginada de componentes
+   */
+  async findAll(filters = {}, pagination = {}, options = {}) {
+    // Se filtrar por parceiroId, fazer include da página para filtrar pelo parceiro
+    if (filters.parceiroId) {
+      options.include = options.include || [];
+      options.include.push({
+        association: 'paginas',
+        where: { pag_par_id: filters.parceiroId },
+        required: true,
+        through: { attributes: [] }, // Não incluir atributos da tabela de junção
+      });
+      delete filters.parceiroId;
+    }
+    
+    return super.findAll(filters, pagination, options);
+  }
+
+  /**
    * Busca componente com todas relações
    * @param {string} id - ID do componente
    * @returns {Promise<Object>} Componente com relações

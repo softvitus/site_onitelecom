@@ -37,6 +37,7 @@ const mapearParceiro = (data) => {
     nome: data.par_nome,
     descricao: `${data.par_dominio}`,
     dominio: data.par_dominio,
+    dominioPainel: data.par_dominio_painel,
     cidade: data.par_cidade,
     estado: data.par_estado,
     endereco: data.par_endereco,
@@ -59,6 +60,7 @@ const mapearParceiroParaBackend = (dados) => {
   return {
     par_nome: dados.nome,
     par_dominio: dados.dominio || '',
+    par_dominio_painel: dados.dominioPainel || null,
     par_cidade: dados.cidade || '',
     par_estado: dados.estado || null,
     par_endereco: dados.endereco || null,

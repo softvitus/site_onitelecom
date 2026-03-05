@@ -14,6 +14,23 @@ import { Sequelize } from 'sequelize';
  */
 export class ParceiroService extends BaseService {
   /**
+   * Override findAll para converter parceiroId para par_id
+   * @param {Object} filters - Filtros de busca
+   * @param {Object} pagination - Opções de paginação
+   * @param {Object} options - Opções adicionais
+   * @returns {Promise<Object>} Lista paginada de parceiros
+   */
+  async findAll(filters = {}, pagination = {}, options = {}) {
+    // Converter parceiroId para par_id se presente
+    if (filters.parceiroId) {
+      filters.par_id = filters.parceiroId;
+      delete filters.parceiroId;
+    }
+    
+    return super.findAll(filters, pagination, options);
+  }
+
+  /**
    * Busca parceiro com todas as suas relações
    * @param {string} id - ID do parceiro
    * @returns {Promise<Object>} Parceiro com temas e páginas
@@ -105,7 +122,7 @@ export class ParceiroService extends BaseService {
 
     return this.findAll(
       { par_cidade: cities },
-      pagination
+      pagination,
     );
   }
 
@@ -157,7 +174,7 @@ export class ParceiroService extends BaseService {
           latitude,
           longitude,
           parseFloat(parceiro.par_latitude),
-          parseFloat(parceiro.par_longitude)
+          parseFloat(parceiro.par_longitude),
         ),
       }))
       .filter(p => p.distancia <= radiusKm)

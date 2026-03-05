@@ -106,7 +106,7 @@ function extrairEntidadeDoPath(path, metodo, data = {}) {
     // Para POST/PUT, tenta obter do data.data.id ou data.data.*_id
     if (metodo === 'POST' || metodo === 'PUT') {
       entidadeId = data.data.id || Object.values(data.data).find((v) =>
-        typeof v === 'string' && v.match(/^[0-9a-f]{8}-[0-9a-f]{4}-/i)
+        typeof v === 'string' && v.match(/^[0-9a-f]{8}-[0-9a-f]{4}-/i),
       );
     }
   }

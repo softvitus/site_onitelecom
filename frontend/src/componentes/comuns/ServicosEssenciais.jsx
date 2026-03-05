@@ -15,7 +15,6 @@ import {
   getTexto,
   getImagem,
   getTemaConteudosByCategoria,
-  getTemaImagensByCategoria,
 } from '../../servicos/tema';
 
 // ═════════════════════════════════════════════════════════════════════════════════════
@@ -62,7 +61,7 @@ const getServiceCards = () => {
  * @returns {React.ReactElement}
  */
 const SectionHeader = () => (
-  <h2 className={styles['clique']} role="heading" aria-level="2">
+  <h2 className={styles['clique']} aria-level="2">
     {getTexto('servicosEssenciais', 'title', 'Soluções rápidas ao seu alcance')}
   </h2>
 );
@@ -144,7 +143,7 @@ const ServicosEssenciais = () => {
     <div
       id={SECTION_ID}
       className={styles['container-custom']}
-      role="region"
+     
       aria-labelledby="servicos-essenciais-title"
     >
       {/* Título da seção */}
@@ -157,3 +156,4 @@ const ServicosEssenciais = () => {
 };
 
 export default ServicosEssenciais;
+

@@ -60,24 +60,22 @@ const request = async (endpoint, options = {}) => {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
-      throw {
-        status: response.status,
-        message: error.error?.message || `Erro ${response.status}`,
-        data: error,
-      };
+      const err = new Error(error.error?.message || `Erro ${response.status}`);
+      err.status = response.status;
+      err.data = error;
+      throw err;
     }
 
     return await response.json();
   } catch (error) {
     // Re-throw se já é um erro formatado
-    if (error.status) throw error;
+    if (error instanceof Error && error.status) throw error;
 
     // Erro de rede ou outro
-    throw {
-      status: 0,
-      message: error.message || 'Erro de conexão',
-      data: null,
-    };
+    const err = new Error(error.message || 'Erro de conexão');
+    err.status = 0;
+    err.data = null;
+    throw err;
   }
 };
 
@@ -223,7 +221,7 @@ export const checkApiHealth = async (timeout = 5000) => {
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const response = await fetch(`${API_BASE_URL}/public/parceiros`, {
+    await fetch(`${API_BASE_URL}/public/parceiros`, {
       method: 'GET',
       signal: controller.signal,
     });
@@ -259,7 +257,7 @@ export const checkApiHealth = async (timeout = 5000) => {
 // EXPORTS
 // ============================================================================
 
-export default {
+const apiService = {
   API_BASE_URL,
   get,
   post,
@@ -269,5 +267,7 @@ export default {
   checkApiHealth,
   isConnectionError,
 };
+
+export default apiService;
 
 export { API_BASE_URL, DEFAULT_HEADERS };

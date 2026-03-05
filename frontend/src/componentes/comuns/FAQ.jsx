@@ -6,7 +6,7 @@
  * @returns {JSX.Element} Componente renderizado
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../../estilos/componentes/comuns/FAQ.module.css';
 import {
   FaSearch,
@@ -401,7 +401,7 @@ function FAQ() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [searchTerm]);
+  }, [searchTerm, categories]);
 
   // ─────────────────────────────────────────────────────────────────────────
   // Handlers

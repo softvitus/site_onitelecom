@@ -1,6 +1,19 @@
 /** @type {import('sequelize-cli').Migration} */
 export default {
   async up(queryInterface, Sequelize) {
+    // Limpar ENUMs antigos se existirem
+    try {
+      await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_0061_Permissoes_perm_modulo" CASCADE;');
+    } catch (error) {
+      console.log('Limpeza de enum_0061_Permissoes_perm_modulo:', error.message);
+    }
+    
+    try {
+      await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_0061_Permissoes_perm_acao" CASCADE;');
+    } catch (error) {
+      console.log('Limpeza de enum_0061_Permissoes_perm_acao:', error.message);
+    }
+
     await queryInterface.createTable('0061_Permissoes', {
       perm_id: {
         type: Sequelize.UUID,
@@ -21,20 +34,29 @@ export default {
       },
       perm_modulo: {
         type: Sequelize.ENUM(
-          'tema',
-          'pagina',
-          'componente',
-          'elemento',
-          'usuario',
-          'parceiro',
+          'tema', 'temas',
+          'pagina', 'paginas',
+          'componente', 'componentes',
+          'elemento', 'elementos',
+          'usuario', 'usuarios',
+          'parceiro', 'parceiros',
           'relatorios',
-          'auditoria'
+          'auditoria',
+          'cores',
+          'imagens',
+          'links',
+          'textos',
+          'conteudo', 'conteudos',
+          'features',
+          'config_tema',
+          'role_permissoes',
+          'permissoes'
         ),
         allowNull: false,
         comment: 'Módulo relacionado',
       },
       perm_acao: {
-        type: Sequelize.ENUM('criar', 'listar', 'editar', 'deletar', 'visualizar', 'exportar', 'estatisticas', 'filtrar'),
+        type: Sequelize.ENUM('criar', 'listar', 'editar', 'deletar', 'visualizar', 'exportar', 'estatisticas', 'filtrar', 'leituradados'),
         allowNull: false,
         comment: 'Ação realizada',
       },
