@@ -54,55 +54,64 @@ const getMediaControls = () => [
 // ─────────────────────────────────────────────────────────────────────────────────────
 
 /**
- * TopBanner - Banner superior com logo e link
+ * LeftColumn - Coluna esquerda com imagem e texto do banner
  * @returns {React.ReactElement}
  */
-const TopBanner = () => {
+const LeftColumn = () => {
   const bannerText = getTexto('appExclusivo', 'banner', '');
   const bannerParts = formatBannerText(bannerText, 'App Exclusivo');
 
   return (
-    <div className={`container ${styles['top-banner']}`}>
-      <div className={`row align-items-center mb-4 ${styles['banner-row']}`}>
-        {/* Logo */}
-        <div className={`col-md-3 text-center ${styles['banner-logo']}`}>
-          <img
-            src={getImagem('appExclusivo', 'logo', '')}
-            alt="Logo Onigo"
-            className={`${styles['img-fluid']} ${styles['logo-img']}`}
-            loading="lazy"
-          />
-        </div>
+    <div className={styles['left-column']}>
+      {/* Imagem das telas */}
+      <div className={styles['image-wrapper']}>
+        <img
+          src={getImagem('appExclusivo', 'telas', '')}
+          alt="Telas do aplicativo Onigo em diversos dispositivos"
+          className="img-fluid"
+          loading="lazy"
+        />
+      </div>
 
-        {/* Texto do banner com link */}
-        <div className={`col-md-9 ${styles['banner-text']}`}>
-          <a href={getLink('externa', 'Portal Onigo', '#')} aria-label="Acessar portal Onigo">
-            {bannerParts.before}
-            <strong>{getTexto('appExclusivo', 'destaque', 'App Exclusivo')}</strong>
-            {bannerParts.after}
-          </a>
-        </div>
+      {/* Texto do banner */}
+      <div className={styles['banner-text']}>
+        <a href={getLink('externa', 'Portal Onigo', '#')} aria-label="Acessar portal Onigo">
+          {bannerParts.before}
+          <strong>{getTexto('appExclusivo', 'destaque', 'App Exclusivo')}</strong>
+          {bannerParts.after}
+        </a>
       </div>
     </div>
   );
 };
 
 /**
- * AppScreenshot - Imagem demonstrativa das telas do app
+ * RightColumn - Coluna direita com logo, título e features
  * @returns {React.ReactElement}
  */
-const AppScreenshot = () => (
-  <div className={`col-md-6 mb-4 mb-md-0 ${styles['image-container']}`}>
-    <div className={styles['image-wrapper']}>
-      <img
-        src={getImagem('appExclusivo', 'telas', '')}
-        alt="Telas do aplicativo Onigo em diversos dispositivos"
-        className="img-fluid"
-        loading="lazy"
-      />
+const RightColumn = () => {
+  const fullTitle = getTexto('appExclusivo', 'titulo', 'O melhor da TV pra você curtir a qualquer hora e em qualquer lugar.');
+  
+  return (
+    <div className={styles['right-column']}>
+      {/* Logo + Título inline */}
+      <div className={styles['header-section']}>
+        <img
+          src={getImagem('appExclusivo', 'logo', '')}
+          alt="Logo Onigo"
+          className={styles['logo-img']}
+          loading="lazy"
+        />
+        <span className={styles['title']}>{fullTitle}</span>
+      </div>
+
+      {/* Carrossel de features */}
+      <FeaturesCarousel />
     </div>
-  </div>
-);
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────────────
 
 /**
  * MediaControls - Controles de mídia ilustrativos
@@ -125,37 +134,33 @@ const MediaControls = () => {
 };
 
 /**
- * FeaturesHighlight - Texto destacado de funcionalidades
+ * FeaturesCarousel - Carrossel animado com ícones e textos
  * @returns {React.ReactElement}
  */
-const FeaturesHighlight = () => (
-  <div className={styles['highlight']}>
-    {getTexto('appExclusivo', 'feature_play', 'Assista')}
-    <br />
-    {getTexto('appExclusivo', 'feature_pause', 'Pause')}
-    <br />
-    {getTexto('appExclusivo', 'feature_grave', 'Grave')}
-    <br />
-    {getTexto('appExclusivo', 'feature_quando', 'Quando quiser')}
-  </div>
-);
+const FeaturesCarousel = () => {
+  const features = [
+    { icon: getImagem('appExclusivo', 'controles_play', ''), text: getTexto('appExclusivo', 'feature_play', 'Assista') },
+    { icon: getImagem('appExclusivo', 'controles_pause', ''), text: getTexto('appExclusivo', 'feature_pause', 'Pause') },
+    { icon: getImagem('appExclusivo', 'controles_retroceder', ''), text: getTexto('appExclusivo', 'feature_grave', 'Grave') },
+    { icon: getImagem('appExclusivo', 'controles_avancar', ''), text: getTexto('appExclusivo', 'feature_quando', 'Quando quiser') },
+  ];
 
-/**
- * AppContent - Conteúdo principal com título, controles e destaques
- * @returns {React.ReactElement}
- */
-const AppContent = () => (
-  <div className={`col-md-6 ${styles['text-content']}`}>
-    {/* Título */}
-    <h1>{getTexto('appExclusivo', 'titulo', '')}</h1>
+  // Duplicar para loop infinito
+  const duplicatedFeatures = [...features, ...features];
 
-    {/* Controles de mídia */}
-    <MediaControls />
-
-    {/* Funcionalidades em destaque */}
-    <FeaturesHighlight />
-  </div>
-);
+  return (
+    <div className={styles['carousel-wrapper']}>
+      <div className={styles['carousel-track']}>
+        {duplicatedFeatures.map((item, index) => (
+          <div key={index} className={styles['carousel-item']}>
+            <img src={item.icon} alt={item.text} className={styles['carousel-icon']} />
+            <span className={styles['carousel-text']}>{item.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // 📱 COMPONENTE PRINCIPAL
@@ -177,17 +182,13 @@ const AppExclusivo = () => {
      
       aria-labelledby="app-exclusivo-title"
     >
-      {/* Banner superior */}
-      <TopBanner />
-
-      {/* Conteúdo principal */}
       <div className="container">
-        <div className={`row align-items-center ${styles['main-content']}`}>
-          {/* Imagem das telas */}
-          <AppScreenshot />
+        <div className={styles['main-content']}>
+          {/* Coluna esquerda - Imagem + Banner */}
+          <LeftColumn />
 
-          {/* Conteúdo textual */}
-          <AppContent />
+          {/* Coluna direita - Logo + Título + Features */}
+          <RightColumn />
         </div>
       </div>
     </div>

@@ -1,24 +1,10 @@
 .custom-section {
   background: var(--gradient-purple-primary);
   min-height: auto;
-  padding: 80px 0;
+  padding: 50px 0;
   display: block;
   position: relative;
   overflow: hidden;
-}
-
-.custom-section::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10%);
-  background-size: 50px 50px;
-  transform: rotate(30deg);
-  z-index: 0;
-  pointer-events: none;
 }
 
 .content-wrapper {
@@ -26,16 +12,37 @@
   z-index: 2;
 }
 
+.title-wrapper {
+  text-align: center;
+  margin-bottom: 40px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.description-wrapper {
+  text-align: center;
+  margin-top: 40px;
+}
+
 .custom-text {
-  font-size: 4em;
-  font-weight: 800;
-  line-height: 1.2;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 2.2em;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 0;
+  display: inline;
+}
+
+.description-text {
+  color: white;
+  font-size: 1.1em;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .accent-text {
   color: var(--color-neutral-white);
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .custom-card {
@@ -63,13 +70,13 @@
 
 .custom-icon {
   background: var(--gradient-purple-primary);
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 15px;
   transition: var(--transition-normal);
 }
 
@@ -78,16 +85,50 @@
 }
 
 .custom-icon img {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
 }
 
+.cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.card-col {
+  flex: 0 1 auto;
+  min-width: 220px;
+  max-width: 280px;
+}
+
 @media (max-width: 768px) {
-  .custom-text {
-    font-size: 2.5em;
+  .custom-section {
+    padding: 40px 0;
   }
+
+  .title-wrapper {
+    margin-bottom: 30px;
+  }
+
+  .description-wrapper {
+    margin-top: 30px;
+  }
+
+  .custom-text {
+    font-size: 1.4em;
+  }
+
+  .description-text {
+    font-size: 1em;
+  }
+
   .custom-card {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+  }
+
+  .card-col {
+    max-width: 100%;
   }
 }

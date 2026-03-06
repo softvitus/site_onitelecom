@@ -1,5 +1,7 @@
 header {
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 /* Conteúdo principal da página */
 main,
@@ -12,7 +14,7 @@ section {
 .top-bar {
   background-color: var(--color-neutral-black);
   color: var(--color-neutral-white);
-  padding: 10px 20px;
+  padding: 5px 20px;
 }
 
 .abrir-menu {
@@ -66,7 +68,8 @@ section {
 /* Estilos do Main Header */
 .main-header {
   background-color: var(--color-neutral-white);
-  padding: 0px 10px;
+  padding: 5px 10px;
+  margin: 0;
 }
 
 .logo img {
@@ -75,11 +78,11 @@ section {
 
 .main-nav a {
   color: var(--color-secondary-blue);
-  margin-right: 20px;
+  margin-right: 8px;
   text-decoration: none;
   font-weight: bold;
-  font-size: 20px;
-  padding: 10px 20px;
+  font-size: 18px;
+  padding: 10px 12px;
   position: relative;
   display: inline-block;
 }

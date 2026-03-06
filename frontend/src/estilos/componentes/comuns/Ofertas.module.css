@@ -68,8 +68,9 @@
 }
 
 .nav-button:hover {
-  background: var(--gradient-purple-reverse);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #8b3db8 0%, #6e32a0 100%);
+  box-shadow: 0 0 15px rgba(139, 61, 184, 0.5);
+  transform: translateY(-50%) scale(1.05);
 }
 
 .nav-button:disabled {
@@ -95,21 +96,24 @@
 
 .card-oferta {
   width: 320px;
+  min-height: 580px;
   border-radius: var(--radius-xl);
   background: var(--gradient-purple-primary);
   text-align: center;
-  padding: 7px 7px 7px;
+  padding: 7px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
   position: relative;
   color: var(--color-neutral-white);
   font-family: Arial, sans-serif;
   margin-bottom: 20px;
-  height: 100%;
   flex: 0 0 calc(95% / 4);
   max-width: calc(100% / 4);
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 .card-oferta.visible {
   opacity: 1;
@@ -126,37 +130,70 @@
 .selo {
   position: absolute;
   top: 10px;
-  right: 8px;
+  left: 8px;
   width: 70px;
-  z-index: 1;
+  z-index: 3;
 }
 
 .card-content {
   background: var(--color-neutral-white);
   text-align: center;
   border-radius: var(--radius-xl);
-  padding: 15px;
+  padding: 10px;
   color: var(--color-neutral-black);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 0;
+}
+
+/* Logo ONI Fibra */
+.onifo-container {
+  margin: 5px 0;
+  padding: 5px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); 
+  border-radius: var(--radius-md);
+}
+
+.onifo-logo {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.onifo-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Seção de velocidade */
+.speed-section {
+  margin: 8px 0;
 }
 
 .header {
   background: var(--gradient-purple-primary);
   color: var(--color-neutral-white);
   font-weight: bold;
-  width: 80%;
   text-align: center;
-  font-size: 14px;
-  padding: 10px 0;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  position: absolute;
-  top: -42px;
-  left: 28px;
+  font-size: 11px;
+  padding: 6px 40px;
   text-transform: uppercase;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 3px 8px rgba(110, 50, 160, 0.4);
+  letter-spacing: 0.5px;
+  position: absolute;
+  top: 25px;
+  right: -35px;
+  transform: rotate(45deg);
+  width: 180px;
+  z-index: 1;
 }
 
 .speed {
-  font-size: 3rem;
+  font-size: 3.5rem;
   color: var(--color-primary-main);
   font-weight: bold;
   margin: 0;
@@ -164,66 +201,94 @@
 }
 
 .speed-subtext {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   font-weight: bold;
   color: var(--color-neutral-black);
-  margin-top: -10px;
+  margin-top: 0;
   line-height: 1;
+}
+
+/* Benefícios compactos */
+.benefits-compact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 8px 0;
+  padding: 0;
+}
+
+.benefit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.benefit-icon img {
+  width: 70px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.benefit-icon img:hover {
+  transform: scale(1.1);
+}
+
+.benefits-label {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--color-primary-main);
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .divider {
   width: 85%;
   border: 1px solid var(--color-primary-main);
-  margin: 10px auto;
-}
-
-.partners img {
-  width: 160px;
-  margin: 10px 5px;
-  transition: transform 0.3s ease;
-}
-
-.partners img:hover {
-  transform: scale(1.1);
-}
-
-.partners.second-line img {
-  width: 100px;
+  margin: 8px auto;
 }
 
 .app-choices {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   color: var(--color-primary-main);
-  margin: 12px 0 8px 0;
+  margin: 10px 0 8px 0;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .app-icons {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
-  margin: 10px 0;
+  margin: 8px 0;
+  flex-wrap: wrap;
 }
 
 .app-icons img {
   width: 50px;
   height: 50px;
-  border: 1px solid var(--color-neutral-300);
-  border-radius: var(--radius-md);
+  border: 2px solid var(--color-primary-main);
+  border-radius: var(--radius-lg);
   padding: 5px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  transition: var(--transition-normal);
+  background: white;
+  box-shadow: 0px 3px 6px rgba(110, 50, 160, 0.15);
+  transition: all 0.3s ease;
 }
 
 .app-icons img:hover {
-  transform: scale(1.05);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0px 6px 12px rgba(110, 50, 160, 0.25);
+  border-color: var(--color-secondary-blue);
 }
 
 .price-text {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
-  margin: 20px 0 -10px;
+  margin: 8px 0 2px;
   color: var(--color-neutral-black);
   text-transform: uppercase;
 }
@@ -233,7 +298,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: baseline;
-  margin-left: 30px;
+  margin: 3px 0 10px 30px;
 }
 
 .price .currency {
@@ -266,83 +331,26 @@
 }
 
 .btn-contratar {
-  margin-top: 0px;
+  margin-top: 10px;
+  margin-bottom: 0;
   background: var(--gradient-purple-primary);
   color: var(--color-neutral-white);
-  padding: 12px 20px;
+  padding: 12px 24px;
   border-radius: 50px;
   font-size: 14px;
   font-weight: bold;
   border: none;
-  box-shadow: 0px 4px 6px rgba(110, 50, 160, 0.2);
+  box-shadow: 0px 4px 8px rgba(110, 50, 160, 0.3);
   text-transform: uppercase;
   transition: all 0.3s ease;
+  cursor: pointer;
+  width: 100%;
 }
 
 .btn-contratar:hover {
-  background: var(--gradient-purple-reverse);
-  transform: scale(1.05);
-  box-shadow: 0px 6px 12px rgba(110, 50, 160, 0.3);
-}
-
-.hidden-content {
-  display: none;
-}
-
-.toggle-benefits {
-  background: var(--gradient-purple-primary);
-  color: var(--color-neutral-white);
-  padding: 10px 15px;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 15px auto;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 200px;
-}
-
-.toggle-benefits:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
-
-.toggle-benefits .icon {
-  margin-right: 8px;
-  font-size: 20px;
-  transition: transform 0.3s ease;
-}
-
-.toggle-benefits:hover .icon {
-  transform: rotate(90deg);
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.05);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-.toggle-benefits {
-  animation: pulse 2s infinite;
-}
-
-.toggle-divider {
-  width: 85%;
-  border: 1px solid var(--color-primary-main);
-  margin: 15px auto;
+  background: linear-gradient(135deg, #8b3db8 0%, #6e32a0 100%);
+  box-shadow: 0px 6px 16px rgba(110, 50, 160, 0.5);
+  transform: scale(1.02);
 }
 
 /* Estilos para dispositivos móveis */
@@ -360,22 +368,75 @@
     max-width: 100%;
     width: 100%;
     margin: 0;
-    height: 100%;
+    min-height: 550px;
+  }
+
+  .card-content {
+    padding: 5px 10px;
+    justify-content: flex-start;
+    padding-top: 35px;
+  }
+
+  .onifo-container {
+    margin: 0 0 5px 0;
+  }
+
+  .speed-section {
+    margin: 5px 0;
+  }
+
+  .divider {
+    margin: 5px 0;
+  }
+
+  .benefits-label {
+    margin: 0 0 5px 0;
+    font-size: 10px;
+  }
+
+  .benefits-compact {
+    margin: 0 0 5px 0;
+    gap: 6px;
+  }
+
+  .app-choices {
+    margin: 5px 0 5px 0;
+    font-size: 10px;
+  }
+
+  .app-icons {
+    margin: 5px 0;
+    gap: 8px;
+  }
+
+  .price-text {
+    margin: 5px 0 2px;
+    font-size: 14px;
   }
 
   .header {
-    width: 85%;
-    left: 8%;
-    font-size: 15px;
+    font-size: 10px;
+    padding: 5px 35px;
+    top: 20px;
+    right: -30px;
+    width: 160px;
+  }
+
+  .onifo-logo {
+    max-width: 170px;
   }
 
   .speed {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     margin-bottom: 10px;
   }
 
   .speed-subtext {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
+  }
+
+  .benefit-icon img {
+    width: 60px;
   }
 
   .price .integer {
@@ -393,23 +454,13 @@
   }
 
   .btn-contratar {
-    width: 80%;
-    margin: 15px auto;
-  }
-
-  .partners img {
-    width: 80%;
-    max-width: 200px;
-  }
-
-  .partners.second-line img {
-    width: 55%;
-    max-width: 150px;
+    width: 85%;
+    margin: 15px auto 0;
   }
 
   .app-icons img {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
   }
 
   .nav-button {
@@ -433,82 +484,4 @@
   .offer-headline p {
     font-size: 16px;
   }
-}
-
-.toggle-all-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background: var(--gradient-purple-primary);
-  border-radius: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  width: fit-content;
-  position: sticky;
-  top: 20px;
-  z-index: 1000;
-}
-
-.toggle-all-switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 28px;
-  margin-right: 10px;
-}
-
-.toggle-all-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--color-neutral-400);
-  transition: 0.4s;
-  border-radius: 28px;
-}
-.sideBySide {
-  display: flex;
-  justify-content: center;
-  gap: 10px; /* ajuste conforme necessário */
-}
-
-.sideBySide img {
-  width: 40%; /* ajuste conforme necessário */
-}
-
-.slider:before {
-  position: absolute;
-  content: '';
-  height: 20px;
-  width: 20px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: var(--color-secondary-blue);
-}
-
-input:checked + .slider:before {
-  transform: translateX(22px);
-}
-
-.toggle-all-text {
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }

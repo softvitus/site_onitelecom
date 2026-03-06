@@ -57,7 +57,7 @@
 }
 
 .social-icon:hover {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-main);
   transform: scale(1.1);
 }
 
@@ -131,8 +131,8 @@
 }
 
 .store-badge:hover {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  background-color: var(--color-primary-main);
+  border-color: var(--color-primary-main);
   transform: translateY(-2px);
 }
 
@@ -205,20 +205,20 @@
 }
 
 .btn-primary {
-  background: var(--color-primary);
+  background: var(--color-primary-main);
   color: var(--color-neutral-white);
   padding: 10px 16px;
   text-decoration: none;
   border-radius: var(--radius-xl);
   text-align: center;
   font-size: 13px;
-  border: 1px solid var(--color-primary);
+  border: none;
   transition: all 0.2s;
 }
 
 .btn-primary:hover {
-  background: var(--color-secondary-blue);
-  border-color: var(--color-secondary-blue);
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
 }
 
 /* Localização */
@@ -252,7 +252,7 @@
 
 .location-inputs select:hover:not(:disabled) {
   background-color: var(--color-neutral-text-dark);
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-main);
 }
 
 .location-inputs select:disabled {

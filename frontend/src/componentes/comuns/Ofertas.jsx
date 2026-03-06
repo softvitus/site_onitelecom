@@ -91,64 +91,43 @@ const OfertasHeader = () => (
 );
 
 /**
- * OfertasToggleAll - Controle para abrir/fechar todos os cards
- * @param {Object} props - Props do componente
- * @param {boolean} props.allCardsOpen - Estado de abertura de todos os cards
- * @param {Function} props.onToggle - Callback ao clicar no toggle
+ * OniFoLogo - Logo ONI Fibra que aparece em todos os cards
  * @returns {React.ReactElement}
  */
-const OfertasToggleAll = ({ allCardsOpen, onToggle }) => (
-  <div className={styles['toggle-all-container']}>
-    <label className={styles['toggle-all-switch']}>
-      <input
-        type="checkbox"
-        checked={allCardsOpen}
-        onChange={onToggle}
-        aria-label={allCardsOpen ? 'Fechar todos os cards' : 'Abrir todos os cards'}
-      />
-      <span className={`${styles.slider} ${styles.round}`}></span>
-    </label>
-    <span className={styles['toggle-all-text']} role="status" aria-live="polite">
-      {allCardsOpen
-        ? getTexto('ofertas', 'toggle_fechar', 'Fechar todos os cards')
-        : getTexto('ofertas', 'toggle_abrir', 'Abrir todos os cards')}
-    </span>
-  </div>
-);
+const OniFoLogo = () => {
+  const onifoImg = getImagem('oferta', 'onifo', '');
+  return onifoImg ? (
+    <div className={styles['onifo-container']}>
+      <img src={onifoImg} alt="ONI Fibra" className={styles['onifo-logo']} loading="lazy" />
+    </div>
+  ) : null;
+};
 
 /**
- * BenefitItem - Item individual de benefício
+ * BenefitsCompact - Benefícios exibidos de forma compacta
  * @param {Object} props - Props do componente
- * @param {Object} props.benefit - Dados do benefício
- * @param {number} props.index - Índice do benefício
- * @param {string} props.cardType - Tipo do card
+ * @param {Array} props.benefits - Array de benefícios
  * @returns {React.ReactElement}
  */
-const BenefitItem = ({ benefit, index, cardType }) => (
-  <React.Fragment key={index}>
-    {index !== 0 && <div className={styles.divider}></div>}
-    {benefit.type === 'sideBySide' ? (
-      <div className={`${styles.partners} ${styles.sideBySide}`}>
-        {benefit.images.map((image, imageIdx) => (
-          <img key={imageIdx} src={image.img} alt={image.alt} loading="lazy" />
-        ))}
-      </div>
-    ) : (
-      <div className={`${styles.partners} ${styles[cardType]}`}>
-        <img
-          src={benefit.img}
-          alt={benefit.alt}
-          loading="lazy"
-          style={{
-            width: benefit.width ? `${benefit.width}px` : '',
-            marginTop: benefit.marginTop ? `${benefit.marginTop}px` : '',
-            marginBottom: benefit.marginBottom ? `${benefit.marginBottom}px` : '',
-          }}
-        />
-      </div>
-    )}
-  </React.Fragment>
-);
+const BenefitsCompact = ({ benefits }) => {
+  if (!benefits || benefits.length === 0) return null;
+  
+  return (
+    <div className={styles['benefits-compact']}>
+      {benefits.map((benefit, idx) => (
+        <div key={idx} className={styles['benefit-icon']}>
+          {benefit.type === 'sideBySide' ? (
+            benefit.images.map((image, imageIdx) => (
+              <img key={imageIdx} src={image.img} alt={image.alt} loading="lazy" />
+            ))
+          ) : (
+            <img src={benefit.img} alt={benefit.alt} loading="lazy" />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 /**
  * PriceDisplay - Exibe o preço formatado em reais
@@ -173,74 +152,66 @@ const PriceDisplay = ({ price }) => {
 };
 
 /**
- * OfertaCard - Card individual de oferta com expansão de benefícios
+ * OfertaCard - Card individual de oferta sempre aberto e padronizado
  * @param {Object} props - Props do componente
  * @param {Object} props.card - Dados do card
  * @param {number} props.index - Índice do card
- * @param {boolean} props.isOpen - Estado de expansão do card
- * @param {Function} props.onToggleContent - Callback ao expandir/recolher benefícios
  * @param {boolean} props.isVisible - Card está visível no carrossel
  * @returns {React.ReactElement}
  */
-const OfertaCard = ({ card, index, isOpen, onToggleContent, isVisible }) => (
+const OfertaCard = ({ card, index, isVisible }) => (
   <div
     className={`${styles['card-oferta']} ${isVisible ? styles.visible : styles.hidden}`}
     id={`card-oferta-${card.id}`}
-    aria-expanded={isOpen}
   >
     {card.seal && <img src={card.seal} alt="Selo" className={styles.selo} loading="lazy" />}
 
     <div className={styles.header}>{card.header}</div>
 
     <div className={styles['card-content']}>
+      {/* Logo ONI Fibra */}
+      <OniFoLogo />
+
       {/* Seção de velocidade */}
-      <div>
+      <div className={styles['speed-section']}>
         <div className={styles.speed}>{card.speed}</div>
         <div className={styles['speed-subtext']}>
           {getTexto('ofertas', 'velocidade_unidade', 'MEGA')}
         </div>
       </div>
 
-      {/* Toggle de benefícios */}
-      <div
-        className={styles['toggle-benefits']}
-        onClick={() => onToggleContent(card.id)}
-        onKeyDown={(e) => e.key === 'Enter' && onToggleContent(card.id)}
-        role="button"
-        tabIndex={0}
-        aria-label={`${isOpen ? 'Ocultar' : 'Ver'} benefícios do plano ${card.header}`}
-      >
-        <span className={styles.icon}>{isOpen ? '-' : '+'}</span>
-        <span>
-          {isOpen
-            ? getTexto('ofertas', 'beneficios_ocultar', 'Ocultar Benefícios')
-            : getTexto('ofertas', 'beneficios_ver', 'Ver Benefícios')}
-        </span>
-      </div>
+      {/* Benefícios compactos (outros parceiros) */}
+      {card.benefits && card.benefits.length > 0 && (
+        <>
+          <div className={styles['benefits-label']}>
+            {getTexto('ofertas', 'beneficios_label', 'BENEFÍCIOS INCLUSOS:')}
+          </div>
+          <BenefitsCompact benefits={card.benefits} />
+        </>
+      )}
 
       {/* Divisor */}
-      <div className={`${styles['toggle-divider']} ${isOpen ? styles.hidden : ''}`}></div>
+      <div className={styles.divider}></div>
 
-      {/* Conteúdo de benefícios */}
-      <div className={`${styles['benefits-content']} ${isOpen ? '' : styles['hidden-content']}`}>
-        {card.benefits.map((benefit, idx) => (
-          <BenefitItem key={idx} benefit={benefit} index={idx} cardType={card.cardType} />
-        ))}
-        <div className={styles.divider}></div>
+      {/* Apps de Streaming */}
+      {card.appChoices && card.appChoices.length > 0 && (
+        <>
+          <div className={styles['app-choices']}>
+            {getTexto('ofertas', 'app_escolha', '+ 1 APP DE SUA ESCOLHA:')}
+          </div>
+          <div className={styles['app-icons']}>
+            {card.appChoices.map((app, idx) => (
+              <img key={idx} src={app.img} alt={app.alt} loading="lazy" />
+            ))}
+          </div>
+        </>
+      )}
 
-        {/* Seleção de apps */}
-        <div className={styles['app-choices']}>
-          {getTexto('ofertas', 'app_escolha', 'OU 1 APP STANDARD DE SUA ESCOLHA:')}
-        </div>
-        <div className={styles['app-icons']}>
-          {card.appChoices.map((app, idx) => (
-            <img key={idx} src={app.img} alt={app.alt} loading="lazy" />
-          ))}
-        </div>
-      </div>
+      {/* Divisor */}
+      <div className={styles.divider}></div>
 
       {/* Texto de preço */}
-      <div className={`${styles['price-text']} ${isOpen ? '' : styles['hidden-content']}`}>
+      <div className={styles['price-text']}>
         {getTexto('ofertas', 'preco_label', 'Tudo isso por')}
       </div>
 
@@ -249,7 +220,7 @@ const OfertaCard = ({ card, index, isOpen, onToggleContent, isVisible }) => (
 
       {/* Botão de contratação */}
       <button className={styles['btn-contratar']} aria-label={`Contratar plano ${card.header}`}>
-        {getTexto('ofertas', 'botao_contratar', 'Contrate Agora!')}
+        {getTexto('ofertas', 'botao_contratar', 'CONTRATE AGORA')}
       </button>
     </div>
   </div>
@@ -269,8 +240,6 @@ const Ofertas = () => {
   // ─────────────────────────────────────────────────────────────────────────────────
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [allCardsOpen, setAllCardsOpen] = useState(false);
-  const [openCards, setOpenCards] = useState({});
   const [visibleCards, setVisibleCards] = useState(CARDS_VISIBLE_DESKTOP);
 
   // Obtém cards de ofertas da API via tema
@@ -356,25 +325,7 @@ const Ofertas = () => {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-  /**
-   * Alterna entre abrir todos os cards ou fechar todos
-   */
-  const handleToggleAllCards = () => {
-    const newState = !allCardsOpen;
-    setAllCardsOpen(newState);
-    setOpenCards(createCardStateMap(cards, newState));
-  };
 
-  /**
-   * Alterna a visibilidade de benefícios de um card específico
-   * @param {string} cardId - ID do card
-   */
-  const handleToggleCardContent = (cardId) => {
-    setOpenCards((prev) => ({
-      ...prev,
-      [cardId]: !prev[cardId],
-    }));
-  };
 
   // ─────────────────────────────────────────────────────────────────────────────────
   // RENDER
@@ -388,9 +339,6 @@ const Ofertas = () => {
     <div className={styles['offer-carousel']}>
       {/* Cabeçalho da seção de ofertas */}
       <OfertasHeader />
-
-      {/* Toggle para abrir/fechar todos os cards */}
-      <OfertasToggleAll allCardsOpen={allCardsOpen} onToggle={handleToggleAllCards} />
 
       {/* Carrossel de ofertas */}
       <div className={styles['carousel-container']}>
@@ -432,8 +380,6 @@ const Ofertas = () => {
                 key={card.id}
                 card={card}
                 index={index}
-                isOpen={openCards[card.id] || false}
-                onToggleContent={handleToggleCardContent}
                 isVisible={isVisible}
               />
             );

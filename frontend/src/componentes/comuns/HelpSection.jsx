@@ -119,19 +119,14 @@ const SectionTitle = ({ caminhoPagina }) => {
   if (!isElementoHabilitado(caminhoPagina, 'helpSection', 'title')) return null;
 
   return (
-    <div className="row align-items-center mb-5">
-      <div className="col-lg-6 mb-4 mb-lg-0">
-        <h1 className={`text-white ${styles['custom-text']}`}>
-          {getTexto('helpSection', 'titulo')}{' '}
-          <span className={styles['accent-text']}>{getTexto('helpSection', 'tituloDestaque')}</span>
-          <br />
-          {getTexto('helpSection', 'subtitulo')}{' '}
-          <span className={styles['accent-text']}>
-            {getTexto('helpSection', 'subtituloDestaque')}
-          </span>
-        </h1>
-      </div>
-    </div>
+    <h1 className={`text-white ${styles['custom-text']}`}>
+      {getTexto('helpSection', 'titulo')}{' '}
+      <span className={styles['accent-text']}>{getTexto('helpSection', 'tituloDestaque')}</span>
+      {' '}{getTexto('helpSection', 'subtitulo')}{' '}
+      <span className={styles['accent-text']}>
+        {getTexto('helpSection', 'subtituloDestaque')}
+      </span>
+    </h1>
   );
 };
 
@@ -145,11 +140,7 @@ const SectionDescription = ({ caminhoPagina }) => {
   if (!isElementoHabilitado(caminhoPagina, 'helpSection', 'description')) return null;
 
   return (
-    <div className="row align-items-center mb-5">
-      <div className="col-lg-6 mb-4 mb-lg-0">
-        <p className="text-white lead mt-4 fs-4">{getTexto('helpSection', 'descricao')}</p>
-      </div>
-    </div>
+    <p className={styles['description-text']}>{getTexto('helpSection', 'descricao')}</p>
   );
 };
 
@@ -178,46 +169,48 @@ const HelpCard = ({ card }) => {
   const linkTarget = getLinkTarget(card.link);
 
   return (
-    <div className="col-md-4">
-      <div
+    <div className={styles['card-col']}>
+      <a
+        href={cardLink}
+        target={linkTarget}
+        rel="noopener noreferrer"
         className={`${styles['custom-card']} h-100`}
         role="article"
         aria-labelledby={`help-card-${card.id}`}
         style={{
           background: 'white',
-          borderRadius: '16px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          borderRadius: '12px',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
           display: 'block',
           visibility: 'visible',
           opacity: 1,
+          textDecoration: 'none',
+          cursor: 'pointer',
         }}
       >
-        <div className="card-body text-center p-4">
+        <div className="card-body text-center p-3">
           {/* Ícone */}
           <HelpCardIcon src={cardImage} alt={card.title} />
 
           {/* Título */}
-          <h3 id={`help-card-${card.id}`} className="fw-bold mb-3" style={{ color: '#1a1a2e' }}>
+          <h3 id={`help-card-${card.id}`} className="fw-bold mb-2" style={{ color: '#1a1a2e', fontSize: '1.1em' }}>
             {card.title}
           </h3>
 
           {/* Descrição */}
-          <p className="fs-6" style={{ color: '#4a4a4a' }}>
+          <p className="mb-2" style={{ color: '#4a4a4a', fontSize: '0.9em' }}>
             {card.description}
           </p>
 
           {/* Botão */}
-          <a
-            href={cardLink}
-            className="btn btn-primary mt-3"
-            target={linkTarget}
-            rel="noopener noreferrer"
+          <span
+            className="btn btn-primary btn-sm mt-2"
             aria-label={`${card.buttonText} - ${card.title}`}
           >
             {card.buttonText}
-          </a>
+          </span>
         </div>
-      </div>
+      </a>
     </div>
   );
 };
@@ -234,7 +227,7 @@ const HelpCardsGrid = ({ caminhoPagina }) => {
   const cards = getHelpCards();
 
   return (
-    <div className="row g-4 mt-4" aria-label="Opções de ajuda">
+    <div className={styles['cards-row']} aria-label="Opções de ajuda">
       {cards.map((card, index) => (
         <HelpCard key={card.id || index} card={card} />
       ))}
@@ -257,18 +250,21 @@ const HelpSection = ({ caminhoPagina = '/inicio' }) => {
     <section
       id={SECTION_ID}
       className={styles['custom-section']}
-     
       aria-labelledby="help-section-title"
     >
-      <div className={`container ${styles['content-wrapper']} py-5`}>
-        {/* Título e subtítulo */}
-        <SectionTitle caminhoPagina={caminhoPagina} />
-
-        {/* Descrição */}
-        <SectionDescription caminhoPagina={caminhoPagina} />
+      <div className={`container ${styles['content-wrapper']}`}>
+        {/* Título centralizado */}
+        <div className={styles['title-wrapper']}>
+          <SectionTitle caminhoPagina={caminhoPagina} />
+        </div>
 
         {/* Cards de ajuda */}
         <HelpCardsGrid caminhoPagina={caminhoPagina} />
+
+        {/* Descrição abaixo dos cards */}
+        <div className={styles['description-wrapper']}>
+          <SectionDescription caminhoPagina={caminhoPagina} />
+        </div>
       </div>
     </section>
   );

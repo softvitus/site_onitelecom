@@ -35,6 +35,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  border: 2px solid var(--color-primary-main);
 }
 
 .cardschip::before {
