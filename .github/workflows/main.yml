@@ -606,11 +606,11 @@ jobs:
 
             # Run database migrations (if needed)
             echo "🗄️  Running migrations..."
-            docker compose exec -T backend npm run db:migrate || true
+            docker compose exec -T backend npm run migrate:prod || true
 
             # Run database seeds (if needed)
             echo "🌱 Running seeds..."
-            docker compose exec -T backend npm run db:seed || true
+            docker compose exec -T backend npm run seed:prod || true
 
             echo "✅ Deployment completed successfully!"
 
