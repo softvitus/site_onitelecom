@@ -556,22 +556,38 @@ jobs:
             set -e
             echo "🚀 Starting deployment..."
 
-            # Backup current directory if it exists
-            if [ -d "/app/site-oni" ]; then
-              echo "📦 Backing up application..."
-              cp -r /app/site-oni /app/site-oni.backup.$(date +%s) || true
+            # Navigate to application directory or create it
+            if [ ! -d "/app/site-oni" ]; then
+              echo "📥 Creating application directory..."
+              mkdir -p /app/site-oni
             fi
 
-            # Remove application directory completely and clone fresh
-            echo "🧹 Preparing clean deployment..."
-            rm -rf /app/site-oni
-            mkdir -p /app/site-oni
-
-            # Clone repository
-            echo "📥 Cloning repository..."
             cd /app/site-oni
-            git clone https://github.com/softvitus/site_onitelecom.git .
-            git checkout main
+
+            # If git repo exists, clean it; otherwise clone fresh
+            if [ -d ".git" ]; then
+              echo "🧹 Cleaning existing repository..."
+              # Fix ownership issues if any
+              sudo chown -R $(whoami):$(whoami) .git 2>/dev/null || true
+              # Remove git lock files
+              find .git -name "*.lock" -delete 2>/dev/null || true
+              # Reset to clean state
+              git reset --hard HEAD 2>/dev/null || true
+              git clean -fd 2>/dev/null || true
+              git fetch origin main 2>/dev/null || true
+              git checkout main 2>/dev/null || git checkout -f main
+            else
+              echo "📥 Cloning repository..."
+              git clone https://github.com/softvitus/site_onitelecom.git . || {
+                echo "Clone failed, cleaning and retrying..."
+                cd /app
+                rm -rf site-oni
+                mkdir -p site-oni
+                cd site-oni
+                git clone https://github.com/softvitus/site_onitelecom.git .
+              }
+              git checkout main
+            fi
 
             # Create necessary directories
             mkdir -p data logs backups
