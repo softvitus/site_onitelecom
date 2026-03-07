@@ -556,43 +556,15 @@ jobs:
             set -e
             echo "🚀 Starting deployment..."
 
-            # Fix permissions on existing repo if it exists and has issues
-            if [ -d "/app/site-oni/.git" ]; then
-              echo "🔧 Fixing git permissions..."
-              sudo chown -R $(whoami):$(whoami) /app/site-oni 2>/dev/null || true
-              sudo chmod -R u+w /app/site-oni/.git 2>/dev/null || true
-            fi
+            cd /app/site-oni
 
-            # Navigate to application directory
-            cd /app/site-oni 2>/dev/null || {
-              echo "📥 Creating fresh clone..."
-              sudo rm -rf /app/site-oni 2>/dev/null || true
-              sudo mkdir -p /app/site-oni
-              sudo chown -R $(whoami):$(whoami) /app/site-oni
-              git clone https://github.com/softvitus/site_onitelecom.git /app/site-oni
-              cd /app/site-oni
-              git checkout main
-              exit 0
-            }
-
-            # Clean and update existing repo
+            # Update repository
             echo "🧹 Updating repository..."
-            git status >/dev/null 2>&1 && {
-              rm -f .git/index.lock 2>/dev/null || true
-              git reset --hard HEAD || git fetch origin main
-              git clean -fd || true
-              git fetch origin main || true
-              git checkout main || git checkout -f main
-            } || {
-              echo "Repo corrupted, creating fresh clone..."
-              cd /app
-              sudo rm -rf /app/site-oni
-              sudo mkdir -p /app/site-oni
-              sudo chown -R $(whoami):$(whoami) /app/site-oni
-              git clone https://github.com/softvitus/site_onitelecom.git /app/site-oni
-              cd /app/site-oni
-              git checkout main
-            }
+            git config --global --add safe.directory /app/site-oni
+            git fetch origin main
+            git reset --hard origin/main
+            git clean -fd -e '.env*' -e 'data/' -e 'logs/' -e 'backups/'
+            echo "✅ Repository updated"
 
             # Create necessary directories
             mkdir -p data logs backups
