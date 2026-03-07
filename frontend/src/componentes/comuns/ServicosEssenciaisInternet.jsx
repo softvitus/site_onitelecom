@@ -32,7 +32,17 @@ const SECTION_ID = 'servicos-essenciais-internet';
 const getServicesItems = () => {
   const conteudos = getTemaConteudosByCategoria('servicosEssenciaisInternet');
   return conteudos.map((item) => {
-    const dados = item.dados || {};
+    const itemData = item.valor || item.dados;
+    let dados = itemData;
+    if (typeof itemData === 'string') {
+      try {
+        dados = JSON.parse(itemData);
+      } catch (e) {
+        dados = {};
+      }
+    } else {
+      dados = itemData || {};
+    }
     return {
       id: item.id,
       imgKey: dados.imgKey || item.tipo,

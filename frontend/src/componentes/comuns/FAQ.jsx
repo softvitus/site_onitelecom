@@ -6,7 +6,7 @@
  * @returns {JSX.Element} Componente renderizado
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styles from '../../estilos/componentes/comuns/FAQ.module.css';
 import {
   FaSearch,
@@ -73,18 +73,28 @@ const getCategoriesWithIcons = () => [
 ];
 
 /**
- * Executa busca em todas as categorias de FAQ
- * @param {string} searchTerm - Termo para buscar
- * @param {Array<Object>} categories - Lista de categorias disponíveis
- * @returns {Array<Object>} Array com resultados encontrados
+ * Obtém todos os dados FAQ organizados por categoria
+ * @returns {Object} Objeto com { categoryId: [perguntas...] }
  */
-const performFaqSearch = (searchTerm, categories) => {
+const getFaqDataByCategory = () => {
   const faqConteudos = getTemaConteudosByTipo('faq');
-  // Transforma array de conteúdos em objeto por categoria
-  const faqData = faqConteudos.reduce((acc, item) => {
+  return faqConteudos.reduce((acc, item) => {
     const categoryId = item.categoria || 'geral';
     if (!acc[categoryId]) acc[categoryId] = [];
-    const dados = item.dados || {};
+    
+    // Suporta ambos valor (novo) e dados (compatibilidade)
+    const itemData = item.valor || item.dados;
+    let dados = itemData;
+    if (typeof itemData === 'string') {
+      try {
+        dados = JSON.parse(itemData);
+      } catch (e) {
+        dados = {};
+      }
+    } else {
+      dados = itemData || {};
+    }
+    
     acc[categoryId].push({
       id: dados.id || item.id,
       question: dados.question || '',
@@ -92,6 +102,16 @@ const performFaqSearch = (searchTerm, categories) => {
     });
     return acc;
   }, {});
+};
+
+/**
+ * Executa busca em todas as categorias de FAQ
+ * @param {string} searchTerm - Termo para buscar
+ * @param {Array<Object>} categories - Lista de categorias disponíveis
+ * @returns {Array<Object>} Array com resultados encontrados
+ */
+const performFaqSearch = (searchTerm, categories) => {
+  const faqData = getFaqDataByCategory();
   const results = [];
 
   Object.entries(faqData).forEach(([categoryId, questions]) => {
@@ -289,21 +309,7 @@ const FAQItem = ({ item, isExpanded, toggleQuestion }) => (
  * @component
  * @param {Object} props - Props do componente
  */
-const FAQContent = ({ activeCategory, expandedQuestions, toggleQuestion, focusSearchInput }) => {
-  const faqConteudos = getTemaConteudosByTipo('faq');
-  // Transforma array de conteúdos em objeto por categoria
-  const faqData = faqConteudos.reduce((acc, item) => {
-    const categoryId = item.categoria || 'geral';
-    if (!acc[categoryId]) acc[categoryId] = [];
-    const dados = item.dados || {};
-    acc[categoryId].push({
-      id: dados.id || item.id,
-      question: dados.question || '',
-      answer: dados.answer || '',
-    });
-    return acc;
-  }, {});
-  const categories = getCategoriesWithIcons();
+const FAQContent = ({ activeCategory, expandedQuestions, toggleQuestion, focusSearchInput, faqData, categories }) => {
   const categoryName =
     categories.find((c) => c.id === activeCategory)?.name || 'Perguntas Frequentes';
   const categoryFaqs = faqData[activeCategory] || [];
@@ -374,7 +380,11 @@ function FAQ() {
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
-  const categories = getCategoriesWithIcons();
+  // Memorizar categories para evitar recriação desnecessária
+  const categories = useMemo(() => getCategoriesWithIcons(), []);
+
+  // Memorizar dados de FAQ para evitar recálculos desnecessários
+  const faqData = useMemo(() => getFaqDataByCategory(), []);
 
   // ─────────────────────────────────────────────────────────────────────────
   // Efeitos
@@ -475,6 +485,8 @@ function FAQ() {
             expandedQuestions={expandedQuestions}
             toggleQuestion={handleToggleQuestion}
             focusSearchInput={handleFocusSearch}
+            faqData={faqData}
+            categories={categories}
           />
         </div>
       </div>

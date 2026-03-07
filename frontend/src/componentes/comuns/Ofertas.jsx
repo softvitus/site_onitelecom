@@ -263,7 +263,17 @@ const Ofertas = () => {
   };
 
   const cards = ofertasConteudos.map((c) => {
-    const dados = c.dados || {};
+    const itemData = c.valor || c.dados;
+    let dados = itemData;
+    if (typeof itemData === 'string') {
+      try {
+        dados = JSON.parse(itemData);
+      } catch (e) {
+        dados = {};
+      }
+    } else {
+      dados = itemData || {};
+    }
     const benefits = (dados.benefits || []).map(resolveImagensNoBenefit);
     const appChoices = (dados.appChoices || []).map((app) => ({
       ...app,

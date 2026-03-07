@@ -19,15 +19,14 @@
 .cartao {
   border: none;
   box-shadow: var(--box-shadow-md);
-  transition: var(--transition-slow);
+  transition: transform var(--transition-slow);
   margin-bottom: 30px;
   position: relative;
   overflow: hidden;
 }
 
 .cartao:hover {
-  transform: translateY(-15px);
-  box-shadow: var(--box-shadow-lg);
+  transform: translateY(-15px) scale(1.02);
 }
 
 .cartao:before {
@@ -63,8 +62,7 @@
 }
 
 .cartao:hover .icone-wrapper {
-  transform: scale(1.1);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transform: scale(1.15) rotate(5deg);
 }
 
 .titulo-cartao {
@@ -99,7 +97,7 @@
   color: white;
   padding: 12px 28px;
   font-weight: 600;
-  transition: var(--transition-normal);
+  transition: all var(--transition-normal);
   border: none;
   box-shadow: var(--box-shadow-md);
 }
@@ -107,8 +105,7 @@
 .botao-oni:hover {
   background: var(--gradient-purple-light);
   color: white;
-  transform: translateY(-3px);
-  box-shadow: var(--box-shadow-lg);
+  transform: translateY(-3px) scale(1.05);
 }
 
 /* Responsividade para dispositivos móveis */

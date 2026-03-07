@@ -32,7 +32,17 @@ const getDepoimentoPrincipal = () => {
   const depoimentos = getTemaConteudosByCategoria('clientes');
   if (!depoimentos?.length) return null;
   const primeiro = depoimentos[0];
-  return primeiro.dados || primeiro;
+  const itemData = primeiro.valor || primeiro.dados;
+  
+  let parsedData = itemData;
+  if (typeof itemData === 'string') {
+    try {
+      parsedData = JSON.parse(itemData);
+    } catch (e) {
+      parsedData = itemData;
+    }
+  }
+  return parsedData || primeiro;
 };
 
 /**

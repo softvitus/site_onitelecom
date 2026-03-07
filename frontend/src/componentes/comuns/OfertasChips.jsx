@@ -80,7 +80,17 @@ const getPlanos = () => {
   const rawPlanos = getTemaConteudosByCategoria('chips');
 
   return rawPlanos.map((plano) => {
-    const planoData = plano.dados || {};
+    const itemData = plano.valor || plano.dados;
+    let planoData = itemData;
+    if (typeof itemData === 'string') {
+      try {
+        planoData = JSON.parse(itemData);
+      } catch (e) {
+        planoData = {};
+      }
+    } else {
+      planoData = itemData || {};
+    }
     return {
       ...planoData,
       nome: plano.titulo || planoData.nome,

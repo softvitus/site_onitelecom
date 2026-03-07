@@ -44,7 +44,17 @@ const getServiceImage = (imgKey) => {
 const getServiceCards = () => {
   const conteudos = getTemaConteudosByCategoria('servicosEssenciais');
   return conteudos.map((card) => {
-    const dados = card.dados || {};
+    const itemData = card.valor || card.dados;
+    let dados = itemData;
+    if (typeof itemData === 'string') {
+      try {
+        dados = JSON.parse(itemData);
+      } catch (e) {
+        dados = {};
+      }
+    } else {
+      dados = itemData || {};
+    }
     return {
       id: card.id,
       href: dados.href || '#',

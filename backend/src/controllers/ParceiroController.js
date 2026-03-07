@@ -687,7 +687,7 @@ export class ParceiroController {
         categoria: c.cnt_categoria,
         titulo: c.cnt_titulo,
         descricao: c.cnt_descricao,
-        dados: c.cnt_dados,
+        valor: c.cnt_dados,  // ← Renomeado de 'dados' para 'valor'
         ordem: c.cnt_ordem,
       }));
 

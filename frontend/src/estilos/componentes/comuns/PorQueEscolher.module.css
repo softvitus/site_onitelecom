@@ -29,12 +29,11 @@
   padding: 2rem;
   background: white;
   box-shadow: var(--box-shadow-md);
-  transition: var(--transition-normal);
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
 }
 
 .item-recurso:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--box-shadow-lg);
+  transform: translateY(-10px) scale(1.02);
 }
 
 .icone-recurso {

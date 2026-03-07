@@ -70,6 +70,7 @@ const getCardImage = (cardId) => {
  * @returns {string} URL do link
  */
 const getCardLink = (card) => {
+  if (!card.link) return '#';
   if (card.link === 'whatsapp') {
     return getLink('social', 'WhatsApp');
   }
@@ -82,6 +83,7 @@ const getCardLink = (card) => {
  * @returns {string} '_blank' ou '_self'
  */
 const getLinkTarget = (link) => {
+  if (!link) return '_self';
   return link.startsWith('http') || link === 'whatsapp' ? '_blank' : '_self';
 };
 
@@ -95,15 +97,17 @@ const getHelpCards = () => {
   const filtered = (conteudos || []).filter((c) => c.tipo === 'helpSection');
 
   return filtered.map((c) => {
-    // Se dados é string, fazer parse
-    if (typeof c.dados === 'string') {
+    // Se valor é string, fazer parse
+    const cardData = c.valor || c.dados; // Suporta ambos valor e dados para compatibilidade
+    
+    if (typeof cardData === 'string') {
       try {
-        return JSON.parse(c.dados);
+        return JSON.parse(cardData);
       } catch (e) {
-        return c.dados;
+        return cardData;
       }
     }
-    return c.dados || c;
+    return cardData || c;
   });
 };
 

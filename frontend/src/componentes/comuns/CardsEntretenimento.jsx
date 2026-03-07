@@ -112,14 +112,29 @@ const getCardImage = (cardId, type, fallbackLogo, fallbackBanner) => {
 const getOffersByCategory = () => {
   // API retorna todos em categoria 'entretenimento', mapeamos para estrutura interna
   const allOffers = getTemaConteudosByCategoria('entretenimento') || [];
-  const mappedOffers = allOffers.map((item) => ({
-    id: item.dados?.id || item.id,
-    name: item.dados?.name || item.titulo,
-    price: item.dados?.price || '0,00',
-    description: item.dados?.description || item.descricao || '',
-    logo: '',
-    banner: '',
-  }));
+  const mappedOffers = allOffers.map((item) => {
+    // Suporta ambos valor (novo) e dados (compatibilidade)
+    const itemData = item.valor || item.dados;
+    
+    // Se o dado é string (JSON), fazer parse
+    let parsedData = itemData;
+    if (typeof itemData === 'string') {
+      try {
+        parsedData = JSON.parse(itemData);
+      } catch (e) {
+        parsedData = itemData;
+      }
+    }
+    
+    return {
+      id: parsedData?.id || item.id,
+      name: parsedData?.name || item.titulo,
+      price: parsedData?.price || '0,00',
+      description: parsedData?.description || item.descricao || '',
+      logo: '',
+      banner: '',
+    };
+  });
 
   // Distribui ofertas por categorias baseado no ID
   return {

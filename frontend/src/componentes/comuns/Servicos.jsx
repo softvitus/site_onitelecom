@@ -55,8 +55,19 @@ const getIconByName = (iconName) => {
 const getServicosWithIcons = () => {
   const conteudos = getTemaConteudosByTipo('servicos');
   return conteudos.map((servico) => {
-    // Parseia o JSON do valor se existir
-    const dados = servico.valor ? JSON.parse(servico.valor) : {};
+    // Parseia o JSON do valor - pode vir como objeto ou string
+    let dados = {};
+    if (servico.valor) {
+      if (typeof servico.valor === 'string') {
+        try {
+          dados = JSON.parse(servico.valor);
+        } catch (e) {
+          console.error('Erro ao parsear valor do serviço:', e);
+        }
+      } else if (typeof servico.valor === 'object') {
+        dados = servico.valor;
+      }
+    }
     return {
       id: servico.id,
       icon: getIconByName(dados.icon || servico.tipo),
