@@ -559,6 +559,9 @@ jobs:
             # Navigate to application directory
             cd /app/site-oni
 
+            # Fix Git safe directory permissions
+            git config --global --add safe.directory /app/site-oni
+
             # Create necessary directories
             mkdir -p data logs backups
 
