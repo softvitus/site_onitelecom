@@ -556,38 +556,43 @@ jobs:
             set -e
             echo "🚀 Starting deployment..."
 
-            # Navigate to application directory or create it
-            if [ ! -d "/app/site-oni" ]; then
-              echo "📥 Creating application directory..."
-              mkdir -p /app/site-oni
+            # Fix permissions on existing repo if it exists and has issues
+            if [ -d "/app/site-oni/.git" ]; then
+              echo "🔧 Fixing git permissions..."
+              sudo chown -R $(whoami):$(whoami) /app/site-oni 2>/dev/null || true
+              sudo chmod -R u+w /app/site-oni/.git 2>/dev/null || true
             fi
 
-            cd /app/site-oni
-
-            # If git repo exists, clean it; otherwise clone fresh
-            if [ -d ".git" ]; then
-              echo "🧹 Cleaning existing repository..."
-              # Fix ownership issues if any
-              sudo chown -R $(whoami):$(whoami) .git 2>/dev/null || true
-              # Remove git lock files
-              find .git -name "*.lock" -delete 2>/dev/null || true
-              # Reset to clean state
-              git reset --hard HEAD 2>/dev/null || true
-              git clean -fd 2>/dev/null || true
-              git fetch origin main 2>/dev/null || true
-              git checkout main 2>/dev/null || git checkout -f main
-            else
-              echo "📥 Cloning repository..."
-              git clone https://github.com/softvitus/site_onitelecom.git . || {
-                echo "Clone failed, cleaning and retrying..."
-                cd /app
-                rm -rf site-oni
-                mkdir -p site-oni
-                cd site-oni
-                git clone https://github.com/softvitus/site_onitelecom.git .
-              }
+            # Navigate to application directory
+            cd /app/site-oni 2>/dev/null || {
+              echo "📥 Creating fresh clone..."
+              sudo rm -rf /app/site-oni 2>/dev/null || true
+              sudo mkdir -p /app/site-oni
+              sudo chown -R $(whoami):$(whoami) /app/site-oni
+              git clone https://github.com/softvitus/site_onitelecom.git /app/site-oni
+              cd /app/site-oni
               git checkout main
-            fi
+              exit 0
+            }
+
+            # Clean and update existing repo
+            echo "🧹 Updating repository..."
+            git status >/dev/null 2>&1 && {
+              rm -f .git/index.lock 2>/dev/null || true
+              git reset --hard HEAD || git fetch origin main
+              git clean -fd || true
+              git fetch origin main || true
+              git checkout main || git checkout -f main
+            } || {
+              echo "Repo corrupted, creating fresh clone..."
+              cd /app
+              sudo rm -rf /app/site-oni
+              sudo mkdir -p /app/site-oni
+              sudo chown -R $(whoami):$(whoami) /app/site-oni
+              git clone https://github.com/softvitus/site_onitelecom.git /app/site-oni
+              cd /app/site-oni
+              git checkout main
+            }
 
             # Create necessary directories
             mkdir -p data logs backups
