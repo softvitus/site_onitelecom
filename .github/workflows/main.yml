@@ -556,18 +556,22 @@ jobs:
             set -e
             echo "🚀 Starting deployment..."
 
-            # Navigate to application directory
+            # Backup current directory if it exists
+            if [ -d "/app/site-oni" ]; then
+              echo "📦 Backing up application..."
+              cp -r /app/site-oni /app/site-oni.backup.$(date +%s) || true
+            fi
+
+            # Remove application directory completely and clone fresh
+            echo "🧹 Preparing clean deployment..."
+            rm -rf /app/site-oni
+            mkdir -p /app/site-oni
+
+            # Clone repository
+            echo "📥 Cloning repository..."
             cd /app/site-oni
-
-            # Remove git lock if exists
-            rm -f /app/site-oni/.git/index.lock
-
-            # Clean git repository without removing directory
-            echo "🧹 Cleaning repository..."
-            git reset --hard
-            git clean -fd
-            git fetch origin main
-            git checkout origin/main
+            git clone https://github.com/softvitus/site_onitelecom.git .
+            git checkout main
 
             # Create necessary directories
             mkdir -p data logs backups
