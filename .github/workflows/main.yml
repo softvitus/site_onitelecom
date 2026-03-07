@@ -556,19 +556,15 @@ jobs:
             set -e
             echo "🚀 Starting deployment..."
 
-            # Clean deployment approach - remove old repo and fresh clone
-            if [ -d "/app/site-oni" ]; then
-              echo "🧹 Cleaning old repository..."
-              rm -rf /app/site-oni
-            fi
-
-            # Create application directory
-            mkdir -p /app/site-oni
+            # Navigate to application directory
             cd /app/site-oni
 
-            # Fresh clone
-            echo "📦 Cloning repository..."
-            git clone https://github.com/softvitus/site_onitelecom.git .
+            # Clean git repository without removing directory
+            echo "🧹 Cleaning repository..."
+            git reset --hard
+            git clean -fd
+            git fetch origin main
+            git checkout origin/main
 
             # Create necessary directories
             mkdir -p data logs backups
