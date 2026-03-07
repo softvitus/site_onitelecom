@@ -559,6 +559,9 @@ jobs:
             # Navigate to application directory
             cd /app/site-oni
 
+            # Remove git lock if exists
+            rm -f /app/site-oni/.git/index.lock
+
             # Clean git repository without removing directory
             echo "🧹 Cleaning repository..."
             git reset --hard
