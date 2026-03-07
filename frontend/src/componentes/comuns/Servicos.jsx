@@ -62,7 +62,7 @@ const getServicosWithIcons = () => {
         try {
           dados = JSON.parse(servico.valor);
         } catch (e) {
-          console.error('Erro ao parsear valor do serviço:', e);
+          // JSON parsing falhou, usar dados como está
         }
       } else if (typeof servico.valor === 'object') {
         dados = servico.valor;

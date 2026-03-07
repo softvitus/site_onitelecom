@@ -62,7 +62,7 @@ const getRecursosWithIcons = () => {
         try {
           dados = JSON.parse(recurso.valor);
         } catch (e) {
-          console.error('Erro ao parsear valor do recurso:', e);
+          // JSON parsing falhou, usar dados como está
         }
       } else if (typeof recurso.valor === 'object') {
         dados = recurso.valor;

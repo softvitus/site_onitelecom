@@ -114,26 +114,6 @@ const RightColumn = () => {
 // ─────────────────────────────────────────────────────────────────────────────────────
 
 /**
- * MediaControls - Controles de mídia ilustrativos
- * @returns {React.ReactElement}
- */
-const MediaControls = () => {
-  const controls = getMediaControls();
-
-  return (
-    <div
-      className={`d-flex gap-3 ${styles['controls']}`}
-      role="img"
-      aria-label="Controles de mídia do aplicativo"
-    >
-      {controls.map((control, index) => (
-        <img key={index} src={control.src} alt={control.alt} loading="lazy" />
-      ))}
-    </div>
-  );
-};
-
-/**
  * FeaturesCarousel - Carrossel animado com ícones e textos
  * @returns {React.ReactElement}
  */

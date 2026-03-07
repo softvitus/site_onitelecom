@@ -54,20 +54,6 @@ const calculateMaxIndex = (cards, visibleCards) => {
   return Math.max(0, cards.length - visibleCards);
 };
 
-/**
- * Cria um objeto com todos os cards abertos ou fechados
- * @param {Array} cards - Array de cards
- * @param {boolean} isOpen - Estado desejado (aberto ou fechado)
- * @returns {Object} Mapa de IDs com estado de abertura
- */
-const createCardStateMap = (cards, isOpen) => {
-  const map = {};
-  cards.forEach((card) => {
-    map[card.id] = isOpen;
-  });
-  return map;
-};
-
 // ─────────────────────────────────────────────────────────────────────────────────────
 
 /**
