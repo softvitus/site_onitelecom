@@ -556,26 +556,22 @@ jobs:
             set -e
             echo "🚀 Starting deployment..."
 
-            # Navigate to application directory
+            # Clean deployment approach - remove old repo and fresh clone
+            if [ -d "/app/site-oni" ]; then
+              echo "🧹 Cleaning old repository..."
+              rm -rf /app/site-oni
+            fi
+
+            # Create application directory
+            mkdir -p /app/site-oni
             cd /app/site-oni
 
-            # Fix Git safe directory permissions
-            git config --global --add safe.directory /app/site-oni
+            # Fresh clone
+            echo "📦 Cloning repository..."
+            git clone https://github.com/softvitus/site_onitelecom.git .
 
             # Create necessary directories
             mkdir -p data logs backups
-
-            # Clone or update repository
-            if [ -d ".git" ]; then
-              echo "📦 Repository exists, updating..."
-              git pull origin main
-            else
-              echo "📦 Repository does not exist, initializing..."
-              git init
-              git remote add origin https://github.com/softvitus/site_onitelecom.git
-              git fetch origin main
-              git checkout origin/main -b main
-            fi
 
             # Verify environment files exist in each project
             if [ ! -f "backend/.env.production" ]; then
