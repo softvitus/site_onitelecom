@@ -40,17 +40,6 @@ const formatBannerText = (bannerText, highlightText) => {
   };
 };
 
-/**
- * Obtém os controles de mídia do tema
- * @returns {Array<Object>} Lista de controles com src e alt
- */
-const getMediaControls = () => [
-  { src: getImagem('appExclusivo', 'controles_play', ''), alt: 'Botão Play' },
-  { src: getImagem('appExclusivo', 'controles_pause', ''), alt: 'Botão Pause' },
-  { src: getImagem('appExclusivo', 'controles_retroceder', ''), alt: 'Botão Retroceder' },
-  { src: getImagem('appExclusivo', 'controles_avancar', ''), alt: 'Botão Avançar' },
-];
-
 // ─────────────────────────────────────────────────────────────────────────────────────
 
 /**
