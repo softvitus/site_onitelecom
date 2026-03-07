@@ -299,7 +299,7 @@
 
 .price .currency {
   font-size: 1.5rem;
-  color: var(--color-secondary-blue);
+  color: var(--color-primary-main);
   font-weight: bold;
   margin-right: 5px;
 }
@@ -307,12 +307,12 @@
 .price .integer {
   font-size: 4.2rem;
   font-weight: bold;
-  color: var(--color-secondary-blue-dark);
+  color: var(--color-primary-main);
 }
 
 .price .decimal {
   font-size: 1.5rem;
-  color: var(--color-secondary-blue-dark);
+  color: var(--color-primary-main);
   position: relative;
   top: -35px;
 }
