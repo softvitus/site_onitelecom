@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
         try {
           // Tentar obter permissões (isso valida o token automaticamente)
           const perms = await authService.obterPermissoes();
-          
+
           // Se conseguiu permissões, token é válido
           setUsuario(JSON.parse(userStored));
           setAutenticado(true);
@@ -133,11 +133,7 @@ export const AuthProvider = ({ children }) => {
     temAlgumaPermissao,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 /**

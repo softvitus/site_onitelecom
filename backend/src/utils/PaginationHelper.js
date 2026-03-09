@@ -35,7 +35,12 @@ export class PaginationHelper {
    */
   static middleware() {
     return (req, res, next) => {
-      const { page = 1, limit = 10, sort = '-createdAt', search = '' } = req.query;
+      const {
+        page = 1,
+        limit = 10,
+        sort = '-createdAt',
+        search = '',
+      } = req.query;
 
       req.pagination = PaginationHelper.calculateOffset(page, limit);
       req.sort = PaginationHelper.parseSort(sort);
@@ -97,7 +102,10 @@ export class PaginationHelper {
     }
 
     if (isNaN(limit) || limit < 1 || limit > 100) {
-      errors.push({ field: 'limit', message: 'limit deve estar entre 1 e 100' });
+      errors.push({
+        field: 'limit',
+        message: 'limit deve estar entre 1 e 100',
+      });
     }
 
     return errors;

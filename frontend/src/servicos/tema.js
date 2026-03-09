@@ -249,74 +249,17 @@ const sortByOrdem = (items) => {
 };
 
 /**
- * Converte cor hex para RGB
+ * Converte espaços e caracteres especiais para kebab-case
  * @private
- * @param {string} hex - Cor em formato hex (#RGB ou #RRGGBB)
- * @returns {{r: number, g: number, b: number}} Objeto RGB
+ * @param {string} str - String a converter
+ * @returns {string} String em kebab-case
  */
-const hexToRgb = (hex) => {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  if (!result) {
-    // Tenta formato curto #RGB
-    const shortResult = /^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec(hex);
-    if (shortResult) {
-      return {
-        r: parseInt(shortResult[1] + shortResult[1], 16),
-        g: parseInt(shortResult[2] + shortResult[2], 16),
-        b: parseInt(shortResult[3] + shortResult[3], 16),
-      };
-    }
-    return { r: 0, g: 0, b: 0 };
-  }
-  return {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16),
-  };
-};
-
-/**
- * Converte RGB para hex
- * @private
- * @param {number} r - Red (0-255)
- * @param {number} g - Green (0-255)
- * @param {number} b - Blue (0-255)
- * @returns {string} Cor em formato hex
- */
-const rgbToHex = (r, g, b) => {
-  return (
-    '#' +
-    [r, g, b]
-      .map((x) => {
-        const hex = Math.round(Math.max(0, Math.min(255, x))).toString(16);
-        return hex.length === 1 ? '0' + hex : hex;
-      })
-      .join('')
-  );
-};
-
-/**
- * Clareia uma cor
- * @private
- * @param {string} hex - Cor em formato hex
- * @param {number} amount - Quantidade (0-1, onde 1 = branco)
- * @returns {string} Cor clareada em hex
- */
-const lightenColor = (hex, amount) => {
-  const { r, g, b } = hexToRgb(hex);
-  return rgbToHex(r + (255 - r) * amount, g + (255 - g) * amount, b + (255 - b) * amount);
-};
-
-/**
- * Escurece uma cor
- * @private
- * @param {string} hex - Cor em formato hex
- * @param {number} amount - Quantidade (0-1, onde 1 = preto)
- * @returns {string} Cor escurecida em hex
- */
-const darkenColor = (hex, amount) => {
-  const { r, g, b } = hexToRgb(hex);
-  return rgbToHex(r * (1 - amount), g * (1 - amount), b * (1 - amount));
+const toKebabCase = (str) => {
+  if (!str) return '';
+  return str
+    .toLowerCase()
+    .replace(/[\s_]+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
 };
 
 // ============================================================================
@@ -344,6 +287,8 @@ export const buscarTemaParceiro = async (parceiroId) => {
 
     if (response.success && response.data) {
       setTemaAtivoMemoria(response.data);
+      // ✅ Aplicar cores do tema como variáveis CSS globais (passando tema direto)
+      applyTemaCoresCSS(response.data);
       return response;
     }
 
@@ -408,6 +353,8 @@ export const cacheTemaParceiro = (parceiroId, tema) => {
       timestamp: Date.now(),
     });
     setTemaAtivoMemoria(tema);
+    // ✅ Aplicar cores do tema como variáveis CSS globais (passando tema direto)
+    applyTemaCoresCSS(tema);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao cachear tema:', error);
@@ -543,6 +490,35 @@ export const getTemaCorsByCategoria = (categoria) => {
 };
 
 /**
+ * Obtém cores ativas apenas
+ * @returns {Array<TemaCorItem>}
+ */
+export const getTemaAtivas = () => {
+  const cores = getTemaCores();
+  return cores.filter((c) => c.ativo !== false); // Considera true ou undefined como ativo
+};
+
+/**
+ * Obtém cores de um componente específico
+ * @param {string} componente - Nome do componente (ex: 'Header', 'Ofertas')
+ * @returns {Array<TemaCorItem>}
+ */
+export const getTemaCorsByComponente = (componente) => {
+  const cores = getTemaCores();
+  return cores.filter((c) => c.componente === componente);
+};
+
+/**
+ * Obtém cor pela referência de variável CSS
+ * @param {string} variavelRef - Referência da variável CSS (ex: 'var(--header-background)')
+ * @returns {TemaCorItem|null}
+ */
+export const getTemaCorByVariavelRef = (variavelRef) => {
+  const cores = getTemaCores();
+  return cores.find((c) => c.variavel_ref === variavelRef) || null;
+};
+
+/**
  * Agrupa cores por categoria
  * @returns {Object<string, Object<string, string>>}
  */
@@ -564,194 +540,86 @@ export const getTemaCoresGrouped = () => {
  * Aplica cores do tema como variáveis CSS no :root
  * @description Converte cores da API em CSS custom properties
  *              Aplica tanto no formato da API quanto no formato do variables.css
+ * @param {Object|Array} [temaOuCores=null] - Objeto tema completo ou array de cores direto da API
+ *                                            Se null, tenta recuperar de getTemaAtivoMemoria()
  * @returns {boolean} True se aplicado com sucesso
  *
  * @example
- * // Após carregar tema da API:
- * applyTemaCoresCSS();
+ * // Após carregar tema da API (passando diretamente):
+ * applyTemaCoresCSS(temaDadosCompletos);
  * // Resultado: --color-primary-main: #FF6600;
  */
-export const applyTemaCoresCSS = () => {
+export const applyTemaCoresCSS = (temaOuCores = null) => {
   try {
-    const cores = getTemaCores();
+    // Extrair cores do param ou do estado em memória
+    let cores = [];
+
+    if (temaOuCores) {
+      // Se passou array direto (cores)
+      if (Array.isArray(temaOuCores)) {
+        cores = temaOuCores;
+      }
+      // Se passou objeto tema completo
+      else if (temaOuCores.cores) {
+        cores = temaOuCores.cores;
+      }
+    } else {
+      // Fallback: tentar do estado em memória
+      cores = getTemaCores();
+    }
 
     if (!cores || cores.length === 0) {
       // eslint-disable-next-line no-console
-      console.warn('[Tema] Nenhuma cor encontrada para aplicar');
+      console.warn('[Tema] Nenhuma cor encontrada para aplicar', { temaOuCores });
       return false;
     }
 
+    // eslint-disable-next-line no-console
+    console.log(`[Tema] Aplicando ${cores.length} cores como CSS variables`);
+
     const root = document.documentElement;
-
-    /**
-     * Normaliza string para kebab-case (CSS válido)
-     * "Roxo Principal" → "roxo-principal"
-     */
-    const toKebabCase = (str) =>
-      str
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '');
-
-    /**
-     * Mapeamento de nomes da API → nomes do variables.css
-     * Formato: "categoria/nome-kebab" → "variavel-css"
-     * IMPORTANTE: Os nomes usam kebab-case (hífens) pois toKebabCase converte espaços
-     */
-    const API_TO_CSS_MAP = {
-      // Primárias
-      'primaria/roxo-principal': 'primary-main',
-      'primaria/roxo-escuro': 'primary-dark',
-      'primaria/roxo-claro': 'primary-light',
-      'primaria/roxo-mais-claro': 'primary-lighter',
-      'primaria/roxo-muito-claro': 'primary-very-light',
-      'primaria/roxo-alternativo': 'primary-purple',
-      'primaria/roxo-escuro-alternativo': 'primary-purple-dark',
-      'primaria/violeta': 'primary-violet',
-
-      // Secundárias
-      'secundaria/azul-principal': 'secondary-blue',
-      'secundaria/azul-claro': 'secondary-blue-light',
-      'secundaria/azul-escuro': 'secondary-blue-dark',
-      'secundaria/azul-profundo': 'secondary-blue-deep',
-      'secundaria/azul-muito-escuro': 'secondary-blue-darker',
-      'secundaria/azul-eltrico': 'secondary-blue-electric', // sem acento
-      'secundaria/ciano': 'secondary-cyan',
-      'secundaria/info': 'secondary-info',
-
-      // Neutras - nomes descritivos
-      'neutro/preto': 'neutral-black',
-      'neutro/cinza-escuro': 'neutral-dark-gray',
-      'neutro/cinza-mdio-escuro': 'neutral-medium-dark-gray', // sem acento
-      'neutro/cinza-medio-escuro': 'neutral-medium-dark-gray', // com acento
-      'neutro/cinza-mdio': 'neutral-gray', // sem acento
-      'neutro/cinza-bootstrap': 'neutral-gray-2',
-      'neutro/cinza-claro': 'neutral-light-gray',
-      'neutro/cinza-muito-claro': 'neutral-very-light-gray',
-      'neutro/cinza-mais-claro': 'neutral-lighter-gray',
-      'neutro/cinza-super-claro': 'neutral-super-light-gray',
-      'neutro/branco-sujo': 'neutral-off-white',
-      'neutro/branco-puro': 'neutral-white',
-      'neutro/branco-puro-alt': 'neutral-white-alt',
-      'neutro/fundo-claro': 'neutral-background',
-      'neutro/fundo-cinza-claro': 'neutral-background-gray',
-      'neutro/fundo-muito-claro': 'neutral-background-light',
-      'neutro/texto-padro': 'neutral-text', // sem acento (toKebabCase remove)
-      'neutro/texto-escuro': 'neutral-text-dark',
-
-      // Status
-      'status/sucesso-verde': 'status-success',
-      'status/erro-vermelho': 'status-error',
-      'status/erro-vermelho-escuro': 'status-error-dark',
-      'status/aviso-amarelo': 'status-warning',
-      'status/perigo-vermelho': 'status-danger',
-    };
-
-    /**
-     * Mapeamento adicional para escala numérica
-     * Cada cor da API pode mapear para múltiplas variáveis CSS
-     */
-    const NUMERIC_SCALE_MAP = {
-      // neutral-50 a neutral-900 - nomes descritivos
-      'neutro/fundo-muito-claro': 'neutral-50', // #fafafa
-      'neutro/fundo-cinza-claro': 'neutral-100', // #f9f9f9
-      'neutro/branco-sujo': 'neutral-200', // #f0f0f0
-      'neutro/cinza-mais-claro': 'neutral-300', // #e0e0e0
-      'neutro/cinza-muito-claro': 'neutral-400', // #ddd → #ccc
-      'neutro/cinza-claro': 'neutral-500', // #888 → #999
-      'neutro/cinza-mdio': 'neutral-600', // #666
-      'neutro/cinza-mdio-escuro': 'neutral-700', // #34495e → #3a3a3a
-      'neutro/texto-padro': 'neutral-800', // #333
-      'neutro/preto': 'neutral-900', // #000 → #111
-      // neutral-50 a neutral-900 - nomes numéricos da API
-      'neutro/neutro-50': 'neutral-50',
-      'neutro/neutro-400': 'neutral-400',
-      'neutro/neutro-500': 'neutral-500',
-      'neutro/neutro-700': 'neutral-700',
-      'neutro/neutro-900': 'neutral-900',
-    };
 
     // Aplicar cada cor como variável CSS
     cores.forEach((cor) => {
+      // Pular cores inativas (se campo ativo existir e for false)
+      if (cor.ativo === false) {
+        return;
+      }
+
       if (cor.categoria && cor.nome && cor.valor) {
-        // 1. Formato original da API: --color-{categoria}-{nome}
-        const varNameApi = `--color-${toKebabCase(cor.categoria)}-${toKebabCase(cor.nome)}`;
-        root.style.setProperty(varNameApi, cor.valor);
-
-        // 2. Formato do variables.css (se existir mapeamento)
-        const chave = `${toKebabCase(cor.categoria)}/${toKebabCase(cor.nome)}`;
-        const cssName = API_TO_CSS_MAP[chave];
-        if (cssName) {
-          root.style.setProperty(`--color-${cssName}`, cor.valor);
-        }
-
-        // 3. Escala numérica (se existir mapeamento)
-        const numericName = NUMERIC_SCALE_MAP[chave];
-        if (numericName) {
-          root.style.setProperty(`--color-${numericName}`, cor.valor);
+        try {
+          // Usar apenas o que vem da API
+          const varName = `--color-${toKebabCase(cor.categoria)}-${toKebabCase(cor.nome)}`;
+          root.style.setProperty(varName, cor.valor);
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn(`[Tema] Erro ao aplicar cor ${cor.categoria}/${cor.nome}:`, err);
         }
       }
     });
 
-    // 4. Gerar variantes light/dark para cores de status
-    const statusColors = {
-      'status-success': null,
-      'status-error': null,
-      'status-warning': null,
-      'status-info': null,
-    };
-
-    // Buscar cores de status aplicadas
+    // Aplicar cores de componentes específicos - DINÂMICO
+    // Buscar todas as cores com categoria 'componente' automaticamente
     cores.forEach((cor) => {
-      if (cor.categoria && cor.nome && cor.valor) {
-        const chave = `${toKebabCase(cor.categoria)}/${toKebabCase(cor.nome)}`;
-        const cssName = API_TO_CSS_MAP[chave];
-        if (cssName && statusColors.hasOwnProperty(cssName)) {
-          statusColors[cssName] = cor.valor;
-        }
+      // Pular cores inativas
+      if (cor.ativo === false) {
+        return;
+      }
+
+      if (cor.categoria === 'componente' && cor.nome && cor.valor) {
+        const varName = `--${cor.nome.replace(/_/g, '-')}`;
+        root.style.setProperty(varName, cor.valor);
       }
     });
 
-    // Gerar variantes light/dark
-    Object.entries(statusColors).forEach(([name, color]) => {
-      if (color) {
-        const lightColor = lightenColor(color, 0.85);
-        const darkColor = darkenColor(color, 0.4);
-        root.style.setProperty(`--color-${name}-light`, lightColor);
-        root.style.setProperty(`--color-${name}-dark`, darkColor);
-      }
-    });
-
-    // Aplicar gradientes se existirem
-    const coresGrouped = getTemaCoresGrouped();
-    if (coresGrouped.gradients) {
-      Object.entries(coresGrouped.gradients).forEach(([nome, valor]) => {
-        root.style.setProperty(`--gradient-${nome}`, valor);
-      });
+    // 5. Aplicar configurações (radius, transitions) da API
+    let configs = [];
+    if (temaOuCores && temaOuCores.configs) {
+      configs = temaOuCores.configs;
+    } else {
+      configs = getTemaConfigs();
     }
 
-    // 5. Aplicar sombras da API
-    if (coresGrouped.shadow) {
-      Object.entries(coresGrouped.shadow).forEach(([nome, valor]) => {
-        root.style.setProperty(`--shadow-${nome}`, valor);
-      });
-    }
-
-    // 6. Aplicar bordas da API
-    if (coresGrouped.border) {
-      Object.entries(coresGrouped.border).forEach(([nome, valor]) => {
-        const varName = nome === 'default' ? '--color-border' : `--color-border-${nome}`;
-        root.style.setProperty(varName, valor);
-        // Também aplica como --color-input-border para 'input'
-        if (nome === 'input') {
-          root.style.setProperty('--color-input-border', valor);
-        }
-      });
-    }
-
-    // 7. Aplicar configurações (radius, transitions) da API
-    const configs = getTemaConfigs();
     if (configs && configs.length > 0) {
       configs.forEach((config) => {
         if (config.chave && config.valor) {
@@ -768,6 +636,56 @@ export const applyTemaCoresCSS = () => {
     console.error('[Tema] Erro ao aplicar cores CSS:', error);
     return false;
   }
+};
+
+// ============================================================================
+// IMAGENS
+// ============================================================================
+
+/**
+ * Obtém cores de um componente específico
+ * @param {string} componentName - Nome do componente (ex: 'servicosEssenciais')
+ * @returns {Object} Objeto com cores do componente
+ *
+ * @example
+ * const colors = getComponentColors('servicosEssenciais');
+ * // Retorna: { container: '#f5f5f5', card: '#ffffff', ... }
+ */
+export const getComponentColors = (componentName) => {
+  const cores = getTemaCores();
+  const componentColors = {};
+
+  cores.forEach((cor) => {
+    // Buscar cores com categoria 'componente' e nome começando com 'componentName_'
+    if (cor.categoria === 'componente' && cor.nome?.startsWith(`${componentName}_`)) {
+      const colorKey = cor.nome.substring(`${componentName}_`.length);
+      componentColors[colorKey] = cor.valor;
+    }
+  });
+
+  return componentColors;
+};
+
+/**
+ * Aplica cores de um componente ao DOM via CSS variables
+ * @param {string} componentName - Nome do componente
+ * @param {Object} varMapping - Mapeamento de chaves para nomes de variáveis CSS
+ *
+ * @example
+ * applyComponentColorsCSS('servicosEssenciais', {
+ *   container: '--servicosEssenciais-container',
+ *   card: '--servicosEssenciais-card',
+ * });
+ */
+export const applyComponentColorsCSS = (componentName, varMapping) => {
+  const colors = getComponentColors(componentName);
+  const root = document.documentElement;
+
+  Object.entries(varMapping).forEach(([colorKey, varName]) => {
+    if (colors[colorKey]) {
+      root.style.setProperty(varName, colors[colorKey]);
+    }
+  });
 };
 
 // ============================================================================
@@ -1525,6 +1443,9 @@ const temaService = {
   getTemaCores,
   getTemaCor,
   getTemaCorsByCategoria,
+  getTemaAtivas,
+  getTemaCorsByComponente,
+  getTemaCorByVariavelRef,
   getTemaCoresGrouped,
   applyTemaCoresCSS,
   // Imagens
@@ -1575,4 +1496,3 @@ const temaService = {
 export default temaService;
 
 export { CACHE_TTL, STORAGE_KEY_PARCEIRO, CAMINHO_MAP, DEFAULT_ORDER };
-

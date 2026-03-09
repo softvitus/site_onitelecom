@@ -2,7 +2,7 @@
  * @file Componente Modal Profissional e Reutilizável
  * @description Modal flexível com design minimalista, suporte a diferentes tamanhos,
  * animações suaves e controle completo de interação. Totalmente customizável.
- * 
+ *
  * @module componentes/Comum/Modal
  */
 
@@ -32,10 +32,10 @@ const MODAL_DIMENSOES = {
 
 /**
  * Componente Modal Profissional
- * 
+ *
  * Modal responsivo com header, body e footer opcionais. Design minimalista
  * com animações suaves. Suporta fechar ao clicar fora e diversos tamanhos.
- * 
+ *
  * @component
  * @param {boolean} aberto - Modal está visível?
  * @param {Function} onClose - Callback ao fechar o modal (obrigatório)
@@ -47,7 +47,7 @@ const MODAL_DIMENSOES = {
  * @param {boolean} [showCloseButton=true] - Mostrar botão fechar?
  * @param {Object} [props] - Props adicionais HTML
  * @returns {JSX.Element|null}
- * 
+ *
  * @example
  * <Modal
  *   aberto={isOpen}
@@ -113,7 +113,16 @@ const Modal = ({
                   aria-label="Fechar modal"
                   title="Fechar (Esc)"
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                   </svg>
@@ -123,16 +132,10 @@ const Modal = ({
           )}
 
           {/* Body */}
-          <div className="modal-body-custom">
-            {children}
-          </div>
+          <div className="modal-body-custom">{children}</div>
 
           {/* Footer */}
-          {footer && (
-            <div className="modal-footer-custom">
-              {footer}
-            </div>
-          )}
+          {footer && <div className="modal-footer-custom">{footer}</div>}
         </div>
       </div>
     </>

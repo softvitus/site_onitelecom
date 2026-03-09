@@ -48,7 +48,7 @@ body {
 
 /* Footer sempre no final */
 .dynamic-page > footer,
-footer[class*="footer"] {
+footer[class*='footer'] {
   margin-top: auto !important;
   flex-shrink: 0;
 }

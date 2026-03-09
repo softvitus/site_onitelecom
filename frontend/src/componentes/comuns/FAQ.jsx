@@ -81,7 +81,7 @@ const getFaqDataByCategory = () => {
   return faqConteudos.reduce((acc, item) => {
     const categoryId = item.categoria || 'geral';
     if (!acc[categoryId]) acc[categoryId] = [];
-    
+
     // Suporta ambos valor (novo) e dados (compatibilidade)
     const itemData = item.valor || item.dados;
     let dados = itemData;
@@ -94,7 +94,7 @@ const getFaqDataByCategory = () => {
     } else {
       dados = itemData || {};
     }
-    
+
     acc[categoryId].push({
       id: dados.id || item.id,
       question: dados.question || '',
@@ -309,7 +309,14 @@ const FAQItem = ({ item, isExpanded, toggleQuestion }) => (
  * @component
  * @param {Object} props - Props do componente
  */
-const FAQContent = ({ activeCategory, expandedQuestions, toggleQuestion, focusSearchInput, faqData, categories }) => {
+const FAQContent = ({
+  activeCategory,
+  expandedQuestions,
+  toggleQuestion,
+  focusSearchInput,
+  faqData,
+  categories,
+}) => {
   const categoryName =
     categories.find((c) => c.id === activeCategory)?.name || 'Perguntas Frequentes';
   const categoryFaqs = faqData[activeCategory] || [];

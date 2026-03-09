@@ -1,12 +1,30 @@
+/* ================== VARIÁVEIS CSS CUSTOM - Banner ================== */
+
+:root {
+  /* ELEMENTOS */
+  --banner-sectionBackground: var(--gradient-purple-primary);
+  --banner-overlayBackground: var(--gradient-purple-primary);
+  --banner-decorativeCirclesLight: var(--color-neutral-white);
+  --banner-decorativeCirclesDark: var(--color-neutral-white);
+  --banner-buttonBackground: var(--color-primary-main);
+  --banner-buttonHoverBackground: var(--color-primary-dark);
+  --banner-shadowMedium: var(--box-shadow-lg);
+
+  /* TEXTOS */
+  --banner-textPrimary: var(--color-neutral-white);
+  --banner-buttonText: var(--color-neutral-white);
+}
+
+/* ================================================================ */
+
 .secao-banner {
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
-  background-color: var(--gradient-purple-primary);
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  background-color: var(--banner-sectionBackground);
   background-size: cover;
   height: 80vh;
   display: flex;
   align-items: center;
-  color: white;
+  color: var(--banner-textPrimary);
   position: relative;
   overflow: hidden;
 }
@@ -18,7 +36,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--gradient-purple-primary);
+  background: var(--banner-overlayBackground);
   opacity: 0.4;
   z-index: 1;
 }
@@ -29,7 +47,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 2px, transparent 2px);
+  background-image: radial-gradient(
+    circle,
+    var(--banner-decorativeCirclesLight) 2px,
+    transparent 2px
+  );
   background-size: 50px 50px;
   z-index: 2;
   animation: moverBolinhas 15s linear infinite;
@@ -42,7 +64,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+  background-image: radial-gradient(
+    circle,
+    var(--banner-decorativeCirclesDark) 2px,
+    transparent 2px
+  );
   background-size: 30px 30px;
   background-position: 15px 15px;
   z-index: 2;
@@ -84,20 +110,20 @@
 }
 
 .botao-oni {
-  background: var(--gradient-purple-primary);
-  color: white;
+  background: var(--banner-buttonBackground);
+  color: var(--banner-buttonText);
   padding: 12px 28px;
   font-weight: 600;
   transition: var(--transition-normal);
   border: none;
-  box-shadow: var(--shadow-medium);
+  box-shadow: var(--box-shadow-md);
 }
 
 .botao-oni:hover {
-  background: var(--gradient-purple-hover);
-  color: white;
+  background: var(--banner-buttonHoverBackground);
+  color: var(--banner-buttonText);
   transform: translateY(-3px);
-  box-shadow: var(--shadow-large);
+  box-shadow: var(--box-shadow-lg);
 }
 
 /* Responsividade para dispositivos móveis */

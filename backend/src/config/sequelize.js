@@ -1,6 +1,6 @@
 /**
  * Sequelize ORM Instance
- * 
+ *
  * Inicializa a conexão com o banco de dados
  * Carrega modelos e define associações
  */

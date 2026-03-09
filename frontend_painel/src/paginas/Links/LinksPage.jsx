@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Links
  * @description Interface completa de CRUD para links
- * 
+ *
  * @module paginas/Links/LinksPage
  */
 
@@ -42,14 +42,16 @@ const COLUNAS_GRID = [
     titulo: 'URL/Valor',
     largura: '25%',
     render: (valor) => (
-      <span style={{
-        maxWidth: '200px',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        display: 'inline-block',
-        title: valor,
-      }}>
+      <span
+        style={{
+          maxWidth: '200px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          display: 'inline-block',
+          title: valor,
+        }}
+      >
         {valor.length > 40 ? `${valor.substring(0, 40)}...` : valor}
       </span>
     ),
@@ -101,16 +103,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Links
- * 
+ *
  * Funcionalidades completas de CRUD.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const LinksPage = () => {
   // Autenticação e Permissões
   const { usuario, temPermissao } = useAuth();
-  
+
   // Estado
   const [links, setLinks] = useState([]);
   const [temas, setTemas] = useState([]);
@@ -159,12 +161,12 @@ const LinksPage = () => {
 
     try {
       const filtros = { search: filtro };
-      
+
       // Se não é admin, filtrar pelo parceiro do usuário
       if (usuario?.tipo !== 'admin' && usuario?.parceiroId) {
         filtros.parceiroId = usuario.parceiroId;
       }
-      
+
       const resultado = await LinksService.listar(pagina, itensPorPagina, filtros);
 
       if (resultado.sucesso) {
@@ -292,7 +294,7 @@ const LinksPage = () => {
   const executarDelecao = async () => {
     if (!confirmarDialog.link) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const link = confirmarDialog.link;
 
@@ -306,12 +308,12 @@ const LinksPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar link'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar link'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -398,11 +400,7 @@ const LinksPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarLink}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarLink} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -412,7 +410,9 @@ const LinksPage = () => {
           {/* Tema - obrigatório */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Tema <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Tema <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.temaId}
@@ -426,16 +426,16 @@ const LinksPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.temaId && (
-                <span className="modal-form-error">{errosForm.temaId}</span>
-              )}
+              {errosForm.temaId && <span className="modal-form-error">{errosForm.temaId}</span>}
             </div>
           </div>
 
           {/* Categoria e Nome */}
           <div className="modal-form-row cols-2">
             <div className="modal-form-group">
-              <label className="modal-form-label">Categoria <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Categoria <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -449,7 +449,9 @@ const LinksPage = () => {
             </div>
 
             <div className="modal-form-group">
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -457,16 +459,16 @@ const LinksPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Ex: Facebook, GitHub, Site Externo"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
           </div>
 
           {/* URL/Valor */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">URL/Valor <span className="required">*</span></label>
+              <label className="modal-form-label">
+                URL/Valor <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -474,9 +476,7 @@ const LinksPage = () => {
                 onChange={(e) => setFormData({ ...formData, valor: e.target.value })}
                 placeholder="Ex: https://facebook.com/seu-pagina"
               />
-              {errosForm.valor && (
-                <span className="modal-form-error">{errosForm.valor}</span>
-              )}
+              {errosForm.valor && <span className="modal-form-error">{errosForm.valor}</span>}
             </div>
           </div>
         </form>

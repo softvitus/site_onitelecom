@@ -24,7 +24,9 @@ describe('ErrorCodes - Real Coverage', () => {
   });
 
   it('ApiError deve ter details opcionais', () => {
-    const error = new ApiError('VALIDATION_ERROR', 'Dados inválidos', { field: 'email' });
+    const error = new ApiError('VALIDATION_ERROR', 'Dados inválidos', {
+      field: 'email',
+    });
     expect(error.details).toEqual({ field: 'email' });
   });
 
@@ -44,11 +46,13 @@ describe('ErrorCodes - Real Coverage', () => {
 
   it('ApiError deve ser serializável', () => {
     const error = new ApiError('NOT_FOUND', 'Item não encontrado');
-    const json = error.toJSON ? error.toJSON() : JSON.stringify({
-      code: error.code,
-      message: error.message,
-      statusCode: error.statusCode,
-    });
+    const json = error.toJSON
+      ? error.toJSON()
+      : JSON.stringify({
+          code: error.code,
+          message: error.message,
+          statusCode: error.statusCode,
+        });
     expect(json).toBeDefined();
   });
 });

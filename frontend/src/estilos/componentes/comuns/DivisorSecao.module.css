@@ -1,6 +1,10 @@
+:root {
+  --divisorSecao-background: var(--color-primary-main);
+}
+
 .divisor-secao {
   height: 150px;
-  background: var(--gradient-purple-primary);
+  background: var(--divisorSecao-background);
   margin: 0;
   position: relative;
   display: flex;
@@ -11,7 +15,7 @@
 }
 
 .divisor-secao h3 {
-  color: white;
+  color: var(--color-neutral-white);
   font-weight: 700;
   font-size: 2.5rem;
   text-align: center;

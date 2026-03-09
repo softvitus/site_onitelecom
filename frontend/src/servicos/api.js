@@ -196,9 +196,7 @@ const CONNECTION_ERRORS = Object.freeze([
  */
 export const isConnectionError = (error) => {
   const errorMessage = error?.message || error?.toString() || '';
-  return CONNECTION_ERRORS.some(msg => 
-    errorMessage.toLowerCase().includes(msg.toLowerCase())
-  );
+  return CONNECTION_ERRORS.some((msg) => errorMessage.toLowerCase().includes(msg.toLowerCase()));
 };
 
 /**
@@ -225,19 +223,18 @@ export const checkApiHealth = async (timeout = 5000) => {
       method: 'GET',
       signal: controller.signal,
     });
-    
+
     clearTimeout(timeoutId);
-    
+
     // Qualquer resposta (mesmo 4xx/5xx) significa que a API está respondendo
     return true;
   } catch (error) {
     clearTimeout(timeoutId);
-    
+
     // Erro de timeout ou conexão
-    const errorMessage = error.name === 'AbortError' 
-      ? 'API timeout' 
-      : error.message || 'Failed to fetch';
-    
+    const errorMessage =
+      error.name === 'AbortError' ? 'API timeout' : error.message || 'Failed to fetch';
+
     throw new Error(errorMessage);
   }
 };

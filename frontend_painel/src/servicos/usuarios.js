@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar usuários.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (usu_nome → nome, etc).
- * 
+ *
  * @module servicos/usuarios
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_USUARIOS = '/usuarios';
 /**
  * Mapeia dados do backend (usu_nome, usu_email, etc)
  * para formato do frontend (nome, email, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -48,7 +48,7 @@ const mapearUsuario = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -85,7 +85,7 @@ const UsuariosServiceBase = criarServicoGenerico(ENDPOINT_USUARIOS);
 
 /**
  * Serviço para Gerenciar Usuários
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -99,14 +99,14 @@ const UsuariosService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await UsuariosServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearUsuario(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -117,14 +117,14 @@ const UsuariosService = {
    */
   obter: async (id) => {
     const resultado = await UsuariosServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearUsuario(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 

@@ -55,7 +55,7 @@ export class ElementoService extends BaseService {
       });
       delete filters.parceiroId;
     }
-    
+
     return super.findAll(filters, pagination, options);
   }
 
@@ -66,10 +66,7 @@ export class ElementoService extends BaseService {
    */
   async findByIdWithRelations(id) {
     return this.findById(id, {
-      include: [
-        { association: 'componentes' },
-        { association: 'conteudos' },
-      ],
+      include: [{ association: 'componentes' }, { association: 'conteudos' }],
     });
   }
 

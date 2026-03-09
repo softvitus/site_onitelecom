@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Textos
  * @description Interface completa de CRUD para textos
- * 
+ *
  * @module paginas/Textos/TextosPage
  */
 
@@ -42,14 +42,16 @@ const COLUNAS_GRID = [
     titulo: 'Valor',
     largura: '25%',
     render: (valor) => (
-      <span style={{
-        maxWidth: '200px',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        display: 'inline-block',
-        title: valor,
-      }}>
+      <span
+        style={{
+          maxWidth: '200px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          display: 'inline-block',
+          title: valor,
+        }}
+      >
         {valor.length > 40 ? `${valor.substring(0, 40)}...` : valor}
       </span>
     ),
@@ -101,16 +103,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Textos
- * 
+ *
  * Funcionalidades completas de CRUD.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const TextosPage = () => {
   // Autenticação e Permissões
   const { usuario, temPermissao } = useAuth();
-  
+
   // Estado
   const [textos, setTextos] = useState([]);
   const [temas, setTemas] = useState([]);
@@ -159,12 +161,12 @@ const TextosPage = () => {
 
     try {
       const filtros = { search: filtro };
-      
+
       // Se não é admin, filtrar pelo parceiro do usuário
       if (usuario?.tipo !== 'admin' && usuario?.parceiroId) {
         filtros.parceiroId = usuario.parceiroId;
       }
-      
+
       const resultado = await TextosService.listar(pagina, itensPorPagina, filtros);
 
       if (resultado.sucesso) {
@@ -292,7 +294,7 @@ const TextosPage = () => {
   const executarDelecao = async () => {
     if (!confirmarDialog.texto) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const texto = confirmarDialog.texto;
 
@@ -306,12 +308,12 @@ const TextosPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar texto'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar texto'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -398,11 +400,7 @@ const TextosPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarTexto}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarTexto} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -412,7 +410,9 @@ const TextosPage = () => {
           {/* Tema - obrigatório */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Tema <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Tema <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.temaId}
@@ -426,16 +426,16 @@ const TextosPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.temaId && (
-                <span className="modal-form-error">{errosForm.temaId}</span>
-              )}
+              {errosForm.temaId && <span className="modal-form-error">{errosForm.temaId}</span>}
             </div>
           </div>
 
           {/* Categoria e Chave */}
           <div className="modal-form-row cols-2">
             <div className="modal-form-group">
-              <label className="modal-form-label">Categoria <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Categoria <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -449,7 +449,9 @@ const TextosPage = () => {
             </div>
 
             <div className="modal-form-group">
-              <label className="modal-form-label">Chave <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Chave <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -457,16 +459,16 @@ const TextosPage = () => {
                 onChange={(e) => setFormData({ ...formData, chave: e.target.value })}
                 placeholder="Ex: copyright, description"
               />
-              {errosForm.chave && (
-                <span className="modal-form-error">{errosForm.chave}</span>
-              )}
+              {errosForm.chave && <span className="modal-form-error">{errosForm.chave}</span>}
             </div>
           </div>
 
           {/* Valor */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Valor <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Valor <span className="required">*</span>
+              </label>
               <textarea
                 className="modal-form-textarea"
                 value={formData.valor}
@@ -474,9 +476,7 @@ const TextosPage = () => {
                 placeholder="Digite o conteúdo do texto..."
                 rows="4"
               />
-              {errosForm.valor && (
-                <span className="modal-form-error">{errosForm.valor}</span>
-              )}
+              {errosForm.valor && <span className="modal-form-error">{errosForm.valor}</span>}
             </div>
           </div>
         </form>

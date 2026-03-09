@@ -3,7 +3,7 @@
  * @description Factory que cria serviços CRUD genéricos para qualquer entidade.
  * Fornece operações padrão (listar, obter, criar, atualizar, deletar, buscar)
  * com tratamento de erros e formatação de respostas.
- * 
+ *
  * @module servicos/base
  */
 
@@ -42,13 +42,13 @@ const extrairMensagemErro = (erro) => {
 
 /**
  * Factory para criar serviço CRUD genérico
- * 
+ *
  * Cria um objeto com métodos CRUD padrão para qualquer entidade,
  * automatizando requisições HTTP e tratamento de erros.
- * 
+ *
  * @param {string} endpoint - Endpoint da API (ex: '/parceiros')
  * @returns {Object} Objeto com métodos CRUD (listar, obter, criar, atualizar, deletar, buscar)
- * 
+ *
  * @example
  * const parceirosService = criarServicoGenerico('/parceiros');
  * const resultado = await parceirosService.listar(1, 10);
@@ -144,7 +144,6 @@ const criarServicoGenerico = (endpoint) => {
           detalhes: response.data.details,
         };
       } catch (error) {
-        console.error('[servicoBase.criar] Erro na requisição:', error);
         return {
           sucesso: false,
           erro: extrairMensagemErro(error.response?.data?.error || error.message),

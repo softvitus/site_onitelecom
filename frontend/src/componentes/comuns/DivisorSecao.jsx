@@ -44,11 +44,7 @@ const DecorativeDots = () => <div className={styles['bolinhas-divisor']} aria-hi
  * @param {string} props.titulo - Texto do título
  * @returns {React.ReactElement}
  */
-const DivisorTitle = ({ titulo }) => (
-  <h3>
-    {titulo}
-  </h3>
-);
+const DivisorTitle = ({ titulo }) => <h3>{titulo}</h3>;
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // 📱 COMPONENTE PRINCIPAL

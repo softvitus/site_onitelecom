@@ -2,7 +2,7 @@
  * @file Componente Alert para Exibição de Mensagens
  * @description Componente reutilizável para exibir alertas com tipos variados
  * (sucesso, erro, aviso, informação) com opção de fechar
- * 
+ *
  * @module componentes/Comum/Alert
  */
 
@@ -30,10 +30,10 @@ const CLASSES_TIPO = {
 
 /**
  * Componente Alert para Exibição de Mensagens
- * 
+ *
  * Componente reutilizável baseado em Bootstrap com suporte a diferentes
  * tipos de alerta, título opcional e fechamento programático.
- * 
+ *
  * @component
  * @param {string} [tipo='info'] - Tipo de alerta: 'success', 'danger', 'warning', 'info'
  * @param {string} [titulo=''] - Título do alerta
@@ -43,7 +43,7 @@ const CLASSES_TIPO = {
  * @param {ReactNode} [children] - Conteúdo adicional dentro do alerta
  * @param {Object} [props] - Props adicionais do HTML
  * @returns {JSX.Element}
- * 
+ *
  * @example
  * <Alert
  *   tipo="success"
@@ -65,18 +65,17 @@ const Alert = ({
   const tipoClass = CLASSES_TIPO[tipo] || CLASSES_TIPO[TIPOS_ALERTA.INFO];
 
   return (
-    <div className={`alert ${tipoClass} ${dismissible ? 'alert-dismissible fade show' : ''}`.trim()} role="alert" {...props}>
+    <div
+      className={`alert ${tipoClass} ${dismissible ? 'alert-dismissible fade show' : ''}`.trim()}
+      role="alert"
+      {...props}
+    >
       {titulo && <h4 className="alert-heading">{titulo}</h4>}
       {mensagem && <p>{mensagem}</p>}
       {children}
-      
+
       {dismissible && onClose && (
-        <button
-          type="button"
-          className="btn-close"
-          onClick={onClose}
-          aria-label="Close"
-        ></button>
+        <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
       )}
     </div>
   );

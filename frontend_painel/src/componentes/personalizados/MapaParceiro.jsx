@@ -2,7 +2,7 @@
  * @file Componente de Mapa Interativo para Parceiros
  * @description Renderiza mapa com Leaflet permitindo dragging do marcador
  * para ajuste fino da localização. Inclui recentramento automático.
- * 
+ *
  * @module componentes/MapaParceiro
  */
 
@@ -134,7 +134,10 @@ const MapaParceiro = ({ latitude, longitude, nomeParceiro, onMarkerDrag }) => {
   const markerRef = useRef(null);
 
   // Sincronizar estado quando as coordenadas iniciais mudam
-  if (coordenadasValidas && (coordenatasMarcador[0] !== latitude || coordenatasMarcador[1] !== longitude)) {
+  if (
+    coordenadasValidas &&
+    (coordenatasMarcador[0] !== latitude || coordenatasMarcador[1] !== longitude)
+  ) {
     setCoordenatasMarcador([latitude, longitude]);
   }
 
@@ -159,23 +162,15 @@ const MapaParceiro = ({ latitude, longitude, nomeParceiro, onMarkerDrag }) => {
     return (
       <div className="mapa-parceiro-vazio">
         <div>
-          <p>
-            Insira coordenadas para visualizar no mapa
-          </p>
-          <p>
-            Use a pesquisa de CEP ou digite manualmente latitude e longitude
-          </p>
+          <p>Insira coordenadas para visualizar no mapa</p>
+          <p>Use a pesquisa de CEP ou digite manualmente latitude e longitude</p>
         </div>
       </div>
     );
   }
 
   return (
-    <MapContainer
-      center={coordInicial}
-      zoom={MAP_CONFIG.ZOOM_INICIAL}
-      className="mapa-parceiro"
-    >
+    <MapContainer center={coordInicial} zoom={MAP_CONFIG.ZOOM_INICIAL} className="mapa-parceiro">
       <TileLayer url={OSM_TILE_URL} attribution={OSM_ATTRIBUTION} />
 
       <Marker
@@ -190,7 +185,8 @@ const MapaParceiro = ({ latitude, longitude, nomeParceiro, onMarkerDrag }) => {
           <div className="mapa-parceiro-popup">
             <strong>{nomeParceiro}</strong>
             <code>
-              {parseFloat(coordenatasMarcador[0]).toFixed(6)}, {parseFloat(coordenatasMarcador[1]).toFixed(6)}
+              {parseFloat(coordenatasMarcador[0]).toFixed(6)},{' '}
+              {parseFloat(coordenatasMarcador[1]).toFixed(6)}
             </code>
           </div>
         </Popup>

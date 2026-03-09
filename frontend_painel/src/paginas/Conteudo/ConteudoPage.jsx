@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Conteúdo
  * @description Interface completa de CRUD para conteúdo
- * 
+ *
  * @module paginas/Conteudo/ConteudoPage
  */
 
@@ -90,16 +90,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Conteúdo
- * 
+ *
  * Funcionalidades completas de CRUD.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const ConteudoPage = () => {
   // Autenticação e Permissões
   const { usuario, temPermissao } = useAuth();
-  
+
   // Estado
   const [conteudos, setConteudos] = useState([]);
   const [temas, setTemas] = useState([]);
@@ -148,12 +148,12 @@ const ConteudoPage = () => {
 
     try {
       const filtros = { search: filtro };
-      
+
       // Se não é admin, filtrar pelo parceiro do usuário
       if (usuario?.tipo !== 'admin' && usuario?.parceiroId) {
         filtros.parceiroId = usuario.parceiroId;
       }
-      
+
       const resultado = await ConteudoService.listar(pagina, itensPorPagina, filtros);
 
       if (resultado.sucesso) {
@@ -284,7 +284,7 @@ const ConteudoPage = () => {
   const executarDelecao = async () => {
     if (!confirmarDialog.conteudo) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const conteudo = confirmarDialog.conteudo;
 
@@ -298,12 +298,12 @@ const ConteudoPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar conteúdo'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar conteúdo'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -390,11 +390,7 @@ const ConteudoPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarConteudo}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarConteudo} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -404,7 +400,9 @@ const ConteudoPage = () => {
           {/* Tema - obrigatório */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Tema <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Tema <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.temaId}
@@ -418,16 +416,16 @@ const ConteudoPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.temaId && (
-                <span className="modal-form-error">{errosForm.temaId}</span>
-              )}
+              {errosForm.temaId && <span className="modal-form-error">{errosForm.temaId}</span>}
             </div>
           </div>
 
           {/* Tipo e Categoria */}
           <div className="modal-form-row cols-2">
             <div className="modal-form-group">
-              <label className="modal-form-label">Tipo <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Tipo <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.tipo}
@@ -440,13 +438,13 @@ const ConteudoPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.tipo && (
-                <span className="modal-form-error">{errosForm.tipo}</span>
-              )}
+              {errosForm.tipo && <span className="modal-form-error">{errosForm.tipo}</span>}
             </div>
 
             <div className="modal-form-group">
-              <label className="modal-form-label">Categoria <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Categoria <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"

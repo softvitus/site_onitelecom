@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Role Permissões
  * @description Interface completa de CRUD para role permissões
- * 
+ *
  * @module paginas/RolePermissoes/RolePermissoesPage
  */
 
@@ -43,7 +43,7 @@ const COLUNAS_GRID = [
     titulo: 'Tipo de Role',
     largura: '25%',
     render: (valor) => {
-      const tipo = TIPOS_ROLE.find(t => t.value === valor);
+      const tipo = TIPOS_ROLE.find((t) => t.value === valor);
       return tipo?.label || valor;
     },
   },
@@ -89,9 +89,9 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Role Permissões
- * 
+ *
  * Funcionalidades completas de CRUD para role permissões.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
@@ -233,7 +233,9 @@ const RolePermissoesPage = () => {
         : await RolePermissoesService.criar(formData);
 
       if (resultado.sucesso) {
-        const msg = editando ? 'Role permissão atualizada com sucesso!' : 'Role permissão criada com sucesso!';
+        const msg = editando
+          ? 'Role permissão atualizada com sucesso!'
+          : 'Role permissão criada com sucesso!';
         setAlerta(criarAlerta('sucesso', msg));
         fecharModal();
         // Recarregar a primeira página
@@ -273,7 +275,7 @@ const RolePermissoesPage = () => {
   const executarDelecao = async () => {
     if (!confirmarDialog.rolePermissao) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const rolePermissao = confirmarDialog.rolePermissao;
 
@@ -287,12 +289,12 @@ const RolePermissoesPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar role permissão'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar role permissão'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -377,11 +379,7 @@ const RolePermissoesPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarRolePermissao}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarRolePermissao} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -391,7 +389,9 @@ const RolePermissoesPage = () => {
           {/* Tipo - obrigatório */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Tipo de Role <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Tipo de Role <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.tipo}
@@ -404,16 +404,16 @@ const RolePermissoesPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.tipo && (
-                <span className="modal-form-error">{errosForm.tipo}</span>
-              )}
+              {errosForm.tipo && <span className="modal-form-error">{errosForm.tipo}</span>}
             </div>
           </div>
 
           {/* Permissão - obrigatória */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Permissão <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Permissão <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.permissaoId}

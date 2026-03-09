@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -7,7 +7,7 @@ export default defineConfig({
     react({
       // Usar oxc para transformação de JSX (não esbuild)
       fastRefresh: true,
-    })
+    }),
   ],
   build: {
     // Usar minificador padrão do Vite (esbuild)
@@ -41,4 +41,4 @@ export default defineConfig({
   preview: {
     port: 5173,
   },
-})
+});

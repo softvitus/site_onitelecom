@@ -6,9 +6,9 @@
 describe('Permissões (RBAC) - Unit Tests', () => {
   describe('Role Hierarchy', () => {
     const roles = {
-      admin: 35,    // Todas as permissões
-      gestor: 22,   // Sem delete, sem usuario_*, sem parceiro_*
-      usuario: 9,   // Apenas listar e visualizar
+      admin: 35, // Todas as permissões
+      gestor: 22, // Sem delete, sem usuario_*, sem parceiro_*
+      usuario: 9, // Apenas listar e visualizar
     };
 
     it('Admin deve ter maior número de permissões', () => {
@@ -30,7 +30,15 @@ describe('Permissões (RBAC) - Unit Tests', () => {
   });
 
   describe('Permissão por Módulo', () => {
-    const modulos = ['tema', 'pagina', 'componente', 'elemento', 'usuario', 'parceiro', 'relatorios'];
+    const modulos = [
+      'tema',
+      'pagina',
+      'componente',
+      'elemento',
+      'usuario',
+      'parceiro',
+      'relatorios',
+    ];
     const acoes = ['listar', 'visualizar', 'criar', 'editar', 'deletar'];
 
     it('deve ter 7 módulos', () => {
@@ -48,8 +56,8 @@ describe('Permissões (RBAC) - Unit Tests', () => {
 
     it('deve gerar nomes de permissão corretos', () => {
       const modulo = 'tema';
-      const permissoes = acoes.map(acao => `${modulo}_${acao}`);
-      
+      const permissoes = acoes.map((acao) => `${modulo}_${acao}`);
+
       expect(permissoes).toContain('tema_listar');
       expect(permissoes).toContain('tema_visualizar');
       expect(permissoes).toContain('tema_criar');
@@ -62,18 +70,34 @@ describe('Permissões (RBAC) - Unit Tests', () => {
     const permissoesPorRole = {
       admin: [
         // Todas as 35
-        'tema_listar', 'tema_visualizar', 'tema_criar', 'tema_editar', 'tema_deletar',
-        'pagina_listar', 'pagina_visualizar', 'pagina_criar', 'pagina_editar', 'pagina_deletar',
+        'tema_listar',
+        'tema_visualizar',
+        'tema_criar',
+        'tema_editar',
+        'tema_deletar',
+        'pagina_listar',
+        'pagina_visualizar',
+        'pagina_criar',
+        'pagina_editar',
+        'pagina_deletar',
         // ... (simplificado)
       ],
       gestor: [
-        'tema_listar', 'tema_visualizar', 'tema_criar', 'tema_editar',
-        'pagina_listar', 'pagina_visualizar', 'pagina_criar', 'pagina_editar',
+        'tema_listar',
+        'tema_visualizar',
+        'tema_criar',
+        'tema_editar',
+        'pagina_listar',
+        'pagina_visualizar',
+        'pagina_criar',
+        'pagina_editar',
         // ... sem deletar, sem usuario_*, sem parceiro_*
       ],
       usuario: [
-        'tema_listar', 'tema_visualizar',
-        'pagina_listar', 'pagina_visualizar',
+        'tema_listar',
+        'tema_visualizar',
+        'pagina_listar',
+        'pagina_visualizar',
         // ... apenas listar e visualizar
       ],
     };
@@ -83,23 +107,29 @@ describe('Permissões (RBAC) - Unit Tests', () => {
     });
 
     it('Gestor NÃO deve ter permissões de delete', () => {
-      const temDelete = permissoesPorRole.gestor.some(p => p.includes('_deletar'));
+      const temDelete = permissoesPorRole.gestor.some((p) =>
+        p.includes('_deletar'),
+      );
       expect(temDelete).toBe(false);
     });
 
     it('Gestor NÃO deve gerenciar usuários', () => {
-      const temUsuario = permissoesPorRole.gestor.some(p => p.startsWith('usuario_'));
+      const temUsuario = permissoesPorRole.gestor.some((p) =>
+        p.startsWith('usuario_'),
+      );
       expect(temUsuario).toBe(false);
     });
 
     it('Gestor NÃO deve gerenciar parceiros', () => {
-      const temParceiro = permissoesPorRole.gestor.some(p => p.startsWith('parceiro_'));
+      const temParceiro = permissoesPorRole.gestor.some((p) =>
+        p.startsWith('parceiro_'),
+      );
       expect(temParceiro).toBe(false);
     });
 
     it('Usuário deve ter apenas leitura', () => {
       const todasLeitura = permissoesPorRole.usuario.every(
-        p => p.endsWith('_listar') || p.endsWith('_visualizar'),
+        (p) => p.endsWith('_listar') || p.endsWith('_visualizar'),
       );
       expect(todasLeitura).toBe(true);
     });
@@ -139,13 +169,15 @@ describe('Permissões (RBAC) - Unit Tests', () => {
     });
 
     it('Gestor e usuário do mesmo parceiro devem ver dados iguais', () => {
-      expect(usuarios.gestor.usu_parceiro_id).toBe(usuarios.usuario.usu_parceiro_id);
+      expect(usuarios.gestor.usu_parceiro_id).toBe(
+        usuarios.usuario.usu_parceiro_id,
+      );
     });
 
     it('Não deve permitir acesso cruzado entre parceiros', () => {
       const usuario1_parceiroId = usuarios.gestor.usu_parceiro_id;
       const usuario2_parceiroId = 'outro-parceiro-id';
-      
+
       const podeAcessar = usuario1_parceiroId === usuario2_parceiroId;
       expect(podeAcessar).toBe(false);
     });
@@ -202,7 +234,7 @@ describe('Permissões (RBAC) - Unit Tests', () => {
     it('cache deve ter TTL de 5 minutos', () => {
       const TTL_MINUTOS = 5;
       const TTL_MS = TTL_MINUTOS * 60 * 1000;
-      
+
       expect(TTL_MS).toBe(300000);
     });
 
@@ -219,7 +251,7 @@ describe('Permissões (RBAC) - Unit Tests', () => {
       });
 
       const cached = cache.get(userId);
-      const expirou = (agora - cached.timestamp) > TTL_MS;
+      const expirou = agora - cached.timestamp > TTL_MS;
 
       expect(expirou).toBe(true);
     });

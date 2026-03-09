@@ -1,16 +1,57 @@
 /* Carrinho.module.css - White-Label */
 
+:root {
+  --carrinho-buttonBackground: var(--color-primary-main);
+  --carrinho-buttonText: var(--color-neutral-white);
+  --carrinho-buttonHoverBg: var(--color-primary-dark);
+  --carrinho-buttonDisabledBg: var(--color-primary-light);
+  --carrinho-cardBorder: var(--color-neutral-300);
+  --carrinho-cardHoverBorder: var(--color-primary-main);
+  --carrinho-titleColor: var(--color-neutral-text);
+  --carrinho-titleHoverColor: var(--color-primary-dark);
+  --carrinho-descriptionColor: var(--color-neutral-gray);
+  --carrinho-priceColor: var(--color-primary-dark);
+  --carrinho-badgeBackground: var(--color-status-error);
+  --carrinho-badgeText: var(--color-neutral-white);
+  --carrinho-containerBorder: var(--color-neutral-400);
+  --carrinho-headerBackground: var(--color-primary-main);
+  --carrinho-headerText: var(--color-neutral-white);
+  --carrinho-itemBackground: var(--color-neutral-100);
+  --carrinho-itemBorder: var(--color-neutral-300);
+  --carrinho-itemLeftBorder: var(--color-primary-main);
+  --carrinho-itemHoverBg: var(--color-neutral-200);
+  --carrinho-itemTitle: var(--color-neutral-800);
+  --carrinho-quantityBorder: var(--color-neutral-300);
+  --carrinho-quantityText: var(--color-primary-main);
+  --carrinho-quantityHoverBg: var(--color-primary-main);
+  --carrinho-quantityHoverText: var(--color-neutral-white);
+  --carrinho-quantityValue: var(--color-neutral-800);
+  --carrinho-emptyCartIcon: var(--color-neutral-300);
+  --carrinho-emptyCartText: var(--color-neutral-600);
+  --carrinho-successIcon: var(--color-status-success);
+  --carrinho-successTitle: var(--color-status-success);
+  --carrinho-toastBorder: var(--color-primary-light);
+  --carrinho-modalBorder: var(--color-neutral-light);
+  --carrinho-titleMainColor: var(--color-primary-main);
+  --carrinho-titleUnderline: var(--color-primary-main);
+  --carrinho-navLinkHoverColor: var(--color-primary-main);
+  --carrinho-navLinkHoverBg: var(--color-primary-background);
+  --carrinho-navLinkActiveColor: var(--color-primary-main);
+  --carrinho-btnOutlinePrimaryColor: var(--color-primary-main);
+  --carrinho-btnOutlinePrimaryHoverBg: var(--color-primary-main);
+}
+
 /* Cores e gradientes */
 .oni-gradient {
-  background: var(--gradient-purple-primary);
-  color: white;
+  background: var(--carrinho-buttonBackground);
+  color: var(--carrinho-buttonText);
   border: none;
   border-radius: var(--radius-md);
   padding: 10px 20px;
   font-weight: 600;
   letter-spacing: 0.5px;
   transition: var(--transition-normal);
-  box-shadow: var(--shadow-purple-medium);
+  box-shadow: var(--box-shadow-md);
   position: relative;
   overflow: hidden;
 }
@@ -27,9 +68,9 @@
 }
 
 .oni-gradient:hover {
-  background: var(--gradient-purple-hover);
+  background: var(--carrinho-buttonHoverBg);
   transform: translateY(-3px);
-  box-shadow: var(--shadow-purple-deep);
+  box-shadow: var(--box-shadow-lg);
 }
 
 .oni-gradient:hover::before {
@@ -38,17 +79,13 @@
 
 .oni-gradient:active {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-medium);
+  box-shadow: var(--box-shadow-md);
 }
 
 .oni-gradient:disabled {
-  background: linear-gradient(
-    135deg,
-    var(--color-primary-light) 0%,
-    var(--color-primary-light) 100%
-  );
+  background: var(--carrinho-buttonDisabledBg);
   transform: none;
-  box-shadow: var(--shadow-small);
+  box-shadow: var(--box-shadow-sm);
 }
 
 .oni-gradient i {
@@ -60,12 +97,12 @@
 .product-card {
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-medium);
+  box-shadow: var(--box-shadow-md);
   margin-bottom: 25px;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
-  background: white;
-  border: 2px solid var(--color-neutral-300);
+  background: var(--color-neutral-white);
+  border: 2px solid var(--carrinho-cardBorder);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -74,8 +111,8 @@
 
 .product-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: var(--shadow-purple-medium);
-  border-color: var(--color-primary-main);
+  box-shadow: var(--box-shadow-lg);
+  border-color: var(--carrinho-cardHoverBorder);
 }
 
 .product-card:hover .product-image {
@@ -111,19 +148,15 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  background: linear-gradient(
-    135deg,
-    var(--color-status-error) 0%,
-    var(--color-status-error-dark) 100%
-  );
-  color: white;
+  background: var(--carrinho-badgeBackground);
+  color: var(--carrinho-badgeText);
   padding: 6px 12px;
   border-radius: 25px;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 8px rgba(238, 9, 121, 0.3);
+  box-shadow: var(--box-shadow-md);
   z-index: 10;
 }
 
@@ -140,16 +173,16 @@
   margin-top: 10px;
   margin-bottom: 8px;
   font-size: 1.2rem;
-  color: var(--color-neutral-text);
+  color: var(--carrinho-titleColor);
   transition: var(--transition-normal);
 }
 
 .product-card:hover .product-title {
-  color: var(--color-primary-dark);
+  color: var(--carrinho-titleHoverColor);
 }
 
 .product-description {
-  color: var(--color-neutral-gray);
+  color: var(--carrinho-descriptionColor);
   font-size: 0.9rem;
   margin-bottom: 15px;
   line-height: 1.5;
@@ -159,7 +192,7 @@
 .product-price {
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--color-primary-dark);
+  color: var(--carrinho-priceColor);
   margin-bottom: 20px;
   display: flex;
   align-items: baseline;
@@ -177,24 +210,24 @@
 .cart-container {
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-large);
+  box-shadow: var(--box-shadow-lg);
   transition: var(--transition-slow);
-  border: 3px solid var(--color-neutral-400);
-  background: white;
+  border: 3px solid var(--carrinho-containerBorder);
+  background: var(--color-neutral-white);
   position: relative;
   top: 0;
   margin-bottom: 20px;
 }
 
 .cart-container:hover {
-  box-shadow: var(--shadow-purple-medium);
+  box-shadow: var(--box-shadow-lg);
 }
 
 .cart-header {
   border-bottom: 3px solid var(--color-neutral-300);
   padding: 15px 20px;
-  background: var(--gradient-primary);
-  color: white;
+  background: var(--carrinho-headerBackground);
+  color: var(--carrinho-headerText);
 }
 
 .cart-header h5 {
@@ -202,7 +235,7 @@
   margin: 0;
   display: flex;
   align-items: center;
-  color: white;
+  color: var(--carrinho-headerText);
 }
 
 .cart-header h5 i {
@@ -210,26 +243,26 @@
 }
 
 .cart-item {
-  background-color: var(--color-neutral-100);
+  background-color: var(--carrinho-itemBackground);
   border-radius: 10px;
   transition: all 0.3s ease;
   padding: 12px 15px !important;
   margin-bottom: 10px !important;
-  border: 2px solid var(--color-neutral-300);
-  border-left: 5px solid var(--color-primary-main);
+  border: 2px solid var(--carrinho-itemBorder);
+  border-left: 5px solid var(--carrinho-itemLeftBorder);
 }
 
 .cart-item:hover {
-  background-color: var(--color-neutral-200);
+  background-color: var(--carrinho-itemHoverBg);
   transform: translateX(3px);
   border-color: var(--color-neutral-400);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow-sm);
 }
 
 .cart-item h6 {
   font-weight: 600;
   margin-bottom: 3px;
-  color: var(--color-neutral-800);
+  color: var(--carrinho-itemTitle);
 }
 
 .quantity-control {
@@ -242,27 +275,27 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 1px solid var(--color-neutral-300);
-  background-color: white;
+  border: 1px solid var(--carrinho-quantityBorder);
+  background-color: var(--color-neutral-white);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-weight: bold;
   transition: all 0.2s ease;
-  color: var(--color-primary-main);
+  color: var(--carrinho-quantityText);
 }
 
 .quantity-btn:hover {
-  background-color: var(--color-primary-main);
-  color: white;
-  border-color: var(--color-primary-main);
+  background-color: var(--carrinho-quantityHoverBg);
+  color: var(--carrinho-quantityHoverText);
+  border-color: var(--carrinho-quantityHoverBg);
 }
 
 .quantity-value {
   margin: 0 10px;
   font-weight: 600;
-  color: var(--color-neutral-800);
+  color: var(--carrinho-quantityValue);
   min-width: 20px;
   text-align: center;
 }
@@ -280,12 +313,12 @@
 
 .empty-cart i {
   font-size: 4rem;
-  color: var(--color-neutral-300);
+  color: var(--carrinho-emptyCartIcon);
   margin-bottom: 15px;
 }
 
 .empty-cart p {
-  color: var(--color-neutral-600);
+  color: var(--carrinho-emptyCartText);
   margin-bottom: 5px;
 }
 
@@ -301,8 +334,8 @@
 .toast {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  border: 2px solid var(--color-primary-light);
+  box-shadow: var(--box-shadow-lg);
+  border: 2px solid var(--carrinho-toastBorder);
   min-width: 300px;
 }
 
@@ -328,16 +361,16 @@
 }
 
 .modal-content {
-  border: 2px solid var(--color-neutral-light);
+  border: 2px solid var(--carrinho-modalBorder);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--box-shadow-lg);
 }
 
 .modal-header {
-  border-bottom: 2px solid var(--color-neutral-light);
+  border-bottom: 2px solid var(--carrinho-modalBorder);
   padding: 15px 20px;
-  background: linear-gradient(to bottom, var(--color-neutral-50), white);
+  background: linear-gradient(to bottom, var(--color-neutral-50), var(--color-neutral-white));
 }
 
 .modal-body {
@@ -345,9 +378,9 @@
 }
 
 .modal-footer {
-  border-top: 2px solid var(--color-neutral-light);
+  border-top: 2px solid var(--carrinho-modalBorder);
   padding: 15px 20px;
-  background: linear-gradient(to top, var(--color-neutral-50), white);
+  background: linear-gradient(to top, var(--color-neutral-50), var(--color-neutral-white));
 }
 
 .success-animation {
@@ -356,14 +389,14 @@
 
 .success-animation i {
   font-size: 5rem;
-  color: var(--color-status-success);
+  color: var(--carrinho-successIcon);
   margin-bottom: 25px;
   display: inline-block;
 }
 
 .success-animation h4 {
   margin-bottom: 15px;
-  color: var(--color-status-success);
+  color: var(--carrinho-successTitle);
   font-weight: 600;
 }
 
@@ -379,7 +412,7 @@
 
 /* Título principal */
 .title {
-  color: var(--color-primary-main);
+  color: var(--carrinho-titleMainColor);
   font-weight: 700;
   margin-bottom: 15px;
   position: relative;
@@ -394,7 +427,7 @@
   transform: translateX(-50%);
   width: 100%;
   height: 3px;
-  background: var(--gradient-primary);
+  background: var(--carrinho-titleUnderline);
   border-radius: 3px;
 }
 
@@ -414,12 +447,12 @@
 }
 
 .nav-tabs .nav-link:hover {
-  color: var(--color-primary-main);
-  background-color: var(--color-primary-background);
+  color: var(--carrinho-navLinkHoverColor);
+  background-color: var(--carrinho-navLinkHoverBg);
 }
 
 .nav-tabs .nav-link.active {
-  color: var(--color-primary-main);
+  color: var(--carrinho-navLinkActiveColor);
   background-color: transparent;
   font-weight: 600;
 }
@@ -431,7 +464,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: var(--gradient-primary);
+  background: var(--color-primary-main);
   border-radius: 3px 3px 0 0;
 }
 
@@ -454,7 +487,7 @@
 
 /* Botões de exportação */
 .btn-group {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow-md);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -469,13 +502,13 @@
 }
 
 .btn-outline-primary {
-  color: var(--color-primary-main);
-  border-color: var(--color-primary-main);
+  color: var(--carrinho-btnOutlinePrimaryColor);
+  border-color: var(--carrinho-btnOutlinePrimaryColor);
 }
 
 .btn-outline-primary:hover {
-  background-color: var(--color-primary-main);
-  color: white;
+  background-color: var(--carrinho-btnOutlinePrimaryHoverBg);
+  color: var(--color-neutral-white);
 }
 
 .btn-outline-success {

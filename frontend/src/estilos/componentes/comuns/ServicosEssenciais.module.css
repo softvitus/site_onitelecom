@@ -1,6 +1,23 @@
+/* ================== VARIÁVEIS CSS CUSTOM - ServicosEssenciais ================== */
+
+:root {
+  /* Cores de Texto Genéricas */
+  --servicosEssenciais-textColor: var(--color-neutral-medium-dark-gray);
+  --servicosEssenciais-textColorAlt: var(--color-neutral-white);
+
+  /* Cores por Elemento */
+  --servicosEssenciais-container: var(--color-neutral-background);
+  --servicosEssenciais-titulo: var(--color-neutral-dark-gray);
+  --servicosEssenciais-card: var(--color-neutral-white);
+  --servicosEssenciais-icon: var(--color-primary-main);
+  --servicosEssenciais-cardText: var(--color-neutral-medium-dark-gray);
+}
+
+/* ============================================================================ */
+
 .container-custom {
   text-align: center;
-  background-color: var(--color-neutral-background);
+  background-color: var(--servicosEssenciais-container);
   padding: 4rem 0;
 }
 
@@ -8,7 +25,7 @@
   font-family: 'Arial', sans-serif;
   margin-bottom: 2.5rem;
   font-size: 2.2rem;
-  color: var(--color-neutral-dark-gray);
+  color: var(--servicosEssenciais-titulo);
   font-weight: 600;
 }
 
@@ -22,9 +39,9 @@
 }
 
 .card-custom {
-  background-color: var(--color-neutral-white);
+  background-color: var(--servicosEssenciais-card);
   border-radius: 15px;
-  box-shadow: 0 6px 20px var(--shadow-black-xs);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   width: 250px;
   height: 250px;
@@ -41,11 +58,11 @@
 
 .card-custom:hover {
   transform: translateY(-8px);
-  box-shadow: 0 8px 25px var(--shadow-purple-deep);
+  box-shadow: var(--box-shadow-lg);
 }
 
 .icon {
-  background: var(--gradient-purple-blue);
+  background: var(--servicosEssenciais-icon);
   border-radius: var(--radius-full);
   padding: 25px;
   margin-bottom: 1.5rem;
@@ -65,7 +82,7 @@
 .clique-text {
   font-size: 1.2rem;
   font-weight: bold;
-  color: var(--color-neutral-medium-dark-gray);
+  color: var(--servicosEssenciais-cardText);
   text-align: center;
   margin: 0;
   font-family: 'Arial', sans-serif;

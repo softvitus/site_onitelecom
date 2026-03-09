@@ -28,7 +28,11 @@
   },
   "overrides": [
     {
-      "files": ["src/**/*.test.js", "src/**/*.spec.js", "src/__tests__/**/*.js"],
+      "files": [
+        "src/**/*.test.js",
+        "src/**/*.spec.js",
+        "src/__tests__/**/*.js"
+      ],
       "rules": {
         "no-unused-vars": "off"
       }

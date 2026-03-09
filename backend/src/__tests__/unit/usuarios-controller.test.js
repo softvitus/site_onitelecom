@@ -85,8 +85,18 @@ describe('UsuariosController - Unit Tests', () => {
   describe('getAll - GET /api/usuarios', () => {
     it('deve retornar lista de usuários com paginação', async () => {
       const mockUsuarios = [
-        createMockModel({ usu_id: '1', usu_nome: 'Admin', usu_email: 'admin@test.com', usu_tipo: 'admin' }),
-        createMockModel({ usu_id: '2', usu_nome: 'Gestor', usu_email: 'gestor@test.com', usu_tipo: 'gestor' }),
+        createMockModel({
+          usu_id: '1',
+          usu_nome: 'Admin',
+          usu_email: 'admin@test.com',
+          usu_tipo: 'admin',
+        }),
+        createMockModel({
+          usu_id: '2',
+          usu_nome: 'Gestor',
+          usu_email: 'gestor@test.com',
+          usu_tipo: 'gestor',
+        }),
       ];
 
       mockService.findAll.mockResolvedValue({
@@ -111,7 +121,12 @@ describe('UsuariosController - Unit Tests', () => {
 
     it('deve remover senha das respostas', async () => {
       const mockUsuarios = [
-        createMockModel({ usu_id: '1', usu_nome: 'Admin', usu_email: 'admin@test.com', usu_senha: 'should_be_removed' }),
+        createMockModel({
+          usu_id: '1',
+          usu_nome: 'Admin',
+          usu_email: 'admin@test.com',
+          usu_senha: 'should_be_removed',
+        }),
       ];
 
       mockService.findAll.mockResolvedValue({
@@ -309,7 +324,10 @@ describe('UsuariosController - Unit Tests', () => {
   describe('update - PUT /api/usuarios/:id', () => {
     it('deve atualizar usuário existente', async () => {
       const updateData = { usu_nome: 'Admin Atualizado' };
-      const anterior = createMockModel({ usu_id: '123', usu_nome: 'Admin Original' });
+      const anterior = createMockModel({
+        usu_id: '123',
+        usu_nome: 'Admin Original',
+      });
       const updated = createMockModel({ usu_id: '123', ...updateData });
 
       mockService.findById.mockResolvedValue(anterior);
@@ -321,7 +339,10 @@ describe('UsuariosController - Unit Tests', () => {
 
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
-        data: expect.objectContaining({ usu_id: '123', usu_nome: 'Admin Atualizado' }),
+        data: expect.objectContaining({
+          usu_id: '123',
+          usu_nome: 'Admin Atualizado',
+        }),
       });
     });
 
@@ -404,8 +425,16 @@ describe('UsuariosController - Unit Tests', () => {
   describe('getByType - GET /api/usuarios/tipo/:tipo', () => {
     it('deve retornar usuários por tipo', async () => {
       const mockUsuarios = [
-        createMockModel({ usu_id: '1', usu_nome: 'Gestor 1', usu_tipo: 'gestor' }),
-        createMockModel({ usu_id: '2', usu_nome: 'Gestor 2', usu_tipo: 'gestor' }),
+        createMockModel({
+          usu_id: '1',
+          usu_nome: 'Gestor 1',
+          usu_tipo: 'gestor',
+        }),
+        createMockModel({
+          usu_id: '2',
+          usu_nome: 'Gestor 2',
+          usu_tipo: 'gestor',
+        }),
       ];
 
       mockService.findByType.mockResolvedValue({
@@ -418,10 +447,10 @@ describe('UsuariosController - Unit Tests', () => {
 
       await controller.getByType(mockReq, mockRes, mockNext);
 
-      expect(mockService.findByType).toHaveBeenCalledWith(
-        'gestor',
-        { page: 1, limit: 10 },
-      );
+      expect(mockService.findByType).toHaveBeenCalledWith('gestor', {
+        page: 1,
+        limit: 10,
+      });
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
         data: expect.arrayContaining([
@@ -434,7 +463,11 @@ describe('UsuariosController - Unit Tests', () => {
 
     it('deve remover senhas na listagem por tipo', async () => {
       const mockUsuarios = [
-        createMockModel({ usu_id: '1', usu_nome: 'Gestor 1', usu_senha: 'must_remove' }),
+        createMockModel({
+          usu_id: '1',
+          usu_nome: 'Gestor 1',
+          usu_senha: 'must_remove',
+        }),
       ];
 
       mockService.findByType.mockResolvedValue({

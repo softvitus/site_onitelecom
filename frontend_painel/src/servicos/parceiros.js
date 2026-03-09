@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar parceiros.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (par_nome → nome, etc).
- * 
+ *
  * @module servicos/parceiros
  */
 
@@ -23,7 +23,7 @@ const RAIO_COBERTURA_PADRAO = 50;
 /**
  * Mapeia dados do backend (par_nome, par_dominio, etc)
  * para formato do frontend (nome, dominio, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -52,7 +52,7 @@ const mapearParceiro = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -67,7 +67,9 @@ const mapearParceiroParaBackend = (dados) => {
     par_cep: dados.cep || null,
     par_latitude: dados.latitude ? parseFloat(dados.latitude) : null,
     par_longitude: dados.longitude ? parseFloat(dados.longitude) : null,
-    par_raio_cobertura: dados.raioCobertura ? parseFloat(dados.raioCobertura) : RAIO_COBERTURA_PADRAO,
+    par_raio_cobertura: dados.raioCobertura
+      ? parseFloat(dados.raioCobertura)
+      : RAIO_COBERTURA_PADRAO,
     par_status: dados.status || 'ativo',
   };
 };
@@ -80,7 +82,7 @@ const ParceirosServiceBase = criarServicoGenerico(ENDPOINT_PARCEIROS);
 
 /**
  * Serviço para Gerenciar Parceiros
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -94,14 +96,14 @@ const ParceirosService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await ParceirosServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearParceiro(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -112,14 +114,14 @@ const ParceirosService = {
    */
   obter: async (id) => {
     const resultado = await ParceirosServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearParceiro(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 

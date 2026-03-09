@@ -137,5 +137,3 @@ const useLocationGuard = (options = {}) => {
 
 export default useLocationGuard;
 export { useLocationGuard, verificarLocalizacao, STORAGE_KEY, REDIRECT_PATH };
-
-

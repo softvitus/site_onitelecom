@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Permissões
  * @description Interface completa de CRUD para permissões
- * 
+ *
  * @module paginas/Permissoes/PermissoesPage
  */
 
@@ -44,19 +44,14 @@ const MODULOS = [
   'role_permissoes',
 ];
 
-const ACOES = [
-  'criar',
-  'editar',
-  'deletar',
-  'listar',
-  'leituradados',
-];
+const ACOES = ['criar', 'editar', 'deletar', 'listar', 'leituradados'];
 
 const FORM_INICIAL = {
   modulo: '',
   acao: '',
   descricao: '',
-}; const COLUNAS_GRID = [
+};
+const COLUNAS_GRID = [
   { chave: 'modulo', titulo: 'Módulo', largura: '25%' },
   { chave: 'acao', titulo: 'Ação', largura: '20%' },
   { chave: 'descricao', titulo: 'Descrição', largura: '55%' },
@@ -99,9 +94,9 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Permissões
- * 
+ *
  * Funcionalidades completas de CRUD para permissões.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
@@ -211,7 +206,7 @@ const PermissoesPage = () => {
 
   const salvarPermissao = async () => {
     console.log('[Permissões] Iniciando salvar com dados:', formData);
-    
+
     const erros = validarFormulario(formData);
     setErrosForm(erros);
 
@@ -240,7 +235,9 @@ const PermissoesPage = () => {
       console.log('[Permissões] Resposta recebida:', resultado);
 
       if (resultado.sucesso) {
-        const msg = editando ? 'Permissão atualizada com sucesso!' : 'Permissão criada com sucesso!';
+        const msg = editando
+          ? 'Permissão atualizada com sucesso!'
+          : 'Permissão criada com sucesso!';
         setAlerta(criarAlerta('sucesso', msg));
         fecharModal();
         // Recarregar a primeira página
@@ -284,7 +281,7 @@ const PermissoesPage = () => {
   const executarDeletar = async () => {
     if (!confirmarDialog.permissao) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const permissao = confirmarDialog.permissao;
 
@@ -298,12 +295,12 @@ const PermissoesPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar permissão'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar permissão'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -393,11 +390,7 @@ const PermissoesPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarPermissao}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarPermissao} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -407,7 +400,9 @@ const PermissoesPage = () => {
           {/* Linha 1: Módulo e Ação */}
           <div className="modal-form-row cols-2">
             <div className="modal-form-group">
-              <label className="modal-form-label">Módulo <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Módulo <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.modulo}
@@ -420,12 +415,12 @@ const PermissoesPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.modulo && (
-                <span className="modal-form-error">{errosForm.modulo}</span>
-              )}
+              {errosForm.modulo && <span className="modal-form-error">{errosForm.modulo}</span>}
             </div>
             <div className="modal-form-group">
-              <label className="modal-form-label">Ação <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Ação <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.acao}
@@ -438,9 +433,7 @@ const PermissoesPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.acao && (
-                <span className="modal-form-error">{errosForm.acao}</span>
-              )}
+              {errosForm.acao && <span className="modal-form-error">{errosForm.acao}</span>}
             </div>
           </div>
 

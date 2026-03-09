@@ -1,13 +1,37 @@
 /* CSS for the Cards Entretenimento component */
+
+:root {
+  --cardsEntretenimento-headerBackground: var(--color-neutral-background);
+  --cardsEntretenimento-headlineBackground: var(--color-primary-main);
+  --cardsEntretenimento-headlineTitle: var(--color-neutral-white);
+  --cardsEntretenimento-headlineText: var(--color-neutral-white);
+  --cardsEntretenimento-buttonBackground: var(--color-neutral-white);
+  --cardsEntretenimento-buttonBorder: var(--color-secondary-blue);
+  --cardsEntretenimento-buttonText: var(--color-secondary-blue);
+  --cardsEntretenimento-buttonHoverBg: var(--color-secondary-blue);
+  --cardsEntretenimento-buttonHoverText: var(--color-neutral-white);
+  --cardsEntretenimento-inputBorder: var(--color-secondary-blue);
+  --cardsEntretenimento-searchBackground: var(--color-secondary-blue);
+  --cardsEntretenimento-searchText: var(--color-neutral-white);
+  --cardsEntretenimento-searchHover: var(--color-secondary-blue-dark);
+  --cardsEntretenimento-cardBg: var(--color-neutral-300);
+  --cardsEntretenimento-descriptionText: var(--color-neutral-600);
+  --cardsEntretenimento-textPrimary: var(--color-secondary-blue);
+  --cardsEntretenimento-textSecondary: var(--color-neutral-500);
+  --cardsEntretenimento-primaryBackground: var(--color-secondary-blue);
+  --cardsEntretenimento-primaryText: var(--color-neutral-white);
+  --cardsEntretenimento-primaryHover: var(--color-secondary-blue-dark);
+}
+
 .header-cards {
   width: 100%;
-  background: var(--color-neutral-background);
+  background: var(--cardsEntretenimento-headerBackground);
 }
 .section-headline {
   text-align: center;
   padding: 30px 0;
-  background: var(--gradient-purple-primary);
-  box-shadow: var(--shadow-medium);
+  background: var(--cardsEntretenimento-headlineBackground);
+  box-shadow: var(--box-shadow-md);
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -26,15 +50,15 @@
 }
 
 .section-headline h2 {
-  color: var(--color-neutral-white);
+  color: var(--cardsEntretenimento-headlineTitle);
   font-size: 36px;
   font-weight: bold;
   margin: 0 0 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .section-headline p {
-  color: var(--color-neutral-white);
+  color: var(--cardsEntretenimento-headlineText);
   font-size: 18px;
   line-height: 1.5;
   margin: 0;
@@ -64,13 +88,13 @@
   border-radius: 9999px;
   white-space: nowrap;
   text-align: center;
-  background-color: white;
-  border: 1px solid var(--color-secondary-blue);
-  color: var(--color-secondary-blue);
+  background-color: var(--cardsEntretenimento-buttonBackground);
+  border: 1px solid var(--cardsEntretenimento-buttonBorder);
+  color: var(--cardsEntretenimento-buttonText);
   font-size: 0.9rem;
   font-weight: bold;
   padding: 10px 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow-sm);
   transition: var(--transition-fast);
   text-decoration: none;
   display: flex;
@@ -79,8 +103,8 @@
 
 .category-btn:hover,
 .category-btn:focus {
-  background-color: var(--color-secondary-blue);
-  color: white;
+  background-color: var(--cardsEntretenimento-buttonHoverBg);
+  color: var(--cardsEntretenimento-buttonHoverText);
   transform: scale(1.05);
 }
 
@@ -102,7 +126,7 @@
 
 .search-bar .form-control {
   flex-grow: 1;
-  border: 2px solid var(--color-secondary-blue);
+  border: 2px solid var(--cardsEntretenimento-inputBorder);
   border-radius: 10px 0 0 10px;
   padding: 10px;
   font-size: 1rem;
@@ -111,18 +135,18 @@
 .search-bar .search-btn {
   border-radius: 0 10px 10px 0;
   font-weight: 600;
-  background-color: var(--color-secondary-blue);
+  background-color: var(--cardsEntretenimento-searchBackground);
   border: none;
   padding: 0 20px;
   transition:
     background-color 0.2s,
     transform 0.2s;
-  color: white;
+  color: var(--cardsEntretenimento-searchText);
   cursor: pointer;
 }
 
 .search-bar .search-btn:hover {
-  background-color: var(--color-secondary-blue-dark);
+  background-color: var(--cardsEntretenimento-searchHover);
   transform: scale(1.05);
 }
 
@@ -137,7 +161,7 @@
   height: 70px;
   object-fit: cover;
   border-radius: 50%;
-  border: 5px solid var(--color-neutral-300);
+  border: 5px solid var(--cardsEntretenimento-cardBg);
   position: relative;
   z-index: 2;
   margin-bottom: -20px;
@@ -152,19 +176,19 @@
 }
 
 .card-container {
-  background-color: var(--color-neutral-300);
-  border: 1px solid var(--color-neutral-300);
+  background-color: var(--cardsEntretenimento-cardBg);
+  border: 1px solid var(--cardsEntretenimento-cardBg);
   border-radius: 0 0 1.5rem 0;
 }
 
 .card-content-manual {
-  background: white;
+  background: var(--color-neutral-white);
   border-radius: 0px 0px 15px 15px;
   padding: 0px 0px 15px;
 }
 
 .description-container {
-  background-color: var(--color-neutral-300);
+  background-color: var(--cardsEntretenimento-cardBg);
   border-radius: 0 0 15px 15px;
   padding: 15px;
 }
@@ -172,13 +196,13 @@
 .description-text {
   font-size: 0.9rem;
   line-height: 1.5;
-  color: var(--color-neutral-600);
+  color: var(--cardsEntretenimento-descriptionText);
   text-align: center;
   margin: 0;
 }
 
 .highlight {
-  color: var(--color-secondary-blue);
+  color: var(--cardsEntretenimento-textPrimary);
   font-weight: 600;
 }
 
@@ -194,11 +218,11 @@
 }
 
 .text-primary {
-  color: var(--color-secondary-blue);
+  color: var(--cardsEntretenimento-textPrimary);
 }
 
 .text-secondary {
-  color: var(--color-neutral-500);
+  color: var(--cardsEntretenimento-textSecondary);
 }
 
 .fs-4 {
@@ -206,8 +230,8 @@
 }
 
 .btn-primary {
-  background-color: var(--color-secondary-blue);
-  color: white;
+  background-color: var(--cardsEntretenimento-primaryBackground);
+  color: var(--cardsEntretenimento-primaryText);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -216,7 +240,7 @@
 }
 
 .btn-primary:hover {
-  background-color: var(--color-secondary-blue-dark);
+  background-color: var(--cardsEntretenimento-primaryHover);
 }
 
 .row {

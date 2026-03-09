@@ -114,9 +114,7 @@ const InfoBox = ({ title, items, id }) => (
     <h3 id={`info-box-${id}`}>{title}</h3>
     <ul>
       {items.map((item, index) => (
-        <li key={index}>
-          {item}
-        </li>
+        <li key={index}>{item}</li>
       ))}
     </ul>
   </div>
@@ -165,12 +163,7 @@ const Quemsomos = () => {
   // ─────────────────────────────────────────────────────────────────────────────────
 
   return (
-    <section
-      id={SECTION_ID}
-      className={styles.secaoPrincipal}
-     
-      aria-labelledby="quem-somos-title"
-    >
+    <section id={SECTION_ID} className={styles.secaoPrincipal} aria-labelledby="quem-somos-title">
       <div className={styles.container}>
         {/* Conteúdo principal */}
         <div className={styles.conteudoPrincipal}>
@@ -189,5 +182,3 @@ const Quemsomos = () => {
 };
 
 export default Quemsomos;
-
-

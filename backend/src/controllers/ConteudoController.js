@@ -24,20 +24,20 @@ export class ConteudoController {
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
-      
+
       // Construir filtros
       const filtros = {};
-      
+
       // Se não é admin e tem parceiroId, filtrar por parceiro
       // Conteúdos estão vinculados a temas, que têm relação com parceiro
       if (req.user?.tipo !== 'admin' && req.user?.parceiroId) {
         filtros.parceiroId = req.user.parceiroId;
       }
-      
-      const result = await this.service.findAll(
-        filtros,
-        { page: parseInt(page), limit: parseInt(limit) },
-      );
+
+      const result = await this.service.findAll(filtros, {
+        page: parseInt(page),
+        limit: parseInt(limit),
+      });
 
       return res.json({
         success: true,
@@ -230,8 +230,13 @@ export default ConteudoController;
 export const conteudoController = new ConteudoController();
 
 // Exporta métodos para compatibilidade com versão anterior
-export const getAll = (req, res, next) => conteudoController.getAll(req, res, next);
-export const getById = (req, res, next) => conteudoController.getById(req, res, next);
-export const create = (req, res, next) => conteudoController.create(req, res, next);
-export const update = (req, res, next) => conteudoController.update(req, res, next);
-export const remove = (req, res, next) => conteudoController.remove(req, res, next);
+export const getAll = (req, res, next) =>
+  conteudoController.getAll(req, res, next);
+export const getById = (req, res, next) =>
+  conteudoController.getById(req, res, next);
+export const create = (req, res, next) =>
+  conteudoController.create(req, res, next);
+export const update = (req, res, next) =>
+  conteudoController.update(req, res, next);
+export const remove = (req, res, next) =>
+  conteudoController.remove(req, res, next);

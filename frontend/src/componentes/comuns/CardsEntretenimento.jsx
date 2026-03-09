@@ -115,7 +115,7 @@ const getOffersByCategory = () => {
   const mappedOffers = allOffers.map((item) => {
     // Suporta ambos valor (novo) e dados (compatibilidade)
     const itemData = item.valor || item.dados;
-    
+
     // Se o dado é string (JSON), fazer parse
     let parsedData = itemData;
     if (typeof itemData === 'string') {
@@ -125,7 +125,7 @@ const getOffersByCategory = () => {
         parsedData = itemData;
       }
     }
-    
+
     return {
       id: parsedData?.id || item.id,
       name: parsedData?.name || item.titulo,
@@ -420,5 +420,3 @@ const CardsEntretenimento = () => {
 };
 
 export default CardsEntretenimento;
-
-

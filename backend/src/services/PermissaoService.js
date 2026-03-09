@@ -16,19 +16,26 @@ export class PermissaoService extends BaseService {
    * @type {string[]}
    */
   static VALID_MODULOS = [
-    'tema', 'temas',
-    'pagina', 'paginas',
-    'componente', 'componentes',
-    'elemento', 'elementos',
-    'usuario', 'usuarios',
-    'parceiro', 'parceiros',
+    'tema',
+    'temas',
+    'pagina',
+    'paginas',
+    'componente',
+    'componentes',
+    'elemento',
+    'elementos',
+    'usuario',
+    'usuarios',
+    'parceiro',
+    'parceiros',
     'relatorios',
     'auditoria',
     'cores',
     'imagens',
     'links',
     'textos',
-    'conteudo', 'conteudos',
+    'conteudo',
+    'conteudos',
     'features',
     'config_tema',
     'role_permissoes',
@@ -39,7 +46,17 @@ export class PermissaoService extends BaseService {
    * Ações válidas
    * @type {string[]}
    */
-  static VALID_ACOES = ['criar', 'listar', 'editar', 'deletar', 'visualizar', 'exportar', 'estatisticas', 'filtrar', 'leituradados'];
+  static VALID_ACOES = [
+    'criar',
+    'listar',
+    'editar',
+    'deletar',
+    'visualizar',
+    'exportar',
+    'estatisticas',
+    'filtrar',
+    'leituradados',
+  ];
 
   /**
    * Busca permissão por nome
@@ -53,11 +70,7 @@ export class PermissaoService extends BaseService {
     });
 
     if (!permissao) {
-      throw new ApiError(
-        'NOT_FOUND',
-        'Permissão não encontrada',
-        404,
-      );
+      throw new ApiError('NOT_FOUND', 'Permissão não encontrada', 404);
     }
 
     return permissao;
@@ -117,15 +130,24 @@ export class PermissaoService extends BaseService {
     const { perm_nome, perm_modulo, perm_acao } = data;
 
     if (!perm_nome || typeof perm_nome !== 'string') {
-      throw new ApiError('VALIDATION_ERROR', 'perm_nome é obrigatório e deve ser string');
+      throw new ApiError(
+        'VALIDATION_ERROR',
+        'perm_nome é obrigatório e deve ser string',
+      );
     }
 
     if (!perm_modulo || !PermissaoService.VALID_MODULOS.includes(perm_modulo)) {
-      throw new ApiError('VALIDATION_ERROR', `perm_modulo deve ser um de: ${PermissaoService.VALID_MODULOS.join(', ')}`);
+      throw new ApiError(
+        'VALIDATION_ERROR',
+        `perm_modulo deve ser um de: ${PermissaoService.VALID_MODULOS.join(', ')}`,
+      );
     }
 
     if (!perm_acao || !PermissaoService.VALID_ACOES.includes(perm_acao)) {
-      throw new ApiError('VALIDATION_ERROR', `perm_acao deve ser um de: ${PermissaoService.VALID_ACOES.join(', ')}`);
+      throw new ApiError(
+        'VALIDATION_ERROR',
+        `perm_acao deve ser um de: ${PermissaoService.VALID_ACOES.join(', ')}`,
+      );
     }
   }
 
@@ -135,11 +157,7 @@ export class PermissaoService extends BaseService {
    * @returns {Promise<Object>} Permissão criada
    */
   async createPayload(data) {
-    // eslint-disable-next-line no-console
-    console.log('[PermissaoService.createPayload] Iniciando com data:', data);
     this.validatePayload(data);
-    // eslint-disable-next-line no-console
-    console.log('[PermissaoService.createPayload] Validação passou, chamando create');
     return this.create(data);
   }
 
@@ -152,7 +170,7 @@ export class PermissaoService extends BaseService {
   async updatePayload(id, data) {
     if (data.perm_modulo || data.perm_acao) {
       const payload = {
-        ...await this.findById(id),
+        ...(await this.findById(id)),
         ...data,
       };
       this.validatePayload(payload);

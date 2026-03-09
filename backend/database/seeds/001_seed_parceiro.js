@@ -44,7 +44,7 @@ export default {
         par_endereco: 'Av. Getúlio Vargas, 800, Boa Viagem',
         par_cep: '51020-000',
         par_latitude: -8.047556,
-        par_longitude: -34.877000,
+        par_longitude: -34.877,
         par_raio_cobertura: 60,
         par_status: 'ativo',
         createdAt: new Date(),

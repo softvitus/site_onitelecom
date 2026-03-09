@@ -20,7 +20,7 @@ export class PermissoesController {
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 50 } = req.query;
-      
+
       const result = await this.service.findAll(
         {},
         { page: parseInt(page), limit: parseInt(limit) },
@@ -72,7 +72,9 @@ export class PermissoesController {
 
       if (!perm_modulo || !perm_acao) {
         if (process.env.DEBUG_PERMISSOES === 'true') {
-          console.error('[PermissoesController.create] ERRO 400 - perm_modulo ou perm_acao vazios/indefinidos');
+          console.error(
+            '[PermissoesController.create] ERRO 400 - perm_modulo ou perm_acao vazios/indefinidos',
+          );
         }
         return res.status(400).json({
           success: false,
@@ -217,10 +219,10 @@ export class PermissoesController {
       const { modulo } = req.params;
       const { page = 1, limit = 50 } = req.query;
 
-      const result = await this.service.findByModulo(
-        modulo,
-        { page: parseInt(page), limit: parseInt(limit) },
-      );
+      const result = await this.service.findByModulo(modulo, {
+        page: parseInt(page),
+        limit: parseInt(limit),
+      });
 
       return res.json({
         success: true,
@@ -241,10 +243,10 @@ export class PermissoesController {
       const { acao } = req.params;
       const { page = 1, limit = 50 } = req.query;
 
-      const result = await this.service.findByAcao(
-        acao,
-        { page: parseInt(page), limit: parseInt(limit) },
-      );
+      const result = await this.service.findByAcao(acao, {
+        page: parseInt(page),
+        limit: parseInt(limit),
+      });
 
       return res.json({
         success: true,

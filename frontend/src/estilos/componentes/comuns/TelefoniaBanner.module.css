@@ -1,8 +1,27 @@
+/* ================== VARIÁVEIS CSS CUSTOM - TelefoniaBanner ================== */
+
+:root {
+  /* ELEMENTOS */
+  --telefoniaBanner-containerBackground: var(--color-neutral-100);
+  --telefoniaBanner-cardBackground: var(--color-neutral-white);
+  --telefoniaBanner-cardTitle: var(--color-neutral-900);
+  --telefoniaBanner-cardText: var(--color-neutral-600);
+  --telefoniaBanner-buttonPrimaryBackground: var(--color-secondary-blue);
+  --telefoniaBanner-buttonPrimaryHover: var(--color-secondary-blue-dark);
+  --telefoniaBanner-buttonSecondaryColor: var(--color-secondary-blue);
+
+  /* TEXTOS */
+  --telefoniaBanner-buttonPrimaryText: var(--color-neutral-white);
+  --telefoniaBanner-buttonSecondaryText: var(--color-neutral-white);
+}
+
+/* ================================================================ */
+
 .banner-container {
   position: relative;
   width: 100%;
   min-height: 500px;
-  background-color: var(--color-neutral-background);
+  background-color: var(--telefoniaBanner-containerBackground);
   overflow: hidden;
   display: flex;
   padding: 40px 20px;
@@ -33,7 +52,7 @@
 }
 
 .card-custom {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: var(--telefoniaBanner-cardBackground);
   border-radius: var(--radius-lg);
   padding: 25px;
   box-shadow: var(--box-shadow-lg);
@@ -49,11 +68,11 @@
 .card-title {
   font-size: 1.5rem;
   margin-bottom: 12px;
-  color: var(--color-neutral-dark);
+  color: var(--telefoniaBanner-cardTitle);
 }
 
 .card-text {
-  color: var(--color-neutral-text);
+  color: var(--telefoniaBanner-cardText);
   font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 15px;
@@ -74,25 +93,25 @@
 }
 
 .btn-primary {
-  background-color: var(--color-secondary-blue);
-  color: var(--color-neutral-white);
+  background-color: var(--telefoniaBanner-buttonPrimaryBackground);
+  color: var(--telefoniaBanner-buttonPrimaryText);
   border: none;
 }
 
 .btn-primary:hover {
-  background-color: var(--color-secondary-blue-dark);
+  background-color: var(--telefoniaBanner-buttonPrimaryHover);
   transform: translateY(-2px);
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--color-secondary-blue);
-  border: 2px solid var(--color-secondary-blue);
+  color: var(--telefoniaBanner-buttonSecondaryColor);
+  border: 2px solid var(--telefoniaBanner-buttonSecondaryColor);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-secondary-blue);
-  color: var(--color-neutral-white);
+  background-color: var(--telefoniaBanner-buttonSecondaryColor);
+  color: var(--telefoniaBanner-buttonSecondaryText);
 }
 
 .icon {

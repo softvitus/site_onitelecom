@@ -163,7 +163,9 @@ describe('API Endpoints - Fluxos de Integração', () => {
         { perm_id: '3', perm_acao: 'criar', perm_nome: 'tema_criar' },
       ];
 
-      const editarPermissoes = permissoes.filter((p) => p.perm_acao === 'editar');
+      const editarPermissoes = permissoes.filter(
+        (p) => p.perm_acao === 'editar',
+      );
       expect(editarPermissoes).toHaveLength(2);
     });
   });
@@ -207,7 +209,11 @@ describe('API Endpoints - Fluxos de Integração', () => {
         usuario: ['tema_visualizar', 'pagina_visualizar'],
       };
 
-      const novasPermissoes = ['tema_visualizar', 'pagina_visualizar', 'relatorios_visualizar'];
+      const novasPermissoes = [
+        'tema_visualizar',
+        'pagina_visualizar',
+        'relatorios_visualizar',
+      ];
 
       rolesPermissoes.usuario = novasPermissoes;
 
@@ -264,7 +270,11 @@ describe('API Endpoints - Fluxos de Integração', () => {
       expect(usuario.usu_tipo).toBe('admin');
 
       // 2. Role admin tem permissões
-      const adminPerms = ['tema_editar', 'usuario_criar', 'auditoria_visualizar'];
+      const adminPerms = [
+        'tema_editar',
+        'usuario_criar',
+        'auditoria_visualizar',
+      ];
 
       // 3. Validar
       expect(adminPerms).toContain('usuario_criar');

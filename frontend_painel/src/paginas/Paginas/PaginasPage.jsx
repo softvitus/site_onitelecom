@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Páginas
  * @description Interface completa de CRUD para páginas
- * 
+ *
  * @module paginas/Paginas/PaginasPage
  */
 
@@ -65,9 +65,7 @@ const COLUNAS_GRID = [
     titulo: 'Menu',
     largura: '10%',
     render: (valor) => (
-      <span className={`paginas-menu-badge ${valor ? 'sim' : 'nao'}`}>
-        {valor ? 'Sim' : 'Não'}
-      </span>
+      <span className={`paginas-menu-badge ${valor ? 'sim' : 'nao'}`}>{valor ? 'Sim' : 'Não'}</span>
     ),
   },
   { chave: 'etiquetaMenu', titulo: 'Etiqueta', largura: '14%' },
@@ -124,16 +122,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Páginas
- * 
+ *
  * Funcionalidades completas de CRUD com listagem em grid.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const PaginasPage = () => {
   // Autenticação e Permissões
   const { usuario, temPermissao } = useAuth();
-  
+
   // Estado
   const [paginas, setPaginas] = useState([]);
   const [carregando, setCarregando] = useState(true);
@@ -230,10 +228,10 @@ const PaginasPage = () => {
 
       if (resultado.sucesso) {
         // Mapear páginas para adicionar nomes de relacionamentos
-        const paginasComRelacoes = resultado.dados.map(pagina => ({
+        const paginasComRelacoes = resultado.dados.map((pagina) => ({
           ...pagina,
-          parceiroNome: parceiros.find(p => p.id === pagina.parceiroId)?.nome || 'N/A',
-          temaNome: temas.find(t => t.id === pagina.temaId)?.nome || 'N/A',
+          parceiroNome: parceiros.find((p) => p.id === pagina.parceiroId)?.nome || 'N/A',
+          temaNome: temas.find((t) => t.id === pagina.temaId)?.nome || 'N/A',
         }));
         setPaginas(paginasComRelacoes);
 
@@ -347,7 +345,7 @@ const PaginasPage = () => {
   const executarDelecao = async () => {
     if (!confirmarDialog.pagina) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     try {
       const resultado = await PaginasService.deletar(confirmarDialog.pagina.id);
@@ -360,12 +358,12 @@ const PaginasPage = () => {
         carregarDadosGrid(PAGINACAO.PAGINA_INICIAL, PAGINACAO.ITENS_POR_PAGINA);
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar página'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar página'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -452,11 +450,7 @@ const PaginasPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarPagina}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarPagina} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -466,7 +460,9 @@ const PaginasPage = () => {
           {/* Nome, Caminho, Título, Status */}
           <div className="modal-form-row">
             <div className="modal-form-group">
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -474,12 +470,12 @@ const PaginasPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Nome da página"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
             <div className="modal-form-group">
-              <label className="modal-form-label">Caminho <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Caminho <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -487,12 +483,12 @@ const PaginasPage = () => {
                 onChange={(e) => setFormData({ ...formData, caminho: e.target.value })}
                 placeholder="/exemplo"
               />
-              {errosForm.caminho && (
-                <span className="modal-form-error">{errosForm.caminho}</span>
-              )}
+              {errosForm.caminho && <span className="modal-form-error">{errosForm.caminho}</span>}
             </div>
             <div className="modal-form-group">
-              <label className="modal-form-label">Título <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Título <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -500,9 +496,7 @@ const PaginasPage = () => {
                 onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
                 placeholder="Título da página"
               />
-              {errosForm.titulo && (
-                <span className="modal-form-error">{errosForm.titulo}</span>
-              )}
+              {errosForm.titulo && <span className="modal-form-error">{errosForm.titulo}</span>}
             </div>
             <div className="modal-form-group">
               <label className="modal-form-label">Status</label>
@@ -521,7 +515,9 @@ const PaginasPage = () => {
           {/* Parceiro, Tema, Exibir Menu, Etiqueta */}
           <div className="modal-form-row">
             <div className="modal-form-group">
-              <label className="modal-form-label">Parceiro <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Parceiro <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.parceiroId}
@@ -540,7 +536,9 @@ const PaginasPage = () => {
               )}
             </div>
             <div className="modal-form-group">
-              <label className="modal-form-label">Tema <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Tema <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.temaId}
@@ -554,16 +552,16 @@ const PaginasPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.temaId && (
-                <span className="modal-form-error">{errosForm.temaId}</span>
-              )}
+              {errosForm.temaId && <span className="modal-form-error">{errosForm.temaId}</span>}
             </div>
             <div className="modal-form-group">
               <label className="modal-form-label">Exibir no Menu</label>
               <select
                 className="modal-form-select"
                 value={formData.mostrarNoMenu ? 'sim' : 'nao'}
-                onChange={(e) => setFormData({ ...formData, mostrarNoMenu: e.target.value === 'sim' })}
+                onChange={(e) =>
+                  setFormData({ ...formData, mostrarNoMenu: e.target.value === 'sim' })
+                }
               >
                 <option value="nao">Não</option>
                 <option value="sim">Sim</option>
@@ -631,5 +629,5 @@ const PaginasPage = () => {
       />
     </div>
   );
-}
+};
 export default PaginasPage;

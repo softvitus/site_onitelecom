@@ -23,7 +23,7 @@ export class FeaturesController {
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
-      
+
       const result = await this.service.findAll(
         {},
         { page: parseInt(page), limit: parseInt(limit) },
@@ -220,8 +220,13 @@ export default FeaturesController;
 export const featuresController = new FeaturesController();
 
 // Exporta métodos para compatibilidade com versão anterior
-export const getAll = (req, res, next) => featuresController.getAll(req, res, next);
-export const getById = (req, res, next) => featuresController.getById(req, res, next);
-export const create = (req, res, next) => featuresController.create(req, res, next);
-export const update = (req, res, next) => featuresController.update(req, res, next);
-export const remove = (req, res, next) => featuresController.remove(req, res, next);
+export const getAll = (req, res, next) =>
+  featuresController.getAll(req, res, next);
+export const getById = (req, res, next) =>
+  featuresController.getById(req, res, next);
+export const create = (req, res, next) =>
+  featuresController.create(req, res, next);
+export const update = (req, res, next) =>
+  featuresController.update(req, res, next);
+export const remove = (req, res, next) =>
+  featuresController.remove(req, res, next);

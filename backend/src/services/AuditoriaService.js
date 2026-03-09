@@ -47,8 +47,9 @@ export class AuditoriaService {
       }
 
       // Sanitizar dados sensíveis
-      const dadosAnterioresSanitizados =
-        this._sanitizarDados(dados.dadosAnteriores);
+      const dadosAnterioresSanitizados = this._sanitizarDados(
+        dados.dadosAnteriores,
+      );
       const dadosNovosSanitizados = this._sanitizarDados(dados.dadosNovos);
 
       // Criar registro de auditoria
@@ -107,7 +108,9 @@ export class AuditoriaService {
       if (typeof obj === 'object' && obj !== null) {
         const sanitizado = {};
         for (const [chave, valor] of Object.entries(obj)) {
-          if (camposSensiveis.some((campo) => chave.toLowerCase().includes(campo))) {
+          if (
+            camposSensiveis.some((campo) => chave.toLowerCase().includes(campo))
+          ) {
             sanitizado[chave] = '[REDACTED]';
           } else {
             sanitizado[chave] = sanitizar(valor);
@@ -250,11 +253,13 @@ export class AuditoriaService {
             return {
               aud_usuario_id: item.aud_usuario_id,
               total: item.total,
-              usuario: usuario ? {
-                usu_id: usuario.usu_id,
-                usu_nome: usuario.usu_nome,
-                usu_email: usuario.usu_email,
-              } : null,
+              usuario: usuario
+                ? {
+                    usu_id: usuario.usu_id,
+                    usu_nome: usuario.usu_nome,
+                    usu_email: usuario.usu_email,
+                  }
+                : null,
             };
           } catch (err) {
             return item;
@@ -275,9 +280,10 @@ export class AuditoriaService {
         estatisticas: {
           totalAcoes,
           totalErros,
-          taxaErro: totalAcoes > 0 
-            ? parseFloat(((totalErros / totalAcoes) * 100).toFixed(2))
-            : 0,
+          taxaErro:
+            totalAcoes > 0
+              ? parseFloat(((totalErros / totalAcoes) * 100).toFixed(2))
+              : 0,
           acoesTop,
           usuariosTop,
         },

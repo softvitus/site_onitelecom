@@ -2,7 +2,7 @@
  * @file Serviço de Integração com ViaCEP e Nominatim
  * @description Fornece utilitários para busca de endereços por CEP e geocodificação
  * de localizações utilizando APIs públicas (ViaCEP e OpenStreetMap/Nominatim)
- * 
+ *
  * @module servicos/viacep
  */
 
@@ -24,33 +24,33 @@ const LONGITUDE_MAX = 180;
  * @type {Object<string, string>}
  */
 const ESTADOS_BRASIL = {
-  'AC': 'acre',
-  'AL': 'alagoas',
-  'AP': 'amapá',
-  'AM': 'amazonas',
-  'BA': 'bahia',
-  'CE': 'ceará',
-  'DF': 'distrito federal',
-  'ES': 'espírito santo',
-  'GO': 'goiás',
-  'MA': 'maranhão',
-  'MT': 'mato grosso',
-  'MS': 'mato grosso do sul',
-  'MG': 'minas gerais',
-  'PA': 'pará',
-  'PB': 'paraíba',
-  'PR': 'paraná',
-  'PE': 'pernambuco',
-  'PI': 'piauí',
-  'RJ': 'rio de janeiro',
-  'RN': 'rio grande do norte',
-  'RS': 'rio grande do sul',
-  'RO': 'rondônia',
-  'RR': 'roraima',
-  'SC': 'santa catarina',
-  'SP': 'são paulo',
-  'SE': 'sergipe',
-  'TO': 'tocantins',
+  AC: 'acre',
+  AL: 'alagoas',
+  AP: 'amapá',
+  AM: 'amazonas',
+  BA: 'bahia',
+  CE: 'ceará',
+  DF: 'distrito federal',
+  ES: 'espírito santo',
+  GO: 'goiás',
+  MA: 'maranhão',
+  MT: 'mato grosso',
+  MS: 'mato grosso do sul',
+  MG: 'minas gerais',
+  PA: 'pará',
+  PB: 'paraíba',
+  PR: 'paraná',
+  PE: 'pernambuco',
+  PI: 'piauí',
+  RJ: 'rio de janeiro',
+  RN: 'rio grande do norte',
+  RS: 'rio grande do sul',
+  RO: 'rondônia',
+  RR: 'roraima',
+  SC: 'santa catarina',
+  SP: 'são paulo',
+  SE: 'sergipe',
+  TO: 'tocantins',
 };
 
 // ============================================================================
@@ -94,7 +94,7 @@ const sãoCoordenadosValidas = (latitude, longitude) => {
  */
 const validarEFormatarCEP = (cep) => {
   const cepLimpo = cep.replace(/\D/g, '');
-  
+
   if (!cepLimpo || cepLimpo.length !== CEP_LENGTH) {
     return {
       valido: false,
@@ -163,9 +163,8 @@ const validarRespotaNominatim = (displayName, cidade, estado) => {
   const nomeEstado = ESTADOS_BRASIL[estado.toUpperCase()] || estado.toLowerCase();
 
   const contemCidade = displayLower.includes(cidadeLower);
-  const contemEstado = 
-    displayLower.includes(nomeEstado) || 
-    displayLower.includes(estado.toLowerCase());
+  const contemEstado =
+    displayLower.includes(nomeEstado) || displayLower.includes(estado.toLowerCase());
 
   return contemCidade && contemEstado;
 };
@@ -175,7 +174,7 @@ const validarRespotaNominatim = (displayName, cidade, estado) => {
  * @param {number} ms - Milissegundos a aguardar
  * @returns {Promise<void>}
  */
-const aguardar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const aguardar = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * Realiza uma requisição com tratamento de erros
@@ -214,11 +213,11 @@ const buscarDaAPI = async (url, options = {}) => {
 const ViaCepService = {
   /**
    * Busca informações de endereço pelo CEP
-   * 
+   *
    * @async
    * @param {string} cep - CEP no formato "12345-678" ou "12345678"
    * @returns {Promise<Object>} Objeto com {sucesso, dados?, erro?}
-   * 
+   *
    * @example
    * const resultado = await ViaCepService.buscarPorCep('12345-678');
    * if (resultado.sucesso) {
@@ -276,10 +275,10 @@ const ViaCepService = {
 
   /**
    * Busca coordenadas (latitude/longitude) usando Nominatim
-   * 
+   *
    * Utiliza estratégia progressiva de buscas, começando com endereço
    * completo e caindo para buscas menos específicas se necessário.
-   * 
+   *
    * @async
    * @param {Object} enderecoDados - Dados do endereço
    * @param {string} enderecoDados.endereco - Rua/avenida
@@ -287,7 +286,7 @@ const ViaCepService = {
    * @param {string} enderecoDados.cidade - Cidade
    * @param {string} enderecoDados.estado - Estado (sigla ou nome)
    * @returns {Promise<Object>} Objeto com {latitude: string, longitude: string}
-   * 
+   *
    * @example
    * const coords = await ViaCepService.buscarCoordenadas({
    *   endereco: 'Rua A, 123',

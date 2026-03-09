@@ -15,17 +15,17 @@ const permCache = new NodeCache({ stdTTL: 300 });
  */
 async function getPermissoesByRole(tipo) {
   const cacheKey = `role_${tipo}`;
-  
+
   let perms = permCache.get(cacheKey);
-  
+
   if (!perms) {
     const models = getModels();
     const rolePerms = await models.RolePermissao.findByTipo(tipo);
-    
-    perms = rolePerms.map(rp => rp.permissao.perm_nome);
+
+    perms = rolePerms.map((rp) => rp.permissao.perm_nome);
     permCache.set(cacheKey, perms);
   }
-  
+
   return perms;
 }
 
@@ -37,11 +37,7 @@ export const requirePermission = (permissionName) => {
   return async (req, res, next) => {
     try {
       if (!req.user) {
-        throw new ApiError(
-          'UNAUTHORIZED',
-          'Usuário não autenticado',
-          401,
-        );
+        throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
       }
 
       const userType = req.user.tipo;
@@ -77,11 +73,7 @@ export const requireAnyPermission = (permissionNames) => {
   return async (req, res, next) => {
     try {
       if (!req.user) {
-        throw new ApiError(
-          'UNAUTHORIZED',
-          'Usuário não autenticado',
-          401,
-        );
+        throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
       }
 
       const userType = req.user.tipo;
@@ -93,7 +85,9 @@ export const requireAnyPermission = (permissionNames) => {
 
       // Verificar se tem alguma das permissões
       const perms = await getPermissoesByRole(userType);
-      const hasPermission = permissionNames.some(perm => perms.includes(perm));
+      const hasPermission = permissionNames.some((perm) =>
+        perms.includes(perm),
+      );
 
       if (!hasPermission) {
         throw new ApiError(
@@ -118,11 +112,7 @@ export const requireAllPermissions = (permissionNames) => {
   return async (req, res, next) => {
     try {
       if (!req.user) {
-        throw new ApiError(
-          'UNAUTHORIZED',
-          'Usuário não autenticado',
-          401,
-        );
+        throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
       }
 
       const userType = req.user.tipo;
@@ -134,7 +124,9 @@ export const requireAllPermissions = (permissionNames) => {
 
       // Verificar se tem todas as permissões
       const perms = await getPermissoesByRole(userType);
-      const hasAllPermissions = permissionNames.every(perm => perms.includes(perm));
+      const hasAllPermissions = permissionNames.every((perm) =>
+        perms.includes(perm),
+      );
 
       if (!hasAllPermissions) {
         throw new ApiError(

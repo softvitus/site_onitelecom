@@ -41,11 +41,22 @@ describe('ParceiroService - Unit Tests', () => {
   describe('findAll - Listar parceiros', () => {
     it('deve retornar lista de parceiros com paginação', async () => {
       const mockParceiros = [
-        { par_id: '1', par_nome: 'Telecom Plus', par_dominio: 'telecomplus.com' },
-        { par_id: '2', par_nome: 'Internet Rápida', par_dominio: 'internetrapida.com' },
+        {
+          par_id: '1',
+          par_nome: 'Telecom Plus',
+          par_dominio: 'telecomplus.com',
+        },
+        {
+          par_id: '2',
+          par_nome: 'Internet Rápida',
+          par_dominio: 'internetrapida.com',
+        },
       ];
 
-      mockModel.findAndCountAll.mockResolvedValue({ rows: mockParceiros, count: 2 });
+      mockModel.findAndCountAll.mockResolvedValue({
+        rows: mockParceiros,
+        count: 2,
+      });
 
       const result = await service.findAll({}, { page: 1, limit: 10 });
 
@@ -59,7 +70,10 @@ describe('ParceiroService - Unit Tests', () => {
         { par_id: '1', par_nome: 'Ativo', par_status: 'ativo' },
       ];
 
-      mockModel.findAndCountAll.mockResolvedValue({ rows: mockParceiros, count: 1 });
+      mockModel.findAndCountAll.mockResolvedValue({
+        rows: mockParceiros,
+        count: 1,
+      });
 
       const result = await service.findAll({ par_status: 'ativo' });
 
@@ -108,7 +122,10 @@ describe('ParceiroService - Unit Tests', () => {
       const result = await service.findById('123');
 
       expect(result).toEqual(mockParceiro);
-      expect(mockModel.findByPk).toHaveBeenCalledWith('123', expect.any(Object));
+      expect(mockModel.findByPk).toHaveBeenCalledWith(
+        '123',
+        expect.any(Object),
+      );
     });
   });
 
@@ -139,7 +156,10 @@ describe('ParceiroService - Unit Tests', () => {
         { par_id: '2', par_status: 'ativo' },
       ];
 
-      mockModel.findAndCountAll.mockResolvedValue({ rows: mockAtivos, count: 2 });
+      mockModel.findAndCountAll.mockResolvedValue({
+        rows: mockAtivos,
+        count: 2,
+      });
 
       const result = await service.findActive();
 
@@ -156,7 +176,10 @@ describe('ParceiroService - Unit Tests', () => {
     it('deve retornar parceiros de uma cidade específica', async () => {
       const mockParceiros = [{ par_id: '1', par_cidade: 'São Paulo' }];
 
-      mockModel.findAndCountAll.mockResolvedValue({ rows: mockParceiros, count: 1 });
+      mockModel.findAndCountAll.mockResolvedValue({
+        rows: mockParceiros,
+        count: 1,
+      });
 
       const result = await service.findByCity('São Paulo');
 
@@ -252,8 +275,8 @@ describe('ParceiroService - Unit Tests', () => {
   describe('update - Atualizar parceiro', () => {
     it('deve atualizar parceiro com novos dados', async () => {
       const updateData = { par_nome: 'Nome Atualizado' };
-      const mockItem = { 
-        par_id: '123', 
+      const mockItem = {
+        par_id: '123',
         ...updateData,
         update: jest.fn().mockResolvedValue(true),
       };
@@ -337,7 +360,12 @@ describe('ParceiroService - Unit Tests', () => {
   describe('calculateDistance - Cálculo de distância', () => {
     it('deve calcular corretamente distância entre dois pontos', () => {
       // João Pessoa (-7.115556, -34.878056) para Campina Grande (-7.229444, -35.881111)
-      const distance = service.calculateDistance(-7.115556, -34.878056, -7.229444, -35.881111);
+      const distance = service.calculateDistance(
+        -7.115556,
+        -34.878056,
+        -7.229444,
+        -35.881111,
+      );
 
       // A distância real é aproximadamente 111 km
       expect(distance).toBeGreaterThan(100);
@@ -345,14 +373,24 @@ describe('ParceiroService - Unit Tests', () => {
     });
 
     it('deve retornar 0 para coordenadas iguais', () => {
-      const distance = service.calculateDistance(-7.115556, -34.878056, -7.115556, -34.878056);
+      const distance = service.calculateDistance(
+        -7.115556,
+        -34.878056,
+        -7.115556,
+        -34.878056,
+      );
 
       expect(distance).toBe(0);
     });
 
     it('deve calcular corretamente para coordenadas diferentes', () => {
       // São Paulo (23.550520, -46.633309) para Rio de Janeiro (22.902756, -43.209469)
-      const distance = service.calculateDistance(23.550520, -46.633309, 22.902756, -43.209469);
+      const distance = service.calculateDistance(
+        23.55052,
+        -46.633309,
+        22.902756,
+        -43.209469,
+      );
 
       // Distância real é aproximadamente 357 km
       expect(distance).toBeGreaterThan(350);
@@ -430,20 +468,30 @@ describe('ParceiroService - Unit Tests', () => {
     });
 
     it('deve aceitar dados parciais de localização', () => {
-      expect(() => service.validateLocationData({ par_latitude: 0 })).not.toThrow();
-      expect(() => service.validateLocationData({ par_longitude: 0 })).not.toThrow();
-      expect(() => service.validateLocationData({ par_raio_cobertura: 50 })).not.toThrow();
+      expect(() =>
+        service.validateLocationData({ par_latitude: 0 }),
+      ).not.toThrow();
+      expect(() =>
+        service.validateLocationData({ par_longitude: 0 }),
+      ).not.toThrow();
+      expect(() =>
+        service.validateLocationData({ par_raio_cobertura: 50 }),
+      ).not.toThrow();
     });
   });
 
   // ========== TESTES: findNearby (Busca geoespacial) ==========
   describe('findNearby - Busca por proximidade', () => {
     it('deve rejeitar latitude ausente', async () => {
-      await expect(service.findNearby(null, -34.878056)).rejects.toThrow('obrigatórias');
+      await expect(service.findNearby(null, -34.878056)).rejects.toThrow(
+        'obrigatórias',
+      );
     });
 
     it('deve rejeitar longitude ausente', async () => {
-      await expect(service.findNearby(-7.115556, null)).rejects.toThrow('obrigatórias');
+      await expect(service.findNearby(-7.115556, null)).rejects.toThrow(
+        'obrigatórias',
+      );
     });
 
     it('deve rejeitar coordenadas fora do intervalo válido', async () => {

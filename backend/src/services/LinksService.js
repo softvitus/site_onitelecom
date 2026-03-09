@@ -15,7 +15,14 @@ export class LinksService extends BaseService {
    * Tipos de link válidos
    * @type {string[]}
    */
-  static VALID_TYPES = ['social', 'externo', 'interno', 'email', 'telefone', 'download'];
+  static VALID_TYPES = [
+    'social',
+    'externo',
+    'interno',
+    'email',
+    'telefone',
+    'download',
+  ];
 
   /**
    * Override findAll para filtrar por parceiro através do tema
@@ -35,7 +42,7 @@ export class LinksService extends BaseService {
       });
       delete filters.parceiroId;
     }
-    
+
     return super.findAll(filters, pagination, options);
   }
 

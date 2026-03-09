@@ -40,7 +40,7 @@ export const authenticate = (req, res, next) => {
   try {
     // Extrai o token do header Authorization
     const authHeader = req.headers.authorization;
-    
+
     if (!authHeader) {
       return res.status(401).json({
         success: false,
@@ -104,9 +104,11 @@ export const authorize = (allowedRoles = []) => {
     }
 
     const userRole = req.user.role;
-    
+
     if (allowedRoles.length > 0 && !allowedRoles.includes(userRole)) {
-      console.warn(`[WARN] Acesso negado para usuário ${req.user.id} com role ${userRole}`);
+      console.warn(
+        `[WARN] Acesso negado para usuário ${req.user.id} com role ${userRole}`,
+      );
       return res.status(403).json({
         success: false,
         error: {

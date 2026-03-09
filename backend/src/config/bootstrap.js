@@ -11,7 +11,9 @@ const node_env = process.env.NODE_ENV;
 const envConfig = packageJson.envConfig;
 
 if (!envConfig[node_env]) {
-  throw new Error(`[ENV] NODE_ENV inválido: ${node_env}. Valores válidos: ${Object.keys(envConfig).join(', ')}`);
+  throw new Error(
+    `[ENV] NODE_ENV inválido: ${node_env}. Valores válidos: ${Object.keys(envConfig).join(', ')}`,
+  );
 }
 
 const envFilename = envConfig[node_env];

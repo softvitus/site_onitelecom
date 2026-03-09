@@ -21,7 +21,8 @@ export default {
       par_dominio_painel: {
         type: Sequelize.STRING(255),
         allowNull: true,
-        comment: 'Domínio para acesso ao painel administrativo (ex: admin.parceiro.com)',
+        comment:
+          'Domínio para acesso ao painel administrativo (ex: admin.parceiro.com)',
       },
       par_cidade: {
         type: Sequelize.STRING(255),
@@ -77,7 +78,10 @@ export default {
     await queryInterface.addIndex('0001_Parceiro', ['par_status']);
     await queryInterface.addIndex('0001_Parceiro', ['par_dominio']);
     // Índice para localizações (geo queries)
-    await queryInterface.addIndex('0001_Parceiro', ['par_latitude', 'par_longitude']);
+    await queryInterface.addIndex('0001_Parceiro', [
+      'par_latitude',
+      'par_longitude',
+    ]);
     await queryInterface.addIndex('0001_Parceiro', ['par_cep']);
   },
 

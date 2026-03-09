@@ -3,7 +3,7 @@
  * @description Interface de autenticação para acesso à plataforma.
  * Valida email e senha, com opção de visibilidade de senha e
  * tratamento de erros de autenticação.
- * 
+ *
  * @module paginas/Auth/LoginPage
  */
 
@@ -109,10 +109,10 @@ const validarFormularioLogin = (email, senha) => {
   const erros = {};
   const erroEmail = validarEmail(email);
   const erroSenha = validarSenha(senha);
-  
+
   if (erroEmail) erros.email = erroEmail;
   if (erroSenha) erros.senha = erroSenha;
-  
+
   return erros;
 };
 
@@ -122,14 +122,14 @@ const validarFormularioLogin = (email, senha) => {
 
 /**
  * Página de Login
- * 
+ *
  * Interface de autenticação que permite ao usuário fazer login com
  * email e senha. Inclui validação em tempo real, visibilidade de senha
  * e tratamento de erros de autenticação.
- * 
+ *
  * @component
  * @returns {JSX.Element}
- * 
+ *
  * @example
  * <LoginPage />
  */
@@ -140,7 +140,8 @@ function LoginPage() {
   const { logo, nomeParceiro, carregarBreanding } = useBreanding();
 
   // Obter parceiroId da URL ou usar padrão
-  const parceiroIdFromUrl = searchParams.get('parceiroId') || '550e8400-e29b-41d4-a716-446655440001'; // Oni Telecom como padrão
+  const parceiroIdFromUrl =
+    searchParams.get('parceiroId') || '550e8400-e29b-41d4-a716-446655440001'; // Oni Telecom como padrão
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -201,18 +202,12 @@ function LoginPage() {
               <h1 className="login-form-title">
                 <span className="text-primary">LOGIN</span>
               </h1>
-              <p className="login-form-subtitle">
-                Preencha os dados a seguir para acessar
-              </p>
+              <p className="login-form-subtitle">Preencha os dados a seguir para acessar</p>
             </div>
 
             {/* Erro Geral */}
             {erroGeral && (
-              <Alert
-                tipo="danger"
-                mensagem={erroGeral}
-                onClose={() => setErroGeral(null)}
-              />
+              <Alert tipo="danger" mensagem={erroGeral} onClose={() => setErroGeral(null)} />
             )}
 
             {/* Formulário */}
@@ -220,7 +215,7 @@ function LoginPage() {
               {/* Email */}
               <div className="login-form-group">
                 <label htmlFor="email" className="login-form-label">
-                Usuário / email
+                  Usuário / email
                 </label>
                 <div className="login-input-wrapper">
                   <MdEmail className="login-input-icon" />
@@ -249,7 +244,7 @@ function LoginPage() {
               {/* Senha */}
               <div className="login-form-group">
                 <label htmlFor="senha" className="login-form-label">
-                Senha
+                  Senha
                 </label>
                 <div className="login-input-wrapper">
                   <MdLock className="login-input-icon" />
@@ -303,15 +298,15 @@ function LoginPage() {
             {/* Logo */}
             {logo && (
               <div className="login-logo-container">
-                <img 
-                  src={logo} 
+                <img
+                  src={logo}
                   alt={`Logo ${nomeParceiro}`}
                   className="login-logo"
                   loading="lazy"
                 />
               </div>
             )}
-            
+
             <h2 className="login-right-title">
               Faça o login em nossa
               <br />

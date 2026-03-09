@@ -1,13 +1,34 @@
+/* ================== VARIÁVEIS CSS CUSTOM - Servicos ================== */
+
+:root {
+  /* ELEMENTOS */
+  --servicos-titleColor: var(--color-primary-main);
+  --servicos-iconBackground: var(--color-primary-main);
+  --servicos-iconColor: var(--color-neutral-white);
+  --servicos-cardBorder: var(--color-primary-main);
+  --servicos-buttonBackground: var(--color-primary-main);
+  --servicos-buttonHoverBackground: var(--color-primary-dark);
+  --servicos-buttonColor: var(--color-neutral-white);
+
+  /* TEXTOS */
+  --servicos-sectionTitleColor: var(--color-primary-main);
+  --servicos-textDescription: inherit;
+  --servicos-sectionBackground: var(--color-neutral-background);
+}
+
+/* ================================================================ */
+
 .secao {
   padding: 6rem 0;
 }
 
 .texto-oni-azul {
-  color: var(--color-secondary-blue);
+  color: var(--servicos-sectionTitleColor);
+  font-weight: 700;
 }
 
 .fundo-claro {
-  background-color: var(--color-neutral-background) !important;
+  background-color: var(--servicos-sectionBackground) !important;
 }
 
 .grade-servicos {
@@ -36,7 +57,7 @@
   left: 0;
   width: 5px;
   height: 100%;
-  background: var(--gradient-purple-primary);
+  background: var(--servicos-cardBorder);
 }
 
 .corpo-cartao {
@@ -50,7 +71,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--gradient-purple-primary);
+  background: var(--servicos-iconBackground);
   border-radius: 50%;
   margin: 0 auto 1.5rem;
   transition: var(--transition-normal);
@@ -58,7 +79,7 @@
 
 .icone-cartao {
   font-size: 2.5rem;
-  color: white;
+  color: var(--servicos-iconColor);
 }
 
 .cartao:hover .icone-wrapper {
@@ -68,7 +89,7 @@
 .titulo-cartao {
   font-weight: 700;
   margin-bottom: 1.2rem;
-  color: var(--color-secondary-blue);
+  color: var(--servicos-titleColor);
   font-size: 1.6rem;
 }
 
@@ -86,15 +107,15 @@
 
 .cartao ul li:before {
   content: '✓';
-  color: var(--color-primary-main);
+  color: var(--servicos-titleColor);
   font-weight: bold;
   position: absolute;
   left: 0;
 }
 
 .botao-oni {
-  background: var(--gradient-purple-primary);
-  color: white;
+  background: var(--servicos-buttonBackground);
+  color: var(--servicos-buttonColor);
   padding: 12px 28px;
   font-weight: 600;
   transition: all var(--transition-normal);
@@ -103,8 +124,8 @@
 }
 
 .botao-oni:hover {
-  background: var(--gradient-purple-light);
-  color: white;
+  background: var(--servicos-buttonHoverBackground);
+  color: var(--servicos-buttonColor);
   transform: translateY(-3px) scale(1.05);
 }
 

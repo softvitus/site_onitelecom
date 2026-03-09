@@ -2,7 +2,7 @@
  * @file Componente Layout Principal
  * @description Estrutura de layout com Header, Sidebar colapsível,
  * conteúdo principal e Footer
- * 
+ *
  * @module componentes/Layout/Layout
  */
 
@@ -17,14 +17,14 @@ import '../../estilos/componentes/layout/Layout.css';
 
 /**
  * Componente Layout
- * 
+ *
  * Estrutura principal da aplicação com header superior, sidebar lateral
  * colapsível e área de conteúdo central com footer.
- * 
+ *
  * @component
  * @param {ReactNode} children - Conteúdo principal da página
  * @returns {JSX.Element}
- * 
+ *
  * @example
  * <Layout>
  *   <ParceirosPage />
@@ -40,14 +40,12 @@ const Layout = ({ children }) => {
   return (
     <div className="layout">
       <Header onToggleSidebar={toggleSidebar} sidebarAberto={sidebarAberto} />
-      
+
       <div className="layout-container">
         <Sidebar aberto={sidebarAberto} />
-        
+
         <div className="layout-main">
-          <div className="layout-content">
-            {children}
-          </div>
+          <div className="layout-content">{children}</div>
         </div>
       </div>
     </div>

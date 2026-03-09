@@ -29,7 +29,7 @@ export const options = {
     // Taxa de erro < 1%
     http_req_failed: ['rate<0.01'],
     // Taxa de sucesso > 99%
-    'http_req_success_rate': ['rate>0.99'],
+    http_req_success_rate: ['rate>0.99'],
   },
 };
 
@@ -137,7 +137,7 @@ export default function (data) {
     res = http.post(
       `${API_URL}/auth/verify`,
       JSON.stringify({ token: token || 'test' }),
-      { headers }
+      { headers },
     );
     successRate.add(res.status === 200 || res.status === 401);
     check(res, {

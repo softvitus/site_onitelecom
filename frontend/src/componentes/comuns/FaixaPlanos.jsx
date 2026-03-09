@@ -130,4 +130,3 @@ const FaixaPlanos = () => {
 };
 
 export default FaixaPlanos;
-

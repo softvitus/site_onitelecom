@@ -5,25 +5,36 @@
   font-family: 'Roboto', sans-serif;
 }
 
+:root {
+  --ofertasChips-sloganColor: var(--color-secondary-blue);
+  --ofertasChips-cardBorder: var(--color-primary-main);
+  --ofertasChips-cardTopBg: var(--color-primary-main);
+  --ofertasChips-cardTitle: var(--color-primary-main);
+  --ofertasChips-cardText: var(--color-neutral-text);
+  --ofertasChips-precoColor: var(--color-secondary-blue);
+  --ofertasChips-btnBg: var(--color-primary-main);
+}
+
 .title {
   text-align: center;
   color: var(--color-primary-main);
   margin-bottom: 20px;
   font-size: 2.8em;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 700;
 }
 
 .slogan {
   text-align: center;
-  color: var(--color-secondary-blue);
+  color: var(--ofertasChips-sloganColor);
   font-size: 1.5em;
   margin-bottom: 40px;
   font-style: italic;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .cardschip {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: var(--color-neutral-white);
   border-radius: var(--radius-xl);
   box-shadow: var(--box-shadow-lg);
   padding: 30px;
@@ -35,7 +46,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  border: 2px solid var(--color-primary-main);
+  border: 2px solid var(--ofertasChips-cardBorder);
 }
 
 .cardschip::before {
@@ -45,7 +56,7 @@
   left: -10px;
   right: -10px;
   height: 10px;
-  background: var(--gradient-purple-primary);
+  background: var(--ofertasChips-cardTopBg);
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
@@ -55,10 +66,11 @@
 }
 
 .cardschip h3 {
-  color: var(--color-secondary-blue);
+  color: var(--ofertasChips-cardTitle);
   margin-top: 0;
   font-size: 1.8em;
   margin-bottom: 20px;
+  font-weight: 700;
 }
 
 .cardschip-content p {
@@ -67,24 +79,27 @@
   align-items: center;
   justify-content: center;
   font-size: 1.1em;
-  color: var(--color-neutral-text);
+  color: var(--ofertasChips-cardText);
 }
 
 .cardschip-content svg {
   margin-right: 10px;
+  width: 20px;
+  height: 20px;
   color: var(--color-primary-main);
+  filter: drop-shadow(0 0 1px var(--color-primary-transparent));
 }
 
 .preco {
   font-size: 1.6em;
   font-weight: bold;
-  color: var(--color-secondary-blue);
+  color: var(--ofertasChips-precoColor);
   margin-top: 20px;
 }
 
 .contratar-btn {
-  background: var(--gradient-purple-primary);
-  color: white;
+  background: var(--ofertasChips-btnBg);
+  color: var(--color-neutral-white);
   border: none;
   padding: 12px 25px;
   border-radius: var(--radius-xl);
@@ -105,12 +120,13 @@
   position: absolute;
   top: 20px;
   right: -35px;
-  background: var(--color-status-warning);
-  color: white;
+  background: var(--color-primary-main);
+  color: var(--color-neutral-white);
   padding: 3px 45px;
   transform: rotate(45deg);
   font-size: 0.9em;
   font-weight: bold;
+  box-shadow: var(--box-shadow-md);
 }
 
 .image-container {
@@ -127,7 +143,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow-sm);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -135,7 +151,7 @@
 
 .streamer-offer:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--box-shadow-md);
 }
 
 .streamer-offer img {
@@ -155,8 +171,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
+  background-color: var(--color-neutral-dark);
+  color: var(--color-neutral-white);
   font-size: 8px;
   padding: 2px;
   text-align: center;

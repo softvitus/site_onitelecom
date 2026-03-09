@@ -1,10 +1,30 @@
+/* ================== VARIÁVEIS CSS CUSTOM - AppExclusivo ================== */
+
+:root {
+  /* ELEMENTOS */
+  --appExclusivo-containerBackground: transparent;
+  --appExclusivo-mainContentBackground: transparent;
+  --appExclusivo-leftColumnBackground: transparent;
+  --appExclusivo-rightColumnBackground: transparent;
+  --appExclusivo-imageWrapper: transparent;
+  --appExclusivo-carouselBackground: var(--color-neutral-white);
+  --appExclusivo-logoImage: transparent;
+
+  /* TEXTOS */
+  --appExclusivo-textPrimary: var(--color-neutral-black);
+  --appExclusivo-textHighlight: var(--color-secondary-blue);
+}
+
+/* ========================================================================= */
+
 .oni-theme-variables {
-  --primary-color: var(--color-secondary-blue);
-  --text-color: var(--color-neutral-black);
+  --primary-color: var(--appExclusivo-textHighlight);
+  --text-color: var(--appExclusivo-textPrimary);
   --header-font-size: 22px;
   --title-font-size: 42px;
   --highlight-font-size: 36px;
   padding: 40px 30px;
+  background-color: var(--appExclusivo-containerBackground);
 }
 
 body {
@@ -18,6 +38,7 @@ body {
   gap: 60px;
   max-width: 1200px;
   margin: 0 auto;
+  background-color: var(--appExclusivo-mainContentBackground);
 }
 
 /* ===== COLUNA ESQUERDA ===== */
@@ -27,11 +48,13 @@ body {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  background-color: var(--appExclusivo-leftColumnBackground);
 }
 
 .image-wrapper {
   width: 100%;
   max-width: 550px;
+  background-color: var(--appExclusivo-imageWrapper);
 }
 
 .image-wrapper img {
@@ -77,6 +100,7 @@ body {
   gap: 20px;
   max-width: 550px;
   padding-top: 80px;
+  background-color: var(--appExclusivo-rightColumnBackground);
 }
 
 .header-section {
@@ -95,6 +119,7 @@ body {
   margin-right: 10px;
   margin-top: -5px;
   transition: var(--transition-normal);
+  background-color: var(--appExclusivo-logoImage);
 }
 
 .logo-img:hover {
@@ -159,6 +184,7 @@ body {
   overflow: hidden;
   margin-top: 20px;
   position: relative;
+  background-color: var(--appExclusivo-carouselBackground);
 }
 
 .carousel-wrapper::before,
@@ -174,12 +200,12 @@ body {
 
 .carousel-wrapper::before {
   left: 0;
-  background: linear-gradient(to right, white, transparent);
+  background: linear-gradient(to right, var(--color-neutral-white), transparent);
 }
 
 .carousel-wrapper::after {
   right: 0;
-  background: linear-gradient(to left, white, transparent);
+  background: linear-gradient(to left, var(--color-neutral-white), transparent);
 }
 
 .carousel-track {

@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Features
  * @description Interface completa de CRUD para features
- * 
+ *
  * @module paginas/Features/FeaturesPage
  */
 
@@ -40,14 +40,16 @@ const COLUNAS_GRID = [
     titulo: 'Status',
     largura: '25%',
     render: (valor) => (
-      <span style={{
-        padding: '0.25rem 0.75rem',
-        borderRadius: '4px',
-        fontSize: '0.85rem',
-        fontWeight: '600',
-        backgroundColor: valor ? '#dcfce7' : '#fee2e2',
-        color: valor ? '#166534' : '#991b1b',
-      }}>
+      <span
+        style={{
+          padding: '0.25rem 0.75rem',
+          borderRadius: '4px',
+          fontSize: '0.85rem',
+          fontWeight: '600',
+          backgroundColor: valor ? '#dcfce7' : '#fee2e2',
+          color: valor ? '#166534' : '#991b1b',
+        }}
+      >
         {valor ? 'Habilitado' : 'Desabilitado'}
       </span>
     ),
@@ -91,16 +93,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Features
- * 
+ *
  * Funcionalidades completas de CRUD.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const FeaturesPage = () => {
   // Autenticação e Permissões
   const { temPermissao } = useAuth();
-  
+
   // Estado
   const [features, setFeatures] = useState([]);
   const [temas, setTemas] = useState([]);
@@ -276,7 +278,7 @@ const FeaturesPage = () => {
   const executarDelecao = async () => {
     if (!confirmarDialog.feature) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const feature = confirmarDialog.feature;
 
@@ -290,12 +292,12 @@ const FeaturesPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar feature'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar feature'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -382,11 +384,7 @@ const FeaturesPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarFeature}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarFeature} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -396,7 +394,9 @@ const FeaturesPage = () => {
           {/* Tema - obrigatório */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Tema <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Tema <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.temaId}
@@ -410,16 +410,16 @@ const FeaturesPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.temaId && (
-                <span className="modal-form-error">{errosForm.temaId}</span>
-              )}
+              {errosForm.temaId && <span className="modal-form-error">{errosForm.temaId}</span>}
             </div>
           </div>
 
           {/* Nome - obrigatório */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -427,9 +427,7 @@ const FeaturesPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Ex: Chat Online, Agendamento, Consulta"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
           </div>
 

@@ -6,7 +6,8 @@
 import rateLimit from 'express-rate-limit';
 
 // Em desenvolvimento/teste, usar limites mais altos
-const isDev = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+const isDev =
+  process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 
 /**
  * Limitador geral - 500 requisições por 15 minutos (produção)

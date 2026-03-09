@@ -2,7 +2,7 @@
  * @file Serviço de Tema - Dinâmico por Parceiro
  * @description Gerencia título da página, favicon e cores do tema
  *              do parceiro logado. Busca dados da API pública.
- * 
+ *
  * @module servicos/tema
  */
 
@@ -67,7 +67,7 @@ const converterBase64ToDataUrl = (base64) => {
 /**
  * Busca e aplica tema dinâmico ANTES do React montar
  * Obtém título, favicon e cores do parceiro via API
- * 
+ *
  * @async
  * @returns {Promise<{success: boolean, error?: string}>}
  */
@@ -92,16 +92,14 @@ export const initTemaEarly = async () => {
     const tema = temaData.data;
 
     // 1. Aplicar título da página
-    const pageTitle = tema.textos?.find(
-      (txt) => txt.categoria === 'meta' && txt.chave === 'pageTitle'
-    )?.valor || 'Admin Panel';
+    const pageTitle =
+      tema.textos?.find((txt) => txt.categoria === 'meta' && txt.chave === 'pageTitle')?.valor ||
+      'Admin Panel';
 
     document.title = pageTitle;
 
     // 2. Aplicar favicon
-    const favicon = tema.imagens?.find(
-      (img) => img.categoria === 'meta' && img.nome === 'favicon'
-    );
+    const favicon = tema.imagens?.find((img) => img.categoria === 'meta' && img.nome === 'favicon');
 
     if (favicon) {
       const faviconDataUrl = converterBase64ToDataUrl(favicon.valor);

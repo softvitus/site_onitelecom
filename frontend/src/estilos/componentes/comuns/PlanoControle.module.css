@@ -1,8 +1,29 @@
+/* ================== VARIÁVEIS CSS CUSTOM - PlanoControle ================== */
+
+:root {
+  /* ELEMENTOS */
+  --planoControle-containerBackground: transparent;
+  --planoControle-backgroundImage: transparent;
+  --planoControle-sectionBackground: var(--color-neutral-white);
+  --planoControle-buttonBackground: var(--color-secondary-blue);
+  --planoControle-benefitColor: var(--color-accent-cyan);
+  --planoControle-priceColor: var(--color-neutral-white);
+  --planoControle-infoSectionBackground: var(--color-neutral-white);
+
+  /* TEXTOS */
+  --planoControle-textPrimary: var(--color-neutral-white);
+  --planoControle-textSecondary: var(--color-secondary-blue);
+  --planoControle-textDescription: var(--color-neutral-700);
+}
+
+/* ========================================================================= */
+
 .container7 {
   position: relative;
-  color: white;
+  color: var(--planoControle-textPrimary);
   overflow: hidden;
   min-height: auto;
+  background-color: var(--planoControle-containerBackground);
 }
 
 .main-image7 {
@@ -13,6 +34,7 @@
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  background-color: var(--planoControle-backgroundImage);
 }
 
 .right-section7 {
@@ -44,7 +66,7 @@
 
 .subtext7 h3 {
   font-size: 2.3rem;
-  color: var(--color-accent-cyan);
+  color: var(--planoControle-benefitColor);
   line-height: 1;
   margin-bottom: 2px;
 }
@@ -93,22 +115,25 @@
   font-size: 2rem;
   margin-right: 5px;
   margin-top: 30px;
+  color: var(--planoControle-priceColor);
 }
 
 .price-big7 {
   font-size: 6rem;
   font-weight: bold;
   line-height: 1;
+  color: var(--planoControle-priceColor);
 }
 
 .price-small7 {
   font-size: 2.5rem;
   align-self: flex-start;
   margin-left: 5px;
+  color: var(--planoControle-priceColor);
 }
 
 .cta-button7 {
-  background-color: var(--color-secondary-blue);
+  background-color: var(--planoControle-buttonBackground);
   color: white;
   padding: 10px 30px;
   border: none;
@@ -122,7 +147,8 @@
 }
 
 .cta-button7:hover {
-  background-color: var(--color-secondary-blue-light);
+  background-color: var(--planoControle-buttonBackground);
+  filter: brightness(1.1);
 }
 
 .cta-button7 .cta-link {
@@ -135,7 +161,7 @@
 }
 
 .info-section7 {
-  background-color: white;
+  background-color: var(--planoControle-infoSectionBackground);
   padding: 0;
   margin-top: -150px;
   position: relative;
@@ -157,7 +183,7 @@
 
 .info-text7 h2 {
   font-size: 3.3rem;
-  color: var(--color-secondary-blue);
+  color: var(--planoControle-textSecondary);
   font-weight: bold;
   line-height: 1;
   margin-bottom: 15px;
@@ -165,14 +191,14 @@
 
 .main-paragraph7 {
   font-size: 1.4rem;
-  color: var(--color-neutral-700);
+  color: var(--planoControle-textDescription);
   line-height: 1.2;
   margin-bottom: 15px;
 }
 
 .footnote7 {
   font-size: 0.9rem;
-  color: var(--color-neutral-700);
+  color: var(--planoControle-textDescription);
   margin-top: 10px;
 }
 

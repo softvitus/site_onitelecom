@@ -42,7 +42,9 @@ const ICONEMAP = {
 
 const renderIcone = (nomeDaFuncao, tamanho = 16) => {
   const Icone = ICONEMAP[nomeDaFuncao];
-  return Icone ? <Icone size={tamanho} style={{ marginRight: '6px', verticalAlign: 'middle' }} /> : null;
+  return Icone ? (
+    <Icone size={tamanho} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
+  ) : null;
 };
 
 // ============================================================================
@@ -110,7 +112,7 @@ function AuditoriaPage() {
   const [totalPaginas, setTotalPaginas] = useState(1);
   const [totalLogs, setTotalLogs] = useState(0);
   const [alerta, setAlerta] = useState(null);
-  
+
   // Filtros
   const [_filtro, _setFiltro] = useState('');
   const [filtros, setFiltros] = useState({
@@ -142,7 +144,7 @@ function AuditoriaPage() {
       }));
 
       setLogs(logsFormatados);
-      
+
       if (resposta.pagination) {
         setTotalPaginas(resposta.pagination.pages || 1);
         setTotalLogs(resposta.pagination.total || 0);
@@ -181,7 +183,9 @@ function AuditoriaPage() {
         <div className="auditoria-header">
           <div className="auditoria-header-content">
             <div>
-              <h1><FaHistory /> Auditoria</h1>
+              <h1>
+                <FaHistory /> Auditoria
+              </h1>
               <p>Rastreamento de ações do sistema</p>
             </div>
           </div>
@@ -200,9 +204,9 @@ function AuditoriaPage() {
   }
 
   const handleFiltroMudar = (campo, valor) => {
-    setFiltros(prev => ({
+    setFiltros((prev) => ({
       ...prev,
-      [campo]: valor
+      [campo]: valor,
     }));
     setPagina(1);
   };
@@ -223,7 +227,9 @@ function AuditoriaPage() {
       <div className="auditoria-header">
         <div className="auditoria-header-content">
           <div>
-            <h1><FaHistory /> Auditoria</h1>
+            <h1>
+              <FaHistory /> Auditoria
+            </h1>
             <p>Rastreamento de ações do sistema</p>
           </div>
         </div>
@@ -256,7 +262,7 @@ function AuditoriaPage() {
         <div className="auditoria-filtros-grid">
           <div className="auditoria-filtro-grupo">
             <label>Ação</label>
-            <select 
+            <select
               value={filtros.acao}
               onChange={(e) => handleFiltroMudar('acao', e.target.value)}
               className="auditoria-filtro-select"
@@ -272,7 +278,7 @@ function AuditoriaPage() {
 
           <div className="auditoria-filtro-grupo">
             <label>Entidade</label>
-            <select 
+            <select
               value={filtros.entidade}
               onChange={(e) => handleFiltroMudar('entidade', e.target.value)}
               className="auditoria-filtro-select"
@@ -289,7 +295,7 @@ function AuditoriaPage() {
 
           <div className="auditoria-filtro-grupo">
             <label>Data Início</label>
-            <input 
+            <input
               type="date"
               value={filtros.dataInicio}
               onChange={(e) => handleFiltroMudar('dataInicio', e.target.value)}
@@ -299,7 +305,7 @@ function AuditoriaPage() {
 
           <div className="auditoria-filtro-grupo">
             <label>Data Fim</label>
-            <input 
+            <input
               type="date"
               value={filtros.dataFim}
               onChange={(e) => handleFiltroMudar('dataFim', e.target.value)}
@@ -309,11 +315,7 @@ function AuditoriaPage() {
         </div>
 
         <div className="auditoria-filtros-acoes">
-          <button 
-            className="auditoria-btn-limpar"
-            onClick={handleLimparFiltros}
-            disabled={loading}
-          >
+          <button className="auditoria-btn-limpar" onClick={handleLimparFiltros} disabled={loading}>
             Limpar Filtros
           </button>
         </div>

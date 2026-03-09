@@ -94,7 +94,7 @@ export class AuthController {
         status: 'erro',
         mensagemErro: error.message || 'Erro ao fazer login',
       });
-      
+
       next(error);
     }
   }
@@ -145,11 +145,7 @@ export class AuthController {
       const usuarioId = req.user?.id;
 
       if (!usuarioId) {
-        throw new ApiError(
-          'UNAUTHORIZED',
-          'Usuário não autenticado',
-          401,
-        );
+        throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
       }
 
       const usuario = await this.usuarioService.findById(usuarioId);
@@ -173,11 +169,7 @@ export class AuthController {
       const usuarioId = req.user?.id;
 
       if (!usuarioId) {
-        throw new ApiError(
-          'UNAUTHORIZED',
-          'Usuário não autenticado',
-          401,
-        );
+        throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
       }
 
       const usuario = await this.usuarioService.findById(usuarioId);
@@ -219,11 +211,7 @@ export class AuthController {
       const { token } = req.body;
 
       if (!token) {
-        throw new ApiError(
-          'VALIDATION_ERROR',
-          'Token é obrigatório',
-          400,
-        );
+        throw new ApiError('VALIDATION_ERROR', 'Token é obrigatório', 400);
       }
 
       const decoded = jwt.verify(
@@ -238,22 +226,10 @@ export class AuthController {
       });
     } catch (error) {
       if (error.name === 'JsonWebTokenError') {
-        return next(
-          new ApiError(
-            'INVALID_TOKEN',
-            'Token inválido',
-            401,
-          ),
-        );
+        return next(new ApiError('INVALID_TOKEN', 'Token inválido', 401));
       }
       if (error.name === 'TokenExpiredError') {
-        return next(
-          new ApiError(
-            'TOKEN_EXPIRED',
-            'Token expirado',
-            401,
-          ),
-        );
+        return next(new ApiError('TOKEN_EXPIRED', 'Token expirado', 401));
       }
       next(error);
     }
@@ -270,11 +246,7 @@ export class AuthController {
       const { senhaAtual, senhaNova, senhaConfirm } = req.body;
 
       if (!usuarioId) {
-        throw new ApiError(
-          'UNAUTHORIZED',
-          'Usuário não autenticado',
-          401,
-        );
+        throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
       }
 
       // Validar campos
@@ -362,11 +334,7 @@ export class AuthController {
       const usuarioId = req.user?.id;
 
       if (!usuarioId) {
-        throw new ApiError(
-          'UNAUTHORIZED',
-          'Usuário não autenticado',
-          401,
-        );
+        throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
       }
 
       const perms = await this.usuarioService.getPermissoes(usuarioId);

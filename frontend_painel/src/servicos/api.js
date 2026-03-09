@@ -2,7 +2,7 @@
  * @file Configuração do Cliente HTTP Axios
  * @description Instância configurada de Axios com interceptors para
  * autenticação JWT, renovação automática de token e tratamento de erros
- * 
+ *
  * @module servicos/api
  */
 
@@ -131,10 +131,7 @@ api.interceptors.response.use(
 
     if (import.meta.env[API_CHAVES.DEBUG] === 'true') {
       console.error(
-        MENSAGENS_LOG.ERROR(
-          error.response?.status,
-          error.response?.data?.error || error.message
-        )
+        MENSAGENS_LOG.ERROR(error.response?.status, error.response?.data?.error || error.message)
       );
     }
 

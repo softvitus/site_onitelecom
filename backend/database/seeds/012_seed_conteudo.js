@@ -21,7 +21,13 @@ export default {
           popular: false,
           benefits: [
             { imgKey: 'onigo', alt: 'Onigo', width: 240 },
-            { type: 'sideBySide', images: [{ imgKey: 'sky+', alt: 'Sky+' }, { imgKey: 'max', alt: 'Max' }] },
+            {
+              type: 'sideBySide',
+              images: [
+                { imgKey: 'sky+', alt: 'Sky+' },
+                { imgKey: 'max', alt: 'Max' },
+              ],
+            },
             { imgKey: 'playkids', alt: 'Playkids', width: 240 },
             { imgKey: 'deezer', alt: 'Deezer', width: 240 },
           ],
@@ -85,8 +91,20 @@ export default {
           featured: false,
           popular: false,
           benefits: [
-            { imgKey: 'onigo', alt: 'Onigo', width: 240, marginTop: 40, marginBottom: 40 },
-            { imgKey: 'playkids', alt: 'Playkids', width: 240, marginTop: 40, marginBottom: 40 },
+            {
+              imgKey: 'onigo',
+              alt: 'Onigo',
+              width: 240,
+              marginTop: 40,
+              marginBottom: 40,
+            },
+            {
+              imgKey: 'playkids',
+              alt: 'Playkids',
+              width: 240,
+              marginTop: 40,
+              marginBottom: 40,
+            },
           ],
           appChoices: [
             { imgKey: 'onigo', alt: 'Onigo' },
@@ -116,8 +134,20 @@ export default {
           featured: false,
           popular: false,
           benefits: [
-            { imgKey: 'onigo', alt: 'Onigo', width: 240, marginTop: 40, marginBottom: 40 },
-            { imgKey: 'deezer', alt: 'Deezer', width: 240, marginTop: 40, marginBottom: 40 },
+            {
+              imgKey: 'onigo',
+              alt: 'Onigo',
+              width: 240,
+              marginTop: 40,
+              marginBottom: 40,
+            },
+            {
+              imgKey: 'deezer',
+              alt: 'Deezer',
+              width: 240,
+              marginTop: 40,
+              marginBottom: 40,
+            },
           ],
           appChoices: [
             { imgKey: 'onigo', alt: 'Onigo' },
@@ -143,7 +173,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'internet-1',
           question: 'O que é a fibra óptica da Oni?',
-          answer: 'A fibra óptica da Oni é uma tecnologia de transmissão de dados que utiliza filamentos de vidro ou polímeros para transmitir informações através de pulsos de luz. Oferecemos conexões de até 1 Gbps com alta estabilidade e baixa latência, ideal para streaming, jogos online e trabalho remoto.',
+          answer:
+            'A fibra óptica da Oni é uma tecnologia de transmissão de dados que utiliza filamentos de vidro ou polímeros para transmitir informações através de pulsos de luz. Oferecemos conexões de até 1 Gbps com alta estabilidade e baixa latência, ideal para streaming, jogos online e trabalho remoto.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -160,7 +191,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'internet-2',
           question: 'Quais são os planos de internet disponíveis?',
-          answer: 'A Oni oferece diversos planos de internet fibra óptica, começando com 300 Mbps por R$99,90/mês, 500 Mbps por R$129,90/mês e 1 Gbps por R$199,90/mês. Todos os planos incluem instalação gratuita, roteador Wi-Fi de última geração e suporte técnico 24/7.',
+          answer:
+            'A Oni oferece diversos planos de internet fibra óptica, começando com 300 Mbps por R$99,90/mês, 500 Mbps por R$129,90/mês e 1 Gbps por R$199,90/mês. Todos os planos incluem instalação gratuita, roteador Wi-Fi de última geração e suporte técnico 24/7.',
         }),
         cnt_ordem: 2,
         cnt_habilitado: true,
@@ -177,7 +209,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'internet-3',
           question: 'Como verificar a velocidade da minha internet?',
-          answer: 'Você pode verificar a velocidade da sua internet através do nosso aplicativo Oni ou acessando o site speedtest.net. Para resultados mais precisos, recomendamos fazer o teste com o computador conectado diretamente ao roteador via cabo de rede.',
+          answer:
+            'Você pode verificar a velocidade da sua internet através do nosso aplicativo Oni ou acessando o site speedtest.net. Para resultados mais precisos, recomendamos fazer o teste com o computador conectado diretamente ao roteador via cabo de rede.',
         }),
         cnt_ordem: 3,
         cnt_habilitado: true,
@@ -194,7 +227,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'internet-4',
           question: 'A Oni cobre meu endereço?',
-          answer: 'A Oni está em constante expansão. Para verificar se seu endereço é atendido pela nossa rede de fibra óptica, acesse nosso site e informe seu CEP na página inicial ou entre em contato com nossa central de atendimento pelo 0800 888 9999.',
+          answer:
+            'A Oni está em constante expansão. Para verificar se seu endereço é atendido pela nossa rede de fibra óptica, acesse nosso site e informe seu CEP na página inicial ou entre em contato com nossa central de atendimento pelo 0800 888 9999.',
         }),
         cnt_ordem: 4,
         cnt_habilitado: true,
@@ -213,7 +247,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'oniplay-1',
           question: 'O que é o OniPlay?',
-          answer: 'O OniPlay é nossa plataforma de streaming exclusiva que oferece acesso a filmes, séries, canais ao vivo e conteúdo sob demanda. Disponível para assinantes dos planos de internet da Oni, pode ser acessado em Smart TVs, smartphones, tablets e computadores.',
+          answer:
+            'O OniPlay é nossa plataforma de streaming exclusiva que oferece acesso a filmes, séries, canais ao vivo e conteúdo sob demanda. Disponível para assinantes dos planos de internet da Oni, pode ser acessado em Smart TVs, smartphones, tablets e computadores.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -230,7 +265,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'oniplay-2',
           question: 'Como acessar o OniPlay?',
-          answer: 'Para acessar o OniPlay, baixe o aplicativo na loja de aplicativos do seu dispositivo ou acesse play.oni.com.br. Faça login com os mesmos dados da sua conta Oni e comece a assistir imediatamente.',
+          answer:
+            'Para acessar o OniPlay, baixe o aplicativo na loja de aplicativos do seu dispositivo ou acesse play.oni.com.br. Faça login com os mesmos dados da sua conta Oni e comece a assistir imediatamente.',
         }),
         cnt_ordem: 2,
         cnt_habilitado: true,
@@ -249,7 +285,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'oni5g-1',
           question: 'Quais são os planos móveis da Oni?',
-          answer: 'A Oni oferece planos móveis 4G e 5G com diferentes franquias de dados, começando com 5GB por R$39,90/mês até planos ilimitados por R$99,90/mês. Todos incluem ligações ilimitadas para qualquer operadora e WhatsApp sem consumir dados.',
+          answer:
+            'A Oni oferece planos móveis 4G e 5G com diferentes franquias de dados, começando com 5GB por R$39,90/mês até planos ilimitados por R$99,90/mês. Todos incluem ligações ilimitadas para qualquer operadora e WhatsApp sem consumir dados.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -268,7 +305,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'dados-1',
           question: 'Como alterar meus dados cadastrais?',
-          answer: 'Para alterar seus dados cadastrais, acesse sua conta no site da Oni ou no aplicativo, vá até a seção "Meu Perfil" e selecione "Editar Informações". Após fazer as alterações necessárias, clique em "Salvar".',
+          answer:
+            'Para alterar seus dados cadastrais, acesse sua conta no site da Oni ou no aplicativo, vá até a seção "Meu Perfil" e selecione "Editar Informações". Após fazer as alterações necessárias, clique em "Salvar".',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -287,7 +325,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'planos-1',
           question: 'Como mudar meu plano atual?',
-          answer: 'Para alterar seu plano, acesse sua conta no site da Oni ou no aplicativo, vá até "Meus Serviços" e selecione "Alterar Plano". Você verá as opções disponíveis para upgrade ou downgrade. As alterações são processadas em até 24 horas.',
+          answer:
+            'Para alterar seu plano, acesse sua conta no site da Oni ou no aplicativo, vá até "Meus Serviços" e selecione "Alterar Plano". Você verá as opções disponíveis para upgrade ou downgrade. As alterações são processadas em até 24 horas.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -306,7 +345,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'indicacao-1',
           question: 'Como funciona o programa Indique um Amigo?',
-          answer: 'No programa Indique um Amigo da Oni, você recebe R$50 de desconto na sua mensalidade para cada amigo que assinar um de nossos planos usando seu código de indicação. Seu amigo também ganha R$50 de desconto na primeira mensalidade.',
+          answer:
+            'No programa Indique um Amigo da Oni, você recebe R$50 de desconto na sua mensalidade para cada amigo que assinar um de nossos planos usando seu código de indicação. Seu amigo também ganha R$50 de desconto na primeira mensalidade.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -325,7 +365,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'seguranca-1',
           question: 'Como a Oni protege meus dados?',
-          answer: 'A Oni utiliza tecnologias avançadas de criptografia e segurança para proteger seus dados pessoais, seguindo rigorosamente a Lei Geral de Proteção de Dados (LGPD). Realizamos auditorias de segurança regularmente e nunca compartilhamos suas informações com terceiros sem seu consentimento.',
+          answer:
+            'A Oni utiliza tecnologias avançadas de criptografia e segurança para proteger seus dados pessoais, seguindo rigorosamente a Lei Geral de Proteção de Dados (LGPD). Realizamos auditorias de segurança regularmente e nunca compartilhamos suas informações com terceiros sem seu consentimento.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -344,7 +385,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'aplicativos-1',
           question: 'Quais aplicativos estão disponíveis?',
-          answer: 'Oferecemos diversos aplicativos parceiros como Estuda+, Hub, Kaspersky e Leitura 360. Você pode escolher até 2 aplicativos inclusos no seu plano sem custo adicional.',
+          answer:
+            'Oferecemos diversos aplicativos parceiros como Estuda+, Hub, Kaspersky e Leitura 360. Você pode escolher até 2 aplicativos inclusos no seu plano sem custo adicional.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -363,7 +405,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'suporte-1',
           question: 'Como entrar em contato com o suporte?',
-          answer: 'Nosso suporte está disponível 24/7 através do telefone 0800 700 7072, WhatsApp (83) 97601-0064, chat no site ou app Oni. Também oferecemos suporte via e-mail em suporte@onitelecom.com.br.',
+          answer:
+            'Nosso suporte está disponível 24/7 através do telefone 0800 700 7072, WhatsApp (83) 97601-0064, chat no site ou app Oni. Também oferecemos suporte via e-mail em suporte@onitelecom.com.br.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -426,7 +469,8 @@ export default {
         cnt_dados: JSON.stringify({
           id: 'faq',
           title: 'Perguntas Frequentes',
-          description: 'Encontre respostas rápidas para suas dúvidas mais comuns',
+          description:
+            'Encontre respostas rápidas para suas dúvidas mais comuns',
           buttonText: 'Explorar FAQs',
           link: '/perguntasfrequentes',
         }),
@@ -578,7 +622,10 @@ export default {
             { icon: 'faWifi', text: '15GB de Internet' },
             { icon: 'faPhone', text: '150 minutos' },
             { icon: 'faCommentAlt', text: 'SMS Ilimitados' },
-            { icon: 'faGraduationCap', text: 'Acesso a plataformas educacionais' },
+            {
+              icon: 'faGraduationCap',
+              text: 'Acesso a plataformas educacionais',
+            },
           ],
           preco: 'R$ 59,99/mês',
           imagensCount: 2,
@@ -670,7 +717,8 @@ export default {
         cnt_dados: JSON.stringify({
           icon: 'faUserTie',
           titulo: 'Atendimento Personalizado',
-          descricao: 'Conte com um gerente de conta dedicado para atender às necessidades específicas da sua empresa.',
+          descricao:
+            'Conte com um gerente de conta dedicado para atender às necessidades específicas da sua empresa.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -687,7 +735,8 @@ export default {
         cnt_dados: JSON.stringify({
           icon: 'faCogs',
           titulo: 'Soluções Integradas',
-          descricao: 'Simplifique sua gestão de telecom com nossas soluções completas e integradas.',
+          descricao:
+            'Simplifique sua gestão de telecom com nossas soluções completas e integradas.',
         }),
         cnt_ordem: 2,
         cnt_habilitado: true,
@@ -704,7 +753,8 @@ export default {
         cnt_dados: JSON.stringify({
           icon: 'faHeadset',
           titulo: 'Suporte 24/7',
-          descricao: 'Suporte técnico especializado disponível 24 horas por dia, 7 dias por semana.',
+          descricao:
+            'Suporte técnico especializado disponível 24 horas por dia, 7 dias por semana.',
         }),
         cnt_ordem: 3,
         cnt_habilitado: true,
@@ -723,7 +773,8 @@ export default {
         cnt_dados: JSON.stringify({
           icon: 'faGlobe',
           titulo: 'Internet Empresarial',
-          descricao: 'Conexão rápida e estável para manter sua empresa sempre online.',
+          descricao:
+            'Conexão rápida e estável para manter sua empresa sempre online.',
           recursos: [
             'Fibra óptica de última geração',
             'Planos dedicados com garantia de banda',
@@ -745,7 +796,8 @@ export default {
         cnt_dados: JSON.stringify({
           icon: 'faPhoneAlt',
           titulo: 'Telefonia Empresarial',
-          descricao: 'Comunicação clara e eficiente para sua equipe e clientes.',
+          descricao:
+            'Comunicação clara e eficiente para sua equipe e clientes.',
           recursos: [
             'PABX na nuvem',
             'Ramais ilimitados',
@@ -894,80 +946,6 @@ export default {
         updatedAt: new Date(),
       },
 
-      // ============ ONI TELECOM - SERVIÇOS ESSENCIAIS INTERNET (4) ============
-      {
-        cnt_id: '550e8400-e29b-41d4-a716-446655550044',
-        cnt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
-        cnt_tipo: 'servicosEssenciaisInternet',
-        cnt_categoria: 'internet',
-        cnt_titulo: 'Serviço Internet - Conexão Fibra Óptica',
-        cnt_descricao: 'Informação sobre fibra óptica',
-        cnt_dados: JSON.stringify({
-          imgKey: 'img1',
-          alt: 'Fibra Óptica',
-          titulo: 'CONEXÃO 100% FIBRA ÓPTICA',
-          descricao: 'Experimente velocidades ultrarrápidas e estabilidade incomparável com nossa rede de fibra óptica de ponta a ponta.',
-        }),
-        cnt_ordem: 1,
-        cnt_habilitado: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        cnt_id: '550e8400-e29b-41d4-a716-446655550045',
-        cnt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
-        cnt_tipo: 'servicosEssenciaisInternet',
-        cnt_categoria: 'internet',
-        cnt_titulo: 'Serviço Internet - Roteador Wi-Fi',
-        cnt_descricao: 'Informação sobre roteador Wi-Fi',
-        cnt_dados: JSON.stringify({
-          imgKey: 'img2',
-          alt: 'Roteador Wi-Fi',
-          titulo: 'ROTEADOR WI-FI DUAL BAND',
-          descricao: 'Desfrute de uma cobertura Wi-Fi ampla e potente em toda sua casa com nosso roteador de última geração.',
-        }),
-        cnt_ordem: 2,
-        cnt_habilitado: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        cnt_id: '550e8400-e29b-41d4-a716-446655550046',
-        cnt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
-        cnt_tipo: 'servicosEssenciaisInternet',
-        cnt_categoria: 'internet',
-        cnt_titulo: 'Serviço Internet - Suporte Técnico',
-        cnt_descricao: 'Informação sobre suporte técnico',
-        cnt_dados: JSON.stringify({
-          imgKey: 'img3',
-          alt: 'Suporte',
-          titulo: 'SUPORTE TÉCNICO AVANÇADO',
-          descricao: 'Conte com nossa equipe de especialistas 24/7 para resolver qualquer problema e otimizar sua conexão.',
-        }),
-        cnt_ordem: 3,
-        cnt_habilitado: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        cnt_id: '550e8400-e29b-41d4-a716-446655550047',
-        cnt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
-        cnt_tipo: 'servicosEssenciaisInternet',
-        cnt_categoria: 'internet',
-        cnt_titulo: 'Serviço Internet - Equipe Especializada',
-        cnt_descricao: 'Informação sobre equipe especializada',
-        cnt_dados: JSON.stringify({
-          imgKey: 'img4',
-          alt: 'Equipe Especializada',
-          titulo: 'EQUIPE ESPECIALIZADA',
-          descricao: 'Nossos profissionais altamente treinados garantem a melhor experiência em instalação e manutenção.',
-        }),
-        cnt_ordem: 4,
-        cnt_habilitado: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-
       // ============ ONI TELECOM - CARDS ENTRETENIMENTO (5) ============
       {
         cnt_id: '550e8400-e29b-41d4-a716-446655550048',
@@ -980,7 +958,8 @@ export default {
           id: 'deezer',
           name: 'DEEZER',
           price: '22,90',
-          description: 'Streaming de áudio para mais música no seu dia-a-dia! Escute seus artistas, podcasts e playlists favoritos, descubra novos gostos, conheça os conteúdos exclusivos da Deezer e aproveite mais de 120 milhões de faixas do mundo todo.',
+          description:
+            'Streaming de áudio para mais música no seu dia-a-dia! Escute seus artistas, podcasts e playlists favoritos, descubra novos gostos, conheça os conteúdos exclusivos da Deezer e aproveite mais de 120 milhões de faixas do mundo todo.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -998,7 +977,8 @@ export default {
           id: 'duolingo',
           name: 'DUOLINGO',
           price: '29,90',
-          description: 'Aprenda idiomas de forma divertida e eficaz! O Duolingo oferece lições interativas, desafios diários e um sistema de gamificação para manter você motivado enquanto aprende uma nova língua.',
+          description:
+            'Aprenda idiomas de forma divertida e eficaz! O Duolingo oferece lições interativas, desafios diários e um sistema de gamificação para manter você motivado enquanto aprende uma nova língua.',
         }),
         cnt_ordem: 2,
         cnt_habilitado: true,
@@ -1016,7 +996,8 @@ export default {
           id: 'nordvpn',
           name: 'NORDVPN',
           price: '19,90',
-          description: 'Proteja sua privacidade online com o NordVPN. Navegue com segurança, acesse conteúdo bloqueado geograficamente e mantenha seus dados pessoais protegidos com criptografia de nível militar.',
+          description:
+            'Proteja sua privacidade online com o NordVPN. Navegue com segurança, acesse conteúdo bloqueado geograficamente e mantenha seus dados pessoais protegidos com criptografia de nível militar.',
         }),
         cnt_ordem: 3,
         cnt_habilitado: true,
@@ -1034,7 +1015,8 @@ export default {
           id: 'calm',
           name: 'CALM',
           price: '34,90',
-          description: 'Melhore seu bem-estar mental com o Calm. Acesse meditações guiadas, histórias para dormir, músicas relaxantes e exercícios de respiração para reduzir o estresse e melhorar a qualidade do seu sono.',
+          description:
+            'Melhore seu bem-estar mental com o Calm. Acesse meditações guiadas, histórias para dormir, músicas relaxantes e exercícios de respiração para reduzir o estresse e melhorar a qualidade do seu sono.',
         }),
         cnt_ordem: 4,
         cnt_habilitado: true,
@@ -1181,7 +1163,8 @@ export default {
           imgKey: 'fibraOptica',
           alt: 'Fibra Óptica',
           titulo: 'CONEXÃO 100% FIBRA ÓPTICA',
-          descricao: 'Experimente velocidades ultrarrápidas e estabilidade incomparável com nossa rede de fibra óptica de ponta a ponta.',
+          descricao:
+            'Experimente velocidades ultrarrápidas e estabilidade incomparável com nossa rede de fibra óptica de ponta a ponta.',
         }),
         cnt_ordem: 1,
         cnt_habilitado: true,
@@ -1199,7 +1182,8 @@ export default {
           imgKey: 'roteadorWifi',
           alt: 'Roteador Wi-Fi',
           titulo: 'ROTEADOR WI-FI DUAL BAND',
-          descricao: 'Desfrute de uma cobertura Wi-Fi ampla e potente em toda sua casa com nosso roteador de última geração.',
+          descricao:
+            'Desfrute de uma cobertura Wi-Fi ampla e potente em toda sua casa com nosso roteador de última geração.',
         }),
         cnt_ordem: 2,
         cnt_habilitado: true,
@@ -1217,7 +1201,8 @@ export default {
           imgKey: 'suporteTecnico',
           alt: 'Suporte',
           titulo: 'SUPORTE TÉCNICO AVANÇADO',
-          descricao: 'Conte com nossa equipe de especialistas 24/7 para resolver qualquer problema e otimizar sua conexão.',
+          descricao:
+            'Conte com nossa equipe de especialistas 24/7 para resolver qualquer problema e otimizar sua conexão.',
         }),
         cnt_ordem: 3,
         cnt_habilitado: true,
@@ -1235,7 +1220,8 @@ export default {
           imgKey: 'equipeEspecializada',
           alt: 'Equipe Especializada',
           titulo: 'EQUIPE ESPECIALIZADA',
-          descricao: 'Nossos profissionais altamente treinados garantem a melhor experiência em instalação e manutenção.',
+          descricao:
+            'Nossos profissionais altamente treinados garantem a melhor experiência em instalação e manutenção.',
         }),
         cnt_ordem: 4,
         cnt_habilitado: true,

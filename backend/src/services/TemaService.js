@@ -25,7 +25,7 @@ export class TemaService extends BaseService {
       filters.tem_par_id = filters.parceiroId;
       delete filters.parceiroId;
     }
-    
+
     return super.findAll(filters, pagination, options);
   }
 

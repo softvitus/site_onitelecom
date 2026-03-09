@@ -41,11 +41,6 @@ import useLocationGuard from '../../hooks/useLocationGuard';
 // ----------------------------------------------------------------------------
 import { getTemaImagensByCategoria } from '../../servicos/tema';
 
-// ----------------------------------------------------------------------------
-// Estilos
-// ----------------------------------------------------------------------------
-import styles from '../../estilos/paginas/Inicio.module.css';
-
 // ============================================================================
 // CONSTANTES
 // ============================================================================
@@ -58,6 +53,59 @@ const CAROUSEL_INTERVAL = 5000;
 
 /** Categoria de imagens do carrossel na API */
 const CAROUSEL_CATEGORY = 'carousel';
+
+// ============================================================================
+// WRAPPERS DE ESPAÇAMENTO
+// ============================================================================
+
+/**
+ * Classes CSS para wrappers de espaçamento
+ * Definidas como <style> tag no componente
+ */
+const CUSTOM_WRAPPERS = Object.freeze({
+  ofertas: 'inicio-ofertas',
+  appExclusivo: 'inicio-app-exclusivo',
+  telefoniaBanner: 'inicio-telefonia-banner',
+  contato: 'inicio-contato',
+});
+
+/**
+ * Estilos CSS para wrappers
+ * Injetados via <style> tag no componente
+ */
+const WRAPPERS_STYLES = `
+  .inicio-ofertas {
+    margin-bottom: 5rem;
+  }
+
+  .inicio-app-exclusivo {
+    padding: 1.6rem;
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .inicio-telefonia-banner {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .inicio-contato {
+    margin-bottom: 0rem;
+  }
+
+  @media (max-width: 768px) {
+    .inicio-app-exclusivo {
+      padding: 0.9rem;
+      margin-top: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .inicio-telefonia-banner {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+  }
+`;
 
 // ============================================================================
 // UTILITÁRIOS
@@ -109,21 +157,6 @@ const getCarouselImages = () => {
 // ============================================================================
 
 /**
- * Wrappers customizados para espaçamento de componentes específicos
- * Mapeia nome do componente → classe CSS
- */
-const CUSTOM_WRAPPERS = Object.freeze({
-  ofertas: styles.Ofertas,
-  appExclusivo: styles.AppExclusivo,
-  telefoniaBanner: styles.TelefoniaBanner,
-  contato: styles.contato,
-});
-
-// ============================================================================
-// COMPONENTE
-// ============================================================================
-
-/**
  * Página inicial do site
  * @component
  */
@@ -157,11 +190,14 @@ const Inicio = () => {
   // --------------------------------------------------------------------------
 
   return (
-    <DynamicPageRenderer
-      pagePath={PAGE_PATH}
-      customWrappers={CUSTOM_WRAPPERS}
-      customProps={customProps}
-    />
+    <>
+      <style>{WRAPPERS_STYLES}</style>
+      <DynamicPageRenderer
+        pagePath={PAGE_PATH}
+        customWrappers={CUSTOM_WRAPPERS}
+        customProps={customProps}
+      />
+    </>
   );
 };
 

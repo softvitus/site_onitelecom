@@ -252,5 +252,3 @@ const PlanoControle = () => {
 };
 
 export default PlanoControle;
-
-

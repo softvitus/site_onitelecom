@@ -74,7 +74,10 @@ describe('TemaService - Cobertura Avançada', () => {
 
       await temaService.findByParceiroId(1, { page: 2, limit: 20 });
 
-      expect(temaService.findAll).toHaveBeenCalledWith({ tem_par_id: 1 }, { page: 2, limit: 20 });
+      expect(temaService.findAll).toHaveBeenCalledWith(
+        { tem_par_id: 1 },
+        { page: 2, limit: 20 },
+      );
     });
   });
 
@@ -94,8 +97,12 @@ describe('TemaService - Cobertura Avançada', () => {
     it('deve lançar ApiError quando não encontrado', async () => {
       mockModel.findOne.mockResolvedValue(null);
 
-      await expect(temaService.findByName('Inexistente')).rejects.toThrow(ApiError);
-      await expect(temaService.findByName('Inexistente')).rejects.toThrow('Tema não encontrado');
+      await expect(temaService.findByName('Inexistente')).rejects.toThrow(
+        ApiError,
+      );
+      await expect(temaService.findByName('Inexistente')).rejects.toThrow(
+        'Tema não encontrado',
+      );
     });
 
     it('deve usar case-sensitive na busca', async () => {
@@ -134,7 +141,9 @@ describe('TemaService - Cobertura Avançada', () => {
       jest.spyOn(temaService, 'findById').mockResolvedValue(mockTema);
       jest.spyOn(temaService, 'create').mockResolvedValue({ id: 2 });
 
-      jest.spyOn(Date.prototype, 'toLocaleDateString').mockReturnValue('01/12/2024');
+      jest
+        .spyOn(Date.prototype, 'toLocaleDateString')
+        .mockReturnValue('01/12/2024');
 
       await temaService.cloneTheme(1, 'Cópia');
 

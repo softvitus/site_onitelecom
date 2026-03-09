@@ -1,11 +1,17 @@
+:root {
+  --infinitePossibilities-containerBg: var(--color-neutral-background);
+  --infinitePossibilities-titleColor: var(--color-secondary-blue);
+  --infinitePossibilities-lineColor: var(--color-secondary-blue);
+}
+
 .container-custom {
-  background-color: var(--color-neutral-background);
+  background-color: var(--infinitePossibilities-containerBg);
   padding: 60px 15px;
 }
 
 .container-custom h1 {
   text-align: center;
-  color: var(--color-secondary-blue);
+  color: var(--infinitePossibilities-titleColor);
   font-size: 2rem;
   margin-bottom: 20px;
 }
@@ -14,7 +20,7 @@
   width: 100%;
   max-width: 1200px;
   height: 2px;
-  background-color: var(--color-secondary-blue);
+  background-color: var(--infinitePossibilities-lineColor);
   margin: 20px auto;
 }
 

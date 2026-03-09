@@ -182,7 +182,6 @@ const CarouselContainer = ({
   <div
     id={id}
     className={`${styles['carousel-container']} ${styles[variant]}`}
-   
     aria-roledescription="carrossel"
     aria-label={`Carrossel ${variant}`}
   >
@@ -330,4 +329,3 @@ const Carousel = ({ images, mobileImages, interval = DEFAULT_INTERVAL }) => {
 };
 
 export default Carousel;
-

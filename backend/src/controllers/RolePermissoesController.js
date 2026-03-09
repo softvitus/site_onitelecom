@@ -149,7 +149,7 @@ export class RolePermissoesController {
       }
 
       const permissoesAnteriores = await this.service.findByTipo(tipo);
-      const idsAnteriores = permissoesAnteriores.map(p => p.perm_id);
+      const idsAnteriores = permissoesAnteriores.map((p) => p.perm_id);
 
       await this.service.replacePermissoes(tipo, permissaoIds);
 
@@ -219,20 +219,28 @@ export class RolePermissoesController {
       const filters = {};
       if (search) {
         const { Op } = require('sequelize');
-        filters[Op.or] = [
-          { roleperm_tipo: { [Op.like]: `%${search}%` } },
-        ];
+        filters[Op.or] = [{ roleperm_tipo: { [Op.like]: `%${search}%` } }];
       }
 
       // Usar o serviço para buscar com paginação
-      const result = await this.service.findAll(filters, { page, limit, sort: 'roleperm_tipo,-createdAt' }, {
-        include: [
-          {
-            association: 'permissao',
-            attributes: ['perm_id', 'perm_nome', 'perm_modulo', 'perm_acao', 'perm_descricao'],
-          },
-        ],
-      });
+      const result = await this.service.findAll(
+        filters,
+        { page, limit, sort: 'roleperm_tipo,-createdAt' },
+        {
+          include: [
+            {
+              association: 'permissao',
+              attributes: [
+                'perm_id',
+                'perm_nome',
+                'perm_modulo',
+                'perm_acao',
+                'perm_descricao',
+              ],
+            },
+          ],
+        },
+      );
 
       return res.json({
         success: true,
@@ -251,12 +259,18 @@ export class RolePermissoesController {
   async getById(req, res, next) {
     try {
       const { id } = req.params;
-      
+
       const rolePermissao = await this.service.findById(id, {
         include: [
           {
             association: 'permissao',
-            attributes: ['perm_id', 'perm_nome', 'perm_modulo', 'perm_acao', 'perm_descricao'],
+            attributes: [
+              'perm_id',
+              'perm_nome',
+              'perm_modulo',
+              'perm_acao',
+              'perm_descricao',
+            ],
           },
         ],
       });
@@ -299,7 +313,10 @@ export class RolePermissoesController {
         });
       }
 
-      const rolePermissao = await this.service.atribuirPermissao(tipo, permissaoId);
+      const rolePermissao = await this.service.atribuirPermissao(
+        tipo,
+        permissaoId,
+      );
 
       await AuditoriaService.registrar({
         usuarioId: req.user?.id,

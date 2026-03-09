@@ -23,7 +23,7 @@ export default {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      
+
       // ==================== COMPONENTES REUTILIZÁVEIS ====================
       {
         com_id: '550e8400-e29b-41d4-a716-446655470003',
@@ -105,7 +105,7 @@ export default {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      
+
       // ==================== COMPONENTES ESPECÍFICOS ====================
       {
         com_id: '550e8400-e29b-41d4-a716-446655470011',

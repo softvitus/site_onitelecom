@@ -109,7 +109,7 @@ class CacheManager {
    */
   middleware(ttl = 300) {
     const cacheInstance = this;
-    
+
     return (req, res, next) => {
       // Apenas cache para GET requests
       if (req.method !== 'GET') {

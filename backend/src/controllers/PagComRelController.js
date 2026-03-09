@@ -23,7 +23,7 @@ export class PagComRelController {
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
-      
+
       const result = await this.service.findAll(
         {},
         { page: parseInt(page), limit: parseInt(limit) },
@@ -220,8 +220,13 @@ export default PagComRelController;
 export const pagComRelController = new PagComRelController();
 
 // Exporta métodos para compatibilidade com versão anterior
-export const getAll = (req, res, next) => pagComRelController.getAll(req, res, next);
-export const getById = (req, res, next) => pagComRelController.getById(req, res, next);
-export const create = (req, res, next) => pagComRelController.create(req, res, next);
-export const update = (req, res, next) => pagComRelController.update(req, res, next);
-export const remove = (req, res, next) => pagComRelController.remove(req, res, next);
+export const getAll = (req, res, next) =>
+  pagComRelController.getAll(req, res, next);
+export const getById = (req, res, next) =>
+  pagComRelController.getById(req, res, next);
+export const create = (req, res, next) =>
+  pagComRelController.create(req, res, next);
+export const update = (req, res, next) =>
+  pagComRelController.update(req, res, next);
+export const remove = (req, res, next) =>
+  pagComRelController.remove(req, res, next);

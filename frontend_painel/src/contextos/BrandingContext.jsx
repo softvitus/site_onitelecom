@@ -2,7 +2,7 @@
  * @fileoverview BrandingContext - Contexto de Branding/Tema para Admin
  * @description Gerencia o tema, cores, imagens e dados de branding do parceiro
  *              Busca dados via API pública (/public/parceiros/:id/tema)
- * 
+ *
  * @module contextos/BrandingContext
  */
 
@@ -31,15 +31,15 @@ export const BrandingProvider = ({ children }) => {
 
   // Estado do branding
   const [branding, setBreanding] = useState({
-    parceiro: null,      // Dados do parceiro
-    tema: null,          // Tema completo
-    logo: null,          // URL da logo principal
-    logoTipo: 'image',   // 'image' ou 'text'
+    parceiro: null, // Dados do parceiro
+    tema: null, // Tema completo
+    logo: null, // URL da logo principal
+    logoTipo: 'image', // 'image' ou 'text'
     nomeParceiro: 'Site Oni',
-    cores: {},           // Cores do tema
-    imagens: [],         // Imagens do tema
-    textos: {},          // Textos do tema
-    paginas: [],         // Páginas do tema
+    cores: {}, // Cores do tema
+    imagens: [], // Imagens do tema
+    textos: {}, // Textos do tema
+    paginas: [], // Páginas do tema
   });
 
   const [_loading, setLoading] = useState(false);
@@ -69,9 +69,7 @@ export const BrandingProvider = ({ children }) => {
 
       // Buscar tema via endpoint público
       const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(
-        `${apiUrl}/public/parceiros/${parceiroId}/tema`
-      );
+      const response = await fetch(`${apiUrl}/public/parceiros/${parceiroId}/tema`);
 
       if (!response.ok) {
         throw new Error(`Erro ao buscar tema: ${response.status}`);
@@ -222,7 +220,7 @@ export const BrandingProvider = ({ children }) => {
   useEffect(() => {
     if (!authLoading && usuario?.usu_par_id) {
       const lastLoaded = localStorage.getItem('lastParceiroLoaded');
-      
+
       // Apenas carrega se é um parceiroId diferente
       if (lastLoaded !== usuario.usu_par_id) {
         carregarBreanding(usuario.usu_par_id);

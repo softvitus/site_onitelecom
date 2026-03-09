@@ -53,7 +53,7 @@ export default {
     await queryInterface.addIndex('0007_Com_Ele_Rel', ['cer_com_id']);
     await queryInterface.addIndex('0007_Com_Ele_Rel', ['cer_ele_id']);
     await queryInterface.addIndex('0007_Com_Ele_Rel', ['cer_habilitado']);
-    
+
     // Criar UNIQUE constraint
     await queryInterface.addConstraint('0007_Com_Ele_Rel', {
       fields: ['cer_com_id', 'cer_ele_id'],

@@ -2,7 +2,7 @@
  * @file Componente Button Reutilizável
  * @description Botão customizável com suporte a variantes, tamanhos,
  * estado de carregamento e desabilitado
- * 
+ *
  * @module componentes/Comum/Button
  */
 
@@ -33,10 +33,10 @@ const BUTTON_SIZES = {
 
 /**
  * Componente Button Reutilizável
- * 
+ *
  * Botão flexível com suporte a múltiplas variantes, tamanhos e estados.
  * Integrado com Bootstrap para consistência visual.
- * 
+ *
  * @component
  * @param {string} [variant='primary'] - Variante visual: 'primary', 'secondary', 'success', 'danger', 'warning', 'info'
  * @param {string} [size='md'] - Tamanho: 'sm', 'md', 'lg'
@@ -47,12 +47,12 @@ const BUTTON_SIZES = {
  * @param {string} [className=''] - Classes CSS adicionais
  * @param {string} [type='button'] - Tipo do botão: 'button', 'submit', 'reset'
  * @returns {JSX.Element}
- * 
+ *
  * @example
  * <Button variant="success" size="lg" onClick={() => handleSave()}>
  *   Salvar
  * </Button>
- * 
+ *
  * @example
  * <Button variant="danger" loading={isSaving}>
  *   {isSaving ? 'Salvando...' : 'Salvar'}
@@ -72,14 +72,14 @@ const Button = ({
   const buttonClass = `btn btn-${variant} ${sizeClass} ${className}`.trim();
 
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled || loading}
-      className={buttonClass}
-    >
+    <button type={type} onClick={onClick} disabled={disabled || loading} className={buttonClass}>
       {loading && (
-        <span className="spinner-border spinner-border-sm" style={{ marginRight: '0.5rem' }} role="status" aria-hidden="true"></span>
+        <span
+          className="spinner-border spinner-border-sm"
+          style={{ marginRight: '0.5rem' }}
+          role="status"
+          aria-hidden="true"
+        ></span>
       )}
       <span>{children}</span>
     </button>

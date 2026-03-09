@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar links.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (lin_nome → nome, etc).
- * 
+ *
  * @module servicos/links
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_LINKS = '/links';
 /**
  * Mapeia dados do backend (lin_nome, lin_valor, etc)
  * para formato do frontend (nome, valor, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -42,7 +42,7 @@ const mapearLink = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -63,7 +63,7 @@ const LinksServiceBase = criarServicoGenerico(ENDPOINT_LINKS);
 
 /**
  * Serviço para Gerenciar Links
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -77,14 +77,14 @@ const LinksService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await LinksServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearLink(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -95,14 +95,14 @@ const LinksService = {
    */
   obter: async (id) => {
     const resultado = await LinksServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearLink(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -114,14 +114,14 @@ const LinksService = {
   criar: async (dados) => {
     const dadosFormatados = mapearLinkParaBackend(dados);
     const resultado = await LinksServiceBase.criar(dadosFormatados);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearLink(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -134,14 +134,14 @@ const LinksService = {
   atualizar: async (id, dados) => {
     const dadosFormatados = mapearLinkParaBackend(dados);
     const resultado = await LinksServiceBase.atualizar(id, dadosFormatados);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearLink(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -161,14 +161,14 @@ const LinksService = {
    */
   buscar: async (criterios) => {
     const resultado = await LinksServiceBase.buscar(criterios);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearLink(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 };

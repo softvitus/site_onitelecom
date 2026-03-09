@@ -15,7 +15,16 @@ export class TextosService extends BaseService {
    * Tipos de texto válidos
    * @type {string[]}
    */
-  static VALID_TYPES = ['titulo', 'descricao', 'paragrafo', 'botao', 'label', 'placeholder', 'validacao', 'outro'];
+  static VALID_TYPES = [
+    'titulo',
+    'descricao',
+    'paragrafo',
+    'botao',
+    'label',
+    'placeholder',
+    'validacao',
+    'outro',
+  ];
 
   /**
    * Override findAll para filtrar por parceiro através do tema
@@ -35,7 +44,7 @@ export class TextosService extends BaseService {
       });
       delete filters.parceiroId;
     }
-    
+
     return super.findAll(filters, pagination, options);
   }
 

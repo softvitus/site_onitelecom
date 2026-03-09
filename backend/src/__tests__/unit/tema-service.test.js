@@ -38,7 +38,10 @@ describe('TemaService - Unit Tests', () => {
         { tem_id: '2', tem_nome: 'Tema 2', tem_par_id: 'p1' },
       ];
 
-      mockModel.findAndCountAll.mockResolvedValue({ rows: mockTemas, count: 2 });
+      mockModel.findAndCountAll.mockResolvedValue({
+        rows: mockTemas,
+        count: 2,
+      });
 
       const result = await service.findAll({}, { page: 1, limit: 10 });
 
@@ -82,7 +85,10 @@ describe('TemaService - Unit Tests', () => {
       const result = await service.findById('123');
 
       expect(result).toEqual(mockTema);
-      expect(mockModel.findByPk).toHaveBeenCalledWith('123', expect.any(Object));
+      expect(mockModel.findByPk).toHaveBeenCalledWith(
+        '123',
+        expect.any(Object),
+      );
     });
   });
 
@@ -122,7 +128,6 @@ describe('TemaService - Unit Tests', () => {
         }),
       );
     });
-
   });
 
   // ========== TESTES: findByParceiroId ==========
@@ -217,7 +222,9 @@ describe('TemaService - Unit Tests', () => {
     it('deve lançar erro se tema original não existe', async () => {
       mockModel.findByPk.mockResolvedValue(null);
 
-      await expect(service.cloneTheme('inexistente', 'Clone')).rejects.toThrow();
+      await expect(
+        service.cloneTheme('inexistente', 'Clone'),
+      ).rejects.toThrow();
     });
 
     it('deve preservar tem_par_id do tema original', async () => {
@@ -228,7 +235,10 @@ describe('TemaService - Unit Tests', () => {
       };
 
       mockModel.findByPk.mockResolvedValue(originalTheme);
-      mockModel.create.mockResolvedValue({ tem_id: '456', tem_par_id: 'parceiro-especial' });
+      mockModel.create.mockResolvedValue({
+        tem_id: '456',
+        tem_par_id: 'parceiro-especial',
+      });
 
       await service.cloneTheme('123', 'Clone');
 
@@ -264,8 +274,8 @@ describe('TemaService - Unit Tests', () => {
   describe('update - Atualizar tema', () => {
     it('deve atualizar tema existente', async () => {
       const updateData = { tem_nome: 'Nome Atualizado' };
-      const mockItem = { 
-        tem_id: '123', 
+      const mockItem = {
+        tem_id: '123',
         ...updateData,
         update: jest.fn().mockResolvedValue(true),
       };

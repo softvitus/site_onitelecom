@@ -2,7 +2,7 @@
  * @file Componente Card Reutilizável
  * @description Componente Card baseado em Bootstrap com suporte a header,
  * body, footer e classes customizadas
- * 
+ *
  * @module componentes/Comum/Card
  */
 
@@ -24,10 +24,10 @@ const CARD_CONFIG = {
 
 /**
  * Componente Card
- * 
+ *
  * Wrapper flexível do componente card do Bootstrap com seções opcionais
  * (header com título, body e footer).
- * 
+ *
  * @component
  * @param {string} [titulo] - Título do card (exibido no header)
  * @param {ReactNode} [children] - Conteúdo principal do card
@@ -35,19 +35,13 @@ const CARD_CONFIG = {
  * @param {ReactNode} [footer=null] - Conteúdo do footer
  * @param {Object} [props] - Props adicionais do HTML
  * @returns {JSX.Element}
- * 
+ *
  * @example
  * <Card titulo="Informações" footer={<button>OK</button>}>
  *   <p>Conteúdo do card</p>
  * </Card>
  */
-const Card = ({ 
-  titulo, 
-  children, 
-  className = '',
-  footer = null,
-  ...props 
-}) => {
+const Card = ({ titulo, children, className = '', footer = null, ...props }) => {
   return (
     <div className={`${CARD_CONFIG.CLASSE_BASE} ${className}`.trim()} {...props}>
       {titulo && (
@@ -55,14 +49,8 @@ const Card = ({
           <h5 className={CARD_CONFIG.CLASSE_TITULO}>{titulo}</h5>
         </div>
       )}
-      <div className={CARD_CONFIG.CLASSE_BODY}>
-        {children}
-      </div>
-      {footer && (
-        <div className={CARD_CONFIG.CLASSE_FOOTER}>
-          {footer}
-        </div>
-      )}
+      <div className={CARD_CONFIG.CLASSE_BODY}>{children}</div>
+      {footer && <div className={CARD_CONFIG.CLASSE_FOOTER}>{footer}</div>}
     </div>
   );
 };

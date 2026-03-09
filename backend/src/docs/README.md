@@ -5,11 +5,13 @@
 A API está documentada com Swagger/OpenAPI. Quando o servidor estiver rodando, acesse:
 
 ### **Local Development** (npm start)
+
 ```
 http://localhost:3000/api-docs
 ```
 
 ### **Docker**
+
 ```
 http://localhost:5000/api-docs
 ```

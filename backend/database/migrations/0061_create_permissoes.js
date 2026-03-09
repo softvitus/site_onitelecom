@@ -3,13 +3,20 @@ export default {
   async up(queryInterface, Sequelize) {
     // Limpar ENUMs antigos se existirem
     try {
-      await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_0061_Permissoes_perm_modulo" CASCADE;');
+      await queryInterface.sequelize.query(
+        'DROP TYPE IF EXISTS "enum_0061_Permissoes_perm_modulo" CASCADE;',
+      );
     } catch (error) {
-      console.log('Limpeza de enum_0061_Permissoes_perm_modulo:', error.message);
+      console.log(
+        'Limpeza de enum_0061_Permissoes_perm_modulo:',
+        error.message,
+      );
     }
-    
+
     try {
-      await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_0061_Permissoes_perm_acao" CASCADE;');
+      await queryInterface.sequelize.query(
+        'DROP TYPE IF EXISTS "enum_0061_Permissoes_perm_acao" CASCADE;',
+      );
     } catch (error) {
       console.log('Limpeza de enum_0061_Permissoes_perm_acao:', error.message);
     }
@@ -34,29 +41,46 @@ export default {
       },
       perm_modulo: {
         type: Sequelize.ENUM(
-          'tema', 'temas',
-          'pagina', 'paginas',
-          'componente', 'componentes',
-          'elemento', 'elementos',
-          'usuario', 'usuarios',
-          'parceiro', 'parceiros',
+          'tema',
+          'temas',
+          'pagina',
+          'paginas',
+          'componente',
+          'componentes',
+          'elemento',
+          'elementos',
+          'usuario',
+          'usuarios',
+          'parceiro',
+          'parceiros',
           'relatorios',
           'auditoria',
           'cores',
           'imagens',
           'links',
           'textos',
-          'conteudo', 'conteudos',
+          'conteudo',
+          'conteudos',
           'features',
           'config_tema',
           'role_permissoes',
-          'permissoes'
+          'permissoes',
         ),
         allowNull: false,
         comment: 'Módulo relacionado',
       },
       perm_acao: {
-        type: Sequelize.ENUM('criar', 'listar', 'editar', 'deletar', 'visualizar', 'exportar', 'estatisticas', 'filtrar', 'leituradados'),
+        type: Sequelize.ENUM(
+          'criar',
+          'listar',
+          'editar',
+          'deletar',
+          'visualizar',
+          'exportar',
+          'estatisticas',
+          'filtrar',
+          'leituradados',
+        ),
         allowNull: false,
         comment: 'Ação realizada',
       },

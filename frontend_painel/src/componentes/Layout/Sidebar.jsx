@@ -3,12 +3,29 @@
  * @description Menu lateral de navegação com itens organizados em seções
  * temáticas (Principal, Gerenciamento, Conteúdo, Configuração)
  * Filtra menus baseado nas permissões do usuário
- * 
+ *
  * @module componentes/Layout/Sidebar
  */
 
 import { useLocation, Link } from 'react-router-dom';
-import { FaHome, FaUsers, FaPalette, FaFileAlt, FaCube, FaSquare, FaImage, FaLink, FaFont, FaBoxes, FaStar, FaCog, FaUser, FaLock, FaHistory, FaShieldAlt } from 'react-icons/fa';
+import {
+  FaHome,
+  FaUsers,
+  FaPalette,
+  FaFileAlt,
+  FaCube,
+  FaSquare,
+  FaImage,
+  FaLink,
+  FaFont,
+  FaBoxes,
+  FaStar,
+  FaCog,
+  FaUser,
+  FaLock,
+  FaHistory,
+  FaShieldAlt,
+} from 'react-icons/fa';
 import { useAuth } from '../../hooks/useAuth';
 import '../../estilos/componentes/layout/Sidebar.css';
 
@@ -19,27 +36,45 @@ import '../../estilos/componentes/layout/Sidebar.css';
 const MENU_SECTIONS = [
   {
     label: 'Principal',
-    items: [
-      { path: '/dashboard', label: 'Dashboard', icon: FaHome, adminOnly: true },
-    ],
+    items: [{ path: '/dashboard', label: 'Dashboard', icon: FaHome, adminOnly: true }],
   },
   {
     label: 'Gerenciamento',
     items: [
-      { path: '/parceiros', label: 'Parceiros', icon: FaUsers, requiredPermission: 'parceiro_listar' },
+      {
+        path: '/parceiros',
+        label: 'Parceiros',
+        icon: FaUsers,
+        requiredPermission: 'parceiro_listar',
+      },
       { path: '/temas', label: 'Temas', icon: FaPalette, requiredPermission: 'tema_listar' },
       { path: '/paginas', label: 'Páginas', icon: FaFileAlt, requiredPermission: 'pagina_listar' },
-      { path: '/componentes', label: 'Componentes', icon: FaCube, requiredPermission: 'componente_listar' },
+      {
+        path: '/componentes',
+        label: 'Componentes',
+        icon: FaCube,
+        requiredPermission: 'componente_listar',
+      },
     ],
   },
   {
     label: 'Conteúdo',
     items: [
-      { path: '/elementos', label: 'Elementos', icon: FaSquare, requiredPermission: 'elemento_listar' },
+      {
+        path: '/elementos',
+        label: 'Elementos',
+        icon: FaSquare,
+        requiredPermission: 'elemento_listar',
+      },
       { path: '/imagens', label: 'Imagens', icon: FaImage, requiredPermission: 'imagens_listar' },
       { path: '/links', label: 'Links', icon: FaLink, requiredPermission: 'links_listar' },
       { path: '/textos', label: 'Textos', icon: FaFont, requiredPermission: 'textos_listar' },
-      { path: '/conteudo', label: 'Conteúdo', icon: FaBoxes, requiredPermission: 'conteudo_listar' },
+      {
+        path: '/conteudo',
+        label: 'Conteúdo',
+        icon: FaBoxes,
+        requiredPermission: 'conteudo_listar',
+      },
     ],
   },
   {
@@ -49,9 +84,19 @@ const MENU_SECTIONS = [
       { path: '/features', label: 'Features', icon: FaStar, requiredPermission: 'features_listar' },
       { path: '/usuarios', label: 'Usuários', icon: FaUser, requiredPermission: 'usuario_listar' },
       { path: '/permissoes', label: 'Permissões', icon: FaLock, adminOnly: true },
-      { path: '/role-permissoes', label: 'Permissões de Função', icon: FaShieldAlt, adminOnly: true },
+      {
+        path: '/role-permissoes',
+        label: 'Permissões de Função',
+        icon: FaShieldAlt,
+        adminOnly: true,
+      },
       { path: '/configuracoes', label: 'Configurações', icon: FaCog, adminOnly: true },
-      { path: '/auditoria', label: 'Auditoria', icon: FaHistory, requiredPermission: 'auditoria_listar' },
+      {
+        path: '/auditoria',
+        label: 'Auditoria',
+        icon: FaHistory,
+        requiredPermission: 'auditoria_listar',
+      },
     ],
   },
 ];
@@ -62,15 +107,15 @@ const MENU_SECTIONS = [
 
 /**
  * Componente Sidebar
- * 
+ *
  * Menu lateral colapsível com itens de navegação organizados em seções.
  * Destaca o item ativo baseado na rota atual.
  * Filtra itens baseado nas permissões do usuário.
- * 
+ *
  * @component
  * @param {boolean} aberto - Sidebar está visível?
  * @returns {JSX.Element|null}
- * 
+ *
  * @example
  * <Sidebar aberto={sidebarAberto} />
  */

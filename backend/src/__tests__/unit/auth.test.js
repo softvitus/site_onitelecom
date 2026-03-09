@@ -11,10 +11,10 @@ describe('Autenticação - Unit Tests', () => {
     it('deve hashear uma senha e depois validá-la', async () => {
       const senha = 'teste123';
       const hash = await bcrypt.hash(senha, 10);
-      
+
       expect(hash).toBeDefined();
       expect(hash).not.toBe(senha); // Não deve ser igual
-      
+
       // Validar senha
       const isValid = await bcrypt.compare(senha, hash);
       expect(isValid).toBe(true);
@@ -24,7 +24,7 @@ describe('Autenticação - Unit Tests', () => {
       const senha = 'teste123';
       const senhaErrada = 'teste456';
       const hash = await bcrypt.hash(senha, 10);
-      
+
       const isValid = await bcrypt.compare(senhaErrada, hash);
       expect(isValid).toBe(false);
     });
@@ -33,9 +33,9 @@ describe('Autenticação - Unit Tests', () => {
       const senha = 'teste123';
       const hash1 = await bcrypt.hash(senha, 10);
       const hash2 = await bcrypt.hash(senha, 10);
-      
+
       expect(hash1).not.toBe(hash2); // Salts diferentes
-      
+
       // Mas ambos devem validar a senha
       expect(await bcrypt.compare(senha, hash1)).toBe(true);
       expect(await bcrypt.compare(senha, hash2)).toBe(true);
@@ -45,8 +45,9 @@ describe('Autenticação - Unit Tests', () => {
   describe('JWT Token Validation', () => {
     it('deve ter estrutura de JWT válida (header.payload.signature)', () => {
       // Exemplo de JWT structure (sem validar aprofundadamente)
-      const mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U';
-      
+      const mockToken =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U';
+
       const parts = mockToken.split('.');
       expect(parts).toHaveLength(3);
       expect(parts[0]).toBeDefined(); // header
@@ -76,7 +77,7 @@ describe('Autenticação - Unit Tests', () => {
   describe('Validação de Credenciais', () => {
     it('deve validar email format', () => {
       const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      
+
       expect(validEmail.test('admin@siteoni.com.br')).toBe(true);
       expect(validEmail.test('usuario@test.com')).toBe(true);
       expect(validEmail.test('invalid.email')).toBe(false);
@@ -86,7 +87,7 @@ describe('Autenticação - Unit Tests', () => {
     it('deve validar força mínima de senha', () => {
       // Pelo menos 8 caracteres
       const minLength = (pwd) => pwd.length >= 8;
-      
+
       expect(minLength('teste123')).toBe(true);
       expect(minLength('short')).toBe(false);
       expect(minLength('admin123')).toBe(true);
@@ -94,8 +95,9 @@ describe('Autenticação - Unit Tests', () => {
 
     it('deve rejeitar credenciais vazias', () => {
       const isValidCredential = (email, senha) => {
-        return email && email.trim().length > 0 && 
-               senha && senha.trim().length > 0;
+        return (
+          email && email.trim().length > 0 && senha && senha.trim().length > 0
+        );
       };
 
       expect(isValidCredential('admin@test.com', 'senha123')).toBe(true);
@@ -129,10 +131,10 @@ describe('Autenticação - Unit Tests', () => {
 
     it('deve resetar contadorquando login é bem-sucedido', () => {
       let tentativas = 3;
-      
+
       // Login bem-sucedido - resetar
       tentativas = 0;
-      
+
       expect(tentativas).toBe(0);
     });
   });

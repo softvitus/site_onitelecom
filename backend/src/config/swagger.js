@@ -11,7 +11,8 @@ const swaggerOptions = {
     info: {
       title: 'Site ONI Backend API',
       version: '1.0.0',
-      description: 'API REST para gerenciamento de temas, páginas e componentes multi-tenant',
+      description:
+        'API REST para gerenciamento de temas, páginas e componentes multi-tenant',
       contact: {
         name: 'Dev Team',
         email: 'dev@siteonl.com',
@@ -115,7 +116,13 @@ const swaggerOptions = {
         },
         Pagina: {
           type: 'object',
-          required: ['pag_par_id', 'pag_tem_id', 'pag_nome', 'pag_caminho', 'pag_titulo'],
+          required: [
+            'pag_par_id',
+            'pag_tem_id',
+            'pag_nome',
+            'pag_caminho',
+            'pag_titulo',
+          ],
           properties: {
             pag_id: {
               type: 'string',

@@ -1,8 +1,15 @@
+:root {
+  --locationSelector-primaryColor: var(--color-primary-main);
+  --locationSelector-secondaryColor: var(--color-secondary-blue);
+  --locationSelector-textColor: var(--color-neutral-white);
+  --locationSelector-bgGradient: var(--color-primary-main);
+}
+
 .login_container {
-  --primary-color: var(--color-primary-main);
-  --secondary-color: var(--color-secondary-blue);
-  --text-color: var(--color-neutral-white);
-  --bg-gradient: var(--gradient-purple-primary);
+  --primary-color: var(--locationSelector-primaryColor);
+  --secondary-color: var(--locationSelector-secondaryColor);
+  --text-color: var(--locationSelector-textColor);
+  --bg-gradient: var(--locationSelector-bgGradient);
 }
 
 .container_login {
@@ -26,13 +33,13 @@
   background-color: rgba(0, 0, 0, 0.5);
   border: none;
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-large);
+  box-shadow: var(--box-shadow-lg);
   transition: var(--transition-normal);
 }
 
 .card_login:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-purple-deep);
+  box-shadow: var(--box-shadow-lg);
 }
 
 .card-body_login {
@@ -99,14 +106,14 @@
 
 .btn-primary_login {
   background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  color: white;
+  color: var(--color-neutral-white);
   border: none;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--box-shadow-md);
 }
 
 .btn-primary_login:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--box-shadow-lg);
 }
 
 .btn-secondary_login {

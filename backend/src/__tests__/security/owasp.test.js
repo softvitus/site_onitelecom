@@ -38,7 +38,7 @@ describe('Security - OWASP Protection', () => {
   describe('SQL Injection Prevention', () => {
     it('deve rejeitar payloads SQL injection em filtros', async () => {
       const maliciousFilters = {
-        par_nome: '\'; DROP TABLE parceiros; --',
+        par_nome: "'; DROP TABLE parceiros; --",
       };
 
       // O serviço deve não executar SQL perigoso
@@ -47,7 +47,10 @@ describe('Security - OWASP Protection', () => {
         count: 0,
       });
 
-      const result = await parceiroService.findAll(maliciousFilters, { page: 1, limit: 10 });
+      const result = await parceiroService.findAll(maliciousFilters, {
+        page: 1,
+        limit: 10,
+      });
 
       // Se retornar vazio, significa que não executou o comando perigoso
       expect(result.rows).toEqual([]);
@@ -55,7 +58,7 @@ describe('Security - OWASP Protection', () => {
 
     it('deve escapar caracteres especiais em queries', async () => {
       const filters = {
-        par_nome: 'Test\' OR \'1\'=\'1',
+        par_nome: "Test' OR '1'='1",
       };
 
       parceiroService.model.findAndCountAll.mockResolvedValue({
@@ -63,7 +66,10 @@ describe('Security - OWASP Protection', () => {
         count: 0,
       });
 
-      const result = await parceiroService.findAll(filters, { page: 1, limit: 10 });
+      const result = await parceiroService.findAll(filters, {
+        page: 1,
+        limit: 10,
+      });
 
       // Deve buscar literalmente pela string, não executar SQL
       expect(parceiroService.model.findAndCountAll).toHaveBeenCalled();
@@ -129,7 +135,8 @@ describe('Security - OWASP Protection', () => {
     });
 
     it('deve validar token expirado', async () => {
-      const expiredToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTYyMzkwMjJ9.invalid';
+      const expiredToken =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTYyMzkwMjJ9.invalid';
 
       // JWT inválido deve ser detectado
       expect(() => {
@@ -170,7 +177,11 @@ describe('Security - OWASP Protection', () => {
     it('deve rejeitar URL maliciosa', async () => {
       const validateUrl = (url) => {
         // Rejeita URLs maliciosas
-        if (url.includes('javascript:') || url.includes('onerror=') || url.includes('onload=')) {
+        if (
+          url.includes('javascript:') ||
+          url.includes('onerror=') ||
+          url.includes('onload=')
+        ) {
           return false;
         }
         try {
@@ -199,7 +210,7 @@ describe('Security - OWASP Protection', () => {
 
       expect(allowedPattern.test('valid_email@domain.com')).toBe(true);
       expect(allowedPattern.test('invalid<script>')).toBe(false);
-      expect(allowedPattern.test('invalid\'; DROP'  )).toBe(false);
+      expect(allowedPattern.test("invalid'; DROP")).toBe(false);
     });
   });
 
@@ -298,7 +309,8 @@ describe('Security - OWASP Protection', () => {
 
     it('deve mascarar token em response', async () => {
       const maskToken = (token) => {
-        const masked = token.substring(0, 4) + '...' + token.substring(token.length - 4);
+        const masked =
+          token.substring(0, 4) + '...' + token.substring(token.length - 4);
         return masked;
       };
 
@@ -309,10 +321,7 @@ describe('Security - OWASP Protection', () => {
     });
 
     it('deve validar CORS para requests', async () => {
-      const allowedOrigins = [
-        'http://localhost:3000',
-        'https://example.com',
-      ];
+      const allowedOrigins = ['http://localhost:3000', 'https://example.com'];
 
       const validateCORS = (origin) => allowedOrigins.includes(origin);
 

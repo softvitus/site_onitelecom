@@ -21,14 +21,14 @@ export class UsuariosController {
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
-      
+
       const result = await this.service.findAll(
         {},
         { page: parseInt(page), limit: parseInt(limit) },
       );
 
       // Remover senhas da resposta
-      const dados = result.rows.map(u => {
+      const dados = result.rows.map((u) => {
         const user = u.toJSON();
         delete user.usu_senha;
         return user;
@@ -78,7 +78,15 @@ export class UsuariosController {
    */
   async create(req, res, next) {
     try {
-      const { usu_email, usu_nome, usu_senha, usu_tipo, usu_status, usu_telefone, usu_parceiro_id } = req.body;
+      const {
+        usu_email,
+        usu_nome,
+        usu_senha,
+        usu_tipo,
+        usu_status,
+        usu_telefone,
+        usu_parceiro_id,
+      } = req.body;
 
       if (!usu_email || !usu_nome || !usu_senha) {
         return res.status(400).json({
@@ -171,7 +179,10 @@ export class UsuariosController {
 
       // Se enviar senha, fazer hash
       if (dataAtualizar.usu_senha) {
-        dataAtualizar.usu_senha = await bcrypt.hash(dataAtualizar.usu_senha, 10);
+        dataAtualizar.usu_senha = await bcrypt.hash(
+          dataAtualizar.usu_senha,
+          10,
+        );
       } else {
         delete dataAtualizar.usu_senha;
       }
@@ -265,12 +276,12 @@ export class UsuariosController {
       const { tipo } = req.params;
       const { page = 1, limit = 10 } = req.query;
 
-      const result = await this.service.findByType(
-        tipo,
-        { page: parseInt(page), limit: parseInt(limit) },
-      );
+      const result = await this.service.findByType(tipo, {
+        page: parseInt(page),
+        limit: parseInt(limit),
+      });
 
-      const dados = result.rows.map(u => {
+      const dados = result.rows.map((u) => {
         const user = u.toJSON();
         delete user.usu_senha;
         return user;

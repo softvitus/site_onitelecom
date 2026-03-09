@@ -2,9 +2,31 @@
    FOOTER - Rodapé Unificado
    ═══════════════════════════════════════════════════════════════════════════════════ */
 
+/* ================== VARIÁVEIS CSS CUSTOM - Footer ================== */
+
+:root {
+  /* ELEMENTOS */
+  --footer-containerBackground: var(--color-neutral-900);
+  --footer-bottomBackground: var(--color-neutral-black);
+  --footer-iconBackground: var(--footer-borderColor);
+  --footer-accentColor: var(--color-primary-main);
+  --footer-secondaryColor: var(--color-primary-dark);
+  --footer-selectBackground: var(--footer-inputBg);
+  --footer-selectBorder: var(--color-secondary-blue);
+  --footer-borderColor: var(--color-neutral-700);
+  --footer-inputBg: var(--color-neutral-text);
+
+  /* TEXTOS */
+  --footer-textPrimary: var(--color-neutral-white);
+  --footer-textSecondary: var(--color-neutral-400);
+  --footer-selectHoverBackground: var(--color-neutral-text-dark);
+}
+
+/* ================================================================ */
+
 .footer {
-  background-color: var(--color-neutral-900);
-  color: var(--color-neutral-white);
+  background-color: var(--footer-containerBackground);
+  color: var(--footer-textPrimary);
   width: 100%;
   box-sizing: border-box;
   margin-top: auto;
@@ -51,19 +73,19 @@
   align-items: center;
   width: 42px;
   height: 42px;
-  background-color: var(--color-neutral-text);
+  background-color: var(--footer-iconBackground);
   border-radius: var(--radius-full);
   transition: var(--transition-normal);
 }
 
 .social-icon:hover {
-  background-color: var(--color-primary-main);
+  background-color: var(--footer-accentColor);
   transform: scale(1.1);
 }
 
 .social-icon svg {
   font-size: 18px;
-  color: var(--color-neutral-white);
+  color: var(--footer-textPrimary);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────────────
@@ -85,7 +107,7 @@
   margin-bottom: 15px;
   font-size: 14px;
   font-weight: bold;
-  color: var(--color-neutral-white);
+  color: var(--footer-textPrimary);
 }
 
 .footer-column ul {
@@ -99,14 +121,14 @@
 }
 
 .footer-column ul li a {
-  color: var(--color-neutral-400);
+  color: var(--footer-textSecondary);
   text-decoration: none;
   font-size: 13px;
   transition: color 0.2s;
 }
 
 .footer-column ul li a:hover {
-  color: var(--color-neutral-white);
+  color: var(--footer-textPrimary);
   text-decoration: underline;
 }
 
@@ -121,18 +143,18 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color: var(--color-neutral-black);
-  color: var(--color-neutral-white);
+  background-color: var(--footer-bottomBackground);
+  color: var(--footer-textPrimary);
   padding: 8px 14px;
   border-radius: 8px;
-  border: 1px solid var(--color-neutral-text);
+  border: 1px solid var(--footer-iconBackground);
   text-decoration: none;
   transition: all 0.2s ease;
 }
 
 .store-badge:hover {
-  background-color: var(--color-primary-main);
-  border-color: var(--color-primary-main);
+  background-color: var(--footer-accentColor);
+  border-color: var(--footer-accentColor);
   transform: translateY(-2px);
 }
 
@@ -176,7 +198,7 @@
 
 .footer-description {
   font-size: 14px;
-  color: var(--color-neutral-400);
+  color: var(--footer-textSecondary);
   margin: 0;
   line-height: 1.5;
 }
@@ -189,10 +211,10 @@
 
 .btn {
   background: transparent;
-  color: var(--color-neutral-white);
+  color: var(--footer-textPrimary);
   padding: 10px 16px;
   text-decoration: none;
-  border: 1px solid var(--color-neutral-white);
+  border: 1px solid var(--footer-textPrimary);
   border-radius: var(--radius-xl);
   text-align: center;
   font-size: 13px;
@@ -200,13 +222,13 @@
 }
 
 .btn:hover {
-  background: var(--color-neutral-white);
-  color: var(--color-neutral-900);
+  background: var(--footer-textPrimary);
+  color: var(--footer-containerBackground);
 }
 
 .btn-primary {
-  background: var(--color-primary-main);
-  color: var(--color-neutral-white);
+  background: var(--footer-accentColor);
+  color: var(--footer-textPrimary);
   padding: 10px 16px;
   text-decoration: none;
   border-radius: var(--radius-xl);
@@ -217,7 +239,7 @@
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-dark);
+  background: var(--footer-secondaryColor);
   transform: translateY(-2px);
 }
 
@@ -230,7 +252,7 @@
 
 .footer-location label {
   font-size: 12px;
-  color: var(--color-neutral-400);
+  color: var(--footer-textSecondary);
 }
 
 .location-inputs {
@@ -240,19 +262,19 @@
 
 .location-inputs select {
   flex: 1;
-  background-color: var(--color-neutral-text);
-  color: var(--color-neutral-white);
+  background-color: var(--footer-selectBackground);
+  color: var(--footer-textPrimary);
   padding: 8px 10px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-secondary-blue);
+  border: 1px solid var(--footer-selectBorder);
   cursor: pointer;
   font-size: 12px;
   transition: var(--transition-normal);
 }
 
 .location-inputs select:hover:not(:disabled) {
-  background-color: var(--color-neutral-text-dark);
-  border-color: var(--color-primary-main);
+  background-color: var(--footer-selectHoverBackground);
+  border-color: var(--footer-accentColor);
 }
 
 .location-inputs select:disabled {
@@ -269,8 +291,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background-color: var(--color-neutral-black);
-  border-top: 1px solid var(--color-neutral-text);
+  background-color: var(--footer-bottomBackground);
+  border-top: 1px solid var(--footer-iconBackground);
   font-size: 12px;
 }
 
@@ -320,7 +342,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding-bottom: 20px;
-    border-bottom: 1px solid var(--color-neutral-text);
+    border-bottom: 1px solid var(--footer-borderColor);
   }
 
   .footer-nav {

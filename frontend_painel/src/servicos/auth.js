@@ -3,7 +3,7 @@
  * @description Gerencia autenticação, autorização e tokens JWT.
  * Fornece funções para login, logout, renovação de token, permissões
  * e alteração de senha.
- * 
+ *
  * @module servicos/auth
  */
 
@@ -44,7 +44,7 @@ const MENSAGENS_ERRO = {
 
 /**
  * Serviço de Autenticação
- * 
+ *
  * Gerencia autenticação de usuários, tokens JWT, permissões e
  * operações relacionadas à conta de usuário.
  */

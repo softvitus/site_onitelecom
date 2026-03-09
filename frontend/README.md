@@ -7,6 +7,7 @@ Plataforma white-label desenvolvida em React para sites institucionais de teleco
 O OniTelecom é uma plataforma moderna e altamente configurável que permite criar sites institucionais personalizados para diferentes parceiros/clientes de telecomunicações. O sistema oferece:
 
 ### ✨ Recursos Principais
+
 - **Sistema White-Label Completo** - Branding totalmente customizável por parceiro
 - **Multi-Tenancy** - Múltiplos parceiros com temas e conteúdos independentes
 - **Montagem Dinâmica de Páginas** - Sistema PageBuilder para criar páginas por configuração
@@ -26,14 +27,17 @@ O OniTelecom é uma plataforma moderna e altamente configurável que permite cri
 Este projeto possui documentação detalhada em arquivos separados:
 
 ### 🎨 Sistema de Branding (White-Label)
+
 - **[SISTEMA_BRANDING.md](docs/SISTEMA_BRANDING.md)** - Documentação completa do sistema white-label
 - **[COMO_USAR_BRANDING.md](docs/COMO_USAR_BRANDING.md)** - Guia rápido para criar e usar parceiros
 
 ### 🏗️ Arquitetura e Componentes
+
 - **[MONTAGEM_PAGINAS.md](docs/MONTAGEM_PAGINAS.md)** - Sistema de montagem dinâmica de páginas
 - **[CONTROLE_COMPONENTES.md](docs/CONTROLE_COMPONENTES.md)** - Sistema de controle de visibilidade de componentes
 
 ### 📖 Como Usar a Documentação
+
 1. **Iniciante?** Comece pelo [COMO_USAR_BRANDING.md](docs/COMO_USAR_BRANDING.md)
 2. **Criar Parceiros?** Veja [SISTEMA_BRANDING.md](docs/SISTEMA_BRANDING.md)
 3. **Criar Páginas?** Consulte [MONTAGEM_PAGINAS.md](docs/MONTAGEM_PAGINAS.md)
@@ -42,6 +46,7 @@ Este projeto possui documentação detalhada em arquivos separados:
 ## 🚀 Tecnologias Utilizadas
 
 ### Frontend
+
 - **React** 18.2.0 - Biblioteca JavaScript para interfaces
 - **React Router DOM** 6.4.2 - Roteamento SPA
 - **Bootstrap** 5.3.5 - Framework CSS responsivo
@@ -52,12 +57,14 @@ Este projeto possui documentação detalhada em arquivos separados:
 - **React Input Mask** - Máscaras de input
 
 ### Utilitários
+
 - **jsPDF** - Geração de PDFs
 - **jsPDF AutoTable** - Tabelas em PDF
 - **File Saver** - Download de arquivos
 - **XLSX** - Manipulação de planilhas Excel
 
 ### DevOps
+
 - **Docker** - Containerização
 - **Docker Compose** - Orquestração de containers
 - **Nginx** - Servidor web de produção
@@ -129,24 +136,28 @@ Onitelecom_site/
 ## 🛠️ Instalação e Execução
 
 ### Pré-requisitos
-- Node.js 18+ 
+
+- Node.js 18+
 - npm ou yarn
 - Docker e Docker Compose (para deploy)
 
 ### Desenvolvimento Local
 
 1. **Clone o repositório**
+
 ```bash
 git clone <url-do-repositorio>
 cd Onitelecom_site
 ```
 
 2. **Instale as dependências**
+
 ```bash
 npm install
 ```
 
 3. **Configure o parceiro (opcional)**
+
 ```bash
 # Crie um arquivo .env na raiz do projeto
 REACT_APP_PARTNER=telecomplus  # onitelecom (padrão) ou telecomplus
@@ -154,6 +165,7 @@ REACT_APP_API_URL=http://localhost:5000/api
 ```
 
 4. **Execute em modo desenvolvimento**
+
 ```bash
 npm start
 ```
@@ -163,11 +175,13 @@ A aplicação estará disponível em `http://localhost:3000`
 ### Build de Produção
 
 **Build com parceiro padrão (OniTelecom):**
+
 ```bash
 npm run build
 ```
 
 **Build para parceiro específico:**
+
 ```bash
 REACT_APP_PARTNER=telecomplus npm run build
 ```
@@ -177,11 +191,13 @@ Os arquivos otimizados serão gerados na pasta `build/`
 ### 🐳 Deploy com Docker
 
 **Desenvolvimento:**
+
 ```bash
 docker-compose up -d
 ```
 
 **Produção com parceiro específico:**
+
 ```bash
 docker-compose build --build-arg REACT_APP_PARTNER=telecomplus
 docker-compose up -d
@@ -210,28 +226,31 @@ docker run -d -p 6540:80 --name onitelecom-site onitelecom-site
 ## 📄 Páginas Disponíveis
 
 ### Páginas Principais
-| Rota | Descrição | White-Label |
-|------|-----------|-------------|
-| `/` | Página inicial | ✅ |
-| `/Quemsomos` | Sobre a empresa | ✅ |
-| `/Internet` | Serviços de internet | ✅ |
-| `/OfertasChips` | Ofertas de chips | ✅ |
-| `/Entretenimento` | Serviços de entretenimento | ✅ |
-| `/Planos` | Planos disponíveis | ✅ |
-| `/ParaEmpresas` | Soluções empresariais | ✅ |
-| `/MonteSeuPlano` | Montagem de plano personalizado | ✅ |
-| `/perguntasfrequentes` | FAQ | ✅ |
-| `/carrinho` | Carrinho de compras | ✅ |
+
+| Rota                   | Descrição                       | White-Label |
+| ---------------------- | ------------------------------- | ----------- |
+| `/`                    | Página inicial                  | ✅          |
+| `/Quemsomos`           | Sobre a empresa                 | ✅          |
+| `/Internet`            | Serviços de internet            | ✅          |
+| `/OfertasChips`        | Ofertas de chips                | ✅          |
+| `/Entretenimento`      | Serviços de entretenimento      | ✅          |
+| `/Planos`              | Planos disponíveis              | ✅          |
+| `/ParaEmpresas`        | Soluções empresariais           | ✅          |
+| `/MonteSeuPlano`       | Montagem de plano personalizado | ✅          |
+| `/perguntasfrequentes` | FAQ                             | ✅          |
+| `/carrinho`            | Carrinho de compras             | ✅          |
 
 ### Páginas Especiais
-| Rota | Descrição |
-|------|-----------|
-| `/Login` | Login de usuários |
+
+| Rota             | Descrição                       |
+| ---------------- | ------------------------------- |
+| `/Login`         | Login de usuários               |
 | `/branding-test` | Interface de teste de parceiros |
 
 ## 🎨 Características do Sistema
 
 ### White-Label & Multi-Tenancy
+
 - ✅ **Branding Completo** - Cores, logos, textos por parceiro
 - ✅ **Multi-Parceiro** - Suporte ilimitado de parceiros
 - ✅ **Detecção Automática** - Via ENV, subdomínio ou localStorage
@@ -239,17 +258,20 @@ docker run -d -p 6540:80 --name onitelecom-site onitelecom-site
 - ✅ **Meta Tags Dinâmicas** - Title, description, favicon por parceiro
 
 ### Controle de Componentes
+
 - ✅ **Visibilidade Configurável** - Ative/desative componentes por página
 - ✅ **Controle de Elementos** - Controle granular de elementos dentro de componentes
 - ✅ **Configuração por JSON** - Sem código, apenas configuração
 
 ### Sistema de Páginas
+
 - ✅ **PageBuilder** - Monte páginas dinamicamente
 - ✅ **Componentes Reutilizáveis** - 25+ componentes disponíveis
 - ✅ **Props Customizáveis** - Personalize comportamento de cada componente
 - ✅ **Rotas Dinâmicas** - Geração automática de rotas
 
 ### Interface & UX
+
 - ✅ Design responsivo (mobile-first)
 - ✅ Carrossel de banners com imagens adaptativas
 - ✅ Sistema de carrinho de compras
@@ -263,6 +285,7 @@ docker run -d -p 6540:80 --name onitelecom-site onitelecom-site
 ## 🚀 Recursos Avançados
 
 ### Sistema de Branding
+
 ```javascript
 // Trocar parceiro via código
 import { switchParceiro } from './data/parceiros';
@@ -274,6 +297,7 @@ const { config, parceiroId } = useBranding();
 ```
 
 ### PageBuilder
+
 ```jsx
 import PageBuilder from './componentes/PageBuilder/PageBuilder';
 
@@ -283,6 +307,7 @@ function MinhaPage() {
 ```
 
 ### Controle de Componentes
+
 ```javascript
 import { shouldShowComponent } from './data/config';
 
@@ -304,6 +329,7 @@ npm run eject                          # Ejeta configuração (não recomendado)
 ## 🎯 Guia Rápido por Funcionalidade
 
 ### Criar Novo Parceiro
+
 1. Copie `src/data/parceiros/telecomplus.js` como modelo
 2. Customize: ID, nome, cores, logos
 3. Registre em `src/data/parceiros/brandingManager.js`
@@ -312,6 +338,7 @@ npm run eject                          # Ejeta configuração (não recomendado)
 📖 **Documentação Completa**: [COMO_USAR_BRANDING.md](docs/COMO_USAR_BRANDING.md)
 
 ### Criar Nova Página
+
 1. Configure em `src/data/config.js` → `config.pages`
 2. Use PageBuilder: `<PageBuilder pageName="suapagina" />`
 3. Adicione componentes desejados ao array
@@ -319,6 +346,7 @@ npm run eject                          # Ejeta configuração (não recomendado)
 📖 **Documentação Completa**: [MONTAGEM_PAGINAS.md](docs/MONTAGEM_PAGINAS.md)
 
 ### Controlar Componentes
+
 1. Edite `src/data/config.js` → `config.components`
 2. Defina visibilidade por página
 3. Use `shouldShowComponent(page, component)`
@@ -328,12 +356,14 @@ npm run eject                          # Ejeta configuração (não recomendado)
 ## 🌐 Deploy Multi-Parceiro
 
 ### Opção 1: Via Subdomínio
+
 ```nginx
 # telecomplus.seusite.com.br → Telecom Plus
 # onitelecom.seusite.com.br → OniTelecom
 ```
 
 ### Opção 2: Via Variável de Ambiente
+
 ```bash
 # Build separado para cada parceiro
 REACT_APP_PARTNER=onitelecom npm run build
@@ -341,6 +371,7 @@ REACT_APP_PARTNER=telecomplus npm run build
 ```
 
 ### Opção 3: Via localStorage (Desenvolvimento)
+
 ```javascript
 localStorage.setItem('activeParceiro', 'telecomplus');
 window.location.reload();
@@ -353,6 +384,7 @@ O projeto está configurado para funcionar na rede Docker `softvirtus-network_so
 ## 📦 Build Multi-Stage
 
 O Dockerfile utiliza build multi-stage para otimizar o tamanho da imagem:
+
 1. **Stage 1**: Build da aplicação React com Node.js
 2. **Stage 2**: Servir conteúdo estático com Nginx Alpine
 
@@ -361,6 +393,7 @@ Tamanho final da imagem: ~25MB
 ## ⚙️ Nginx
 
 Configuração personalizada do Nginx inclui:
+
 - ✅ Suporte a Single Page Application (SPA)
 - ✅ Headers de cache para otimização
 - ✅ Redirecionamento para index.html em rotas não encontradas
@@ -370,12 +403,14 @@ Configuração personalizada do Nginx inclui:
 ## 📊 Parceiros Disponíveis
 
 ### OniTelecom (Padrão)
+
 - **ID**: `onitelecom`
 - **Cor**: Roxo (#6B00FF)
 - **Localização**: João Pessoa - PB
 - **Status**: Configuração padrão
 
 ### Telecom Plus (Exemplo)
+
 - **ID**: `telecomplus`
 - **Cor**: Laranja (#FF6B00)
 - **Localização**: São Paulo - SP
@@ -386,16 +421,19 @@ Configuração personalizada do Nginx inclui:
 ## 🔐 Métodos de Ativação de Parceiro
 
 1. **Variável de Ambiente** (Produção)
+
    ```bash
    REACT_APP_PARTNER=telecomplus npm start
    ```
 
 2. **Subdomínio** (Multi-tenant)
+
    ```
    telecomplus.seusite.com.br
    ```
 
 3. **localStorage** (Desenvolvimento)
+
    ```javascript
    localStorage.setItem('activeParceiro', 'telecomplus');
    ```
@@ -416,6 +454,7 @@ Configuração personalizada do Nginx inclui:
 ## 📞 Suporte
 
 Para suporte técnico ou dúvidas:
+
 - 📧 Email: dev@onitelecom.com.br
 - 📱 WhatsApp: (83) 97601-0064
 - 🌐 Site: https://onitelecom.com.br

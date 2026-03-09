@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar elementos.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (ele_nome → nome, etc).
- * 
+ *
  * @module servicos/elementos
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_ELEMENTOS = '/elementos';
 /**
  * Mapeia dados do backend (ele_nome, ele_descricao, etc)
  * para formato do frontend (nome, descricao, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -42,7 +42,7 @@ const mapearElemento = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -63,7 +63,7 @@ const ElementosServiceBase = criarServicoGenerico(ENDPOINT_ELEMENTOS);
 
 /**
  * Serviço para Gerenciar Elementos
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -77,14 +77,14 @@ const ElementosService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await ElementosServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearElemento(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -95,14 +95,14 @@ const ElementosService = {
    */
   obter: async (id) => {
     const resultado = await ElementosServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearElemento(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -142,14 +142,14 @@ const ElementosService = {
    */
   buscar: async (termo, limit = 20) => {
     const resultado = await ElementosServiceBase.buscar(termo, limit);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearElemento(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 };

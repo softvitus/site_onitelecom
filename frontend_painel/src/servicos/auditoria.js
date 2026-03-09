@@ -1,7 +1,7 @@
 /**
  * @file Serviço de Auditoria
  * @description API de rastreamento de ações e logs de auditoria
- * 
+ *
  * Endpoints:
  * - GET /auditoria - Listar logs com paginação e filtros
  * - GET /auditoria/estatisticas - Obter estatísticas de uso
@@ -28,7 +28,7 @@ class AuditoriaService {
   static async listar(filtros = {}) {
     try {
       const params = new URLSearchParams();
-      
+
       if (filtros.page) params.append('page', filtros.page);
       if (filtros.limit) params.append('limit', Math.min(filtros.limit, 500));
       if (filtros.acao) params.append('acao', filtros.acao);
@@ -55,7 +55,7 @@ class AuditoriaService {
   static async estatisticas(filtros = {}) {
     try {
       const params = new URLSearchParams();
-      
+
       if (filtros.dataInicio) params.append('dataInicio', filtros.dataInicio);
       if (filtros.dataFim) params.append('dataFim', filtros.dataFim);
 
@@ -76,13 +76,11 @@ class AuditoriaService {
   static async porUsuario(usuarioId, opcoes = {}) {
     try {
       const params = new URLSearchParams();
-      
+
       if (opcoes.page) params.append('page', opcoes.page);
       if (opcoes.limit) params.append('limit', Math.min(opcoes.limit, 500));
 
-      const response = await api.get(
-        `/auditoria/usuario/${usuarioId}?${params.toString()}`
-      );
+      const response = await api.get(`/auditoria/usuario/${usuarioId}?${params.toString()}`);
       return response.data;
     } catch (error) {
       console.error('Erro ao obter logs do usuário:', error);
@@ -100,7 +98,7 @@ class AuditoriaService {
   static async porEntidade(entidade, entidadeId, opcoes = {}) {
     try {
       const params = new URLSearchParams();
-      
+
       if (opcoes.page) params.append('page', opcoes.page);
       if (opcoes.limit) params.append('limit', Math.min(opcoes.limit, 500));
 
@@ -153,7 +151,7 @@ class AuditoriaService {
    * @returns {Object} { texto, icone, classe }
    */
   static formatarStatus(status) {
-    return status === 'sucesso' 
+    return status === 'sucesso'
       ? { texto: 'Sucesso', icone: 'FiCheckCircle', classe: 'status-sucesso' }
       : { texto: 'Erro', icone: 'FiXCircle', classe: 'status-erro' };
   }

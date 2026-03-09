@@ -153,17 +153,19 @@ export const BrandingProvider = ({ children }) => {
 
         // eslint-disable-next-line no-console
         console.error('[BrandingContext] Erro ao inicializar branding:', err);
-        
+
         // Se for erro de conexão com API, redireciona para página de erro
         if (isConnectionError(err)) {
           // eslint-disable-next-line no-console
 
           // eslint-disable-next-line no-console
-          console.error('[BrandingContext] Erro de conexão com API - redirecionando para página de erro');
+          console.error(
+            '[BrandingContext] Erro de conexão com API - redirecionando para página de erro'
+          );
           redirectToErrorPage();
           return;
         }
-        
+
         setConfig({});
         setError(err.message);
       } finally {
@@ -350,5 +352,3 @@ export const useBrandingError = () => {
 
 export default BrandingContext;
 export { MIN_LOADING_TIME, CONTEXT_ERROR_MESSAGE };
-
-

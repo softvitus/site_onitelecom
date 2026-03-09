@@ -88,8 +88,18 @@ describe('PermissoesController - Unit Tests', () => {
   describe('getAll - GET /api/permissoes', () => {
     it('deve retornar lista de permissões com paginação', async () => {
       const mockPermissoes = [
-        { perm_id: '1', perm_nome: 'tema_editar', perm_modulo: 'tema', perm_acao: 'editar' },
-        { perm_id: '2', perm_nome: 'tema_visualizar', perm_modulo: 'tema', perm_acao: 'visualizar' },
+        {
+          perm_id: '1',
+          perm_nome: 'tema_editar',
+          perm_modulo: 'tema',
+          perm_acao: 'editar',
+        },
+        {
+          perm_id: '2',
+          perm_nome: 'tema_visualizar',
+          perm_modulo: 'tema',
+          perm_acao: 'visualizar',
+        },
       ];
 
       mockService.findAll.mockResolvedValue({
@@ -206,8 +216,10 @@ describe('PermissoesController - Unit Tests', () => {
     });
 
     it('deve chamar AuditoriaService ao criar', async () => {
-      const { AuditoriaService } = require('../../services/AuditoriaService.js');
-      
+      const {
+        AuditoriaService,
+      } = require('../../services/AuditoriaService.js');
+
       const createData = {
         perm_nome: 'usuario_criar',
         perm_modulo: 'usuario',
@@ -287,10 +299,18 @@ describe('PermissoesController - Unit Tests', () => {
     });
 
     it('deve chamar AuditoriaService ao atualizar', async () => {
-      const { AuditoriaService } = require('../../services/AuditoriaService.js');
-      
-      const anterior = createMockModel({ perm_id: '123', perm_nome: 'tema_editar' });
-      const updated = createMockModel({ perm_id: '123', perm_nome: 'tema_editar_v2' });
+      const {
+        AuditoriaService,
+      } = require('../../services/AuditoriaService.js');
+
+      const anterior = createMockModel({
+        perm_id: '123',
+        perm_nome: 'tema_editar',
+      });
+      const updated = createMockModel({
+        perm_id: '123',
+        perm_nome: 'tema_editar_v2',
+      });
 
       mockService.findById.mockResolvedValue(anterior);
       mockService.updatePayload.mockResolvedValue(updated);
@@ -363,10 +383,10 @@ describe('PermissoesController - Unit Tests', () => {
 
       await controller.getByModulo(mockReq, mockRes, mockNext);
 
-      expect(mockService.findByModulo).toHaveBeenCalledWith(
-        'tema',
-        { page: 1, limit: 50 },
-      );
+      expect(mockService.findByModulo).toHaveBeenCalledWith('tema', {
+        page: 1,
+        limit: 50,
+      });
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
         data: mockPermissoes,
@@ -385,10 +405,10 @@ describe('PermissoesController - Unit Tests', () => {
 
       await controller.getByModulo(mockReq, mockRes, mockNext);
 
-      expect(mockService.findByModulo).toHaveBeenCalledWith(
-        'tema',
-        { page: 1, limit: 50 },
-      );
+      expect(mockService.findByModulo).toHaveBeenCalledWith('tema', {
+        page: 1,
+        limit: 50,
+      });
     });
   });
 
@@ -411,10 +431,10 @@ describe('PermissoesController - Unit Tests', () => {
 
       await controller.getByAcao(mockReq, mockRes, mockNext);
 
-      expect(mockService.findByAcao).toHaveBeenCalledWith(
-        'editar',
-        { page: 1, limit: 50 },
-      );
+      expect(mockService.findByAcao).toHaveBeenCalledWith('editar', {
+        page: 1,
+        limit: 50,
+      });
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
         data: mockPermissoes,
@@ -433,10 +453,10 @@ describe('PermissoesController - Unit Tests', () => {
 
       await controller.getByAcao(mockReq, mockRes, mockNext);
 
-      expect(mockService.findByAcao).toHaveBeenCalledWith(
-        'editar',
-        { page: 2, limit: 50 },
-      );
+      expect(mockService.findByAcao).toHaveBeenCalledWith('editar', {
+        page: 2,
+        limit: 50,
+      });
     });
   });
 });

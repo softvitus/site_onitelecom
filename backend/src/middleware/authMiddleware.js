@@ -48,23 +48,11 @@ export const authMiddleware = (req, res, next) => {
     next();
   } catch (error) {
     if (error.name === 'JsonWebTokenError') {
-      return next(
-        new ApiError(
-          'INVALID_TOKEN',
-          'Token inválido',
-          401,
-        ),
-      );
+      return next(new ApiError('INVALID_TOKEN', 'Token inválido', 401));
     }
 
     if (error.name === 'TokenExpiredError') {
-      return next(
-        new ApiError(
-          'TOKEN_EXPIRED',
-          'Token expirado',
-          401,
-        ),
-      );
+      return next(new ApiError('TOKEN_EXPIRED', 'Token expirado', 401));
     }
 
     next(error);
@@ -79,11 +67,7 @@ export const requireRole = (allowedRoles = []) => {
   return (req, res, next) => {
     try {
       if (!req.user) {
-        throw new ApiError(
-          'UNAUTHORIZED',
-          'Usuário não autenticado',
-          401,
-        );
+        throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
       }
 
       if (!allowedRoles.includes(req.user.tipo)) {
@@ -107,19 +91,11 @@ export const requireRole = (allowedRoles = []) => {
 export const requireAdmin = (req, res, next) => {
   try {
     if (!req.user) {
-      throw new ApiError(
-        'UNAUTHORIZED',
-        'Usuário não autenticado',
-        401,
-      );
+      throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
     }
 
     if (req.user.tipo !== 'admin') {
-      throw new ApiError(
-        'FORBIDDEN',
-        'Acesso restrito a administradores',
-        403,
-      );
+      throw new ApiError('FORBIDDEN', 'Acesso restrito a administradores', 403);
     }
 
     next();
@@ -134,19 +110,11 @@ export const requireAdmin = (req, res, next) => {
 export const requireGestor = (req, res, next) => {
   try {
     if (!req.user) {
-      throw new ApiError(
-        'UNAUTHORIZED',
-        'Usuário não autenticado',
-        401,
-      );
+      throw new ApiError('UNAUTHORIZED', 'Usuário não autenticado', 401);
     }
 
     if (!['admin', 'gestor'].includes(req.user.tipo)) {
-      throw new ApiError(
-        'FORBIDDEN',
-        'Acesso restrito a gestores',
-        403,
-      );
+      throw new ApiError('FORBIDDEN', 'Acesso restrito a gestores', 403);
     }
 
     next();
@@ -197,23 +165,11 @@ export const validateTokenOnly = (req, res, next) => {
     next();
   } catch (error) {
     if (error.name === 'JsonWebTokenError') {
-      return next(
-        new ApiError(
-          'INVALID_TOKEN',
-          'Token inválido',
-          401,
-        ),
-      );
+      return next(new ApiError('INVALID_TOKEN', 'Token inválido', 401));
     }
 
     if (error.name === 'TokenExpiredError') {
-      return next(
-        new ApiError(
-          'TOKEN_EXPIRED',
-          'Token expirado',
-          401,
-        ),
-      );
+      return next(new ApiError('TOKEN_EXPIRED', 'Token expirado', 401));
     }
 
     next(error);

@@ -189,4 +189,3 @@ const styles = {
 };
 
 export default ErrorBoundary;
-

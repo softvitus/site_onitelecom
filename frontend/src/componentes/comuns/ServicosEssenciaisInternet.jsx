@@ -10,9 +10,13 @@
  * @returns {React.ReactElement} Seção de serviços essenciais de internet
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from '../../estilos/componentes/comuns/ServicosEssenciaisInternet.module.css';
-import { getTemaConteudosByCategoria, getTemaImagensByCategoria } from '../../servicos/tema';
+import {
+  getTemaConteudosByCategoria,
+  getTemaImagensByCategoria,
+  getComponentColors,
+} from '../../servicos/tema';
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // 🔧 EFEITOS
@@ -126,6 +130,49 @@ const ServicesGrid = ({ items, images }) => (
  */
 const ServicosEssenciaisInternet = () => {
   // ─────────────────────────────────────────────────────────────────────────────────
+  // EFEITOS
+  // ─────────────────────────────────────────────────────────────────────────────────
+
+  /**
+   * Aplica cores do tema dinamicamente ao montar o componente
+   * Busca cores da API e as adiciona como variáveis CSS inline
+   */
+  useEffect(() => {
+    try {
+      const colors = getComponentColors('servicosEssenciaisInternet');
+
+      if (!colors || Object.keys(colors).length === 0) {
+        return;
+      }
+
+      const root = document.documentElement;
+
+      // Mapeamento de cores do componente para variáveis CSS
+      const colorMap = {
+        container16Background: '--servicosEssenciaisInternet-container16Background',
+        rowBackground: '--servicosEssenciaisInternet-rowBackground',
+        colBackground: '--servicosEssenciaisInternet-colBackground',
+        cardBackground: '--servicosEssenciaisInternet-cardBackground',
+        cardImageBackground: '--servicosEssenciaisInternet-cardImageBackground',
+        imageFluidsBackground: '--servicosEssenciaisInternet-imageFluidsBackground',
+        textTitle: '--servicosEssenciaisInternet-textTitle',
+        textDescription: '--servicosEssenciaisInternet-textDescription',
+        cardHoverShadow: '--servicosEssenciaisInternet-cardHoverShadow',
+      };
+
+      // Aplicar cada cor como variável CSS
+      Object.entries(colorMap).forEach(([colorKey, cssVar]) => {
+        if (colors[colorKey]) {
+          root.style.setProperty(cssVar, colors[colorKey]);
+        }
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('[ServicosEssenciaisInternet] Erro ao aplicar cores do tema:', error);
+    }
+  }, []);
+
+  // ─────────────────────────────────────────────────────────────────────────────────
   // DATA
   // ─────────────────────────────────────────────────────────────────────────────────
 
@@ -140,7 +187,6 @@ const ServicosEssenciaisInternet = () => {
     <section
       id={SECTION_ID}
       className={styles['container16']}
-     
       aria-labelledby="servicos-internet-title"
     >
       <div className={styles['container']}>
@@ -152,5 +198,3 @@ const ServicosEssenciaisInternet = () => {
 };
 
 export default ServicosEssenciaisInternet;
-
-

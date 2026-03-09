@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Elementos
  * @description Interface completa de CRUD para elementos
- * 
+ *
  * @module paginas/Elementos/ElementosPage
  */
 
@@ -41,15 +41,21 @@ const COLUNAS_GRID = [
     titulo: 'Obrigatório',
     largura: '10%',
     render: (valor) => (
-      <span style={{
-        padding: '0.25rem 0.75rem',
-        borderRadius: '4px',
-        fontSize: '0.8rem',
-        fontWeight: '500',
-        backgroundColor: valor === true ? '#dcfce7' : '#f3f4f6',
-        color: valor === true ? '#166534' : '#6b7280',
-      }}>
-        {valor === true ? <FiCheck size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> : <FiX size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} />}
+      <span
+        style={{
+          padding: '0.25rem 0.75rem',
+          borderRadius: '4px',
+          fontSize: '0.8rem',
+          fontWeight: '500',
+          backgroundColor: valor === true ? '#dcfce7' : '#f3f4f6',
+          color: valor === true ? '#166534' : '#6b7280',
+        }}
+      >
+        {valor === true ? (
+          <FiCheck size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} />
+        ) : (
+          <FiX size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} />
+        )}
         {valor === true ? 'Sim' : 'Não'}
       </span>
     ),
@@ -59,18 +65,24 @@ const COLUNAS_GRID = [
     titulo: 'Status',
     largura: '10%',
     render: (valor) => (
-      <span style={{
-        padding: '0.25rem 0.75rem',
-        borderRadius: '4px',
-        fontSize: '0.8rem',
-        fontWeight: '500',
-        backgroundColor: valor === true ? '#dcfce7' : '#fee2e2',
-        color: valor === true ? '#166534' : '#991b1b',
-      }}>
+      <span
+        style={{
+          padding: '0.25rem 0.75rem',
+          borderRadius: '4px',
+          fontSize: '0.8rem',
+          fontWeight: '500',
+          backgroundColor: valor === true ? '#dcfce7' : '#fee2e2',
+          color: valor === true ? '#166534' : '#991b1b',
+        }}
+      >
         {valor === true ? (
-          <><FiCheck size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Ativo</>
+          <>
+            <FiCheck size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Ativo
+          </>
         ) : (
-          <><FiX size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Inativo</>
+          <>
+            <FiX size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Inativo
+          </>
         )}
       </span>
     ),
@@ -110,16 +122,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Elementos
- * 
+ *
  * Funcionalidades completas de CRUD.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const ElementosPage = () => {
   // Autenticação e Permissões
   const { usuario, temPermissao } = useAuth();
-  
+
   // Estado
   const [elementos, setElementos] = useState([]);
   const [carregando, setCarregando] = useState(true);
@@ -165,12 +177,12 @@ const ElementosPage = () => {
 
     try {
       const filtros = { search: filtro };
-      
+
       // Se não é admin, filtrar pelo parceiro do usuário
       if (usuario?.tipo !== 'admin' && usuario?.parceiroId) {
         filtros.parceiroId = usuario.parceiroId;
       }
-      
+
       const resultado = await ElementosService.listar(pagina, itensPorPagina, filtros);
 
       if (resultado.sucesso) {
@@ -283,7 +295,7 @@ const ElementosPage = () => {
   const executarAlterarStatus = async () => {
     if (!confirmarDialog.elemento) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const elemento = confirmarDialog.elemento;
     const novoAtivo = !elemento.ativo;
@@ -296,21 +308,19 @@ const ElementosPage = () => {
 
       if (resultado.sucesso) {
         const alerta =
-          novoAtivo === true
-            ? 'Elemento ativado com sucesso!'
-            : 'Elemento desativado com sucesso!';
+          novoAtivo === true ? 'Elemento ativado com sucesso!' : 'Elemento desativado com sucesso!';
         setAlerta(criarAlerta('sucesso', alerta));
         await carregarDadosGrid(PAGINACAO.PAGINA_INICIAL, PAGINACAO.ITENS_POR_PAGINA);
         setTimeout(() => setAlerta(null), DURACAO_ALERTA);
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao alterar status'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao alterar status do elemento'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -401,11 +411,7 @@ const ElementosPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarElemento}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarElemento} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -415,7 +421,9 @@ const ElementosPage = () => {
           {/* Nome com Checkboxes - mesma linha */}
           <div className="modal-form-row cols-4">
             <div className="modal-form-group" style={{ gridColumn: 'span 2' }}>
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -423,9 +431,7 @@ const ElementosPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Ex: campo de email, botão de envio"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
 
             <div className="modal-form-group">
@@ -470,9 +476,15 @@ const ElementosPage = () => {
       {/* Confirm Dialog */}
       <ConfirmDialog
         aberto={confirmarDialog.aberto}
-        titulo={confirmarDialog.elemento?.ativo === true ? 'Inativar Elemento?' : 'Ativar Elemento?'}
+        titulo={
+          confirmarDialog.elemento?.ativo === true ? 'Inativar Elemento?' : 'Ativar Elemento?'
+        }
         mensagem={`Tem certeza que deseja ${confirmarDialog.elemento?.ativo === true ? 'inativar' : 'ativar'} o elemento "${confirmarDialog.elemento?.nome}"?`}
-        tipo={confirmarDialog.elemento?.ativo === true ? TIPOS_CONFIRMACAO.PERIGO : TIPOS_CONFIRMACAO.SUCESSO}
+        tipo={
+          confirmarDialog.elemento?.ativo === true
+            ? TIPOS_CONFIRMACAO.PERIGO
+            : TIPOS_CONFIRMACAO.SUCESSO
+        }
         onConfirmar={executarAlterarStatus}
         onCancelar={fecharConfirmarDialog}
         textoBotaoConfirmar={confirmarDialog.elemento?.ativo === true ? 'Inativar' : 'Ativar'}

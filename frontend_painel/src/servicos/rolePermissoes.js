@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar permissões de funções (roles).
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (roleperm_tipo → tipo, roleperm_perm_id → permissaoId, etc).
- * 
+ *
  * @module servicos/rolePermissoes
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_ROLE_PERMISSOES = '/role-permissoes';
 /**
  * Mapeia dados do backend (roleperm_tipo, roleperm_perm_id, etc)
  * para formato do frontend (tipo, permissaoId, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -44,7 +44,7 @@ const mapearRolePermissao = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -68,7 +68,7 @@ const servicoBase = criarServicoGenerico(ENDPOINT_ROLE_PERMISSOES);
 const RolePermissoesService = {
   /**
    * Lista todas as role permissões com paginação
-   * 
+   *
    * @param {number} page - Número da página
    * @param {number} limit - Itens por página
    * @param {Object} filtros - Filtros (search, tipo)
@@ -98,7 +98,7 @@ const RolePermissoesService = {
 
   /**
    * Obtém uma role permissão específica
-   * 
+   *
    * @param {string|number} id - ID da role permissão
    * @returns {Promise<Object>} { sucesso, dados, erro }
    */
@@ -126,7 +126,7 @@ const RolePermissoesService = {
 
   /**
    * Cria uma nova role permissão
-   * 
+   *
    * @param {Object} dados - Dados da role permissão (tipo, permissaoId)
    * @returns {Promise<Object>} { sucesso, dados, erro }
    */
@@ -155,7 +155,7 @@ const RolePermissoesService = {
 
   /**
    * Atualiza uma role permissão
-   * 
+   *
    * @param {string|number} id - ID da role permissão
    * @param {Object} dados - Dados a atualizar
    * @returns {Promise<Object>} { sucesso, dados, erro }
@@ -185,7 +185,7 @@ const RolePermissoesService = {
 
   /**
    * Deleta uma role permissão
-   * 
+   *
    * @param {string|number} id - ID da role permissão
    * @returns {Promise<Object>} { sucesso, erro }
    */
@@ -193,7 +193,7 @@ const RolePermissoesService = {
 
   /**
    * Lista role permissões por tipo
-   * 
+   *
    * @param {string} tipo - Tipo de role (admin, gestor, usuario)
    * @param {number} page - Página
    * @param {number} limit - Limite
@@ -215,7 +215,7 @@ const RolePermissoesService = {
 
   /**
    * Busca role permissões por query
-   * 
+   *
    * @param {string} query - Query de busca
    * @param {number} page - Página
    * @param {number} limit - Limite

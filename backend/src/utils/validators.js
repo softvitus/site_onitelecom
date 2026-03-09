@@ -25,9 +25,13 @@ export const parceiroCreateSchema = Joi.object({
     'string.empty': 'Domínio é obrigatório',
     'string.max': 'Domínio deve ter no máximo 255 caracteres',
   }),
-  par_dominio_painel: Joi.string().max(255).optional().allow(null, '').messages({
-    'string.max': 'Domínio do painel deve ter no máximo 255 caracteres',
-  }),
+  par_dominio_painel: Joi.string()
+    .max(255)
+    .optional()
+    .allow(null, '')
+    .messages({
+      'string.max': 'Domínio do painel deve ter no máximo 255 caracteres',
+    }),
   par_cidade: Joi.string().max(100).required().messages({
     'string.empty': 'Cidade é obrigatória',
   }),
@@ -39,7 +43,9 @@ export const parceiroCreateSchema = Joi.object({
   par_latitude: Joi.number().min(-90).max(90).optional(),
   par_longitude: Joi.number().min(-180).max(180).optional(),
   par_raio_cobertura: Joi.number().min(0).optional(),
-  par_status: Joi.string().valid(...STATUS_VALUES).default('ativo'),
+  par_status: Joi.string()
+    .valid(...STATUS_VALUES)
+    .default('ativo'),
 });
 
 export const parceiroUpdateSchema = Joi.object({
@@ -53,7 +59,9 @@ export const parceiroUpdateSchema = Joi.object({
   par_latitude: Joi.number().min(-90).max(90).optional(),
   par_longitude: Joi.number().min(-180).max(180).optional(),
   par_raio_cobertura: Joi.number().min(0).optional(),
-  par_status: Joi.string().valid(...STATUS_VALUES).optional(),
+  par_status: Joi.string()
+    .valid(...STATUS_VALUES)
+    .optional(),
 });
 
 // ============================================================================
@@ -96,7 +104,9 @@ export const paginaCreateSchema = Joi.object({
   pag_tem_id: Joi.string().uuid().required().messages({
     'string.empty': 'Tema é obrigatório',
   }),
-  pag_status: Joi.string().valid(...STATUS_VALUES).default('ativo'),
+  pag_status: Joi.string()
+    .valid(...STATUS_VALUES)
+    .default('ativo'),
   pag_mostrar_no_menu: Joi.boolean().default(false),
   pag_etiqueta_menu: Joi.string().max(100).optional().allow(null, ''),
   pag_ordem_menu: Joi.number().integer().min(0).optional().allow(null),
@@ -110,7 +120,9 @@ export const paginaUpdateSchema = Joi.object({
   pag_titulo: Joi.string().max(255).optional(),
   pag_par_id: Joi.string().uuid().optional(),
   pag_tem_id: Joi.string().uuid().optional(),
-  pag_status: Joi.string().valid(...STATUS_VALUES).optional(),
+  pag_status: Joi.string()
+    .valid(...STATUS_VALUES)
+    .optional(),
   pag_mostrar_no_menu: Joi.boolean().optional(),
   pag_etiqueta_menu: Joi.string().max(100).optional().allow(null, ''),
   pag_ordem_menu: Joi.number().integer().min(0).optional().allow(null),
@@ -125,7 +137,9 @@ export const paginaUpdateSchema = Joi.object({
 export const paginationSchema = Joi.object({
   page: Joi.number().integer().min(1).default(1),
   limit: Joi.number().integer().min(1).max(100).default(10),
-  status: Joi.string().valid(...STATUS_VALUES).optional(),
+  status: Joi.string()
+    .valid(...STATUS_VALUES)
+    .optional(),
   search: Joi.string().max(255).optional(),
 });
 
@@ -140,20 +154,20 @@ export const paginationSchema = Joi.object({
 export const validateBody = (schema) => {
   return (req, res, next) => {
     const { error, value } = schema.validate(req.body, { abortEarly: false });
-    
+
     if (error) {
-      const details = error.details.map(d => ({
+      const details = error.details.map((d) => ({
         field: d.path.join('.'),
         message: d.message,
       }));
-      
+
       return res.status(400).json({
         success: false,
         error: 'Erro de validação',
         details,
       });
     }
-    
+
     req.body = value; // Substitui com valores sanitizados
     next();
   };
@@ -166,20 +180,20 @@ export const validateBody = (schema) => {
 export const validateQuery = (schema) => {
   return (req, res, next) => {
     const { error, value } = schema.validate(req.query, { abortEarly: false });
-    
+
     if (error) {
-      const details = error.details.map(d => ({
+      const details = error.details.map((d) => ({
         field: d.path.join('.'),
         message: d.message,
       }));
-      
+
       return res.status(400).json({
         success: false,
         error: 'Parâmetros de consulta inválidos',
         details,
       });
     }
-    
+
     req.query = value;
     next();
   };

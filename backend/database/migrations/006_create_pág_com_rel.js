@@ -53,12 +53,12 @@ export default {
     await queryInterface.addIndex('0006_Pág_Com_Rel', ['pcr_pag_id']);
     await queryInterface.addIndex('0006_Pág_Com_Rel', ['pcr_com_id']);
     await queryInterface.addIndex('0006_Pág_Com_Rel', ['pcr_habilitado']);
-    
+
     // UNIQUE constraint: uma página não pode ter o mesmo componente mais de uma vez
     await queryInterface.addConstraint('0006_Pág_Com_Rel', {
       fields: ['pcr_pag_id', 'pcr_com_id'],
       type: 'unique',
-      name: 'unique_pagina_componente'
+      name: 'unique_pagina_componente',
     });
   },
 

@@ -52,7 +52,9 @@ export const performanceLogger = (req, res, next) => {
 
     if (ms > 1000 && process.env.PERFORMANCE_LOGGING !== 'false') {
       // eslint-disable-next-line no-console
-      console.warn(`[PERFORMANCE] ${req.method} ${req.path} levou ${ms}ms (lento!)`);
+      console.warn(
+        `[PERFORMANCE] ${req.method} ${req.path} levou ${ms}ms (lento!)`,
+      );
     }
   });
 

@@ -11,9 +11,12 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
 
   beforeAll(() => {
     // Tokens JWT mock para testes (estrutura real mas valores fixos)
-    mockTokenAdmin = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0NzkiLCJ1c3VfdHlwbyI6ImFkbWluIn0.test_admin';
-    mockTokenGestor = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0ODAiLCJ1c3VfdHlwbyI6Imdlc3RvciJ9.test_gestor';
-    mockTokenUsuario = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0ODEiLCJ1c3VfdHlwbyI6InVzdWFyaW8ifQ.test_usuario';
+    mockTokenAdmin =
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0NzkiLCJ1c3VfdHlwbyI6ImFkbWluIn0.test_admin';
+    mockTokenGestor =
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0ODAiLCJ1c3VfdHlwbyI6Imdlc3RvciJ9.test_gestor';
+    mockTokenUsuario =
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0ODEiLCJ1c3VfdHlwbyI6InVzdWFyaW8ifQ.test_usuario';
   });
 
   describe('Estrutura de Requisição HTTP', () => {
@@ -30,7 +33,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Token deve estar no header Authorization', () => {
       const header = 'Authorization';
       const expectedToken = mockTokenAdmin;
-      
+
       expect(header).toBe('Authorization');
       expect(expectedToken).toMatch(/Bearer .+/);
     });
@@ -77,7 +80,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('GET /health deve ser endpoint público', () => {
       const endpoint = '/health';
       const requiresAuth = false;
-      
+
       expect(endpoint).toBe('/health');
       expect(requiresAuth).toBe(false);
     });
@@ -85,7 +88,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('POST /auth/login deve ser endpoint público', () => {
       const endpoint = '/auth/login';
       const requiresAuth = false;
-      
+
       expect(endpoint).toBe('/auth/login');
       expect(requiresAuth).toBe(false);
     });
@@ -107,28 +110,28 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('GET /temas requer autenticação', () => {
       const endpoint = '/temas';
       const requiresAuth = true;
-      
+
       expect(requiresAuth).toBe(true);
     });
 
     it('POST /temas requer autenticação', () => {
       const endpoint = '/temas';
       const requiresAuth = true;
-      
+
       expect(requiresAuth).toBe(true);
     });
 
     it('PUT /temas/:id requer autenticação', () => {
       const endpoint = '/temas/:id';
       const requiresAuth = true;
-      
+
       expect(requiresAuth).toBe(true);
     });
 
     it('DELETE /temas/:id requer autenticação', () => {
       const endpoint = '/temas/:id';
       const requiresAuth = true;
-      
+
       expect(requiresAuth).toBe(true);
     });
   });
@@ -138,7 +141,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
       const endpoint = '/temas';
       const permission = 'tema_criar';
       const method = 'POST';
-      
+
       expect(permission).toBe('tema_criar');
     });
 
@@ -146,7 +149,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
       const endpoint = '/temas/:id';
       const permission = 'tema_deletar';
       const method = 'DELETE';
-      
+
       expect(permission).toBe('tema_deletar');
     });
 
@@ -155,7 +158,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
       const canCreateTema = true;
       const canDeleteTema = true;
       const canViewUsers = true;
-      
+
       expect(role).toBe('admin');
       expect(canCreateTema && canDeleteTema && canViewUsers).toBe(true);
     });
@@ -164,7 +167,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
       const role = 'gestor';
       const canCreateTema = true;
       const canDeleteTema = false;
-      
+
       expect(role).toBe('gestor');
       expect(canCreateTema).toBe(true);
       expect(canDeleteTema).toBe(false);
@@ -175,7 +178,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
       const canCreateTema = false;
       const canDeleteTema = false;
       const canViewTema = true;
-      
+
       expect(canCreateTema).toBe(false);
       expect(canDeleteTema).toBe(false);
       expect(canViewTema).toBe(true);
@@ -191,7 +194,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Response pode ter Access-Control-Allow-Origin header', () => {
       const corsEnabled = true;
       const header = 'Access-Control-Allow-Origin';
-      
+
       if (corsEnabled) {
         expect(header).toBeDefined();
       }
@@ -200,7 +203,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Response deve ter X-Response-Time header se habilitado', () => {
       const hasPerformanceHeader = true;
       const header = 'X-Response-Time';
-      
+
       if (hasPerformanceHeader) {
         expect(header).toBeDefined();
       }
@@ -211,7 +214,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Servidor deve suportar múltiplas requisições', async () => {
       const requestCount = 10;
       const expectedStatus = 200;
-      
+
       expect(requestCount).toBeGreaterThan(0);
       expect(expectedStatus).toBe(200);
     });
@@ -219,7 +222,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Requisições simultâneas não devem interferir umas nas outras', () => {
       const request1Id = 'req-001';
       const request2Id = 'req-002';
-      
+
       expect(request1Id).not.toBe(request2Id);
     });
   });
@@ -228,7 +231,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Erro 401 deve retornar mensagem de autenticação', () => {
       const statusCode = 401;
       const expectedError = 'Autenticação necessária';
-      
+
       expect(statusCode).toBe(401);
       expect(expectedError).toMatch(/[Aa]utenticação/);
     });
@@ -236,7 +239,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Erro 403 deve retornar mensagem de permissão', () => {
       const statusCode = 403;
       const expectedError = 'Permissão insuficiente';
-      
+
       expect(statusCode).toBe(403);
       expect(expectedError).toMatch(/[Pp]ermissão/);
     });
@@ -244,7 +247,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Erro 404 deve retornar mensagem de recurso não encontrado', () => {
       const statusCode = 404;
       const expectedError = 'Recurso não encontrado';
-      
+
       expect(statusCode).toBe(404);
       expect(expectedError).toMatch(/[Rr]ecurso/);
     });
@@ -252,7 +255,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Servidor não deve expor stack trace em produção', () => {
       const errorMessage = 'Error at function';
       const shouldContainStackTrace = false;
-      
+
       expect(shouldContainStackTrace).toBe(false);
     });
   });
@@ -261,7 +264,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Gestor deve acessar apenas dados do seu parceiro', () => {
       const gestorParceiroId = '550e8400-e29b-41d4-a716-446655440001';
       const dataParceiroId = '550e8400-e29b-41d4-a716-446655440001';
-      
+
       const shouldHaveAccess = gestorParceiroId === dataParceiroId;
       expect(shouldHaveAccess).toBe(true);
     });
@@ -269,7 +272,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Gestor NÃO deve acessar dados de outro parceiro', () => {
       const gestorParceiroId = '550e8400-e29b-41d4-a716-446655440001';
       const otherParceiroId = '550e8400-e29b-41d4-a716-446655440002';
-      
+
       const shouldHaveAccess = gestorParceiroId === otherParceiroId;
       expect(shouldHaveAccess).toBe(false);
     });
@@ -277,7 +280,7 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Admin pode acessar dados de todos os parceiros', () => {
       const isAdmin = true;
       const canAccessAllData = isAdmin;
-      
+
       expect(canAccessAllData).toBe(true);
     });
   });
@@ -286,16 +289,15 @@ describe('Rotas HTTP - Integration Tests (Real Simulation)', () => {
     it('Endpoint /health deve responder rapidamente', () => {
       const responseTime = 50; // ms
       const maxAllowedTime = 1000; // ms
-      
+
       expect(responseTime).toBeLessThan(maxAllowedTime);
     });
 
     it('Endpoint /temas/:id deve responder em tempo aceitável', () => {
       const responseTime = 150; // ms
       const maxAllowedTime = 500; // ms
-      
+
       expect(responseTime).toBeLessThan(maxAllowedTime);
     });
   });
 });
-

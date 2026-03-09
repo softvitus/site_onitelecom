@@ -36,26 +36,21 @@ function AlertaPermissao({
     <div className={`alerta-permissao alerta-${tipo}`}>
       <div className="card-alerta">
         <FaLock className="icone" />
-        
+
         <h2>{titulo}</h2>
         <p className="mensagem">{mensagem}</p>
-        
+
         {permissaoNecessaria && (
           <div className="detalhes">
             <p>
               Permissão necessária: <code>{permissaoNecessaria}</code>
             </p>
-            <p className="dica">
-              Entre em contato com um administrador para obter acesso.
-            </p>
+            <p className="dica">Entre em contato com um administrador para obter acesso.</p>
           </div>
         )}
 
         <div className="acoes">
-          <button 
-            className="btn btn-voltar"
-            onClick={handleVoltar}
-          >
+          <button className="btn btn-voltar" onClick={handleVoltar}>
             ← Voltar
           </button>
         </div>

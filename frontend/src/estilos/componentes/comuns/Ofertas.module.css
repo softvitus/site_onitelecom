@@ -1,7 +1,62 @@
+/* ================== VARIÁVEIS CSS CUSTOM - Ofertas ================== */
+
+:root {
+  /* Cores de Texto Genéricas */
+  --ofertas-textColor: var(--color-neutral-black);
+  --ofertas-textColorLight: var(--color-neutral-white);
+
+  /* Cabeçalho */
+  --ofertas-headline: var(--color-primary-main);
+  --ofertas-headlineTitle: var(--color-neutral-white);
+  --ofertas-headlineText: var(--color-neutral-white);
+
+  /* Botões Nav */
+  --ofertas-navButton: var(--color-primary-main);
+  --ofertas-navButtonHover: var(--color-primary-dark);
+
+  /* Cards */
+  --ofertas-cardBorder: var(--color-primary-main);
+  --ofertas-cardContent: var(--color-neutral-white);
+
+  /* Header Card */
+  --ofertas-cardHeader: var(--color-primary-main);
+
+  /* Speed */
+  --ofertas-speedColor: var(--color-primary-main);
+
+  /* Benefícios */
+  --ofertas-benefitsLabel: var(--color-primary-main);
+
+  /* Divisor */
+  --ofertas-dividerColor: var(--color-primary-main);
+
+  /* App Icons */
+  --ofertas-appBorder: var(--color-primary-main);
+  --ofertas-appBorderHover: var(--color-secondary-blue);
+
+  /* Preço */
+  --ofertas-priceColor: var(--color-primary-main);
+  --ofertas-priceMonthColor: var(--color-neutral-800);
+
+  /* Botão Contratar */
+  --ofertas-buttonBg: var(--color-primary-main);
+  --ofertas-buttonColor: var(--color-neutral-white);
+  --ofertas-buttonShadow: 0px 4px 8px var(--color-primary-main);
+  --ofertas-buttonShadowHover: 0px 6px 16px var(--color-primary-main);
+
+  /* Sombras - Elementos */
+  --ofertas-navShadow: 0 0 15px var(--color-primary-main);
+  --ofertas-headerShadow: 0px 3px 8px var(--color-primary-main);
+  --ofertas-appShadow: 0px 3px 6px var(--color-primary-main);
+  --ofertas-appShadowHover: 0px 6px 12px var(--color-primary-main);
+}
+
+/* ================================================================ */
+
 .offer-headline {
   text-align: center;
   padding: 30px 20px;
-  background: var(--color-primary-main);
+  background: var(--ofertas-headline);
   border-radius: 0px;
   box-shadow: var(--box-shadow-md);
   position: relative;
@@ -20,7 +75,7 @@
 }
 
 .offer-headline h2 {
-  color: var(--color-neutral-white);
+  color: var(--ofertas-headlineTitle);
   font-size: 36px;
   font-weight: bold;
   margin: 0 0 10px;
@@ -28,7 +83,7 @@
 }
 
 .offer-headline p {
-  color: var(--color-neutral-white);
+  color: var(--ofertas-headlineText);
   font-size: 18px;
   line-height: 1.5;
   margin: 0;
@@ -52,8 +107,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--color-primary-main);
-  color: var(--color-neutral-white);
+  background: var(--ofertas-navButton);
+  color: var(--ofertas-textColorLight);
   border: none;
   width: 50px;
   height: 50px;
@@ -68,8 +123,8 @@
 }
 
 .nav-button:hover {
-  background: var(--gradient-purple-primary);
-  box-shadow: 0 0 15px var(--color-primary-main);
+  background: var(--ofertas-navButtonHover);
+  box-shadow: var(--ofertas-navShadow);
   transform: translateY(-50%) scale(1.05);
 }
 
@@ -104,7 +159,7 @@
   padding: 7px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
   position: relative;
-  color: var(--color-neutral-white);
+  color: var(--ofertas-textColorLight);
   font-family: Arial, sans-serif;
   margin-bottom: 20px;
   flex: 0 0 calc(95% / 4);
@@ -137,11 +192,11 @@
 }
 
 .card-content {
-  background: var(--color-neutral-white);
+  background: var(--ofertas-cardContent);
   text-align: center;
   border-radius: var(--radius-xl);
   padding: 10px;
-  color: var(--color-neutral-black);
+  color: var(--ofertas-textColor);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -154,7 +209,11 @@
 .onifo-container {
   margin: 5px 0;
   padding: 5px;
-  background: linear-gradient(135deg, var(--color-neutral-very-light-gray) 0%, var(--color-neutral-white) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-neutral-very-light-gray) 0%,
+    var(--color-neutral-white) 100%
+  );
   width: 100%;
   max-width: 220px;
   height: auto;
@@ -172,14 +231,14 @@
 }
 
 .header {
-  background: var(--color-primary-main);
-  color: var(--color-neutral-white);
+  background: var(--ofertas-cardHeader);
+  color: var(--ofertas-textColorLight);
   font-weight: bold;
   text-align: center;
   font-size: 11px;
   padding: 6px 40px;
   text-transform: uppercase;
-  box-shadow: 0px 3px 8px var(--color-primary-main);
+  box-shadow: var(--ofertas-headerShadow);
   letter-spacing: 0.5px;
   position: absolute;
   top: 25px;
@@ -190,8 +249,8 @@
 }
 
 .speed {
-  font-size: 3.5rem;
-  color: var(--color-primary-main);
+  font-size: var(--ofertas-speedSize);
+  color: var(--ofertas-speedColor);
   font-weight: bold;
   margin: 0;
   line-height: 1;
@@ -200,7 +259,7 @@
 .speed-subtext {
   font-size: 2.5rem;
   font-weight: bold;
-  color: var(--color-neutral-black);
+  color: var(--ofertas-textColor);
   margin-top: 0;
   line-height: 1;
 }
@@ -236,7 +295,7 @@
 .benefits-label {
   font-size: 11px;
   font-weight: bold;
-  color: var(--color-primary-main);
+  color: var(--ofertas-benefitsLabel);
   margin: 0 0 8px 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -244,14 +303,14 @@
 
 .divider {
   width: 85%;
-  border: 1px solid var(--color-primary-main);
+  border: 1px solid var(--ofertas-dividerColor);
   margin: 8px auto;
 }
 
 .app-choices {
   font-size: 11px;
   font-weight: bold;
-  color: var(--color-primary-main);
+  color: var(--ofertas-benefitsLabel);
   margin: 10px 0 8px 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -268,25 +327,25 @@
 .app-icons img {
   width: 50px;
   height: 50px;
-  border: 2px solid var(--color-primary-main);
+  border: 2px solid var(--ofertas-appBorder);
   border-radius: var(--radius-lg);
   padding: 5px;
-  background: white;
-  box-shadow: 0px 3px 6px var(--color-primary-main);
+  background: var(--color-neutral-white);
+  box-shadow: var(--ofertas-appShadow);
   transition: all 0.3s ease;
 }
 
 .app-icons img:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0px 6px 12px var(--color-primary-main);
-  border-color: var(--color-secondary-blue);
+  box-shadow: var(--ofertas-appShadowHover);
+  border-color: var(--ofertas-appBorderHover);
 }
 
 .price-text {
   font-size: 16px;
   font-weight: bold;
   margin: 8px 0 2px;
-  color: var(--color-neutral-black);
+  color: var(--ofertas-textColor);
   text-transform: uppercase;
 }
 
@@ -300,27 +359,27 @@
 
 .price .currency {
   font-size: 1.5rem;
-  color: var(--color-primary-main);
+  color: var(--ofertas-priceColor);
   font-weight: bold;
   margin-right: 5px;
 }
 
 .price .integer {
-  font-size: 4.2rem;
+  font-size: var(--ofertas-priceSize);
   font-weight: bold;
-  color: var(--color-primary-main);
+  color: var(--ofertas-priceColor);
 }
 
 .price .decimal {
   font-size: 1.5rem;
-  color: var(--color-primary-main);
+  color: var(--ofertas-priceColor);
   position: relative;
   top: -35px;
 }
 
 .price .month {
   font-size: 1.3rem;
-  color: var(--color-neutral-800);
+  color: var(--ofertas-priceMonthColor);
   font-weight: normal;
   position: relative;
   top: -10px;
@@ -330,14 +389,14 @@
 .btn-contratar {
   margin-top: 10px;
   margin-bottom: 0;
-  background: var(--color-primary-main);
-  color: var(--color-neutral-white);
+  background: var(--ofertas-buttonBg);
+  color: var(--ofertas-buttonColor);
   padding: 12px 24px;
   border-radius: 50px;
   font-size: 14px;
   font-weight: bold;
   border: none;
-  box-shadow: 0px 4px 8px var(--color-primary-main);
+  box-shadow: var(--ofertas-buttonShadow);
   text-transform: uppercase;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -345,8 +404,8 @@
 }
 
 .btn-contratar:hover {
-  background: var(--gradient-purple-primary);
-  box-shadow: 0px 6px 16px var(--color-primary-main);
+  background: var(--ofertas-buttonBg);
+  box-shadow: var(--ofertas-buttonShadowHover);
   transform: scale(1.02);
 }
 

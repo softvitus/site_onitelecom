@@ -1,5 +1,33 @@
+/* ================== VARIÁVEIS CSS CUSTOM - ServicosEssenciaisInternet ================== */
+
+:root {
+  /* CONTAINER */
+  --servicosEssenciaisInternet-container16Background: linear-gradient(
+    135deg,
+    #8a1ce8 0%,
+    #4a00e0 100%
+  );
+
+  /* BACKGROUNDS */
+  --servicosEssencialisInternet-containerBackground: transparent;
+  --servicosEssencialInternet-rowBackground: transparent;
+  --servicosEssenciaisInternet-colBackground: transparent;
+  --servicosEssenciaisInternet-cardBackground: transparent;
+  --servicosEssenciaisInternet-cardImageBackground: rgba(255, 255, 255, 0.2);
+  --servicosEssenciaisInternet-imageFluidsBackground: transparent;
+
+  /* TEXTOS */
+  --servicosEssenciaisInternet-textTitle: var(--color-neutral-white);
+  --servicosEssenciaisInternet-textDescription: var(--color-neutral-white);
+
+  /* HOVER EFFECTS */
+  --servicosEssenciaisInternet-cardHoverShadow: var(--box-shadow-lg);
+}
+
+/* =================================================================================== */
+
 .container16 {
-  background: var(--gradient-blue-deep);
+  background: var(--servicosEssenciaisInternet-container16Background);
   padding: 60px 0;
   margin-top: -55px;
 }
@@ -31,7 +59,8 @@
 
 .item16 {
   text-align: center;
-  color: white;
+  color: var(--servicosEssenciaisInternet-textTitle);
+  background: var(--servicosEssenciaisInternet-cardBackground);
   transition: var(--transition-normal);
   padding: 20px;
   border-radius: 15px;
@@ -43,13 +72,17 @@
 
 .item16:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 20px var(--shadow-black-md);
+  box-shadow: var(--servicosEssenciaisInternet-cardHoverShadow);
 }
 
 .item16 img {
   max-width: 120px;
   margin-bottom: 15px;
   transition: var(--transition-normal);
+  padding: 15px;
+  border-radius: 50%;
+  background: transparent;
+  display: inline-block;
 }
 
 .item16:hover img {
@@ -63,11 +96,13 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--servicosEssenciaisInternet-textTitle);
 }
 
 .item16 p {
   font-size: 14px;
   margin-bottom: 0;
+  color: var(--servicosEssenciaisInternet-textDescription);
 }
 
 .img-fluid {
@@ -90,7 +125,7 @@
 @media (max-width: 768px) {
   .container16 {
     padding: 30px 0;
-    background: var(--gradient-blue-electric);
+    background: var(--servicosEssenciaisInternet-container16Background);
   }
 
   .item16 {

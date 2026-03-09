@@ -1,7 +1,12 @@
+:root {
+  --introducao-textColor: var(--color-primary-main);
+}
+
 .secao {
   padding: 6rem 0;
 }
 
 .texto-oni-azul {
-  color: var(--color-secondary-blue);
+  color: var(--introducao-textColor);
+  font-weight: 700;
 }

@@ -219,7 +219,7 @@
 }
 
 /* Grid automático para campos - até 4 por linha */
-.modal-body-custom form > div[style*="grid"] {
+.modal-body-custom form > div[style*='grid'] {
   gap: 1rem;
 }
 
@@ -341,18 +341,18 @@
 }
 
 /* Botão secundário (Cancelar) - fallback */
-.modal-footer-custom button:not([class*="btn-salvar"]):not([class*="btn-confirmar"]) {
+.modal-footer-custom button:not([class*='btn-salvar']):not([class*='btn-confirmar']) {
   background-color: #f3f4f6;
   color: var(--modal-text-color);
   border: 1px solid var(--modal-border-color);
 }
 
-.modal-footer-custom button:not([class*="btn-salvar"]):not([class*="btn-confirmar"]):hover {
+.modal-footer-custom button:not([class*='btn-salvar']):not([class*='btn-confirmar']):hover {
   background-color: #e5e7eb;
   border-color: #d1d5db;
 }
 
-.modal-footer-custom button:not([class*="btn-salvar"]):not([class*="btn-confirmar"]):active {
+.modal-footer-custom button:not([class*='btn-salvar']):not([class*='btn-confirmar']):active {
   background-color: #d1d5db;
 }
 
@@ -385,7 +385,7 @@
   }
 
   /* Grid responsivo - 2 colunas em tablets */
-  .modal-body-custom form > div[style*="grid-template-columns: repeat(4"] {
+  .modal-body-custom form > div[style*='grid-template-columns: repeat(4'] {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 
@@ -424,11 +424,11 @@
   }
 
   /* Grid responsivo - 1 coluna em celulares */
-  .modal-body-custom form > div[style*="grid-template-columns: repeat(4"] {
+  .modal-body-custom form > div[style*='grid-template-columns: repeat(4'] {
     grid-template-columns: 1fr !important;
   }
 
-  .modal-body-custom form > div[style*="grid-template-columns: repeat(2"] {
+  .modal-body-custom form > div[style*='grid-template-columns: repeat(2'] {
     grid-template-columns: 1fr !important;
   }
 
@@ -615,7 +615,7 @@
   .modal-form-row {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .modal-form-row.cols-3,
   .modal-form-row.cols-4 {
     grid-template-columns: repeat(2, 1fr);
@@ -627,7 +627,7 @@
 /* ========================================================================== */
 
 /* Label com checkbox - com border e background como input */
-.modal-form-group label:has(input[type="checkbox"]) {
+.modal-form-group label:has(input[type='checkbox']) {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -646,20 +646,20 @@
 }
 
 /* Hover do label com checkbox */
-.modal-form-group label:has(input[type="checkbox"]):hover {
+.modal-form-group label:has(input[type='checkbox']):hover {
   border-color: #d1d5db;
   background-color: #f9fafb;
 }
 
 /* Focus do checkbox dentro do label */
-.modal-form-group label:has(input[type="checkbox"]):has(input:focus) {
+.modal-form-group label:has(input[type='checkbox']):has(input:focus) {
   border-color: #0d6efd;
   box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
   outline: none;
 }
 
 /* Label com checkbox */
-.modal-form-label input[type="checkbox"] {
+.modal-form-label input[type='checkbox'] {
   width: 18px;
   height: 18px;
   min-width: 18px;

@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar textos.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (txt_chave → chave, etc).
- * 
+ *
  * @module servicos/textos
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_TEXTOS = '/textos';
 /**
  * Mapeia dados do backend (txt_chave, txt_valor, etc)
  * para formato do frontend (chave, valor, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -42,7 +42,7 @@ const mapearTexto = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -63,7 +63,7 @@ const TextosServiceBase = criarServicoGenerico(ENDPOINT_TEXTOS);
 
 /**
  * Serviço para Gerenciar Textos
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -77,14 +77,14 @@ const TextosService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await TextosServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearTexto(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -95,14 +95,14 @@ const TextosService = {
    */
   obter: async (id) => {
     const resultado = await TextosServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearTexto(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -114,14 +114,14 @@ const TextosService = {
   criar: async (dados) => {
     const dadosFormatados = mapearTextoParaBackend(dados);
     const resultado = await TextosServiceBase.criar(dadosFormatados);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearTexto(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -134,14 +134,14 @@ const TextosService = {
   atualizar: async (id, dados) => {
     const dadosFormatados = mapearTextoParaBackend(dados);
     const resultado = await TextosServiceBase.atualizar(id, dadosFormatados);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearTexto(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -161,14 +161,14 @@ const TextosService = {
    */
   buscar: async (criterios) => {
     const resultado = await TextosServiceBase.buscar(criterios);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearTexto(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 };

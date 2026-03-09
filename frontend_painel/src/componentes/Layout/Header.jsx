@@ -2,7 +2,7 @@
  * @file Componente Header - Barra de Navegação Superior
  * @description Navbar com logo, notificações, menu do usuário e toggle
  * para sidebar lateral
- * 
+ *
  * @module componentes/Layout/Header
  */
 
@@ -18,14 +18,14 @@ import '../../estilos/componentes/layout/Header.css';
 
 /**
  * Componente Header
- * 
+ *
  * Barra de navegação superior com logo, indicador de notificações,
  * menu dropdown do usuário e botão para toggle da sidebar.
- * 
+ *
  * @component
  * @param {Function} onToggleSidebar - Callback para alternar sidebar
  * @returns {JSX.Element}
- * 
+ *
  * @example
  * <Header onToggleSidebar={() => toggleSidebar()} />
  */
@@ -56,9 +56,7 @@ const Header = ({ onToggleSidebar }) => {
             onClick={() => setMenuOpen(!menuOpen)}
             title={usuario?.usu_nome || 'Usuário'}
           >
-            <div className="user-avatar">
-              {usuario?.usu_nome?.charAt(0).toUpperCase() || 'U'}
-            </div>
+            <div className="user-avatar">{usuario?.usu_nome?.charAt(0).toUpperCase() || 'U'}</div>
             <div className="user-info">
               <span className="user-name">{usuario?.usu_nome || 'Usuário'}</span>
               <span className="user-role">{usuario?.usu_tipo || 'Usuário'}</span>

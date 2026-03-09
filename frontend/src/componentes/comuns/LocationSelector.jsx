@@ -262,37 +262,40 @@ const LocationSelector = () => {
    * @param {number} latitude - Latitude
    * @param {number} longitude - Longitude
    */
-  const getLocationData = useCallback((latitude, longitude) => {
-    const url = `${GEOCODE_API_URL}?latitude=${latitude}&longitude=${longitude}&localityLanguage=pt`;
+  const getLocationData = useCallback(
+    (latitude, longitude) => {
+      const url = `${GEOCODE_API_URL}?latitude=${latitude}&longitude=${longitude}&localityLanguage=pt`;
 
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        const cityName = data.city;
-        const matchedCity = findCityByName(cityName);
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          const cityName = data.city;
+          const matchedCity = findCityByName(cityName);
 
-        if (matchedCity) {
-          const stateOption = findStateByCity(matchedCity.value);
-          if (stateOption) {
-            setState(stateOption);
-            setCity(matchedCity.value);
+          if (matchedCity) {
+            const stateOption = findStateByCity(matchedCity.value);
+            if (stateOption) {
+              setState(stateOption);
+              setCity(matchedCity.value);
+            }
+            setMessage('');
+          } else {
+            setMessage(texts.cidadeIndisponivel || 'Cidade não disponível');
           }
-          setMessage('');
-        } else {
-          setMessage(texts.cidadeIndisponivel || 'Cidade não disponível');
-        }
 
-        setLoading(false);
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
+          setLoading(false);
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
 
-        // eslint-disable-next-line no-console
-        console.error('Error fetching location data:', error);
-        setLoading(false);
-        setMessage(texts.erroGeo || 'Erro ao obter localização');
-      });
-  }, [texts]);
+          // eslint-disable-next-line no-console
+          console.error('Error fetching location data:', error);
+          setLoading(false);
+          setMessage(texts.erroGeo || 'Erro ao obter localização');
+        });
+    },
+    [texts]
+  );
 
   /**
    * Obtém localização do usuário via geolocalização
@@ -380,7 +383,7 @@ const LocationSelector = () => {
         }
       });
     }
-  }, [getLocationData, texts.erroGeo]);  // Inclui dependências necessárias
+  }, [getLocationData, texts.erroGeo]); // Inclui dependências necessárias
 
   // ─────────────────────────────────────────────────────────────────────────────────
   // RENDER
@@ -429,5 +432,3 @@ const LocationSelector = () => {
 };
 
 export default LocationSelector;
-
-

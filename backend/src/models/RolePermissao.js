@@ -61,7 +61,13 @@ export default function (sequelize) {
       include: [
         {
           association: 'permissao',
-          attributes: ['perm_id', 'perm_nome', 'perm_modulo', 'perm_acao', 'perm_descricao'],
+          attributes: [
+            'perm_id',
+            'perm_nome',
+            'perm_modulo',
+            'perm_acao',
+            'perm_descricao',
+          ],
         },
       ],
     });

@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Usuários
  * @description Interface completa de CRUD para usuários
- * 
+ *
  * @module paginas/Usuarios/UsuariosPage
  */
 
@@ -56,18 +56,31 @@ const COLUNAS_GRID = [
     titulo: 'Tipo',
     largura: '15%',
     render: (valor) => (
-      <span style={{
-        padding: '0.25rem 0.75rem',
-        borderRadius: '4px',
-        fontSize: '0.75rem',
-        fontWeight: '600',
-        backgroundColor: valor === TIPOS_USUARIO.ADMIN ? '#fee2e2' : 
-                         valor === TIPOS_USUARIO.GESTOR ? '#fef3c7' : '#dcfce7',
-        color: valor === TIPOS_USUARIO.ADMIN ? '#991b1b' : 
-               valor === TIPOS_USUARIO.GESTOR ? '#b45309' : '#166534',
-      }}>
-        {valor === TIPOS_USUARIO.ADMIN ? 'Admin' : 
-         valor === TIPOS_USUARIO.GESTOR ? 'Gestor' : 'Usuário'}
+      <span
+        style={{
+          padding: '0.25rem 0.75rem',
+          borderRadius: '4px',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          backgroundColor:
+            valor === TIPOS_USUARIO.ADMIN
+              ? '#fee2e2'
+              : valor === TIPOS_USUARIO.GESTOR
+                ? '#fef3c7'
+                : '#dcfce7',
+          color:
+            valor === TIPOS_USUARIO.ADMIN
+              ? '#991b1b'
+              : valor === TIPOS_USUARIO.GESTOR
+                ? '#b45309'
+                : '#166534',
+        }}
+      >
+        {valor === TIPOS_USUARIO.ADMIN
+          ? 'Admin'
+          : valor === TIPOS_USUARIO.GESTOR
+            ? 'Gestor'
+            : 'Usuário'}
       </span>
     ),
   },
@@ -76,14 +89,16 @@ const COLUNAS_GRID = [
     titulo: 'Status',
     largura: '15%',
     render: (valor) => (
-      <span style={{
-        padding: '0.25rem 0.75rem',
-        borderRadius: '4px',
-        fontSize: '0.75rem',
-        fontWeight: '600',
-        backgroundColor: valor === STATUS_USUARIO.ATIVO ? '#dcfce7' : '#fee2e2',
-        color: valor === STATUS_USUARIO.ATIVO ? '#166534' : '#991b1b',
-      }}>
+      <span
+        style={{
+          padding: '0.25rem 0.75rem',
+          borderRadius: '4px',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          backgroundColor: valor === STATUS_USUARIO.ATIVO ? '#dcfce7' : '#fee2e2',
+          color: valor === STATUS_USUARIO.ATIVO ? '#166534' : '#991b1b',
+        }}
+      >
         {valor === STATUS_USUARIO.ATIVO ? 'Ativo' : 'Inativo'}
       </span>
     ),
@@ -143,16 +158,16 @@ const validarFormulario = (dados, criando = false) => {
 
 /**
  * Página de Gerenciamento de Usuários
- * 
+ *
  * Funcionalidades completas de CRUD para usuários.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const UsuariosPage = () => {
   // Autenticação e Permissões
   const { temPermissao } = useAuth();
-  
+
   // Estado
   const [usuarios, setUsuarios] = useState([]);
   const [parceiros, setParceiros] = useState([]);
@@ -331,7 +346,7 @@ const UsuariosPage = () => {
   const executarAlterarStatus = async () => {
     if (!confirmarDialog.usuario) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const usuario = confirmarDialog.usuario;
     const novoStatus =
@@ -351,12 +366,12 @@ const UsuariosPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao alterar status'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao alterar status do usuário'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -445,11 +460,7 @@ const UsuariosPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarUsuario}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarUsuario} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -459,7 +470,9 @@ const UsuariosPage = () => {
           {/* Linha 1: Nome e Email */}
           <div className="modal-form-row cols-2">
             <div className="modal-form-group">
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -467,12 +480,12 @@ const UsuariosPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Nome completo"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
             <div className="modal-form-group">
-              <label className="modal-form-label">Email <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Email <span className="required">*</span>
+              </label>
               <input
                 type="email"
                 className="modal-form-input"
@@ -480,9 +493,7 @@ const UsuariosPage = () => {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="usuario@example.com"
               />
-              {errosForm.email && (
-                <span className="modal-form-error">{errosForm.email}</span>
-              )}
+              {errosForm.email && <span className="modal-form-error">{errosForm.email}</span>}
             </div>
           </div>
 
@@ -490,7 +501,8 @@ const UsuariosPage = () => {
           <div className="modal-form-row cols-2">
             <div className="modal-form-group">
               <label className="modal-form-label">
-                Senha {editando ? '(deixe vazio para não alterar)' : <span className="required">*</span>}
+                Senha{' '}
+                {editando ? '(deixe vazio para não alterar)' : <span className="required">*</span>}
               </label>
               <input
                 type="password"
@@ -499,9 +511,7 @@ const UsuariosPage = () => {
                 onChange={(e) => setFormData({ ...formData, senha: e.target.value })}
                 placeholder="••••••••"
               />
-              {errosForm.senha && (
-                <span className="modal-form-error">{errosForm.senha}</span>
-              )}
+              {errosForm.senha && <span className="modal-form-error">{errosForm.senha}</span>}
             </div>
             <div className="modal-form-group">
               <label className="modal-form-label">Telefone</label>
@@ -547,7 +557,8 @@ const UsuariosPage = () => {
             <div className="modal-form-row cols-1">
               <div className="modal-form-group">
                 <label className="modal-form-label">
-                  Parceiro {formData.tipo !== TIPOS_USUARIO.ADMIN && <span className="required">*</span>}
+                  Parceiro{' '}
+                  {formData.tipo !== TIPOS_USUARIO.ADMIN && <span className="required">*</span>}
                 </label>
                 <select
                   className="modal-form-select"
@@ -573,12 +584,22 @@ const UsuariosPage = () => {
       {/* Confirm Dialog */}
       <ConfirmDialog
         aberto={confirmarDialog.aberto}
-        titulo={confirmarDialog.usuario?.status === STATUS_USUARIO.ATIVO ? 'Inativar Usuário?' : 'Ativar Usuário?'}
+        titulo={
+          confirmarDialog.usuario?.status === STATUS_USUARIO.ATIVO
+            ? 'Inativar Usuário?'
+            : 'Ativar Usuário?'
+        }
         mensagem={`Tem certeza que deseja ${confirmarDialog.usuario?.status === STATUS_USUARIO.ATIVO ? 'inativar' : 'ativar'} o usuário "${confirmarDialog.usuario?.nome}"?`}
-        tipo={confirmarDialog.usuario?.status === STATUS_USUARIO.ATIVO ? TIPOS_CONFIRMACAO.PERIGO : TIPOS_CONFIRMACAO.SUCESSO}
+        tipo={
+          confirmarDialog.usuario?.status === STATUS_USUARIO.ATIVO
+            ? TIPOS_CONFIRMACAO.PERIGO
+            : TIPOS_CONFIRMACAO.SUCESSO
+        }
         onConfirmar={executarAlterarStatus}
         onCancelar={fecharConfirmarDialog}
-        textoBotaoConfirmar={confirmarDialog.usuario?.status === STATUS_USUARIO.ATIVO ? 'Inativar' : 'Ativar'}
+        textoBotaoConfirmar={
+          confirmarDialog.usuario?.status === STATUS_USUARIO.ATIVO ? 'Inativar' : 'Ativar'
+        }
         carregando={confirmarDialog.carregando}
       />
     </div>

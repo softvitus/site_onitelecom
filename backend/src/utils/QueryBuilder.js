@@ -166,10 +166,9 @@ export class QueryBuilder {
    * Retorna a query em string SQL (para debug)
    */
   toSQL() {
-    return this.model.sequelize.getQueryInterface().queryGenerator.selectQuery(
-      this.model.tableName,
-      this.query,
-    );
+    return this.model.sequelize
+      .getQueryInterface()
+      .queryGenerator.selectQuery(this.model.tableName, this.query);
   }
 }
 

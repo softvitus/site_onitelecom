@@ -1,17 +1,30 @@
+/* ================== VARIÁVEIS CSS CUSTOM - Depoimentos ================== */
+
+:root {
+  /* ELEMENTOS */
+  --depoimentos-sectionBackground: var(--color-neutral-background);
+  --depoimentos-cardBackground: var(--color-neutral-white);
+  --depoimentos-cardTopBorder: var(--color-primary-main);
+  --depoimentos-titleColor: var(--color-secondary-blue);
+  --depoimentos-authorColor: var(--color-secondary-blue);
+}
+
+/* ================================================================ */
+
 .secao {
   padding: 6rem 0;
 }
 
 .texto-oni-azul {
-  color: var(--color-secondary-blue);
+  color: var(--depoimentos-titleColor);
 }
 
 .fundo-claro {
-  background-color: var(--color-neutral-background) !important;
+  background-color: var(--depoimentos-sectionBackground) !important;
 }
 
 .depoimento {
-  background-color: white;
+  background-color: var(--depoimentos-cardBackground);
   border-radius: 0;
   position: relative;
   padding: 3rem;
@@ -25,7 +38,7 @@
   left: 0;
   width: 100%;
   height: 5px;
-  background: var(--gradient-purple-primary);
+  background: var(--depoimentos-cardTopBorder);
 }
 
 .destaque {
@@ -41,12 +54,12 @@
   position: absolute;
   left: -20px;
   top: -30px;
-  color: rgba(166, 19, 251, 0.2);
+  color: var(--color-primary-light);
 }
 
 .autor {
   font-weight: 600;
   text-align: right;
-  color: var(--color-secondary-blue);
+  color: var(--depoimentos-authorColor);
   margin-top: 20px;
 }

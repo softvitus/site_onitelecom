@@ -1,3 +1,63 @@
+/* ═══════════════════════════════════════════════════════════════════════════════ */
+/* 🎨 CUSTOM PROPERTIES - Header Component Color Variables */
+/* ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Variáveis Genéricas para Textos */
+:root {
+  --header-textColor: var(--color-neutral-white);
+  --header-textColorHover: var(--color-neutral-400);
+  --header-buttonTextColor: var(--color-neutral-white);
+  --header-topNavHoverBg: var(--color-neutral-text-dark);
+}
+
+/* Variáveis por Elemento */
+:root {
+  /* TOP BAR Elements */
+  --header-topBar: var(--color-neutral-black);
+  --header-topBarMobile: var(--color-neutral-900);
+  --header-abrirMenu: var(--color-neutral-white);
+  --header-topNav: var(--color-neutral-white);
+  --header-separator: var(--color-neutral-white);
+  --header-topRightIcons: var(--color-neutral-white);
+  --header-centralAssinante: var(--color-secondary-blue);
+
+  /* MAIN HEADER Elements */
+  --header-mainHeader: var(--color-neutral-white);
+  --header-logo: transparent;
+  --header-mainNav: var(--color-secondary-blue);
+  --header-mainNavUnderline: var(--color-secondary-blue);
+  --header-loginButton: var(--color-secondary-blue);
+  --header-loginButtonBorder: var(--color-secondary-blue);
+  --header-headerButtons: var(--color-secondary-blue);
+  --header-pagarFatura: var(--color-secondary-blue);
+  --header-assineAgora: var(--color-neutral-black);
+  --header-assineAgoraHover: var(--color-neutral-text-dark);
+
+  /* MOBILE NAV Elements */
+  --header-mobileNav: linear-gradient(
+    247deg,
+    var(--color-neutral-900) 48%,
+    var(--color-neutral-800) 48%
+  );
+  --header-closeMenu: var(--color-neutral-white);
+  --header-logoMobile: transparent;
+  --header-menuItem: var(--color-neutral-white);
+  --header-menuItemHover: var(--color-neutral-400);
+  --header-mobileIcons: transparent;
+  --header-iconLink: var(--color-neutral-white);
+
+  /* SEARCH BAR Elements */
+  --header-searchBarContainer: var(--color-neutral-white);
+  --header-searchBarContainerBorder: var(--color-secondary-blue);
+  --header-searchBar: transparent;
+  --header-searchBarText: var(--color-neutral-text-dark);
+  --header-searchBarPlaceholder: var(--color-neutral-text-light);
+  --header-searchButton: var(--color-secondary-blue);
+  --header-searchButtonHover: var(--color-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════ */
+
 header {
   width: 100%;
   margin: 0;
@@ -12,21 +72,21 @@ section {
 
 /* Estilos do Top Bar */
 .top-bar {
-  background-color: var(--color-neutral-black);
-  color: var(--color-neutral-white);
+  background-color: var(--header-topBar);
+  color: var(--header-textColor);
   padding: 5px 20px;
 }
 
 .abrir-menu {
   background: none;
   border: none;
-  color: var(--color-neutral-white);
+  color: var(--header-abrirMenu);
   font-size: 24px;
   cursor: pointer;
 }
 
 .top-nav a {
-  color: var(--color-neutral-white);
+  color: var(--header-topNav);
   margin-right: 10px;
   text-decoration: none;
   position: relative;
@@ -35,7 +95,7 @@ section {
 }
 
 .separator {
-  color: var(--color-neutral-white);
+  color: var(--header-separator);
   margin: 0px 5px 0px -9px;
   font-size: 30px;
 }
@@ -44,7 +104,7 @@ section {
   text-decoration: none;
   box-shadow: 0 0 0px rgba(190, 184, 184, 0.8);
   border-radius: var(--radius-sm);
-  background-color: var(--color-neutral-text-dark);
+  background-color: var(--header-topNavHoverBg);
 }
 
 .top-right-icons {
@@ -53,21 +113,21 @@ section {
 }
 
 .top-right-icons a {
-  color: var(--color-neutral-white);
+  color: var(--header-topRightIcons);
   margin-left: 15px;
   text-decoration: none;
 }
 
 .central-assinante {
-  background-color: var(--color-secondary-blue);
+  background-color: var(--header-centralAssinante);
   padding: 5px 10px;
   border-radius: var(--radius-xl);
-  color: var(--color-neutral-white);
+  color: var(--header-buttonTextColor);
 }
 
 /* Estilos do Main Header */
 .main-header {
-  background-color: var(--color-neutral-white);
+  background-color: var(--header-mainHeader);
   padding: 5px 10px;
   margin: 0;
 }
@@ -77,7 +137,7 @@ section {
 }
 
 .main-nav a {
-  color: var(--color-secondary-blue);
+  color: var(--header-mainNav);
   margin-right: 8px;
   text-decoration: none;
   font-weight: bold;
@@ -94,7 +154,7 @@ section {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: var(--color-secondary-blue);
+  background-color: var(--header-mainNavUnderline);
   visibility: hidden;
   transition: var(--transition-normal);
 }
@@ -110,8 +170,8 @@ section {
 }
 
 .header-buttons .button {
-  background-color: var(--color-secondary-blue);
-  color: var(--color-neutral-white);
+  background-color: var(--header-headerButtons);
+  color: var(--header-buttonTextColor);
   padding: 10px 20px;
   border-radius: var(--radius-xl);
   margin-left: 10px;
@@ -119,15 +179,15 @@ section {
 }
 
 .header-buttons .button.assine-agora {
-  background-color: var(--color-neutral-black);
+  background-color: var(--header-assineAgora);
 }
 
 .header-buttons .button.assine-agora:hover {
-  background-color: var(--color-neutral-text-dark);
+  background-color: var(--header-assineAgoraHover);
 }
 
 .phone-number {
-  color: var(--color-secondary-blue);
+  color: var(--header-mainNav);
   font-weight: bold;
   margin-left: 20px;
   text-decoration: none;
@@ -142,8 +202,8 @@ section {
 .search-bar-container {
   display: flex;
   align-items: center;
-  background-color: var(--color-neutral-white);
-  border: 2px solid var(--color-secondary-blue);
+  background-color: var(--header-searchBarContainer);
+  border: 2px solid var(--header-searchBarContainerBorder);
   border-radius: var(--radius-lg);
   padding: 5px 12px;
   margin: 0 15px;
@@ -155,26 +215,26 @@ section {
   outline: none;
   padding: 8px 4px;
   font-size: 14px;
-  background: transparent;
-  color: var(--color-neutral-text-dark);
+  background: var(--header-searchBar);
+  color: var(--header-searchBarText);
 }
 
 .search-bar::placeholder {
-  color: var(--color-neutral-text-light);
+  color: var(--header-searchBarPlaceholder);
 }
 
 .search-button {
   border: none;
   background: none;
   cursor: pointer;
-  color: var(--color-secondary-blue);
+  color: var(--header-searchButton);
   font-size: 16px;
   padding: 0 8px;
   transition: var(--transition-normal);
 }
 
 .search-button:hover {
-  color: var(--color-primary);
+  color: var(--header-searchButtonHover);
   transform: scale(1.1);
 }
 
@@ -183,8 +243,8 @@ section {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-secondary-blue);
-  border: 2px solid var(--color-secondary-blue);
+  color: var(--header-loginButton);
+  border: 2px solid var(--header-loginButtonBorder);
   padding: 8px 16px;
   border-radius: var(--radius-lg);
   text-decoration: none;
@@ -194,8 +254,8 @@ section {
 }
 
 .login-button:hover {
-  background-color: var(--color-secondary-blue);
-  color: var(--color-neutral-white);
+  background-color: var(--header-loginButton);
+  color: var(--header-buttonTextColor);
 }
 
 /* Estilos do Mobile Nav */
@@ -206,8 +266,8 @@ section {
   left: 0;
   width: 250px;
   height: 100%;
-  background: linear-gradient(247deg, var(--color-neutral-900) 48%, var(--color-neutral-800) 48%);
-  color: var(--color-neutral-white);
+  background: var(--header-mobileNav);
+  color: var(--header-textColor);
   padding: 20px;
   z-index: 1000;
   flex-direction: column;
@@ -217,14 +277,14 @@ section {
 }
 
 .mobile-nav a {
-  color: var(--color-neutral-white);
+  color: var(--header-menuItem);
   text-decoration: none;
   margin-bottom: 15px;
   font-size: 18px;
 }
 
 .mobile-nav a:hover {
-  color: var(--color-neutral-400);
+  color: var(--header-menuItemHover);
 }
 
 .mobile-nav.active {
@@ -234,7 +294,7 @@ section {
 .close-menu {
   background: none;
   border: none;
-  color: var(--color-neutral-white);
+  color: var(--header-closeMenu);
   font-size: 24px;
   margin-bottom: 20px;
   cursor: pointer;
@@ -268,8 +328,8 @@ section {
 
   /* Top Bar */
   .top-bar {
-    background-color: var(--color-neutral-900);
-    color: var(--color-neutral-white);
+    background-color: var(--header-topBarMobile);
+    color: var(--header-textColor);
     display: flex;
     justify-content: space-between;
     align-items: center;

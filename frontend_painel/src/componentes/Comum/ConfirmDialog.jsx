@@ -2,7 +2,7 @@
  * @file Componente Dialog de Confirmação
  * @description Modal reutilizável para confirmações com design profissional
  * Substitui confirm() nativo por uma interface mais elegante
- * 
+ *
  * @module componentes/Comum/ConfirmDialog
  */
 
@@ -27,10 +27,10 @@ const TIPOS_CONFIRMACAO = {
 
 /**
  * Dialog de Confirmação
- * 
+ *
  * Componente modal profissional para confirmar ações críticas.
  * Substitui o confirm() nativo do navegador com design mais elegante.
- * 
+ *
  * @component
  * @param {boolean} aberto - Se o dialog está aberto
  * @param {string} titulo - Título do dialog
@@ -42,7 +42,7 @@ const TIPOS_CONFIRMACAO = {
  * @param {string} textoBotaoCancelar - Texto do botão cancelar (padrão: Cancelar)
  * @param {boolean} carregando - Se está carregando (desabilita botão confirmar)
  * @returns {JSX.Element}
- * 
+ *
  * @example
  * <ConfirmDialog
  *   aberto={showDialog}
@@ -105,12 +105,8 @@ const ConfirmDialog = ({
       }
     >
       <div className={`confirm-dialog-content confirm-dialog-${tipo}`}>
-        <div className="confirm-dialog-icon">
-          {obterIcone()}
-        </div>
-        <p className="confirm-dialog-message">
-          {mensagem}
-        </p>
+        <div className="confirm-dialog-icon">{obterIcone()}</div>
+        <p className="confirm-dialog-message">{mensagem}</p>
       </div>
     </Modal>
   );

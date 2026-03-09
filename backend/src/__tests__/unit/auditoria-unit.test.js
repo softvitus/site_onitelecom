@@ -27,7 +27,11 @@ describe('AuditoriaService - Lógica Pura', () => {
         if (typeof obj === 'object' && obj !== null) {
           const sanitizado = {};
           for (const [chave, valor] of Object.entries(obj)) {
-            if (camposSensiveis.some((campo) => chave.toLowerCase().includes(campo))) {
+            if (
+              camposSensiveis.some((campo) =>
+                chave.toLowerCase().includes(campo),
+              )
+            ) {
               sanitizado[chave] = '[REDACTED]';
             } else {
               sanitizado[chave] = sanitizar(valor);
@@ -45,21 +49,21 @@ describe('AuditoriaService - Lógica Pura', () => {
     it('deve remover campo "senha"', () => {
       const dados = { nome: 'João', senha: '123456' };
       const sanitizado = sanitizarDados(dados);
-      
+
       expect(sanitizado.senha).toBe('[REDACTED]');
     });
 
     it('deve remover campo "usu_senha"', () => {
       const dados = { usu_nome: 'Admin', usu_senha: 'abc123' };
       const sanitizado = sanitizarDados(dados);
-      
+
       expect(sanitizado.usu_senha).toBe('[REDACTED]');
     });
 
     it('deve preservar dados normais', () => {
       const dados = { nome: 'João', email: 'joao@example.com' };
       const sanitizado = sanitizarDados(dados);
-      
+
       expect(sanitizado.nome).toBe('João');
       expect(sanitizado.email).toBe('joao@example.com');
     });
@@ -96,7 +100,16 @@ describe('AuditoriaService - Lógica Pura', () => {
   });
 
   describe('Enum Validation - Ações', () => {
-    const acoesValidas = ['criar', 'editar', 'deletar', 'visualizar', 'inativar', 'ativar', 'login', 'logout'];
+    const acoesValidas = [
+      'criar',
+      'editar',
+      'deletar',
+      'visualizar',
+      'inativar',
+      'ativar',
+      'login',
+      'logout',
+    ];
 
     it('deve ter 8 ações válidas', () => {
       expect(acoesValidas).toHaveLength(8);

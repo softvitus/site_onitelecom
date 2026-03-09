@@ -18,9 +18,9 @@
  * - permissoes.js: PermissoesService (gerenciamento de permissões)
  * - rolePermissoes.js: RolePermissoesService (gerenciamento de permissões de função)
  * - viacep.js: {buscarPorCep, buscarCoordenadas} (localização)
- * 
+ *
  * @module servicos/index
- * 
+ *
  * @example
  * // Importar serviço específico conforme necessário
  * import authService from './auth';
@@ -38,4 +38,3 @@
  */
 
 // Os serviços são importados diretamente onde necessários
-

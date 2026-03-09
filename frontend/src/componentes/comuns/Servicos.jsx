@@ -111,9 +111,7 @@ const ServicoIcon = ({ icon }) => (
 const ServicoRecursos = ({ recursos }) => (
   <ul className="list-unstyled">
     {recursos.map((recurso, idx) => (
-      <li key={idx}>
-        {recurso}
-      </li>
+      <li key={idx}>{recurso}</li>
     ))}
   </ul>
 );
@@ -192,7 +190,6 @@ const Servicos = () => {
     <section
       id={SECTION_ID}
       className={`${styles['secao']} py-5 ${styles['fundo-claro']}`}
-     
       aria-labelledby="servicos-title"
     >
       <div className="container">
@@ -207,4 +204,3 @@ const Servicos = () => {
 };
 
 export default Servicos;
-

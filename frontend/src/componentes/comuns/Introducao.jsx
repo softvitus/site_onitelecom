@@ -41,11 +41,7 @@ const getIntroducaoTexts = () => ({
  * @param {string} props.title - Texto do título
  * @returns {React.ReactElement}
  */
-const IntroducaoTitle = ({ title }) => (
-  <h2 className={styles['texto-oni-azul']}>
-    {title}
-  </h2>
-);
+const IntroducaoTitle = ({ title }) => <h2 className={styles['texto-oni-azul']}>{title}</h2>;
 
 /**
  * IntroducaoDescription - Descrição da seção
@@ -79,11 +75,7 @@ const Introducao = () => {
   // ─────────────────────────────────────────────────────────────────────────────────
 
   return (
-    <section
-      id={SECTION_ID}
-      className={styles['secao']}
-      aria-labelledby="introducao-title"
-    >
+    <section id={SECTION_ID} className={styles['secao']} aria-labelledby="introducao-title">
       <div className="container">
         <div className="row">
           <div className="col-md-8 mx-auto text-center">

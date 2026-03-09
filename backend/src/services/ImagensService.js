@@ -15,7 +15,14 @@ export class ImagensService extends BaseService {
    * Tipos de imagem válidos
    * @type {string[]}
    */
-  static VALID_TYPES = ['banner', 'logo', 'icone', 'thumbnail', 'background', 'custom'];
+  static VALID_TYPES = [
+    'banner',
+    'logo',
+    'icone',
+    'thumbnail',
+    'background',
+    'custom',
+  ];
 
   /**
    * Override findAll para filtrar por parceiro através do tema
@@ -35,7 +42,7 @@ export class ImagensService extends BaseService {
       });
       delete filters.parceiroId;
     }
-    
+
     return super.findAll(filters, pagination, options);
   }
 

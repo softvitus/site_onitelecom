@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Temas
  * @description Interface completa de CRUD para temas
- * 
+ *
  * @module paginas/Temas/TemasPage
  */
 
@@ -34,7 +34,12 @@ const FORM_INICIAL = {
 const COLUNAS_GRID = [
   { chave: 'nome', titulo: 'Nome', largura: '50%' },
   { chave: 'parceiroNome', titulo: 'Parceiro', largura: '30%' },
-  { chave: 'criadoEm', titulo: 'Criado em', largura: '20%', render: (valor) => new Date(valor).toLocaleDateString('pt-BR') },
+  {
+    chave: 'criadoEm',
+    titulo: 'Criado em',
+    largura: '20%',
+    render: (valor) => new Date(valor).toLocaleDateString('pt-BR'),
+  },
 ];
 
 // ============================================================================
@@ -74,16 +79,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Temas
- * 
+ *
  * Funcionalidades completas de CRUD com listagem em grid.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const TemasPage = () => {
   // Autenticação e Permissões
   const { usuario, temPermissao } = useAuth();
-  
+
   // Estado
   const [temas, setTemas] = useState([]);
   const [carregando, setCarregando] = useState(true);
@@ -162,9 +167,9 @@ const TemasPage = () => {
 
       if (resultado.sucesso) {
         // Mapear temas para adicionar nome do parceiro
-        const temasComParceiro = resultado.dados.map(tema => ({
+        const temasComParceiro = resultado.dados.map((tema) => ({
           ...tema,
-          parceiroNome: parceiros.find(p => p.id === tema.parceiroId)?.nome || 'N/A',
+          parceiroNome: parceiros.find((p) => p.id === tema.parceiroId)?.nome || 'N/A',
         }));
         setTemas(temasComParceiro);
 
@@ -273,7 +278,7 @@ const TemasPage = () => {
   const executarDelecao = async () => {
     if (!confirmarDialog.tema) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     try {
       const resultado = await TemasService.deletar(confirmarDialog.tema.id);
@@ -285,12 +290,12 @@ const TemasPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar tema'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar tema'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -377,11 +382,7 @@ const TemasPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarTema}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarTema} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -391,7 +392,9 @@ const TemasPage = () => {
           {/* Nome e Parceiro */}
           <div className="modal-form-row cols-2">
             <div className="modal-form-group">
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -399,13 +402,13 @@ const TemasPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Nome do tema"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
 
             <div className="modal-form-group">
-              <label className="modal-form-label">Parceiro <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Parceiro <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.parceiroId}

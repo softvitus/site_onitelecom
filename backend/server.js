@@ -6,7 +6,9 @@ const { PORT, HOST, NODE_ENV, API_VERSION } = process.env;
 async function start() {
   try {
     const server = app.listen(PORT, HOST, () => {
-      console.log(`\n[SERVER] ✓ Iniciado em http://${HOST}:${PORT} (${NODE_ENV}) v${API_VERSION}\n`);
+      console.log(
+        `\n[SERVER] ✓ Iniciado em http://${HOST}:${PORT} (${NODE_ENV}) v${API_VERSION}\n`,
+      );
     });
 
     const shutdown = (signal) => {

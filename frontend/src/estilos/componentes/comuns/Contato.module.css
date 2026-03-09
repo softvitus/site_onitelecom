@@ -1,11 +1,46 @@
+/* ================== VARIÁVEIS CSS CUSTOM - Contato ================== */
+
+:root {
+  /* ELEMENTOS */
+  --contato-containerBackground: var(--color-neutral-300);
+  --contato-headerBackground: transparent;
+  --contato-cardBackground: var(--color-neutral-white);
+  --contato-cardBorder: var(--color-secondary-blue);
+  --contato-formBackground: var(--color-neutral-white);
+  --contato-mapBackground: var(--color-neutral-white);
+  --contato-buttonSubmitBackground: var(--color-secondary-blue);
+
+  /* TEXTOS */
+  --contato-textTitle: var(--color-secondary-blue);
+  --contato-textLabel: var(--color-secondary-blue);
+  --contato-textSecondary: var(--color-neutral-black);
+  --contato-textGray: var(--color-neutral-600);
+  --contato-inputBorder: var(--color-neutral-300);
+  --contato-inputBackground: var(--color-neutral-100);
+  --contato-neutralBackground: var(--color-neutral-200);
+
+  /* STATUS MESSAGES */
+  --contato-successBackground: var(--color-status-success-light);
+  --contato-successText: var(--color-status-success-dark);
+  --contato-successBorder: var(--color-status-success);
+  --contato-errorBackground: var(--color-status-error-light);
+  --contato-errorText: var(--color-status-error-dark);
+  --contato-errorBorder: var(--color-status-error);
+  --contato-infoBackground: var(--color-status-info-light);
+  --contato-infoText: var(--color-status-info-dark);
+  --contato-infoBorder: var(--color-status-info);
+}
+
+/* ================================================================ */
+
 .contato {
   text-align: center;
-  background-color: var(--color-neutral-300);
+  background-color: var(--contato-containerBackground);
   padding: 30px;
 }
 
 .titulo {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textTitle);
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
@@ -26,13 +61,13 @@
 }
 
 .caixa-contato {
-  border: 2px solid var(--color-secondary-blue);
+  border: 2px solid var(--contato-cardBorder);
   border-radius: var(--radius-lg);
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--color-neutral-white);
+  background-color: var(--contato-cardBackground);
   transition: var(--transition-normal);
   text-align: center;
 }
@@ -43,7 +78,7 @@
 }
 
 .caixa-contato span {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textLabel);
   font-size: 16px;
   margin-bottom: 5px;
   display: block;
@@ -56,13 +91,13 @@
 }
 
 .numero-contato i {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textLabel);
   font-size: 24px;
   margin-right: 10px;
 }
 
 .numero-contato strong {
-  color: var(--color-neutral-black);
+  color: var(--contato-textSecondary);
   font-size: 18px;
 }
 
@@ -73,13 +108,13 @@
 
 .numero-contato p {
   margin: 0;
-  color: var(--color-neutral-black);
+  color: var(--contato-textSecondary);
   font-size: 18px;
 }
 
 /* Adicionei um estilo para o ícone */
 .icon {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textLabel);
   font-size: 24px;
   margin-right: 10px;
 }
@@ -98,7 +133,7 @@
 
 /* ========== FORMULÁRIO ==========*/
 .form-section {
-  background-color: var(--color-neutral-white);
+  background-color: var(--contato-formBackground);
   padding: 30px;
   border-radius: var(--radius-lg);
   margin: 30px auto;
@@ -107,7 +142,7 @@
 }
 
 .form-section h3 {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textTitle);
   font-size: 22px;
   margin-bottom: 25px;
   font-weight: bold;
@@ -121,7 +156,7 @@
 }
 
 .form-group label {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textLabel);
   font-weight: 600;
   margin-bottom: 8px;
   font-size: 14px;
@@ -131,19 +166,19 @@
 .form-group textarea,
 .form-group select {
   padding: 12px 15px;
-  border: 2px solid var(--color-neutral-300);
+  border: 2px solid var(--contato-inputBorder);
   border-radius: var(--radius-md);
   font-size: 14px;
   font-family: inherit;
   transition: all 0.3s ease;
-  background-color: var(--color-neutral-100);
+  background-color: var(--contato-inputBackground);
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--color-secondary-blue);
+  border-color: var(--contato-textLabel);
   background-color: white;
   box-shadow: 0 0 0 3px rgba(70, 130, 180, 0.1);
 }
@@ -183,12 +218,13 @@
 }
 
 .submit-btn {
-  background-color: var(--color-secondary-blue);
+  background-color: var(--contato-buttonSubmitBackground);
   color: white;
 }
 
 .submit-btn:hover:not(:disabled) {
-  background-color: var(--color-secondary-blue-dark);
+  background-color: var(--contato-buttonSubmitBackground);
+  filter: brightness(0.9);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(70, 130, 180, 0.3);
 }
@@ -199,13 +235,13 @@
 }
 
 .reset-btn {
-  background-color: var(--color-neutral-200);
-  color: var(--color-secondary-blue);
-  border: 2px solid var(--color-secondary-blue);
+  background-color: var(--contato-neutralBackground);
+  color: var(--contato-textLabel);
+  border: 2px solid var(--contato_textLabel);
 }
 
 .reset-btn:hover {
-  background-color: var(--color-secondary-blue);
+  background-color: var(--contato-buttonSubmitBackground);
   color: white;
 }
 
@@ -222,21 +258,21 @@
 }
 
 .success-message {
-  background-color: var(--color-status-success-light);
-  color: var(--color-status-success-dark);
-  border: 1px solid var(--color-status-success);
+  background-color: var(--contato-successBackground);
+  color: var(--contato-successText);
+  border: 1px solid var(--contato-successBorder);
 }
 
 .error-message {
-  background-color: var(--color-status-error-light);
-  color: var(--color-status-error-dark);
-  border: 1px solid var(--color-status-error);
+  background-color: var(--contato-errorBackground);
+  color: var(--contato-errorText);
+  border: 1px solid var(--contato-errorBorder);
 }
 
 .loading-message {
-  background-color: var(--color-status-info-light);
-  color: var(--color-status-info-dark);
-  border: 1px solid var(--color-status-info);
+  background-color: var(--contato-infoBackground);
+  color: var(--contato-infoText);
+  border: 1px solid var(--contato-infoBorder);
 }
 
 .message-icon {
@@ -260,14 +296,14 @@
 
 /* ========== MAPA ==========*/
 .map-section {
-  background-color: var(--color-neutral-white);
+  background-color: var(--contato-mapBackground);
   padding: 30px;
   border-radius: var(--radius-lg);
   margin: 0;
 }
 
 .map-title {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textTitle);
   font-size: 22px;
   margin-bottom: 20px;
   font-weight: bold;
@@ -277,7 +313,7 @@
 }
 
 .map-icon {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textLabel);
   font-size: 24px;
 }
 
@@ -287,20 +323,20 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   height: 450px;
   width: 100%;
-  background-color: var(--color-neutral-200);
+  background-color: var(--contato-neutralBackground);
   position: relative;
   z-index: 1;
 }
 
 .map-attribution {
   font-size: 12px;
-  color: var(--color-neutral-600);
+  color: var(--contato-textGray);
   margin-top: 10px;
   text-align: center;
 }
 
 .map-attribution a {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textLabel);
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -311,7 +347,7 @@
 
 .map-legend {
   text-align: center;
-  color: var(--color-neutral-600);
+  color: var(--contato-textGray);
   margin-top: 12px;
   font-style: italic;
 }
@@ -323,14 +359,14 @@
 }
 
 .map-popup strong {
-  color: var(--color-secondary-blue);
+  color: var(--contato-textTitle);
   display: block;
   margin-bottom: 4px;
   font-size: 14px;
 }
 
 .map-popup small {
-  color: var(--color-neutral-600);
+  color: var(--contato-textGray);
   display: block;
   line-height: 1.4;
 }

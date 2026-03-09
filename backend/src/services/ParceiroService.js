@@ -26,7 +26,7 @@ export class ParceiroService extends BaseService {
       filters.par_id = filters.parceiroId;
       delete filters.parceiroId;
     }
-    
+
     return super.findAll(filters, pagination, options);
   }
 
@@ -37,10 +37,7 @@ export class ParceiroService extends BaseService {
    */
   async findByIdWithRelations(id) {
     return this.findById(id, {
-      include: [
-        { association: 'temas' },
-        { association: 'paginas' },
-      ],
+      include: [{ association: 'temas' }, { association: 'paginas' }],
     });
   }
 
@@ -75,7 +72,10 @@ export class ParceiroService extends BaseService {
     });
 
     if (!item) {
-      throw new ApiError('NOT_FOUND', 'Parceiro com este domínio não encontrado');
+      throw new ApiError(
+        'NOT_FOUND',
+        'Parceiro com este domínio não encontrado',
+      );
     }
 
     return item;
@@ -100,7 +100,10 @@ export class ParceiroService extends BaseService {
     });
 
     if (existing) {
-      throw new ApiError('DUPLICATE_ENTRY', 'Já existe parceiro com este domínio');
+      throw new ApiError(
+        'DUPLICATE_ENTRY',
+        'Já existe parceiro com este domínio',
+      );
     }
 
     return this.create(data);
@@ -120,10 +123,7 @@ export class ParceiroService extends BaseService {
       throw new ApiError('INVALID_INPUT', 'Região inválida');
     }
 
-    return this.findAll(
-      { par_cidade: cities },
-      pagination,
-    );
+    return this.findAll({ par_cidade: cities }, pagination);
   }
 
   /**
@@ -150,11 +150,22 @@ export class ParceiroService extends BaseService {
   async findNearby(latitude, longitude, radiusKm = 50, pagination = {}) {
     // Validar coordenadas
     if (!latitude || !longitude) {
-      throw new ApiError('INVALID_INPUT', 'Latitude e longitude são obrigatórias');
+      throw new ApiError(
+        'INVALID_INPUT',
+        'Latitude e longitude são obrigatórias',
+      );
     }
 
-    if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
-      throw new ApiError('INVALID_INPUT', 'Coordenadas fora do intervalo válido');
+    if (
+      latitude < -90 ||
+      latitude > 90 ||
+      longitude < -180 ||
+      longitude > 180
+    ) {
+      throw new ApiError(
+        'INVALID_INPUT',
+        'Coordenadas fora do intervalo válido',
+      );
     }
 
     // Buscar todos os parceiros ativos com localização
@@ -168,7 +179,7 @@ export class ParceiroService extends BaseService {
 
     // Calcular distância de cada parceiro
     const nearby = parceiros
-      .map(parceiro => ({
+      .map((parceiro) => ({
         ...parceiro.toJSON(),
         distancia: this.calculateDistance(
           latitude,
@@ -177,7 +188,7 @@ export class ParceiroService extends BaseService {
           parseFloat(parceiro.par_longitude),
         ),
       }))
-      .filter(p => p.distancia <= radiusKm)
+      .filter((p) => p.distancia <= radiusKm)
       .sort((a, b) => a.distancia - b.distancia);
 
     // Aplicar paginação
@@ -227,21 +238,30 @@ export class ParceiroService extends BaseService {
     if (data.par_latitude) {
       const lat = parseFloat(data.par_latitude);
       if (lat < -90 || lat > 90) {
-        throw new ApiError('INVALID_INPUT', 'Latitude deve estar entre -90 e 90');
+        throw new ApiError(
+          'INVALID_INPUT',
+          'Latitude deve estar entre -90 e 90',
+        );
       }
     }
 
     if (data.par_longitude) {
       const lon = parseFloat(data.par_longitude);
       if (lon < -180 || lon > 180) {
-        throw new ApiError('INVALID_INPUT', 'Longitude deve estar entre -180 e 180');
+        throw new ApiError(
+          'INVALID_INPUT',
+          'Longitude deve estar entre -180 e 180',
+        );
       }
     }
 
     if (data.par_raio_cobertura) {
       const raio = parseFloat(data.par_raio_cobertura);
       if (raio < 0) {
-        throw new ApiError('INVALID_INPUT', 'Raio de cobertura não pode ser negativo');
+        throw new ApiError(
+          'INVALID_INPUT',
+          'Raio de cobertura não pode ser negativo',
+        );
       }
     }
   }
@@ -253,10 +273,23 @@ export class ParceiroService extends BaseService {
    */
   getCitiesByRegion(region) {
     const regions = {
-      sudeste: ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Espírito Santo'],
+      sudeste: [
+        'São Paulo',
+        'Rio de Janeiro',
+        'Minas Gerais',
+        'Espírito Santo',
+      ],
       sul: ['Rio Grande do Sul', 'Paraná', 'Santa Catarina'],
       nordeste: ['Bahia', 'Ceará', 'Pernambuco', 'Maranhão', 'Paraíba'],
-      norte: ['Amazonas', 'Pará', 'Rondônia', 'Acre', 'Amapá', 'Roraima', 'Tocantins'],
+      norte: [
+        'Amazonas',
+        'Pará',
+        'Rondônia',
+        'Acre',
+        'Amapá',
+        'Roraima',
+        'Tocantins',
+      ],
       centrooeste: ['Goiás', 'Mato Grosso', 'Mato Grosso do Sul', 'Brasília'],
     };
 

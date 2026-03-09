@@ -23,7 +23,7 @@ export class ConfigTemaController {
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
-      
+
       const result = await this.service.findAll(
         {},
         { page: parseInt(page), limit: parseInt(limit) },
@@ -220,8 +220,13 @@ export default ConfigTemaController;
 export const configTemaController = new ConfigTemaController();
 
 // Exporta métodos para compatibilidade com versão anterior
-export const getAll = (req, res, next) => configTemaController.getAll(req, res, next);
-export const getById = (req, res, next) => configTemaController.getById(req, res, next);
-export const create = (req, res, next) => configTemaController.create(req, res, next);
-export const update = (req, res, next) => configTemaController.update(req, res, next);
-export const remove = (req, res, next) => configTemaController.remove(req, res, next);
+export const getAll = (req, res, next) =>
+  configTemaController.getAll(req, res, next);
+export const getById = (req, res, next) =>
+  configTemaController.getById(req, res, next);
+export const create = (req, res, next) =>
+  configTemaController.create(req, res, next);
+export const update = (req, res, next) =>
+  configTemaController.update(req, res, next);
+export const remove = (req, res, next) =>
+  configTemaController.remove(req, res, next);

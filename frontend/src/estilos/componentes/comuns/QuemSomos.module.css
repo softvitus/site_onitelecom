@@ -1,8 +1,17 @@
 .secaoPrincipal {
   padding: 40px 20px;
-  background-color: var(--color-neutral-background);
-  color: var(--color-neutral-text);
+  background-color: var(--quemSomos-secaoPrincipalBg);
+  color: var(--quemSomos-secaoPrincipalText);
   font-family: 'Roboto', sans-serif;
+}
+
+:root {
+  --quemSomos-secaoPrincipalBg: var(--color-neutral-background);
+  --quemSomos-secaoPrincipalText: var(--color-neutral-text);
+  --quemSomos-tituloPrincipalColor: var(--color-secondary-blue);
+  --quemSomos-destaqueColor: var(--color-primary-main);
+  --quemSomos-botaoText: var(--color-neutral-white);
+  --quemSomos-secaoInfoBg: var(--color-secondary-blue-light);
 }
 
 .container {
@@ -22,7 +31,7 @@
 }
 
 .tituloPrincipal {
-  color: var(--color-secondary-blue);
+  color: var(--quemSomos-tituloPrincipalColor);
   font-weight: 700;
   font-size: 2rem;
   margin-bottom: 20px;
@@ -37,7 +46,7 @@
 }
 
 .destaque {
-  color: var(--color-primary-main);
+  color: var(--quemSomos-destaqueColor);
   font-weight: 600;
 }
 
@@ -48,8 +57,8 @@
   margin: 30px auto 0;
   font-size: 1.1rem;
   font-weight: 600;
-  background-color: var(--color-primary-main);
-  color: var(--color-neutral-white);
+  background: var(--color-primary-main);
+  color: var(--quemSomos-botaoText);
   padding: 15px 25px;
   border: none;
   border-radius: 30px;
@@ -58,7 +67,8 @@
 }
 
 .botaoAcao:hover {
-  background-color: var(--color-secondary-blue);
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-lg);
 }
 
 .wrapperImagem {
@@ -76,10 +86,10 @@
 
 .secaoInfo {
   margin-top: 40px;
-  background-color: var(--color-secondary-blue-light);
+  background-color: var(--quemSomos-secaoInfoBg);
   padding: 30px 20px;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow-md);
 }
 
 .infoContainer {
@@ -89,9 +99,10 @@
 }
 
 .infoBox h3 {
-  color: var(--color-secondary-blue);
+  color: var(--quemSomos-destaqueColor);
   margin-bottom: 15px;
   font-size: 1.3rem;
+  font-weight: 700;
 }
 
 .infoBox ul {
@@ -108,9 +119,10 @@
 
 .infoBox ul li::before {
   content: '✔';
-  color: var(--color-primary-main);
+  color: var(--quemSomos-destaqueColor);
   position: absolute;
   left: 0;
+  font-weight: bold;
 }
 
 @media (min-width: 768px) {

@@ -97,7 +97,7 @@ const OniFoLogo = () => {
  */
 const BenefitsCompact = ({ benefits }) => {
   if (!benefits || benefits.length === 0) return null;
-  
+
   return (
     <div className={styles['benefits-compact']}>
       {benefits.map((benefit, idx) => (
@@ -321,8 +321,6 @@ const Ofertas = () => {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-
-
   // ─────────────────────────────────────────────────────────────────────────────────
   // RENDER
   // ─────────────────────────────────────────────────────────────────────────────────
@@ -364,21 +362,13 @@ const Ofertas = () => {
         <div
           className={styles['card-container']}
           style={{ transform: `translateX(-${currentIndex * (100 / visibleCards)}%)` }}
-         
           aria-label="Carrossel de ofertas"
         >
           {/* Renderização dos cards */}
           {cards.map((card, index) => {
             const isVisible = index >= currentIndex && index < currentIndex + visibleCards;
 
-            return (
-              <OfertaCard
-                key={card.id}
-                card={card}
-                index={index}
-                isVisible={isVisible}
-              />
-            );
+            return <OfertaCard key={card.id} card={card} index={index} isVisible={isVisible} />;
           })}
         </div>
       </div>
@@ -387,4 +377,3 @@ const Ofertas = () => {
 };
 
 export default Ofertas;
-

@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar permissões.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (perm_modulo → modulo, etc).
- * 
+ *
  * @module servicos/permissoes
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_PERMISSOES = '/permissoes';
 /**
  * Mapeia dados do backend (perm_modulo, perm_acao, etc)
  * para formato do frontend (modulo, acao, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -44,7 +44,7 @@ const mapearPermissao = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -70,7 +70,7 @@ const servicoBase = criarServicoGenerico(ENDPOINT_PERMISSOES);
 const PermissoesService = {
   /**
    * Lista todas as permissões com paginação
-   * 
+   *
    * @param {number} page - Número da página
    * @param {number} limit - Itens por página
    * @param {Object} filtros - Filtros (search, modulo, acao)
@@ -116,7 +116,7 @@ const PermissoesService = {
 
   /**
    * Obtém uma permissão específica
-   * 
+   *
    * @param {string|number} id - ID da permissão
    * @returns {Promise<Object>} { sucesso, dados, erro }
    */
@@ -144,7 +144,7 @@ const PermissoesService = {
 
   /**
    * Cria uma nova permissão
-   * 
+   *
    * @param {Object} dados - Dados da permissão (modulo, acao, descricao, habilitado)
    * @returns {Promise<Object>} { sucesso, dados, erro }
    */
@@ -173,7 +173,7 @@ const PermissoesService = {
 
   /**
    * Atualiza uma permissão (mantém apenas campos não-status)
-   * 
+   *
    * @param {string|number} id - ID da permissão
    * @param {Object} dados - Dados a atualizar
    * @returns {Promise<Object>} { sucesso, dados, erro }
@@ -209,7 +209,7 @@ const PermissoesService = {
 
   /**
    * Alterna o status (habilitado/desabilitado) de uma permissão
-   * 
+   *
    * @param {string|number} id - ID da permissão
    * @param {string} status - Novo status (habilitado ou desabilitado)
    * @returns {Promise<Object>} { sucesso, dados, erro }
@@ -242,7 +242,7 @@ const PermissoesService = {
 
   /**
    * Deleta uma permissão
-   * 
+   *
    * @param {string|number} id - ID da permissão
    * @returns {Promise<Object>} { sucesso, erro }
    */
@@ -250,7 +250,7 @@ const PermissoesService = {
 
   /**
    * Lista permissões por módulo
-   * 
+   *
    * @param {string} modulo - Módulo
    * @param {number} page - Página
    * @param {number} limit - Limite
@@ -272,7 +272,7 @@ const PermissoesService = {
 
   /**
    * Busca permissões por query
-   * 
+   *
    * @param {string} query - Query de busca
    * @param {number} page - Página
    * @param {number} limit - Limite

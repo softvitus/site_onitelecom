@@ -27,23 +27,12 @@ import DynamicPageRenderer from '../../componentes/DynamicPageRenderer/DynamicPa
 // Hooks
 import useLocationGuard from '../../hooks/useLocationGuard';
 
-// Estilos
-import styles from '../../estilos/paginas/Internet.module.css';
-
 // ============================================================================
 // CONSTANTES
 // ============================================================================
 
 /** @constant {string} PAGE_PATH - Caminho da página no sistema */
 const PAGE_PATH = '/internet';
-
-/**
- * @constant {Object} CUSTOM_WRAPPERS - Mapeamento de wrappers customizados
- * @property {string} faixaplanos - Estilo para seção de faixa de planos
- */
-const CUSTOM_WRAPPERS = Object.freeze({
-  faixaplanos: styles.faixaplanos,
-});
 
 // ============================================================================
 // COMPONENTE
@@ -56,7 +45,7 @@ const CUSTOM_WRAPPERS = Object.freeze({
 const Internet = () => {
   useLocationGuard();
 
-  return <DynamicPageRenderer pagePath={PAGE_PATH} customWrappers={CUSTOM_WRAPPERS} />;
+  return <DynamicPageRenderer pagePath={PAGE_PATH} />;
 };
 
 // ============================================================================
@@ -64,4 +53,4 @@ const Internet = () => {
 // ============================================================================
 
 export default Internet;
-export { PAGE_PATH, CUSTOM_WRAPPERS };
+export { PAGE_PATH };

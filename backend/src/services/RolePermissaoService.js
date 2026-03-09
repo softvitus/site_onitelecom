@@ -25,7 +25,10 @@ export class RolePermissaoService extends BaseService {
    */
   async findByTipo(tipo) {
     if (!RolePermissaoService.VALID_TIPOS.includes(tipo)) {
-      throw new ApiError('VALIDATION_ERROR', `Tipo deve ser um de: ${RolePermissaoService.VALID_TIPOS.join(', ')}`);
+      throw new ApiError(
+        'VALIDATION_ERROR',
+        `Tipo deve ser um de: ${RolePermissaoService.VALID_TIPOS.join(', ')}`,
+      );
     }
 
     return this.model.findAll({
@@ -33,7 +36,13 @@ export class RolePermissaoService extends BaseService {
       include: [
         {
           association: 'permissao',
-          attributes: ['perm_id', 'perm_nome', 'perm_modulo', 'perm_acao', 'perm_descricao'],
+          attributes: [
+            'perm_id',
+            'perm_nome',
+            'perm_modulo',
+            'perm_acao',
+            'perm_descricao',
+          ],
         },
       ],
     });
@@ -73,7 +82,10 @@ export class RolePermissaoService extends BaseService {
    */
   async atribuirPermissao(tipo, permissaoId) {
     if (!RolePermissaoService.VALID_TIPOS.includes(tipo)) {
-      throw new ApiError('VALIDATION_ERROR', `Tipo deve ser um de: ${RolePermissaoService.VALID_TIPOS.join(', ')}`);
+      throw new ApiError(
+        'VALIDATION_ERROR',
+        `Tipo deve ser um de: ${RolePermissaoService.VALID_TIPOS.join(', ')}`,
+      );
     }
 
     // Verificar se a permissão existe
@@ -92,7 +104,10 @@ export class RolePermissaoService extends BaseService {
     });
 
     if (existe) {
-      throw new ApiError('VALIDATION_ERROR', 'Esta permissão já está atribuída a este tipo');
+      throw new ApiError(
+        'VALIDATION_ERROR',
+        'Esta permissão já está atribuída a este tipo',
+      );
     }
 
     return this.create({
@@ -109,7 +124,10 @@ export class RolePermissaoService extends BaseService {
    */
   async removerPermissao(tipo, permissaoId) {
     if (!RolePermissaoService.VALID_TIPOS.includes(tipo)) {
-      throw new ApiError('VALIDATION_ERROR', `Tipo deve ser um de: ${RolePermissaoService.VALID_TIPOS.join(', ')}`);
+      throw new ApiError(
+        'VALIDATION_ERROR',
+        `Tipo deve ser um de: ${RolePermissaoService.VALID_TIPOS.join(', ')}`,
+      );
     }
 
     const count = await this.model.destroy({
@@ -134,7 +152,10 @@ export class RolePermissaoService extends BaseService {
    */
   async replacePermissoes(tipo, permissaoIds) {
     if (!RolePermissaoService.VALID_TIPOS.includes(tipo)) {
-      throw new ApiError('VALIDATION_ERROR', `Tipo deve ser um de: ${RolePermissaoService.VALID_TIPOS.join(', ')}`);
+      throw new ApiError(
+        'VALIDATION_ERROR',
+        `Tipo deve ser um de: ${RolePermissaoService.VALID_TIPOS.join(', ')}`,
+      );
     }
 
     if (!Array.isArray(permissaoIds)) {
@@ -153,7 +174,10 @@ export class RolePermissaoService extends BaseService {
     for (const permissaoId of permissaoIds) {
       const permissao = await models.Permissao.findByPk(permissaoId);
       if (!permissao) {
-        throw new ApiError('NOT_FOUND', `Permissão ${permissaoId} não encontrada`);
+        throw new ApiError(
+          'NOT_FOUND',
+          `Permissão ${permissaoId} não encontrada`,
+        );
       }
 
       const rp = await this.create({

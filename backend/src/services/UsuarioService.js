@@ -50,11 +50,7 @@ export class UsuarioService extends BaseService {
     });
 
     if (!user) {
-      throw new ApiError(
-        'NOT_FOUND',
-        'Usuário não encontrado',
-        404,
-      );
+      throw new ApiError('NOT_FOUND', 'Usuário não encontrado', 404);
     }
 
     return user;
@@ -131,11 +127,7 @@ export class UsuarioService extends BaseService {
     }
 
     if (usuario.usu_status !== 'ativo') {
-      throw new ApiError(
-        'ACCOUNT_INACTIVE',
-        'Conta inativa',
-        403,
-      );
+      throw new ApiError('ACCOUNT_INACTIVE', 'Conta inativa', 403);
     }
 
     // Verificar tentativas de login
@@ -183,7 +175,10 @@ export class UsuarioService extends BaseService {
     }
 
     // Validar que gestor e usuario devem ter parceiro
-    if (['gestor', 'usuario'].includes(data.usu_tipo) && !data.usu_parceiro_id) {
+    if (
+      ['gestor', 'usuario'].includes(data.usu_tipo) &&
+      !data.usu_parceiro_id
+    ) {
       throw new ApiError(
         'VALIDATION_ERROR',
         'Gestores e usuários devem estar vinculados a um parceiro',
@@ -266,11 +261,7 @@ export class UsuarioService extends BaseService {
     const senhaValida = await bcrypt.compare(senhaAtual, usuario.usu_senha);
 
     if (!senhaValida) {
-      throw new ApiError(
-        'INVALID_PASSWORD',
-        'Senha atual incorreta',
-        401,
-      );
+      throw new ApiError('INVALID_PASSWORD', 'Senha atual incorreta', 401);
     }
 
     // Hash da nova senha
@@ -385,7 +376,10 @@ export class UsuarioService extends BaseService {
 
     // Buscar permissões do role
     const { RolePermissao } = this.model.sequelize.models;
-    const temPerm = await RolePermissao.temPermissao(usuario.usu_tipo, permissaoNome);
+    const temPerm = await RolePermissao.temPermissao(
+      usuario.usu_tipo,
+      permissaoNome,
+    );
 
     return temPerm;
   }
@@ -408,7 +402,7 @@ export class UsuarioService extends BaseService {
     const rolePerms = await RolePermissao.findByTipo(usuario.usu_tipo);
 
     // Retornar apenas os nomes das permissões (array de strings)
-    return rolePerms.map(rp => rp.permissao.perm_nome);
+    return rolePerms.map((rp) => rp.permissao.perm_nome);
   }
 }
 

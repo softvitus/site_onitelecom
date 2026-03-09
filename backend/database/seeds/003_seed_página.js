@@ -163,7 +163,7 @@ export default {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      
+
       // ==================== PARCEIRO: INTERNET BRASIL ====================
       {
         pag_id: '550e8400-e29b-41d4-a716-446655460004',

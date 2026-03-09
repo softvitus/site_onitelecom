@@ -272,12 +272,16 @@ describe('ParceiroController - Unit Tests', () => {
 
       await controller.update(mockReq, mockRes, mockNext);
 
-      expect(mockService.update).toHaveBeenCalledWith('123', { par_nome: 'Novo Nome' });
+      expect(mockService.update).toHaveBeenCalledWith('123', {
+        par_nome: 'Novo Nome',
+      });
     });
 
     it('deve chamar next com erro quando serviço falha', async () => {
       const error = new Error('Update error');
-      mockService.findById.mockResolvedValue(createMockModel({ par_id: '123' }));
+      mockService.findById.mockResolvedValue(
+        createMockModel({ par_id: '123' }),
+      );
       mockService.update.mockRejectedValue(error);
       mockReq.params = { id: '123' };
 
@@ -368,7 +372,9 @@ describe('ParceiroController - Unit Tests', () => {
         par_cidade: 'SP',
       };
 
-      mockService.create.mockResolvedValue(createMockModel({ par_id: '1', ...originalBody }));
+      mockService.create.mockResolvedValue(
+        createMockModel({ par_id: '1', ...originalBody }),
+      );
       mockReq.body = { ...originalBody };
 
       await controller.create(mockReq, mockRes, mockNext);

@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Cores
  * @description Interface completa de CRUD para cores
- * 
+ *
  * @module paginas/Cores/CoresPage
  */
 
@@ -31,31 +31,55 @@ const FORM_INICIAL = {
   nome: '',
   valor: '#000000',
   categoria: '',
+  componente: '',
+  variavelRef: '',
+  descricao: '',
+  ativo: true,
 };
 
 const COLUNAS_GRID = [
-  { chave: 'nome', titulo: 'Nome', largura: '30%' },
+  { chave: 'nome', titulo: 'Nome', largura: '15%' },
   {
     chave: 'valor',
     titulo: 'Cor',
-    largura: '20%',
+    largura: '10%',
     render: (valor) => (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         <div
           style={{
-            width: '30px',
-            height: '30px',
+            width: '25px',
+            height: '25px',
             backgroundColor: valor,
-            border: '2px solid #ddd',
-            borderRadius: '4px',
+            border: '1px solid #ddd',
+            borderRadius: '3px',
           }}
         />
-        <span style={{ fontSize: '0.85rem', color: '#666' }}>{valor}</span>
+        <span style={{ fontSize: '0.75rem', color: '#666' }}>{valor}</span>
       </div>
     ),
   },
-  { chave: 'categoria', titulo: 'Categoria', largura: '25%' },
-  { chave: 'temaId', titulo: 'Tema', largura: '25%' },
+  { chave: 'categoria', titulo: 'Categoria', largura: '12%' },
+  { chave: 'componente', titulo: 'Componente', largura: '15%' },
+  { chave: 'variavelRef', titulo: 'Variável', largura: '18%' },
+  {
+    chave: 'ativo',
+    titulo: 'Status',
+    largura: '10%',
+    render: (ativo) => (
+      <span
+        style={{
+          padding: '3px 8px',
+          borderRadius: '3px',
+          fontSize: '0.75rem',
+          backgroundColor: ativo ? '#d4edda' : '#f8d7da',
+          color: ativo ? '#155724' : '#721c24',
+          fontWeight: '500',
+        }}
+      >
+        {ativo ? 'Ativo' : 'Inativo'}
+      </span>
+    ),
+  },
 ];
 
 // ============================================================================
@@ -94,6 +118,13 @@ const validarFormulario = (dados) => {
     erros.categoria = 'Categoria é obrigatória';
   }
 
+  // Validar formato de variável CSS se preenchida
+  if (dados.variavelRef?.trim()) {
+    if (!dados.variavelRef.startsWith('var(--') || !dados.variavelRef.endsWith(')')) {
+      erros.variavelRef = 'Deve estar no formato: var(--nome-variavel)';
+    }
+  }
+
   return erros;
 };
 
@@ -103,16 +134,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Cores
- * 
+ *
  * Funcionalidades completas de CRUD.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const CoresPage = () => {
   // Autenticação e Permissões
   const { temPermissao } = useAuth();
-  
+
   // Estado
   const [cores, setCores] = useState([]);
   const [temas, setTemas] = useState([]);
@@ -216,6 +247,10 @@ const CoresPage = () => {
       nome: cor.nome || '',
       valor: cor.valor || '#000000',
       categoria: cor.categoria || '',
+      componente: cor.componente || '',
+      variavelRef: cor.variavelRef || '',
+      descricao: cor.descricao || '',
+      ativo: cor.ativo !== undefined ? cor.ativo : true,
     });
     setErrosForm({});
     setModalAberto(true);
@@ -289,7 +324,7 @@ const CoresPage = () => {
   const executarDelecao = async () => {
     if (!confirmarDialog.cor) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const cor = confirmarDialog.cor;
 
@@ -303,12 +338,12 @@ const CoresPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar cor'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar cor'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -395,11 +430,7 @@ const CoresPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarCor}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarCor} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -409,7 +440,9 @@ const CoresPage = () => {
           {/* Tema - obrigatório */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Tema <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Tema <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.temaId}
@@ -423,16 +456,16 @@ const CoresPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.temaId && (
-                <span className="modal-form-error">{errosForm.temaId}</span>
-              )}
+              {errosForm.temaId && <span className="modal-form-error">{errosForm.temaId}</span>}
             </div>
           </div>
 
           {/* Nome e Cor */}
           <div className="modal-form-row cols-2">
             <div className="modal-form-group">
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -440,13 +473,13 @@ const CoresPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Ex: Primária, Secundária, Acento"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
 
             <div className="modal-form-group">
-              <label className="modal-form-label">Cor <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Cor <span className="required">*</span>
+              </label>
               <div className="modal-form-color-wrapper">
                 <input
                   type="color"
@@ -462,16 +495,16 @@ const CoresPage = () => {
                   placeholder="#000000"
                 />
               </div>
-              {errosForm.valor && (
-                <span className="modal-form-error">{errosForm.valor}</span>
-              )}
+              {errosForm.valor && <span className="modal-form-error">{errosForm.valor}</span>}
             </div>
           </div>
 
           {/* Categoria */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Categoria <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Categoria <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -482,6 +515,71 @@ const CoresPage = () => {
               {errosForm.categoria && (
                 <span className="modal-form-error">{errosForm.categoria}</span>
               )}
+            </div>
+          </div>
+
+          {/* Componente e Variável */}
+          <div className="modal-form-row cols-2">
+            <div className="modal-form-group">
+              <label className="modal-form-label">Componente</label>
+              <input
+                type="text"
+                className="modal-form-input"
+                value={formData.componente}
+                onChange={(e) => setFormData({ ...formData, componente: e.target.value })}
+                placeholder="Ex: Header, Ofertas, Footer"
+              />
+            </div>
+
+            <div className="modal-form-group">
+              <label className="modal-form-label">Variável CSS</label>
+              <input
+                type="text"
+                className="modal-form-input"
+                value={formData.variavelRef}
+                onChange={(e) => setFormData({ ...formData, variavelRef: e.target.value })}
+                placeholder="Ex: var(--header-background)"
+              />
+              {errosForm.variavelRef && (
+                <span className="modal-form-error">{errosForm.variavelRef}</span>
+              )}
+            </div>
+          </div>
+
+          {/* Descrição e Status */}
+          <div className="modal-form-row cols-2">
+            <div className="modal-form-group">
+              <label className="modal-form-label">Descrição</label>
+              <textarea
+                className="modal-form-input"
+                value={formData.descricao}
+                onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+                placeholder="Descrição da cor (opcional)"
+                rows="2"
+              />
+            </div>
+
+            <div className="modal-form-group">
+              <label className="modal-form-label">Status</label>
+              <div
+                style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.5rem' }}
+              >
+                <label
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={formData.ativo}
+                    onChange={(e) => setFormData({ ...formData, ativo: e.target.checked })}
+                  />
+                  <span style={{ marginTop: '2px' }}>Ativo</span>
+                </label>
+              </div>
             </div>
           </div>
         </form>

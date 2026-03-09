@@ -27,11 +27,16 @@ export const captureAuditData = (req, res, next) => {
       const acao = determinarAcao(req.method);
 
       // Determina a entidade e ID do path
-      const { entidade, entidadeId } = extrairEntidadeDoPath(req.path, req.method, data);
+      const { entidade, entidadeId } = extrairEntidadeDoPath(
+        req.path,
+        req.method,
+        data,
+      );
 
       // Status da auditoria
       const status = res.statusCode < 400 ? 'sucesso' : 'erro';
-      const mensagemErro = status === 'erro' ? data.error || data.message : null;
+      const mensagemErro =
+        status === 'erro' ? data.error || data.message : null;
 
       // Registra auditoria de forma assíncrona
       AuditoriaService.registrar({
@@ -105,9 +110,11 @@ function extrairEntidadeDoPath(path, metodo, data = {}) {
   if (!entidadeId && data && data.data) {
     // Para POST/PUT, tenta obter do data.data.id ou data.data.*_id
     if (metodo === 'POST' || metodo === 'PUT') {
-      entidadeId = data.data.id || Object.values(data.data).find((v) =>
-        typeof v === 'string' && v.match(/^[0-9a-f]{8}-[0-9a-f]{4}-/i),
-      );
+      entidadeId =
+        data.data.id ||
+        Object.values(data.data).find(
+          (v) => typeof v === 'string' && v.match(/^[0-9a-f]{8}-[0-9a-f]{4}-/i),
+        );
     }
   }
 

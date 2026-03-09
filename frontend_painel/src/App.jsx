@@ -31,25 +31,31 @@ const ProtectedRoute = ({ element }) => {
 
   if (carregando) {
     return (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        backgroundColor: '#f8f9fa'
-      }}>
-        <div style={{
-          textAlign: 'center',
-        }}>
-          <div style={{
-            display: 'inline-block',
-            width: '40px',
-            height: '40px',
-            border: '4px solid #e9ecef',
-            borderTop: '4px solid #0d6efd',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite'
-          }}></div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          backgroundColor: '#f8f9fa',
+        }}
+      >
+        <div
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              display: 'inline-block',
+              width: '40px',
+              height: '40px',
+              border: '4px solid #e9ecef',
+              borderTop: '4px solid #0d6efd',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+            }}
+          ></div>
           <p style={{ marginTop: '1rem', color: '#6c757d' }}>Carregando...</p>
         </div>
       </div>
@@ -72,34 +78,40 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <BrandingProvider>
-          <Routes>
-            {/* Rota de Login */}
-            <Route path="/login" element={<LoginPage />} />
+            <Routes>
+              {/* Rota de Login */}
+              <Route path="/login" element={<LoginPage />} />
 
-            {/* Rotas Protegidas */}
-            <Route path="/dashboard" element={<ProtectedRoute element={<DashboardPage />} />} />
-            <Route path="/parceiros" element={<ProtectedRoute element={<ParceirosPage />} />} />
-            <Route path="/componentes" element={<ProtectedRoute element={<ComponentesPage />} />} />
-            <Route path="/elementos" element={<ProtectedRoute element={<ElementosPage />} />} />
-            <Route path="/imagens" element={<ProtectedRoute element={<ImagensPage />} />} />
-            <Route path="/links" element={<ProtectedRoute element={<LinksPage />} />} />
-            <Route path="/textos" element={<ProtectedRoute element={<TextosPage />} />} />
-            <Route path="/conteudo" element={<ProtectedRoute element={<ConteudoPage />} />} />
-            <Route path="/cores" element={<ProtectedRoute element={<CoresPage />} />} />
-            <Route path="/features" element={<ProtectedRoute element={<FeaturesPage />} />} />
-            <Route path="/temas" element={<ProtectedRoute element={<TemasPage />} />} />
-            <Route path="/paginas" element={<ProtectedRoute element={<PaginasPage />} />} />
-            <Route path="/auditoria" element={<ProtectedRoute element={<AuditoriaPage />} />} />
-            <Route path="/usuarios" element={<ProtectedRoute element={<UsuariosPage />} />} />
-            <Route path="/permissoes" element={<ProtectedRoute element={<PermissoesPage />} />} />
-            <Route path="/role-permissoes" element={<ProtectedRoute element={<RolePermissoesPage />} />} />
+              {/* Rotas Protegidas */}
+              <Route path="/dashboard" element={<ProtectedRoute element={<DashboardPage />} />} />
+              <Route path="/parceiros" element={<ProtectedRoute element={<ParceirosPage />} />} />
+              <Route
+                path="/componentes"
+                element={<ProtectedRoute element={<ComponentesPage />} />}
+              />
+              <Route path="/elementos" element={<ProtectedRoute element={<ElementosPage />} />} />
+              <Route path="/imagens" element={<ProtectedRoute element={<ImagensPage />} />} />
+              <Route path="/links" element={<ProtectedRoute element={<LinksPage />} />} />
+              <Route path="/textos" element={<ProtectedRoute element={<TextosPage />} />} />
+              <Route path="/conteudo" element={<ProtectedRoute element={<ConteudoPage />} />} />
+              <Route path="/cores" element={<ProtectedRoute element={<CoresPage />} />} />
+              <Route path="/features" element={<ProtectedRoute element={<FeaturesPage />} />} />
+              <Route path="/temas" element={<ProtectedRoute element={<TemasPage />} />} />
+              <Route path="/paginas" element={<ProtectedRoute element={<PaginasPage />} />} />
+              <Route path="/auditoria" element={<ProtectedRoute element={<AuditoriaPage />} />} />
+              <Route path="/usuarios" element={<ProtectedRoute element={<UsuariosPage />} />} />
+              <Route path="/permissoes" element={<ProtectedRoute element={<PermissoesPage />} />} />
+              <Route
+                path="/role-permissoes"
+                element={<ProtectedRoute element={<RolePermissoesPage />} />}
+              />
 
-            {/* Redirecionar para dashboard */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              {/* Redirecionar para dashboard */}
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-            {/* Rota 404 */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Routes>
+              {/* Rota 404 */}
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Routes>
           </BrandingProvider>
         </AuthProvider>
       </BrowserRouter>

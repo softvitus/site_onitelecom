@@ -141,7 +141,6 @@ const InfinitePossibilities = () => {
     <div
       id={SECTION_ID}
       className={styles['container-custom']}
-     
       aria-labelledby="infinite-possibilities-title"
     >
       <div className="row">
@@ -158,4 +157,3 @@ const InfinitePossibilities = () => {
 };
 
 export default InfinitePossibilities;
-

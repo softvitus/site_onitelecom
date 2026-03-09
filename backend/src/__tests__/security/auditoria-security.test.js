@@ -25,7 +25,13 @@ describe('Auditoria - Security Tests (Mocked)', () => {
   });
 
   describe('Sanitização - Campos Sensíveis', () => {
-    const camposSensiveis = ['senha', 'usu_senha', 'token', 'refresh_token', 'api_key'];
+    const camposSensiveis = [
+      'senha',
+      'usu_senha',
+      'token',
+      'refresh_token',
+      'api_key',
+    ];
 
     it('deve redact "senha" em qualquer contexto', () => {
       expect(camposSensiveis).toContain('senha');
@@ -49,7 +55,7 @@ describe('Auditoria - Security Tests (Mocked)', () => {
 
     it('deve ser case-insensitive na detecção', () => {
       const variações = ['SENHA', 'Senha', 'sEnHa'];
-      variações.forEach(senha => {
+      variações.forEach((senha) => {
         const éSensível = 'senha'.toUpperCase() === 'SENHA'.toUpperCase();
         expect(éSensível).toBe(true);
       });
@@ -71,11 +77,12 @@ describe('Auditoria - Security Tests (Mocked)', () => {
       const uuids = {
         válido: '550e8400-e29b-41d4-a716-446655440000',
         inválido: 'não-é-uuid',
-        injetado: '\'; DROP TABLE--',
+        injetado: "'; DROP TABLE--",
       };
 
-      const padrãoUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-      
+      const padrãoUUID =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
       expect(padrãoUUID.test(uuids.válido)).toBe(true);
       expect(padrãoUUID.test(uuids.inválido)).toBe(false);
       expect(padrãoUUID.test(uuids.injetado)).toBe(false);
@@ -98,21 +105,30 @@ describe('Auditoria - Security Tests (Mocked)', () => {
   });
 
   describe('Validação de Enums', () => {
-    const acoesValidas = ['criar', 'editar', 'deletar', 'visualizar', 'inativar', 'ativar', 'login', 'logout'];
+    const acoesValidas = [
+      'criar',
+      'editar',
+      'deletar',
+      'visualizar',
+      'inativar',
+      'ativar',
+      'login',
+      'logout',
+    ];
     const statusValidos = ['sucesso', 'erro'];
 
     it('deve rejeitar ações inválidas', () => {
       const acoesInválidas = ['DROP TABLE', 'truncate', 'malicious'];
-      
-      acoesInválidas.forEach(acao => {
+
+      acoesInválidas.forEach((acao) => {
         expect(acoesValidas).not.toContain(acao);
       });
     });
 
     it('deve rejeitar status inválido', () => {
       const statusInválidos = ['pendente', 'falha', 'success'];
-      
-      statusInválidos.forEach(status => {
+
+      statusInválidos.forEach((status) => {
         expect(statusValidos).not.toContain(status);
       });
     });
@@ -120,7 +136,7 @@ describe('Auditoria - Security Tests (Mocked)', () => {
     it('deve aceitar apenas valores pré-definidos', () => {
       const acao = 'criar';
       const status = 'sucesso';
-      
+
       expect(acoesValidas).toContain(acao);
       expect(statusValidos).toContain(status);
     });

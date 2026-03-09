@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar features.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (fea_nome → nome, etc).
- * 
+ *
  * @module servicos/features
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_FEATURES = '/features';
 /**
  * Mapeia dados do backend (fea_nome, fea_habilitado, etc)
  * para formato do frontend (nome, habilitado, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -41,7 +41,7 @@ const mapearFeature = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -61,7 +61,7 @@ const FeaturesServiceBase = criarServicoGenerico(ENDPOINT_FEATURES);
 
 /**
  * Serviço para Gerenciar Features
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -75,14 +75,14 @@ const FeaturesService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await FeaturesServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearFeature(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -93,14 +93,14 @@ const FeaturesService = {
    */
   obter: async (id) => {
     const resultado = await FeaturesServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearFeature(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -112,14 +112,14 @@ const FeaturesService = {
   criar: async (dados) => {
     const dadosFormatados = mapearFeatureParaBackend(dados);
     const resultado = await FeaturesServiceBase.criar(dadosFormatados);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearFeature(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -132,14 +132,14 @@ const FeaturesService = {
   atualizar: async (id, dados) => {
     const dadosFormatados = mapearFeatureParaBackend(dados);
     const resultado = await FeaturesServiceBase.atualizar(id, dadosFormatados);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearFeature(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -159,14 +159,14 @@ const FeaturesService = {
    */
   buscar: async (criterios) => {
     const resultado = await FeaturesServiceBase.buscar(criterios);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearFeature(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 };

@@ -129,12 +129,7 @@ const TelefoniaBanner = () => {
   // ─────────────────────────────────────────────────────────────────────────────────
 
   return (
-    <div
-      id={SECTION_ID}
-      className={styles['banner-container']}
-     
-      aria-labelledby="telefonia-title"
-    >
+    <div id={SECTION_ID} className={styles['banner-container']} aria-labelledby="telefonia-title">
       {/* Imagem de Fundo */}
       <BannerImage src={image} />
 
@@ -166,4 +161,3 @@ const TelefoniaBanner = () => {
 };
 
 export default TelefoniaBanner;
-

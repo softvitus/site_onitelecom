@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar componentes.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (com_id → id, com_nome → nome, etc).
- * 
+ *
  * @module servicos/componentes
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_COMPONENTES = '/componentes';
 /**
  * Mapeia dados do backend (com_nome, com_descricao, etc)
  * para formato do frontend (nome, descricao, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -43,7 +43,7 @@ const mapearComponente = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -65,7 +65,7 @@ const ComponentesServiceBase = criarServicoGenerico(ENDPOINT_COMPONENTES);
 
 /**
  * Serviço para Gerenciar Componentes
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -79,14 +79,14 @@ const ComponentesService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await ComponentesServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearComponente(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -97,14 +97,14 @@ const ComponentesService = {
    */
   obter: async (id) => {
     const resultado = await ComponentesServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearComponente(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -143,7 +143,8 @@ const ComponentesService = {
    * @param {number} [limit=10] - Itens por página
    * @returns {Promise<Object>} Resultado da busca
    */
-  buscar: (query, page = 1, limit = 10) => ComponentesService.listar(page, limit, { search: query }),
+  buscar: (query, page = 1, limit = 10) =>
+    ComponentesService.listar(page, limit, { search: query }),
 };
 
 export default ComponentesService;

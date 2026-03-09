@@ -2,7 +2,7 @@
  * @file Página de Gerenciamento de Parceiros
  * @description Interface completa de CRUD para parceiros com mapa interativo
  * e integração com APIs de localização (ViaCEP e Nominatim)
- * 
+ *
  * @module paginas/Parceiros/ParceirosPage
  */
 
@@ -72,18 +72,24 @@ const COLUNAS_GRID = [
     titulo: 'Status',
     largura: '10%',
     render: (valor) => (
-      <span style={{
-        padding: '0.25rem 0.75rem',
-        borderRadius: '4px',
-        fontSize: '0.8rem',
-        fontWeight: '500',
-        backgroundColor: valor === STATUS_PARCEIRO.ATIVO ? '#dcfce7' : '#fee2e2',
-        color: valor === STATUS_PARCEIRO.ATIVO ? '#166534' : '#991b1b',
-      }}>
+      <span
+        style={{
+          padding: '0.25rem 0.75rem',
+          borderRadius: '4px',
+          fontSize: '0.8rem',
+          fontWeight: '500',
+          backgroundColor: valor === STATUS_PARCEIRO.ATIVO ? '#dcfce7' : '#fee2e2',
+          color: valor === STATUS_PARCEIRO.ATIVO ? '#166534' : '#991b1b',
+        }}
+      >
         {valor === STATUS_PARCEIRO.ATIVO ? (
-          <><FiCheck size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Ativo</>
+          <>
+            <FiCheck size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Ativo
+          </>
         ) : (
-          <><FiX size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Inativo</>
+          <>
+            <FiX size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Inativo
+          </>
         )}
       </span>
     ),
@@ -131,16 +137,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Parceiros
- * 
+ *
  * Funcionalidades completas de CRUD, mapa interativo e busca de CEP.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const ParceirosPage = () => {
   // Autenticação e Permissões
   const { temPermissao, usuario } = useAuth();
-  
+
   // Estado
   const [parceiros, setParceiros] = useState([]);
   const [carregando, setCarregando] = useState(true);
@@ -367,7 +373,7 @@ const ParceirosPage = () => {
   const executarAlterarStatus = async () => {
     if (!confirmarDialog.parceiro) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const parceiro = confirmarDialog.parceiro;
     const novoStatus =
@@ -390,12 +396,12 @@ const ParceirosPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao alterar status'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao alterar status do parceiro'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -486,11 +492,7 @@ const ParceirosPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarParceiro}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarParceiro} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -500,7 +502,9 @@ const ParceirosPage = () => {
           {/* Linha 1 */}
           <div className="modal-form-row">
             <div className="modal-form-group">
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -508,12 +512,12 @@ const ParceirosPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Nome do parceiro"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
             <div className="modal-form-group">
-              <label className="modal-form-label">Domínio <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Domínio <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -521,9 +525,7 @@ const ParceirosPage = () => {
                 onChange={(e) => setFormData({ ...formData, dominio: e.target.value })}
                 placeholder="https://parceiro.com.br"
               />
-              {errosForm.dominio && (
-                <span className="modal-form-error">{errosForm.dominio}</span>
-              )}
+              {errosForm.dominio && <span className="modal-form-error">{errosForm.dominio}</span>}
             </div>
             <div className="modal-form-group">
               <label className="modal-form-label">Domínio do Painel</label>
@@ -539,7 +541,9 @@ const ParceirosPage = () => {
               )}
             </div>
             <div className="modal-form-group">
-              <label className="modal-form-label">Cidade <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Cidade <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -547,9 +551,7 @@ const ParceirosPage = () => {
                 onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
                 placeholder="São Paulo"
               />
-              {errosForm.cidade && (
-                <span className="modal-form-error">{errosForm.cidade}</span>
-              )}
+              {errosForm.cidade && <span className="modal-form-error">{errosForm.cidade}</span>}
             </div>
             <div className="modal-form-group">
               <label className="modal-form-label">Estado (UF)</label>
@@ -684,12 +686,22 @@ const ParceirosPage = () => {
       {/* Confirm Dialog */}
       <ConfirmDialog
         aberto={confirmarDialog.aberto}
-        titulo={confirmarDialog.parceiro?.status === STATUS_PARCEIRO.ATIVO ? 'Inativar Parceiro?' : 'Ativar Parceiro?'}
+        titulo={
+          confirmarDialog.parceiro?.status === STATUS_PARCEIRO.ATIVO
+            ? 'Inativar Parceiro?'
+            : 'Ativar Parceiro?'
+        }
         mensagem={`Tem certeza que deseja ${confirmarDialog.parceiro?.status === STATUS_PARCEIRO.ATIVO ? 'inativar' : 'ativar'} o parceiro "${confirmarDialog.parceiro?.nome}"?`}
-        tipo={confirmarDialog.parceiro?.status === STATUS_PARCEIRO.ATIVO ? TIPOS_CONFIRMACAO.PERIGO : TIPOS_CONFIRMACAO.SUCESSO}
+        tipo={
+          confirmarDialog.parceiro?.status === STATUS_PARCEIRO.ATIVO
+            ? TIPOS_CONFIRMACAO.PERIGO
+            : TIPOS_CONFIRMACAO.SUCESSO
+        }
         onConfirmar={executarAlterarStatus}
         onCancelar={fecharConfirmarDialog}
-        textoBotaoConfirmar={confirmarDialog.parceiro?.status === STATUS_PARCEIRO.ATIVO ? 'Inativar' : 'Ativar'}
+        textoBotaoConfirmar={
+          confirmarDialog.parceiro?.status === STATUS_PARCEIRO.ATIVO ? 'Inativar' : 'Ativar'
+        }
         carregando={confirmarDialog.carregando}
       />
     </div>

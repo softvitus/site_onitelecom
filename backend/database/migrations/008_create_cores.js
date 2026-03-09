@@ -30,6 +30,27 @@ export default {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      cor_componente: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+        comment: 'Nome do componente (ex: Header, Ofertas, Footer)',
+      },
+      cor_variavel_ref: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+        comment: 'Referência original da variável (ex: var(--color-primary))',
+      },
+      cor_descricao: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        comment: 'Descrição da cor e seu uso',
+      },
+      cor_ativo: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+        comment: 'Indica se a cor está ativa no sistema',
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -46,6 +67,8 @@ export default {
     await queryInterface.addIndex('0008_Cores', ['cor_tem_id']);
     await queryInterface.addIndex('0008_Cores', ['cor_categoria']);
     await queryInterface.addIndex('0008_Cores', ['cor_nome']);
+    await queryInterface.addIndex('0008_Cores', ['cor_componente']);
+    await queryInterface.addIndex('0008_Cores', ['cor_ativo']);
   },
 
   async down(queryInterface, Sequelize) {

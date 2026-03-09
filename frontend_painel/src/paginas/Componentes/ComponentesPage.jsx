@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Componentes
  * @description Interface completa de CRUD para componentes
- * 
+ *
  * @module paginas/Componentes/ComponentesPage
  */
 
@@ -49,18 +49,24 @@ const COLUNAS_GRID = [
     titulo: 'Status',
     largura: '15%',
     render: (valor) => (
-      <span style={{
-        padding: '0.25rem 0.75rem',
-        borderRadius: '4px',
-        fontSize: '0.8rem',
-        fontWeight: '500',
-        backgroundColor: valor === true ? '#dcfce7' : '#fee2e2',
-        color: valor === true ? '#166534' : '#991b1b',
-      }}>
+      <span
+        style={{
+          padding: '0.25rem 0.75rem',
+          borderRadius: '4px',
+          fontSize: '0.8rem',
+          fontWeight: '500',
+          backgroundColor: valor === true ? '#dcfce7' : '#fee2e2',
+          color: valor === true ? '#166534' : '#991b1b',
+        }}
+      >
         {valor === true ? (
-          <><FiCheck size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Ativo</>
+          <>
+            <FiCheck size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Ativo
+          </>
         ) : (
-          <><FiX size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Inativo</>
+          <>
+            <FiX size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> Inativo
+          </>
         )}
       </span>
     ),
@@ -100,16 +106,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Componentes
- * 
+ *
  * Funcionalidades completas de CRUD.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const ComponentesPage = () => {
   // Autenticação e Permissões
   const { usuario, temPermissao } = useAuth();
-  
+
   // Estado
   const [componentes, setComponentes] = useState([]);
   const [carregando, setCarregando] = useState(true);
@@ -155,12 +161,12 @@ const ComponentesPage = () => {
 
     try {
       const filtros = { search: filtro };
-      
+
       // Se não é admin, filtrar pelo parceiro do usuário
       if (usuario?.tipo !== 'admin' && usuario?.parceiroId) {
         filtros.parceiroId = usuario.parceiroId;
       }
-      
+
       const resultado = await ComponentesService.listar(pagina, itensPorPagina, filtros);
 
       if (resultado.sucesso) {
@@ -234,7 +240,9 @@ const ComponentesPage = () => {
         : await ComponentesService.criar(formData);
 
       if (resultado.sucesso) {
-        const msg = editando ? 'Componente atualizado com sucesso!' : 'Componente criado com sucesso!';
+        const msg = editando
+          ? 'Componente atualizado com sucesso!'
+          : 'Componente criado com sucesso!';
         setAlerta(criarAlerta('sucesso', msg));
         fecharModal();
         // Recarregar a primeira página
@@ -274,7 +282,7 @@ const ComponentesPage = () => {
   const executarAlterarStatus = async () => {
     if (!confirmarDialog.componente) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const componente = confirmarDialog.componente;
     const novoAtivo = !componente.ativo;
@@ -296,12 +304,12 @@ const ComponentesPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao alterar status'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao alterar status do componente'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -392,11 +400,7 @@ const ComponentesPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarComponente}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarComponente} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -406,7 +410,9 @@ const ComponentesPage = () => {
           {/* Nome - full width */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -414,9 +420,7 @@ const ComponentesPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Ex: header, footer, carousel"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
           </div>
 
@@ -480,9 +484,15 @@ const ComponentesPage = () => {
       {/* Confirm Dialog */}
       <ConfirmDialog
         aberto={confirmarDialog.aberto}
-        titulo={confirmarDialog.componente?.ativo === true ? 'Inativar Componente?' : 'Ativar Componente?'}
+        titulo={
+          confirmarDialog.componente?.ativo === true ? 'Inativar Componente?' : 'Ativar Componente?'
+        }
         mensagem={`Tem certeza que deseja ${confirmarDialog.componente?.ativo === true ? 'inativar' : 'ativar'} o componente "${confirmarDialog.componente?.nome}"?`}
-        tipo={confirmarDialog.componente?.ativo === true ? TIPOS_CONFIRMACAO.PERIGO : TIPOS_CONFIRMACAO.SUCESSO}
+        tipo={
+          confirmarDialog.componente?.ativo === true
+            ? TIPOS_CONFIRMACAO.PERIGO
+            : TIPOS_CONFIRMACAO.SUCESSO
+        }
         onConfirmar={executarAlterarStatus}
         onCancelar={fecharConfirmarDialog}
         textoBotaoConfirmar={confirmarDialog.componente?.ativo === true ? 'Inativar' : 'Ativar'}

@@ -20,7 +20,16 @@ export default {
         comment: 'ID do usuário que realizou a ação',
       },
       aud_acao: {
-        type: Sequelize.ENUM('criar', 'editar', 'deletar', 'visualizar', 'inativar', 'ativar', 'login', 'logout'),
+        type: Sequelize.ENUM(
+          'criar',
+          'editar',
+          'deletar',
+          'visualizar',
+          'inativar',
+          'ativar',
+          'login',
+          'logout',
+        ),
         allowNull: false,
         comment: 'Tipo de ação realizada',
       },
@@ -99,13 +108,21 @@ export default {
     });
 
     // Índice composto para buscas mais eficientes
-    await queryInterface.addIndex('0063_Auditoria', ['aud_usuario_id', 'createdAt'], {
-      name: 'idx_0063_auditoria_usuario_data',
-    });
+    await queryInterface.addIndex(
+      '0063_Auditoria',
+      ['aud_usuario_id', 'createdAt'],
+      {
+        name: 'idx_0063_auditoria_usuario_data',
+      },
+    );
 
-    await queryInterface.addIndex('0063_Auditoria', ['aud_entidade', 'aud_entidade_id', 'createdAt'], {
-      name: 'idx_0063_auditoria_entidade_completo',
-    });
+    await queryInterface.addIndex(
+      '0063_Auditoria',
+      ['aud_entidade', 'aud_entidade_id', 'createdAt'],
+      {
+        name: 'idx_0063_auditoria_entidade_completo',
+      },
+    );
   },
 
   async down(queryInterface, Sequelize) {

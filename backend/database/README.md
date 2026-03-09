@@ -59,6 +59,7 @@ npm run db:make-migration -- nome_da_tabela
 ```
 
 Exemplo:
+
 ```bash
 npm run db:make-migration -- criar_usuarios
 ```
@@ -107,6 +108,7 @@ npm run db:make-seed -- nome_seed
 ```
 
 Exemplo:
+
 ```bash
 npm run db:make-seed -- usuarios_demo
 ```
@@ -158,22 +160,22 @@ npm run db:seed
 
 ### **Tabelas Principais**
 
-| Tabela | Descrição | Status |
-|--------|-----------|--------|
-| `parceiros` | Empresas parceiras | ✅ Created |
-| `temas` | Temas/marcas | ✅ Created |
-| `páginas` | Páginas do site | ✅ Created |
-| `componentes` | Componentes de UI | ✅ Created |
-| `elementos` | Elementos de página | ✅ Created |
-| `cores` | Paleta de cores | ✅ Created |
-| `imagens` | Gestão de imagens | ✅ Created |
-| `links` | Links e URLs | ✅ Created |
-| `textos` | Conteúdo textual | ✅ Created |
-| `conteudo` | Conteúdo genérico | ✅ Created |
-| `features` | Funcionalidades | ✅ Created |
+| Tabela        | Descrição             | Status     |
+| ------------- | --------------------- | ---------- |
+| `parceiros`   | Empresas parceiras    | ✅ Created |
+| `temas`       | Temas/marcas          | ✅ Created |
+| `páginas`     | Páginas do site       | ✅ Created |
+| `componentes` | Componentes de UI     | ✅ Created |
+| `elementos`   | Elementos de página   | ✅ Created |
+| `cores`       | Paleta de cores       | ✅ Created |
+| `imagens`     | Gestão de imagens     | ✅ Created |
+| `links`       | Links e URLs          | ✅ Created |
+| `textos`      | Conteúdo textual      | ✅ Created |
+| `conteudo`    | Conteúdo genérico     | ✅ Created |
+| `features`    | Funcionalidades       | ✅ Created |
 | `config_tema` | Configurações de tema | ✅ Created |
-| `permissoes` | Sistema de permissões | ✅ Created |
-| `auditoria` | Log de alterações | ✅ Created |
+| `permissoes`  | Sistema de permissões | ✅ Created |
+| `auditoria`   | Log de alterações     | ✅ Created |
 
 ---
 
@@ -226,6 +228,7 @@ npm run db:migrate
 ## 🚨 Boas Práticas
 
 ### ✅ **SIM**
+
 - Criar migração para CADA mudança de schema
 - Nomear migrações descritivamente: `001_create_users`
 - Sempre incluir rollback (função `down`)
@@ -233,6 +236,7 @@ npm run db:migrate
 - Usar transações em operações críticas
 
 ### ❌ **NÃO**
+
 - Modificar migrações já aplicadas
 - Deletar arquivos de migração
 - Rodar seeds em produção sem cuidado

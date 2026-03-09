@@ -30,9 +30,11 @@ describe('Concurrency - Simultaneous Requests', () => {
         count: 1,
       }),
       findByPk: jest.fn().mockResolvedValue({ id: '1', name: 'Test' }),
-      create: jest.fn().mockImplementation((data) =>
-        Promise.resolve({ id: Math.random(), ...data }),
-      ),
+      create: jest
+        .fn()
+        .mockImplementation((data) =>
+          Promise.resolve({ id: Math.random(), ...data }),
+        ),
       update: jest.fn().mockResolvedValue([1]),
       destroy: jest.fn().mockResolvedValue(1),
       increment: jest.fn().mockResolvedValue([1]),
@@ -166,7 +168,9 @@ describe('Concurrency - Simultaneous Requests', () => {
   describe('Error Handling Under Concurrency', () => {
     it('deve continuar processando requisições quando uma falha', async () => {
       // Simular cenário onde alguns findByPk falham
-      parceiroService.model.findByPk.mockRejectedValueOnce(new Error('DB Error'));
+      parceiroService.model.findByPk.mockRejectedValueOnce(
+        new Error('DB Error'),
+      );
 
       const promises = [
         parceiroService.create({ name: 'Test1' }),

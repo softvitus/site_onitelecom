@@ -364,7 +364,6 @@ const MapSection = ({ mapRef }) =>
       <div
         className={styles['map-container']}
         ref={mapRef}
-       
         aria-label="Mapa interativo de localizações dos parceiros"
       />
       <p className={styles['map-attribution']}>
@@ -635,6 +634,3 @@ const Contato = () => {
 };
 
 export default Contato;
-
-
-

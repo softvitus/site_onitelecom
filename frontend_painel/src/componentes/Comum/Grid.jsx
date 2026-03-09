@@ -2,7 +2,7 @@
  * @file Componente Grid Profissional e Minimalista
  * @description Grid com paginação integrada, design moderno e elegante.
  * Reutilizável em múltiplas páginas com styling profissional.
- * 
+ *
  * @module componentes/Comum/Grid
  */
 
@@ -148,15 +148,9 @@ const Grid = ({
               {dados.map((item, idx) => (
                 <tr key={item.id || idx}>
                   {colunas.map((coluna) => (
-                    <td key={`${item.id || idx}-${coluna.chave}`}>
-                      {renderCelula(item, coluna)}
-                    </td>
+                    <td key={`${item.id || idx}-${coluna.chave}`}>{renderCelula(item, coluna)}</td>
                   ))}
-                  {renderAcoes && (
-                    <td className="grid-acoes">
-                      {renderAcoes(item)}
-                    </td>
-                  )}
+                  {renderAcoes && <td className="grid-acoes">{renderAcoes(item)}</td>}
                 </tr>
               ))}
             </tbody>
@@ -192,9 +186,7 @@ const Grid = ({
                   Anterior
                 </button>
 
-                <div style={{ display: 'flex', gap: '0.25rem' }}>
-                  {renderBotoesNumeros()}
-                </div>
+                <div style={{ display: 'flex', gap: '0.25rem' }}>{renderBotoesNumeros()}</div>
 
                 <button
                   onClick={proximaPagina}

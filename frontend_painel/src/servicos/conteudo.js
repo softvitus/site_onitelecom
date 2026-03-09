@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar conteúdo.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (cnt_tipo → tipo, etc).
- * 
+ *
  * @module servicos/conteudo
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_CONTEUDO = '/conteudos';
 /**
  * Mapeia dados do backend (cnt_tipo, cnt_categoria, etc)
  * para formato do frontend (tipo, categoria, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -46,7 +46,7 @@ const mapearConteudo = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -71,7 +71,7 @@ const ConteudoServiceBase = criarServicoGenerico(ENDPOINT_CONTEUDO);
 
 /**
  * Serviço para Gerenciar Conteúdo
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -85,14 +85,14 @@ const ConteudoService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await ConteudoServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearConteudo(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -103,14 +103,14 @@ const ConteudoService = {
    */
   obter: async (id) => {
     const resultado = await ConteudoServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearConteudo(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -122,14 +122,14 @@ const ConteudoService = {
   criar: async (dados) => {
     const dadosFormatados = mapearConteudoParaBackend(dados);
     const resultado = await ConteudoServiceBase.criar(dadosFormatados);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearConteudo(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -142,14 +142,14 @@ const ConteudoService = {
   atualizar: async (id, dados) => {
     const dadosFormatados = mapearConteudoParaBackend(dados);
     const resultado = await ConteudoServiceBase.atualizar(id, dadosFormatados);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearConteudo(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -169,14 +169,14 @@ const ConteudoService = {
    */
   buscar: async (criterios) => {
     const resultado = await ConteudoServiceBase.buscar(criterios);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearConteudo(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 };

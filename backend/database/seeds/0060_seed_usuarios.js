@@ -6,7 +6,7 @@ export default {
     // Buscar um parceiro existente para vincular usuários
     const parceiros = await queryInterface.sequelize.query(
       'SELECT "par_id" FROM "0001_Parceiro" LIMIT 1',
-      { type: Sequelize.QueryTypes.SELECT }
+      { type: Sequelize.QueryTypes.SELECT },
     );
 
     const parceiroId = parceiros.length > 0 ? parceiros[0].par_id : null;

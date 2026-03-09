@@ -29,16 +29,14 @@ export class BaseService {
    */
   async create(data) {
     try {
-      // eslint-disable-next-line no-console
-      console.log(`[BaseService.create] Criando ${this.model.name} com data:`, data);
       const item = await this.model.create(data);
-      // eslint-disable-next-line no-console
-      console.log(`[SERVICE] ${this.model.name} criado:`, item.id);
       return item;
     } catch (error) {
-      console.error(`[BaseService.create] ERRO ao criar ${this.model.name}:`, error.message);
-      console.error('[BaseService.create] Stack:', error.stack);
-      throw new ApiError('DATABASE_ERROR', `Erro ao criar ${this.model.name}`, error.message);
+      throw new ApiError(
+        'DATABASE_ERROR',
+        `Erro ao criar ${this.model.name}`,
+        error.message,
+      );
     }
   }
 
@@ -62,7 +60,11 @@ export class BaseService {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError('DATABASE_ERROR', `Erro ao buscar ${this.model.name}`, error.message);
+      throw new ApiError(
+        'DATABASE_ERROR',
+        `Erro ao buscar ${this.model.name}`,
+        error.message,
+      );
     }
   }
 
@@ -102,7 +104,11 @@ export class BaseService {
         },
       };
     } catch (error) {
-      throw new ApiError('DATABASE_ERROR', `Erro ao listar ${this.model.name}`, error.message);
+      throw new ApiError(
+        'DATABASE_ERROR',
+        `Erro ao listar ${this.model.name}`,
+        error.message,
+      );
     }
   }
 
@@ -147,7 +153,11 @@ export class BaseService {
         },
       };
     } catch (error) {
-      throw new ApiError('DATABASE_ERROR', `Erro ao pesquisar ${this.model.name}`, error.message);
+      throw new ApiError(
+        'DATABASE_ERROR',
+        `Erro ao pesquisar ${this.model.name}`,
+        error.message,
+      );
     }
   }
 
@@ -163,14 +173,16 @@ export class BaseService {
       const item = await this.findById(id);
       await item.update(data);
 
-      // eslint-disable-next-line no-console
-      console.log(`[SERVICE] ${this.model.name} atualizado:`, id);
       return item;
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError('DATABASE_ERROR', `Erro ao atualizar ${this.model.name}`, error.message);
+      throw new ApiError(
+        'DATABASE_ERROR',
+        `Erro ao atualizar ${this.model.name}`,
+        error.message,
+      );
     }
   }
 
@@ -185,14 +197,16 @@ export class BaseService {
       const item = await this.findById(id);
       await item.destroy();
 
-      // eslint-disable-next-line no-console
-      console.log(`[SERVICE] ${this.model.name} deletado:`, id);
       return item;
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError('DATABASE_ERROR', `Erro ao deletar ${this.model.name}`, error.message);
+      throw new ApiError(
+        'DATABASE_ERROR',
+        `Erro ao deletar ${this.model.name}`,
+        error.message,
+      );
     }
   }
 
@@ -207,11 +221,13 @@ export class BaseService {
         where: { id: ids },
       });
 
-      // eslint-disable-next-line no-console
-      console.log(`[SERVICE] ${result} ${this.model.name}(s) deletado(s)`);
       return result;
     } catch (error) {
-      throw new ApiError('DATABASE_ERROR', `Erro ao deletar ${this.model.name}`, error.message);
+      throw new ApiError(
+        'DATABASE_ERROR',
+        `Erro ao deletar ${this.model.name}`,
+        error.message,
+      );
     }
   }
 
@@ -228,11 +244,13 @@ export class BaseService {
         defaults: data,
       });
 
-      // eslint-disable-next-line no-console
-      console.log(`[SERVICE] ${this.model.name} ${created ? 'criado' : 'encontrado'}:`, item.id);
       return { item, created };
     } catch (error) {
-      throw new ApiError('DATABASE_ERROR', `Erro ao buscar/criar ${this.model.name}`, error.message);
+      throw new ApiError(
+        'DATABASE_ERROR',
+        `Erro ao buscar/criar ${this.model.name}`,
+        error.message,
+      );
     }
   }
 
@@ -303,7 +321,11 @@ export class BaseService {
         today: todayCount,
       };
     } catch (error) {
-      throw new ApiError('DATABASE_ERROR', 'Erro ao obter estatísticas', error.message);
+      throw new ApiError(
+        'DATABASE_ERROR',
+        'Erro ao obter estatísticas',
+        error.message,
+      );
     }
   }
 }

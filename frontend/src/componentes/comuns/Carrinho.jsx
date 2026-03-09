@@ -244,10 +244,7 @@ const CartItem = ({ id, item, onIncrease, onDecrease, onRemove }) => {
   const itemTotal = item.price * item.quantity;
 
   return (
-    <div
-      className={`${styles['cart-item']} p-2 mb-2 animate__animated animate__fadeIn`}
-     
-    >
+    <div className={`${styles['cart-item']} p-2 mb-2 animate__animated animate__fadeIn`}>
       <div className="d-flex justify-content-between">
         <div>
           <h6 className="mb-0">{item.name}</h6>
@@ -1071,4 +1068,3 @@ const Carrinho = () => {
 };
 
 export default Carrinho;
-

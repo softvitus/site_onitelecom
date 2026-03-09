@@ -11,11 +11,7 @@
 
 import React from 'react';
 import styles from '../../estilos/componentes/comuns/ServicosEssenciais.module.css';
-import {
-  getTexto,
-  getImagem,
-  getTemaConteudosByCategoria,
-} from '../../servicos/tema';
+import { getTexto, getImagem, getTemaConteudosByCategoria } from '../../servicos/tema';
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // 🔧 EFEITOS
@@ -153,7 +149,6 @@ const ServicosEssenciais = () => {
     <div
       id={SECTION_ID}
       className={styles['container-custom']}
-     
       aria-labelledby="servicos-essenciais-title"
     >
       {/* Título da seção */}
@@ -166,4 +161,3 @@ const ServicosEssenciais = () => {
 };
 
 export default ServicosEssenciais;
-

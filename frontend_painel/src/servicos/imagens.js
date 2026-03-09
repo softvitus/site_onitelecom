@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar imagens.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (img_nome → nome, etc).
- * 
+ *
  * @module servicos/imagens
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_IMAGENS = '/imagens';
 /**
  * Mapeia dados do backend (img_nome, img_categoria, etc)
  * para formato do frontend (nome, categoria, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -42,7 +42,7 @@ const mapearImagem = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -63,7 +63,7 @@ const ImagensServiceBase = criarServicoGenerico(ENDPOINT_IMAGENS);
 
 /**
  * Serviço para Gerenciar Imagens
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -77,14 +77,14 @@ const ImagensService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await ImagensServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearImagem(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -95,14 +95,14 @@ const ImagensService = {
    */
   obter: async (id) => {
     const resultado = await ImagensServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearImagem(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -142,14 +142,14 @@ const ImagensService = {
    */
   buscar: async (termo, limit = 20) => {
     const resultado = await ImagensServiceBase.buscar(termo, limit);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearImagem(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 };

@@ -7,12 +7,20 @@ export const ERROR_CODES = {
   // Validação (4000-4099)
   VALIDATION_ERROR: { code: 4001, status: 400, message: 'Erro de validação' },
   INVALID_INPUT: { code: 4002, status: 400, message: 'Entrada inválida' },
-  MISSING_FIELD: { code: 4003, status: 400, message: 'Campo obrigatório ausente' },
+  MISSING_FIELD: {
+    code: 4003,
+    status: 400,
+    message: 'Campo obrigatório ausente',
+  },
   INVALID_FORMAT: { code: 4004, status: 400, message: 'Formato inválido' },
 
   // Autenticação (4010-4019)
   UNAUTHORIZED: { code: 4010, status: 401, message: 'Não autorizado' },
-  INVALID_CREDENTIALS: { code: 4014, status: 401, message: 'Email ou senha inválidos' },
+  INVALID_CREDENTIALS: {
+    code: 4014,
+    status: 401,
+    message: 'Email ou senha inválidos',
+  },
   INVALID_TOKEN: { code: 4011, status: 401, message: 'Token inválido' },
   EXPIRED_TOKEN: { code: 4012, status: 401, message: 'Token expirado' },
   MISSING_TOKEN: { code: 4013, status: 401, message: 'Token não fornecido' },
@@ -21,7 +29,11 @@ export const ERROR_CODES = {
 
   // Autorização (4020-4029)
   FORBIDDEN: { code: 4020, status: 403, message: 'Acesso negado' },
-  INSUFFICIENT_PERMISSIONS: { code: 4021, status: 403, message: 'Permissões insuficientes' },
+  INSUFFICIENT_PERMISSIONS: {
+    code: 4021,
+    status: 403,
+    message: 'Permissões insuficientes',
+  },
 
   // Recursos (4030-4039)
   NOT_FOUND: { code: 4030, status: 404, message: 'Recurso não encontrado' },
@@ -32,12 +44,24 @@ export const ERROR_CODES = {
   DUPLICATE_ENTRY: { code: 4041, status: 409, message: 'Entrada duplicada' },
 
   // Rate Limiting (4090-4099)
-  RATE_LIMIT_EXCEEDED: { code: 4090, status: 429, message: 'Limite de requisições excedido' },
+  RATE_LIMIT_EXCEEDED: {
+    code: 4090,
+    status: 429,
+    message: 'Limite de requisições excedido',
+  },
 
   // Servidor (5000-5099)
-  INTERNAL_ERROR: { code: 5001, status: 500, message: 'Erro interno do servidor' },
+  INTERNAL_ERROR: {
+    code: 5001,
+    status: 500,
+    message: 'Erro interno do servidor',
+  },
   DATABASE_ERROR: { code: 5002, status: 500, message: 'Erro na base de dados' },
-  SERVICE_UNAVAILABLE: { code: 5003, status: 503, message: 'Serviço indisponível' },
+  SERVICE_UNAVAILABLE: {
+    code: 5003,
+    status: 503,
+    message: 'Serviço indisponível',
+  },
 };
 
 /**

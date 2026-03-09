@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 /**
  * 🚀 LOAD TEST - API Performance Testing
- * 
+ *
  * Simula usuários reaiscom comportamento realista
  * Cada usuário: 2-4 requisições espaçadas de 1-2 segundos
  * Cenário: 10 usuários simultâneos durante 60 segundos
- * 
+ *
  * Resultado esperado: ~30-40 requisições com 100% taxa de sucesso
  * Tempo médio resposta: 10-15ms
- * 
+ *
  * Uso:
  *   node scripts/load-test.js
- * 
+ *
  * Requisitos:
  *   - Servidor rodando: npm run dev
  *   - Database migrado: npm run migrate
@@ -71,7 +71,7 @@ class NormalLoadTest {
 
       const request = http.request(options, (res) => {
         let data = '';
-        res.on('data', chunk => data += chunk);
+        res.on('data', (chunk) => (data += chunk));
         res.on('end', () => {
           try {
             const json = JSON.parse(data);
@@ -98,15 +98,15 @@ class NormalLoadTest {
     return new Promise((resolve) => {
       const start = performance.now();
       const fullUrl = `${BASE_URL}${path}`;
-      
+
       const options = {
         timeout: 5000,
-        headers: this.token ? { 'Authorization': `Bearer ${this.token}` } : {},
+        headers: this.token ? { Authorization: `Bearer ${this.token}` } : {},
       };
 
       const request = http.get(fullUrl, options, (res) => {
         let data = '';
-        res.on('data', chunk => data += chunk);
+        res.on('data', (chunk) => (data += chunk));
         res.on('end', () => {
           resolve({
             path,
@@ -118,12 +118,24 @@ class NormalLoadTest {
       });
 
       request.on('error', (err) => {
-        resolve({ path, status: 0, time: performance.now() - start, ok: false, error: err.message });
+        resolve({
+          path,
+          status: 0,
+          time: performance.now() - start,
+          ok: false,
+          error: err.message,
+        });
       });
 
       request.on('timeout', () => {
         request.destroy();
-        resolve({ path, status: 0, time: performance.now() - start, ok: false, error: 'Timeout' });
+        resolve({
+          path,
+          status: 0,
+          time: performance.now() - start,
+          ok: false,
+          error: 'Timeout',
+        });
       });
     });
   }
@@ -136,7 +148,9 @@ class NormalLoadTest {
     console.log(`Usuários: ${CONCURRENT_USERS}`);
     console.log(`Duração: ${TEST_DURATION_SEC}s`);
     console.log(`Requisições/usuário: ${REQUESTS_PER_USER}`);
-    console.log(`Total esperado: ~${CONCURRENT_USERS * REQUESTS_PER_USER} requisiçõese`);
+    console.log(
+      `Total esperado: ~${CONCURRENT_USERS * REQUESTS_PER_USER} requisiçõese`,
+    );
     console.log('='.repeat(60) + '\n');
 
     // Autentica primeiro
@@ -154,28 +168,30 @@ class NormalLoadTest {
     for (let u = 0; u < CONCURRENT_USERS; u++) {
       // Espaça os usuários ao longo do tempo
       const delay = (u / CONCURRENT_USERS) * (TEST_DURATION_SEC * 1000 * 0.6);
-      
+
       setTimeout(async () => {
         activeUsers++;
-        process.stdout.write(`👥 Usuários ativos: ${activeUsers}/${CONCURRENT_USERS}\r`);
-        
+        process.stdout.write(
+          `👥 Usuários ativos: ${activeUsers}/${CONCURRENT_USERS}\r`,
+        );
+
         // Cada usuário faz entre 2-4 requisições
         const requests = 2 + Math.random() * 2;
         for (let r = 0; r < requests; r++) {
           if (Date.now() > endTime) break;
-          
+
           const path = ENDPOINTS[Math.floor(Math.random() * ENDPOINTS.length)];
           const result = await this.makeRequest(path);
-          
+
           this.results.total++;
           this.results.times.push(result.time);
-          
+
           if (!this.results.endpoints[path]) {
             this.results.endpoints[path] = { total: 0, success: 0, times: [] };
           }
           this.results.endpoints[path].total++;
           this.results.endpoints[path].times.push(result.time);
-          
+
           if (result.ok) {
             this.results.success++;
             this.results.endpoints[path].success++;
@@ -184,20 +200,26 @@ class NormalLoadTest {
             const err = result.error || `HTTP ${result.status}`;
             this.results.errors[err] = (this.results.errors[err] || 0) + 1;
           }
-          
-          process.stdout.write(`📊 ${this.results.total.toString().padEnd(5)} reqs | ✅ ${this.results.success.toString().padEnd(5)} | ❌ ${this.results.failed}\r`);
-          
+
+          process.stdout.write(
+            `📊 ${this.results.total.toString().padEnd(5)} reqs | ✅ ${this.results.success.toString().padEnd(5)} | ❌ ${this.results.failed}\r`,
+          );
+
           // Delay entre requisições do mesmo usuário
-          await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
+          await new Promise((resolve) =>
+            setTimeout(resolve, 1000 + Math.random() * 1000),
+          );
         }
-        
+
         activeUsers--;
       }, delay);
     }
 
     // Espera teste terminar
-    await new Promise(resolve => setTimeout(resolve, (TEST_DURATION_SEC + 10) * 1000));
-    
+    await new Promise((resolve) =>
+      setTimeout(resolve, (TEST_DURATION_SEC + 10) * 1000),
+    );
+
     this.printReport();
   }
 
@@ -211,7 +233,10 @@ class NormalLoadTest {
     const times = this.results.times.sort((a, b) => a - b);
     const avg = times.reduce((a, b) => a + b, 0) / times.length;
     const throughput = (this.results.total / duration).toFixed(2);
-    const successRate = ((this.results.success / this.results.total) * 100).toFixed(1);
+    const successRate = (
+      (this.results.success / this.results.total) *
+      100
+    ).toFixed(1);
 
     console.log('\n\n' + '='.repeat(70));
     console.log('📊 RELATÓRIO DE TESTE DE CARGA');
@@ -229,20 +254,31 @@ class NormalLoadTest {
     console.log(`  Min:        ${times[0].toFixed(2)}`);
     console.log(`  Máx:        ${times[times.length - 1].toFixed(2)}`);
     console.log(`  Média:      ${avg.toFixed(2)}`);
-    console.log(`  P50:        ${times[Math.floor(times.length * 0.5)].toFixed(2)}`);
-    console.log(`  P95:        ${times[Math.floor(times.length * 0.95)].toFixed(2)}`);
-    console.log(`  P99:        ${times[Math.floor(times.length * 0.99)].toFixed(2)}`);
+    console.log(
+      `  P50:        ${times[Math.floor(times.length * 0.5)].toFixed(2)}`,
+    );
+    console.log(
+      `  P95:        ${times[Math.floor(times.length * 0.95)].toFixed(2)}`,
+    );
+    console.log(
+      `  P99:        ${times[Math.floor(times.length * 0.99)].toFixed(2)}`,
+    );
 
     console.log(`\n📍 PERFORMANCE POR ENDPOINT:`);
-    console.log(`${'Endpoint'.padEnd(20)} | ${'Reqs'.padEnd(6)} | ${'Sucesso'.padEnd(8)} | ${'Média (ms)'.padEnd(10)}`);
+    console.log(
+      `${'Endpoint'.padEnd(20)} | ${'Reqs'.padEnd(6)} | ${'Sucesso'.padEnd(8)} | ${'Média (ms)'.padEnd(10)}`,
+    );
     console.log('-'.repeat(70));
-    
+
     Object.entries(this.results.endpoints)
       .sort((a, b) => b[1].total - a[1].total)
       .forEach(([endpoint, stats]) => {
-        const epavg = stats.times.reduce((a, b) => a + b, 0) / stats.times.length;
+        const epavg =
+          stats.times.reduce((a, b) => a + b, 0) / stats.times.length;
         const epsuccess = ((stats.success / stats.total) * 100).toFixed(0);
-        console.log(`${endpoint.padEnd(20)} | ${stats.total.toString().padEnd(6)} | ${epsuccess.padEnd(7)}% | ${epavg.toFixed(2).padEnd(10)}`);
+        console.log(
+          `${endpoint.padEnd(20)} | ${stats.total.toString().padEnd(6)} | ${epsuccess.padEnd(7)}% | ${epavg.toFixed(2).padEnd(10)}`,
+        );
       });
 
     if (Object.keys(this.results.errors).length > 0) {
@@ -251,7 +287,9 @@ class NormalLoadTest {
         .sort((a, b) => b[1] - a[1])
         .forEach(([err, count]) => {
           const pct = ((count / this.results.total) * 100).toFixed(1);
-          console.log(`  ${err.padEnd(25)} ${count.toString().padEnd(6)} (${pct}%)`);
+          console.log(
+            `  ${err.padEnd(25)} ${count.toString().padEnd(6)} (${pct}%)`,
+          );
         });
     }
 
@@ -259,7 +297,9 @@ class NormalLoadTest {
     if (successRate >= 99) {
       console.log('✅ STATUS: EXCELENTE - Pronto para produção!\n');
     } else if (successRate >= 95) {
-      console.log('🟢 STATUS: BOM - Sistema estável na maioria das situações\n');
+      console.log(
+        '🟢 STATUS: BOM - Sistema estável na maioria das situações\n',
+      );
     } else if (successRate >= 90) {
       console.log('🟡 STATUS: ACEITÁVEL - Melhorias recomendadas\n');
     } else {

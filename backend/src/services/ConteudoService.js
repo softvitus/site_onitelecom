@@ -28,7 +28,7 @@ export class ConteudoService extends BaseService {
       });
       delete filters.parceiroId;
     }
-    
+
     return super.findAll(filters, pagination, options);
   }
 

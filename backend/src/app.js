@@ -4,7 +4,12 @@ import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger.js';
 import apiRoutes from './routes/index.js';
-import { errorHandler, notFoundHandler, requestLogger, coloredStatusLogger } from './middleware/index.js';
+import {
+  errorHandler,
+  notFoundHandler,
+  requestLogger,
+  coloredStatusLogger,
+} from './middleware/index.js';
 import { captureAuditData } from './middleware/audit.js';
 import { generalLimiter } from './middleware/rateLimiter.js';
 import { HealthCheckService } from './services/HealthCheckService.js';
@@ -16,11 +21,13 @@ const API_VERSION = process.env.API_VERSION;
 
 // Security
 app.use(helmet());
-app.use(cors({
-  origin: process.env.CORS_ORIGIN?.split(',').map(origin => origin.trim()),
-  credentials: true,
-  optionsSuccessStatus: 200,
-}));
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN?.split(',').map((origin) => origin.trim()),
+    credentials: true,
+    optionsSuccessStatus: 200,
+  }),
+);
 app.use(generalLimiter);
 
 // Response Formatter - Injeta helpers no res (res.success, res.error, res.paginated)
@@ -43,7 +50,13 @@ app.get('/health', async (req, res) => {
     const health = await HealthCheckService.getApplicationHealth();
     res.status(health.status === 'healthy' ? 200 : 503).json(health);
   } catch (error) {
-    res.status(503).json({ status: 'unhealthy', error: error.message, timestamp: new Date().toISOString() });
+    res
+      .status(503)
+      .json({
+        status: 'unhealthy',
+        error: error.message,
+        timestamp: new Date().toISOString(),
+      });
   }
 });
 

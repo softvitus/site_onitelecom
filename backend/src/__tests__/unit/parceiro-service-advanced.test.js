@@ -97,7 +97,9 @@ describe('ParceiroService - Cobertura Avançada', () => {
     });
 
     it('update deve ser chamável', async () => {
-      jest.spyOn(parceiroService, 'update').mockResolvedValue({ id: 1, name: 'Updated' });
+      jest
+        .spyOn(parceiroService, 'update')
+        .mockResolvedValue({ id: 1, name: 'Updated' });
 
       const result = await parceiroService.update(1, { name: 'Updated' });
 
@@ -146,7 +148,12 @@ describe('ParceiroService - Cobertura Avançada', () => {
       });
 
       it('deve retornar número finito sempre', () => {
-        const distance = parceiroService.calculateDistance(-45.5, -120.3, 60.7, 140.2);
+        const distance = parceiroService.calculateDistance(
+          -45.5,
+          -120.3,
+          60.7,
+          140.2,
+        );
         expect(isFinite(distance)).toBe(true);
         expect(distance).toBeGreaterThanOrEqual(0);
       });
@@ -178,7 +185,9 @@ describe('ParceiroService - Cobertura Avançada', () => {
           par_cep: '12345-678',
         };
 
-        expect(() => parceiroService.validateLocationData(validData)).not.toThrow();
+        expect(() =>
+          parceiroService.validateLocationData(validData),
+        ).not.toThrow();
       });
 
       it('deve validar limites exatos', () => {
@@ -190,14 +199,20 @@ describe('ParceiroService - Cobertura Avançada', () => {
           { par_raio_cobertura: 0 },
         ];
 
-        borderCases.forEach(data => {
-          expect(() => parceiroService.validateLocationData(data)).not.toThrow();
+        borderCases.forEach((data) => {
+          expect(() =>
+            parceiroService.validateLocationData(data),
+          ).not.toThrow();
         });
       });
 
       it('deve rejeitar valores ligeiramente fora dos limites', () => {
-        expect(() => parceiroService.validateLocationData({ par_latitude: 90.00001 })).toThrow();
-        expect(() => parceiroService.validateLocationData({ par_longitude: -180.00001 })).toThrow();
+        expect(() =>
+          parceiroService.validateLocationData({ par_latitude: 90.00001 }),
+        ).toThrow();
+        expect(() =>
+          parceiroService.validateLocationData({ par_longitude: -180.00001 }),
+        ).toThrow();
       });
 
       it('deve ignorar campos null ou undefined', () => {
@@ -250,7 +265,10 @@ describe('ParceiroService - Cobertura Avançada', () => {
 
         mockModel.findAll.mockResolvedValue(mockParceiros);
 
-        const result = await parceiroService.findNearby(-7, -34, 500, { page: 2, limit: 10 });
+        const result = await parceiroService.findNearby(-7, -34, 500, {
+          page: 2,
+          limit: 10,
+        });
 
         expect(result.pagination.pages).toBe(4); // 33 / 10 = 3.3 -> 4 páginas
         expect(result.rows.length).toBe(10); // Página 2 tem 10 itens
@@ -268,7 +286,11 @@ describe('ParceiroService - Cobertura Avançada', () => {
 
         mockModel.findAll.mockResolvedValue([distantParceiro]);
 
-        const result = await parceiroService.findNearby(center.lat, center.lon, 100); // raio 100km
+        const result = await parceiroService.findNearby(
+          center.lat,
+          center.lon,
+          100,
+        ); // raio 100km
 
         // Deverá ser filtrado pois está muito distante
         expect(result.rows.length).toBe(0);

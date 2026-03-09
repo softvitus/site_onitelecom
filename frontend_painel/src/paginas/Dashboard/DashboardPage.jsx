@@ -3,7 +3,7 @@
  * @description Página inicial após login com resumo de estatísticas
  * da plataforma (Parceiros, Temas, Páginas, Componentes) e seção
  * de atividades recentes.
- * 
+ *
  * @module paginas/Dashboard/DashboardPage
  */
 
@@ -65,20 +65,22 @@ const DASHBOARD_CARDS_CONFIG = [
 
 /**
  * Página Dashboard
- * 
+ *
  * Página inicial exibida após login com resumo de estatísticas e
  * atividades recentes da plataforma. Fornece visão geral dos principais
  * módulos (Parceiros, Temas, Páginas, Componentes).
- * 
+ *
  * @component
  * @returns {JSX.Element}
- * 
+ *
  * @example
  * <DashboardPage />
  */
 const DashboardPage = () => {
   const { usuario } = useAuth();
-  const [cards, setCards] = useState(DASHBOARD_CARDS_CONFIG.map(c => ({ ...c, valor: 0, carregando: true })));
+  const [cards, setCards] = useState(
+    DASHBOARD_CARDS_CONFIG.map((c) => ({ ...c, valor: 0, carregando: true }))
+  );
 
   // Carregar estatísticas ao montar
   useEffect(() => {
@@ -131,9 +133,7 @@ const DashboardPage = () => {
                 <h3>{card.titulo}</h3>
                 <small>{card.subtitulo}</small>
               </div>
-              <div className="card-value">
-                {card.carregando ? '...' : card.valor}
-              </div>
+              <div className="card-value">{card.carregando ? '...' : card.valor}</div>
             </div>
           );
         })}

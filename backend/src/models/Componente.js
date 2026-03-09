@@ -1,41 +1,45 @@
 import { DataTypes } from 'sequelize';
 
 export default function (sequelize) {
-  const Componente = sequelize.define('Componente', {
-    com_id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-      allowNull: false,
+  const Componente = sequelize.define(
+    'Componente',
+    {
+      com_id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
+      com_nome: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        unique: true,
+      },
+      com_descricao: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      com_tipo: {
+        type: DataTypes.ENUM('global', 'reutilizável', 'específico'),
+        allowNull: true,
+      },
+      com_possui_elementos: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      com_habilitado: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
     },
-    com_nome: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-      unique: true,
+    {
+      tableName: '0004_Componente',
+      timestamps: true,
+      underscored: false,
     },
-    com_descricao: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    com_tipo: {
-      type: DataTypes.ENUM('global', 'reutilizável', 'específico'),
-      allowNull: true,
-    },
-    com_possui_elementos: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    com_habilitado: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
-  }, {
-    tableName: '0004_Componente',
-    timestamps: true,
-    underscored: false,
-  });
+  );
 
   Componente.associate = (models) => {
     Componente.belongsToMany(models.Pagina, {

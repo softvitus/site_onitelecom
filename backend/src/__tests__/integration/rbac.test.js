@@ -30,14 +30,24 @@ describe('RBAC - Integração Completa', () => {
     });
 
     it('Admin pode criar tema', () => {
-      const podeCreateTema = ['tema_listar', 'tema_visualizar', 'tema_criar', 'tema_editar', 'tema_deletar']
-        .includes('tema_criar');
+      const podeCreateTema = [
+        'tema_listar',
+        'tema_visualizar',
+        'tema_criar',
+        'tema_editar',
+        'tema_deletar',
+      ].includes('tema_criar');
       expect(podeCreateTema).toBe(true);
     });
 
     it('Admin pode deletar tema', () => {
-      const podeDeletarTema = ['tema_listar', 'tema_visualizar', 'tema_criar', 'tema_editar', 'tema_deletar']
-        .includes('tema_deletar');
+      const podeDeletarTema = [
+        'tema_listar',
+        'tema_visualizar',
+        'tema_criar',
+        'tema_editar',
+        'tema_deletar',
+      ].includes('tema_deletar');
       expect(podeDeletarTema).toBe(true);
     });
 
@@ -76,17 +86,32 @@ describe('RBAC - Integração Completa', () => {
     });
 
     it('Gestor pode listar temas', () => {
-      const perms = ['tema_listar', 'tema_visualizar', 'tema_criar', 'tema_editar'];
+      const perms = [
+        'tema_listar',
+        'tema_visualizar',
+        'tema_criar',
+        'tema_editar',
+      ];
       expect(perms).toContain('tema_listar');
     });
 
     it('Gestor pode criar tema', () => {
-      const perms = ['tema_listar', 'tema_visualizar', 'tema_criar', 'tema_editar'];
+      const perms = [
+        'tema_listar',
+        'tema_visualizar',
+        'tema_criar',
+        'tema_editar',
+      ];
       expect(perms).toContain('tema_criar');
     });
 
     it('Gestor NÃO pode deletar tema', () => {
-      const perms = ['tema_listar', 'tema_visualizar', 'tema_criar', 'tema_editar'];
+      const perms = [
+        'tema_listar',
+        'tema_visualizar',
+        'tema_criar',
+        'tema_editar',
+      ];
       expect(perms).not.toContain('tema_deletar');
     });
 
@@ -172,13 +197,16 @@ describe('RBAC - Integração Completa', () => {
     });
 
     it('3. Sistema gera JWT token', () => {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0';
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0';
       expect(token).toBeDefined();
       expect(token.split('.')).toHaveLength(3); // header.payload.signature
     });
 
     it('4. Cliente envia token no header Authorization', () => {
-      const header = { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' };
+      const header = {
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+      };
       expect(header.Authorization).toMatch(/^Bearer /);
     });
 
@@ -188,14 +216,23 @@ describe('RBAC - Integração Completa', () => {
     });
 
     it('6. Middleware carrega permissões do usuário', () => {
-      const permissoes = ['tema_listar', 'tema_criar', 'pagina_listar', 'pagina_criar'];
+      const permissoes = [
+        'tema_listar',
+        'tema_criar',
+        'pagina_listar',
+        'pagina_criar',
+      ];
       expect(permissoes).toHaveLength(4);
     });
 
     it('7. Endpoint valida permissão específica', () => {
       const permissaoRequerida = 'tema_criar';
-      const temPermissao = ['tema_listar', 'tema_criar', 'pagina_listar', 'pagina_criar']
-        .includes(permissaoRequerida);
+      const temPermissao = [
+        'tema_listar',
+        'tema_criar',
+        'pagina_listar',
+        'pagina_criar',
+      ].includes(permissaoRequerida);
       expect(temPermissao).toBe(true);
     });
 

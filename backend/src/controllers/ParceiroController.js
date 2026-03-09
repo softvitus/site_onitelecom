@@ -6,6 +6,8 @@
 import { ParceiroService } from '../services/index.js';
 import { AuditoriaService } from '../services/AuditoriaService.js';
 import { getModels } from '../models/loader.js';
+import sequelize from '../config/sequelize.js';
+import { QueryTypes } from 'sequelize';
 
 export class ParceiroController {
   constructor() {
@@ -21,19 +23,19 @@ export class ParceiroController {
   async getAll(req, res, next) {
     try {
       const { page = 1, limit = 10 } = req.query;
-      
+
       // Construir filtros
       const filtros = {};
-      
+
       // Se não é admin e tem parceiroId, mostrar apenas seu parceiro
       if (req.user?.tipo !== 'admin' && req.user?.parceiroId) {
         filtros.par_id = req.user.parceiroId;
       }
-      
-      const result = await this.service.findAll(
-        filtros,
-        { page: parseInt(page), limit: parseInt(limit) },
-      );
+
+      const result = await this.service.findAll(filtros, {
+        page: parseInt(page),
+        limit: parseInt(limit),
+      });
 
       return res.json({
         success: true,
@@ -232,10 +234,10 @@ export class ParceiroController {
       const { cidade } = req.params;
       const { page = 1, limit = 10 } = req.query;
 
-      const result = await this.service.findByCity(
-        cidade,
-        { page: parseInt(page), limit: parseInt(limit) },
-      );
+      const result = await this.service.findByCity(cidade, {
+        page: parseInt(page),
+        limit: parseInt(limit),
+      });
 
       return res.json({
         success: true,
@@ -339,10 +341,10 @@ export class ParceiroController {
       });
 
       // Parceiros já filtrados por status 'ativo' pelo service
-      const parceiros = Array.isArray(result.rows) ? result.rows : (result || []);
+      const parceiros = Array.isArray(result.rows) ? result.rows : result || [];
 
       // Mapear para retornar apenas campos públicos
-      const parceirosPulicos = parceiros.map(p => ({
+      const parceirosPulicos = parceiros.map((p) => ({
         id: p.par_id,
         nome: p.par_nome,
         dominio: p.par_dominio,
@@ -377,18 +379,18 @@ export class ParceiroController {
       const { cidade } = req.params;
       const { page = 1, limit = 10 } = req.query;
 
-      const result = await this.service.findByCity(
-        cidade,
-        { page: parseInt(page), limit: parseInt(limit) },
-      );
+      const result = await this.service.findByCity(cidade, {
+        page: parseInt(page),
+        limit: parseInt(limit),
+      });
 
       // Filtrar apenas parceiros ativos e retornar dados públicos
-      const parceiros = Array.isArray(result.rows || result) 
-        ? (result.rows || result).filter(p => p.par_status === 'ativo')
+      const parceiros = Array.isArray(result.rows || result)
+        ? (result.rows || result).filter((p) => p.par_status === 'ativo')
         : [];
 
       // Mapear para retornar apenas campos públicos
-      const parceirosPulicos = parceiros.map(p => ({
+      const parceirosPulicos = parceiros.map((p) => ({
         id: p.par_id,
         nome: p.par_nome,
         dominio: p.par_dominio,
@@ -429,12 +431,12 @@ export class ParceiroController {
       );
 
       // Filtrar apenas parceiros ativos e retornar dados públicos
-      const parceiros = Array.isArray(result.rows) 
-        ? result.rows.filter(p => p.par_status === 'ativo')
+      const parceiros = Array.isArray(result.rows)
+        ? result.rows.filter((p) => p.par_status === 'ativo')
         : [];
 
       // Mapear para retornar apenas campos públicos
-      const parceirosPulicos = parceiros.map(p => ({
+      const parceirosPulicos = parceiros.map((p) => ({
         id: p.par_id,
         nome: p.par_nome,
         dominio: p.par_dominio,
@@ -470,8 +472,11 @@ export class ParceiroController {
       const models = getModels();
 
       // Verifica se é UUID ou slug/nome e busca o parceiro adequadamente
-      const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
-      
+      const isUUID =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+          id,
+        );
+
       let parceiro;
       if (isUUID) {
         // Busca por UUID
@@ -482,8 +487,10 @@ export class ParceiroController {
         const allParceiros = await models.Parceiro.findAll({
           include: [{ association: 'temas' }],
         });
-        parceiro = allParceiros.find(p => {
-          const parceiroSlug = p.par_nome.toLowerCase().replace(/[^a-z0-9]/g, '');
+        parceiro = allParceiros.find((p) => {
+          const parceiroSlug = p.par_nome
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, '');
           return parceiroSlug === normalizedSlug;
         });
       }
@@ -545,72 +552,121 @@ export class ParceiroController {
       });
 
       // Busca todas as cores do tema
-      const cores = await models.Cores.findAll({
-        where: {
-          cor_tem_id: temaAtivo.tem_id,
-        },
-        order: [['cor_categoria', 'ASC'], ['cor_nome', 'ASC']],
-        raw: false,
-      });
+      // Busca todas as cores do tema
+      let cores = [];
+      try {
+        const result = await sequelize.query(
+          'SELECT * FROM "0008_Cores" WHERE "cor_tem_id" = :temaId ORDER BY "cor_categoria" ASC, "cor_nome" ASC',
+          {
+            replacements: { temaId: temaAtivo.tem_id },
+            type: QueryTypes.SELECT,
+          },
+        );
+        cores = result;
+      } catch (coresError) {
+        cores = [];
+      }
 
       // Busca todas as imagens do tema
-      const imagens = await models.Imagens.findAll({
-        where: {
-          img_tem_id: temaAtivo.tem_id,
-        },
-        order: [['img_categoria', 'ASC'], ['img_nome', 'ASC']],
-        raw: false,
-      });
+      let imagens = [];
+      try {
+        imagens = await models.Imagens.findAll({
+          where: {
+            img_tem_id: temaAtivo.tem_id,
+          },
+          order: [
+            ['img_categoria', 'ASC'],
+            ['img_nome', 'ASC'],
+          ],
+          raw: false,
+        });
+      } catch (imagesError) {
+        imagens = [];
+      }
 
       // Busca todos os textos do tema
-      const textos = await models.Textos.findAll({
-        where: {
-          txt_tem_id: temaAtivo.tem_id,
-        },
-        order: [['txt_categoria', 'ASC'], ['txt_chave', 'ASC']],
-        raw: false,
-      });
+      let textos = [];
+      try {
+        textos = await models.Textos.findAll({
+          where: {
+            txt_tem_id: temaAtivo.tem_id,
+          },
+          order: [
+            ['txt_categoria', 'ASC'],
+            ['txt_chave', 'ASC'],
+          ],
+          raw: false,
+        });
+      } catch (textosError) {
+        textos = [];
+      }
 
       // Busca todos os links do tema
-      const links = await models.Links.findAll({
-        where: {
-          lin_tem_id: temaAtivo.tem_id,
-        },
-        order: [['lin_categoria', 'ASC'], ['lin_nome', 'ASC']],
-        raw: false,
-      });
+      let links = [];
+      try {
+        links = await models.Links.findAll({
+          where: {
+            lin_tem_id: temaAtivo.tem_id,
+          },
+          order: [
+            ['lin_categoria', 'ASC'],
+            ['lin_nome', 'ASC'],
+          ],
+          raw: false,
+        });
+      } catch (linksError) {
+        links = [];
+      }
 
       // Busca todos os conteúdos do tema
-      const conteudos = await models.Conteudo.findAll({
-        where: {
-          cnt_tem_id: temaAtivo.tem_id,
-          cnt_habilitado: true,
-        },
-        order: [['cnt_categoria', 'ASC'], ['cnt_ordem', 'ASC']],
-        raw: false,
-      });
+      let conteudos = [];
+      try {
+        conteudos = await models.Conteudo.findAll({
+          where: {
+            cnt_tem_id: temaAtivo.tem_id,
+            cnt_habilitado: true,
+          },
+          order: [
+            ['cnt_categoria', 'ASC'],
+            ['cnt_ordem', 'ASC'],
+          ],
+          raw: false,
+        });
+      } catch (conteudosError) {
+        conteudos = [];
+      }
 
       // Busca todas as features do tema
-      const features = await models.Features.findAll({
-        where: {
-          fea_tem_id: temaAtivo.tem_id,
-          fea_habilitado: true,
-        },
-        order: [['fea_nome', 'ASC']],
-        raw: false,
-      });
+      let features = [];
+      try {
+        features = await models.Features.findAll({
+          where: {
+            fea_tem_id: temaAtivo.tem_id,
+            fea_habilitado: true,
+          },
+          order: [['fea_nome', 'ASC']],
+          raw: false,
+        });
+      } catch (featuresError) {
+        features = [];
+      }
 
       // Busca todas as configurações do tema
-      const configs = await models.ConfigTema.findAll({
-        where: {
-          cfg_tem_id: temaAtivo.tem_id,
-        },
-        order: [['cfg_chave', 'ASC']],
-        raw: false,
-      });
+      let configs = [];
+      try {
+        configs = await models.ConfigTema.findAll({
+          where: {
+            cfg_tem_id: temaAtivo.tem_id,
+          },
+          order: [['cfg_chave', 'ASC']],
+          raw: false,
+        });
+      } catch (configsError) {
+        configs = [];
+      }
 
       // Mapear páginas para formato público
-      const paginasPublicas = paginas.map(p => ({
+      const paginasPublicas = paginas.map((p) => ({
         id: p.pag_id,
         nome: p.pag_nome,
         caminho: p.pag_caminho,
@@ -622,8 +678,8 @@ export class ParceiroController {
         icone: p.pag_icone,
         componentes: (p.componentes || [])
           // ✅ FILTRA: Apenas componentes habilitados nesta página
-          .filter(c => c['PagComRel']?.pcr_habilitado === true)
-          .map(c => ({
+          .filter((c) => c['PagComRel']?.pcr_habilitado === true)
+          .map((c) => ({
             id: c.com_id,
             nome: c.com_nome,
             tipo: c.com_tipo,
@@ -633,8 +689,8 @@ export class ParceiroController {
             ordem: c['PagComRel']?.pcr_ordem || 999, // Ordem do componente na página
             elementos: (c.elementos || [])
               // ✅ FILTRA: Apenas elementos habilitados neste componente
-              .filter(e => e['ComEleRel']?.cer_habilitado === true)
-              .map(e => ({
+              .filter((e) => e['ComEleRel']?.cer_habilitado === true)
+              .map((e) => ({
                 id: e.ele_id,
                 nome: e.ele_nome,
                 tipo: e.ele_tipo,
@@ -649,7 +705,7 @@ export class ParceiroController {
       }));
 
       // Mapear cores para formato público
-      const coresPublicas = cores.map(c => ({
+      const coresPublicas = cores.map((c) => ({
         id: c.cor_id,
         categoria: c.cor_categoria,
         nome: c.cor_nome,
@@ -657,7 +713,7 @@ export class ParceiroController {
       }));
 
       // Mapear imagens para formato público
-      const imagensPublicas = imagens.map(i => ({
+      const imagensPublicas = imagens.map((i) => ({
         id: i.img_id,
         categoria: i.img_categoria,
         nome: i.img_nome,
@@ -665,7 +721,7 @@ export class ParceiroController {
       }));
 
       // Mapear textos para formato público
-      const textosPublicos = textos.map(t => ({
+      const textosPublicos = textos.map((t) => ({
         id: t.txt_id,
         categoria: t.txt_categoria,
         chave: t.txt_chave,
@@ -673,7 +729,7 @@ export class ParceiroController {
       }));
 
       // Mapear links para formato público
-      const linksPublicos = links.map(l => ({
+      const linksPublicos = links.map((l) => ({
         id: l.lin_id,
         categoria: l.lin_categoria,
         nome: l.lin_nome,
@@ -681,24 +737,24 @@ export class ParceiroController {
       }));
 
       // Mapear conteúdos para formato público
-      const conteudosPublicos = conteudos.map(c => ({
+      const conteudosPublicos = conteudos.map((c) => ({
         id: c.cnt_id,
         tipo: c.cnt_tipo,
         categoria: c.cnt_categoria,
         titulo: c.cnt_titulo,
         descricao: c.cnt_descricao,
-        valor: c.cnt_dados,  // ← Renomeado de 'dados' para 'valor'
+        valor: c.cnt_dados, // ← Renomeado de 'dados' para 'valor'
         ordem: c.cnt_ordem,
       }));
 
       // Mapear features para formato público
-      const featuresPublicas = features.map(f => ({
+      const featuresPublicas = features.map((f) => ({
         id: f.fea_id,
         nome: f.fea_nome,
       }));
 
       // Mapear configs para formato público
-      const configsPublicas = configs.map(c => ({
+      const configsPublicas = configs.map((c) => ({
         id: c.cfg_id,
         chave: c.cfg_chave,
         valor: c.cfg_valor,
@@ -741,9 +797,15 @@ export default ParceiroController;
 // Instância do controller
 export const parceiroController = new ParceiroController();
 // Exporta métodos para compatibilidade com versão anterior
-export const getAll = (req, res, next) => parceiroController.getAll(req, res, next);
-export const getById = (req, res, next) => parceiroController.getById(req, res, next);
-export const create = (req, res, next) => parceiroController.create(req, res, next);
-export const update = (req, res, next) => parceiroController.update(req, res, next);
-export const remove = (req, res, next) => parceiroController.remove(req, res, next);
-export const getNearby = (req, res, next) => parceiroController.getNearby(req, res, next);
+export const getAll = (req, res, next) =>
+  parceiroController.getAll(req, res, next);
+export const getById = (req, res, next) =>
+  parceiroController.getById(req, res, next);
+export const create = (req, res, next) =>
+  parceiroController.create(req, res, next);
+export const update = (req, res, next) =>
+  parceiroController.update(req, res, next);
+export const remove = (req, res, next) =>
+  parceiroController.remove(req, res, next);
+export const getNearby = (req, res, next) =>
+  parceiroController.getNearby(req, res, next);

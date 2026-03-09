@@ -79,8 +79,12 @@ const LeftColumn = () => {
  * @returns {React.ReactElement}
  */
 const RightColumn = () => {
-  const fullTitle = getTexto('appExclusivo', 'titulo', 'O melhor da TV pra você curtir a qualquer hora e em qualquer lugar.');
-  
+  const fullTitle = getTexto(
+    'appExclusivo',
+    'titulo',
+    'O melhor da TV pra você curtir a qualquer hora e em qualquer lugar.'
+  );
+
   return (
     <div className={styles['right-column']}>
       {/* Logo + Título inline */}
@@ -108,10 +112,22 @@ const RightColumn = () => {
  */
 const FeaturesCarousel = () => {
   const features = [
-    { icon: getImagem('appExclusivo', 'controles_play', ''), text: getTexto('appExclusivo', 'feature_play', 'Assista') },
-    { icon: getImagem('appExclusivo', 'controles_pause', ''), text: getTexto('appExclusivo', 'feature_pause', 'Pause') },
-    { icon: getImagem('appExclusivo', 'controles_retroceder', ''), text: getTexto('appExclusivo', 'feature_grave', 'Grave') },
-    { icon: getImagem('appExclusivo', 'controles_avancar', ''), text: getTexto('appExclusivo', 'feature_quando', 'Quando quiser') },
+    {
+      icon: getImagem('appExclusivo', 'controles_play', ''),
+      text: getTexto('appExclusivo', 'feature_play', 'Assista'),
+    },
+    {
+      icon: getImagem('appExclusivo', 'controles_pause', ''),
+      text: getTexto('appExclusivo', 'feature_pause', 'Pause'),
+    },
+    {
+      icon: getImagem('appExclusivo', 'controles_retroceder', ''),
+      text: getTexto('appExclusivo', 'feature_grave', 'Grave'),
+    },
+    {
+      icon: getImagem('appExclusivo', 'controles_avancar', ''),
+      text: getTexto('appExclusivo', 'feature_quando', 'Quando quiser'),
+    },
   ];
 
   // Duplicar para loop infinito
@@ -148,7 +164,6 @@ const AppExclusivo = () => {
     <div
       id={SECTION_ID}
       className={styles['oni-theme-variables']}
-     
       aria-labelledby="app-exclusivo-title"
     >
       <div className="container">
@@ -165,4 +180,3 @@ const AppExclusivo = () => {
 };
 
 export default AppExclusivo;
-

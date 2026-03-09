@@ -99,5 +99,3 @@ describe('ErrorBoundary', () => {
     expect(homeButton.tagName).toBe('BUTTON');
   });
 });
-
-

@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar páginas.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (pag_nome → nome, etc).
- * 
+ *
  * @module servicos/paginas
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_PAGINAS = '/paginas';
 /**
  * Mapeia dados do backend (pag_nome, pag_par_id, etc)
  * para formato do frontend (nome, parceiroId, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -51,7 +51,7 @@ const mapearPagina = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -79,7 +79,7 @@ const PaginasServiceBase = criarServicoGenerico(ENDPOINT_PAGINAS);
 
 /**
  * Serviço para Gerenciar Páginas
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -93,14 +93,14 @@ const PaginasService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await PaginasServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearPagina(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -111,14 +111,14 @@ const PaginasService = {
    */
   obter: async (id) => {
     const resultado = await PaginasServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearPagina(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 

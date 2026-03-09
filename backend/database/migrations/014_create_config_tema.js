@@ -41,7 +41,7 @@ export default {
     // Criar índices
     await queryInterface.addIndex('0014_Config_Tema', ['cfg_tem_id']);
     await queryInterface.addIndex('0014_Config_Tema', ['cfg_chave']);
-    
+
     // Criar UNIQUE constraint
     await queryInterface.addConstraint('0014_Config_Tema', {
       fields: ['cfg_tem_id', 'cfg_chave'],

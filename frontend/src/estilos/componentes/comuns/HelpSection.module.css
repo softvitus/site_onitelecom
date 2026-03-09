@@ -1,5 +1,14 @@
+:root {
+  --helpSection-background: var(--gradient-purple-primary);
+  --helpSection-accentText: var(--color-neutral-white);
+  --helpSection-cardText: var(--color-neutral-900);
+  --helpSection-cardTitle: var(--color-neutral-900);
+  --helpSection-cardDescription: var(--color-neutral-600);
+  --helpSection-iconBackground: var(--gradient-purple-primary);
+}
+
 .custom-section {
-  background: var(--gradient-purple-primary);
+  background: var(--helpSection-background);
   min-height: auto;
   padding: 50px 0;
   display: block;
@@ -34,33 +43,33 @@
 }
 
 .description-text {
-  color: white;
+  color: var(--color-neutral-white);
   font-size: 1.1em;
   line-height: 1.5;
   margin: 0;
 }
 
 .accent-text {
-  color: var(--color-neutral-white);
+  color: var(--helpSection-accentText);
   font-weight: 800;
 }
 
 .custom-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--color-neutral-white);
   border-radius: var(--radius-xl);
   overflow: hidden;
   transition: var(--transition-normal);
   border: none;
   box-shadow: var(--box-shadow-lg);
-  color: var(--color-neutral-800, #1a1a2e);
+  color: var(--helpSection-cardText);
 }
 
 .custom-card :global(.card-title) {
-  color: var(--color-neutral-900, #1a1a2e) !important;
+  color: var(--helpSection-cardTitle) !important;
 }
 
 .custom-card :global(.card-text) {
-  color: var(--color-neutral-600, #4a4a4a) !important;
+  color: var(--helpSection-cardDescription) !important;
 }
 
 .custom-card:hover {
@@ -69,7 +78,7 @@
 }
 
 .custom-icon {
-  background: var(--gradient-purple-primary);
+  background: var(--helpSection-iconBackground);
   width: 70px;
   height: 70px;
   border-radius: 50%;

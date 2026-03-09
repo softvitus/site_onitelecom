@@ -33,7 +33,7 @@ const getDepoimentoPrincipal = () => {
   if (!depoimentos?.length) return null;
   const primeiro = depoimentos[0];
   const itemData = primeiro.valor || primeiro.dados;
-  
+
   let parsedData = itemData;
   if (typeof itemData === 'string') {
     try {

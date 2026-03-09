@@ -14,7 +14,14 @@ export class FeaturesService extends BaseService {
    * Tipos de feature válidos
    * @type {string[]}
    */
-  static VALID_TYPES = ['analytics', 'seo', 'seguranca', 'performance', 'integracao', 'automacao'];
+  static VALID_TYPES = [
+    'analytics',
+    'seo',
+    'seguranca',
+    'performance',
+    'integracao',
+    'automacao',
+  ];
 
   /**
    * Busca features de um tema

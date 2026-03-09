@@ -1,7 +1,7 @@
 /**
  * @file Página de Gerenciamento de Imagens
  * @description Interface completa de CRUD para imagens
- * 
+ *
  * @module paginas/Imagens/ImagensPage
  */
 
@@ -43,14 +43,16 @@ const COLUNAS_GRID = [
     titulo: 'URL/Valor',
     largura: '25%',
     render: (valor) => (
-      <span style={{
-        maxWidth: '200px',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        display: 'inline-block',
-        title: valor,
-      }}>
+      <span
+        style={{
+          maxWidth: '200px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          display: 'inline-block',
+          title: valor,
+        }}
+      >
         {valor.length > 40 ? `${valor.substring(0, 40)}...` : valor}
       </span>
     ),
@@ -102,16 +104,16 @@ const validarFormulario = (dados) => {
 
 /**
  * Página de Gerenciamento de Imagens
- * 
+ *
  * Funcionalidades completas de CRUD.
- * 
+ *
  * @component
  * @returns {JSX.Element}
  */
 const ImagensPage = () => {
   // Autenticação e Permissões
   const { usuario, temPermissao } = useAuth();
-  
+
   // Estado
   const [imagens, setImagens] = useState([]);
   const [temas, setTemas] = useState([]);
@@ -161,12 +163,12 @@ const ImagensPage = () => {
 
     try {
       const filtros = { search: filtro };
-      
+
       // Se não é admin, filtrar pelo parceiro do usuário
       if (usuario?.tipo !== 'admin' && usuario?.parceiroId) {
         filtros.parceiroId = usuario.parceiroId;
       }
-      
+
       const resultado = await ImagensService.listar(pagina, itensPorPagina, filtros);
 
       if (resultado.sucesso) {
@@ -335,7 +337,7 @@ const ImagensPage = () => {
   const executarDelecao = async () => {
     if (!confirmarDialog.imagem) return;
 
-    setConfirmarDialog(prev => ({ ...prev, carregando: true }));
+    setConfirmarDialog((prev) => ({ ...prev, carregando: true }));
 
     const imagem = confirmarDialog.imagem;
 
@@ -349,12 +351,12 @@ const ImagensPage = () => {
         fecharConfirmarDialog();
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao deletar imagem'));
-        setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+        setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
       }
     } catch (err) {
       setAlerta(criarAlerta('erro', 'Erro ao deletar imagem'));
       console.error('[ERRO]', err);
-      setConfirmarDialog(prev => ({ ...prev, carregando: false }));
+      setConfirmarDialog((prev) => ({ ...prev, carregando: false }));
     }
   };
 
@@ -441,11 +443,7 @@ const ImagensPage = () => {
             <button className="modal-btn-cancelar" onClick={fecharModal}>
               Cancelar
             </button>
-            <button
-              className="modal-btn-salvar"
-              onClick={salvarImagem}
-              disabled={salvando}
-            >
+            <button className="modal-btn-salvar" onClick={salvarImagem} disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
@@ -455,7 +453,9 @@ const ImagensPage = () => {
           {/* Tema - obrigatório */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Tema <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Tema <span className="required">*</span>
+              </label>
               <select
                 className="modal-form-select"
                 value={formData.temaId}
@@ -469,16 +469,16 @@ const ImagensPage = () => {
                   </option>
                 ))}
               </select>
-              {errosForm.temaId && (
-                <span className="modal-form-error">{errosForm.temaId}</span>
-              )}
+              {errosForm.temaId && <span className="modal-form-error">{errosForm.temaId}</span>}
             </div>
           </div>
 
           {/* Categoria e Nome */}
           <div className="modal-form-row cols-2">
             <div className="modal-form-group">
-              <label className="modal-form-label">Categoria <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Categoria <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -492,7 +492,9 @@ const ImagensPage = () => {
             </div>
 
             <div className="modal-form-group">
-              <label className="modal-form-label">Nome <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Nome <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 className="modal-form-input"
@@ -500,16 +502,16 @@ const ImagensPage = () => {
                 onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                 placeholder="Ex: logo-principal, banner-home"
               />
-              {errosForm.nome && (
-                <span className="modal-form-error">{errosForm.nome}</span>
-              )}
+              {errosForm.nome && <span className="modal-form-error">{errosForm.nome}</span>}
             </div>
           </div>
 
           {/* URL/Valor - full width com upload de imagem */}
           <div className="modal-form-row cols-1">
             <div className="modal-form-group">
-              <label className="modal-form-label">Imagem <span className="required">*</span></label>
+              <label className="modal-form-label">
+                Imagem <span className="required">*</span>
+              </label>
               <div className="modal-form-file-wrapper">
                 <input
                   type="file"
@@ -523,8 +525,8 @@ const ImagensPage = () => {
                     }
                   }}
                 />
-                <label 
-                  htmlFor="imagem-input" 
+                <label
+                  htmlFor="imagem-input"
                   className={`modal-form-file-label ${dragOver ? 'drag-over' : ''} ${formData.valor && formData.valor.startsWith('data:image') ? 'has-image' : ''}`}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
@@ -532,13 +534,9 @@ const ImagensPage = () => {
                 >
                   {formData.valor && formData.valor.startsWith('data:image') ? (
                     <>
-                      <img 
-                        src={formData.valor} 
-                        alt="Preview"
-                        className="modal-form-file-image"
-                      />
+                      <img src={formData.valor} alt="Preview" className="modal-form-file-image" />
                       <div className="modal-form-file-actions">
-                        <button 
+                        <button
                           type="button"
                           className="modal-form-file-btn modal-form-file-btn-change"
                           title="Trocar imagem"
@@ -550,7 +548,7 @@ const ImagensPage = () => {
                         >
                           <FaCloudUploadAlt /> Trocar
                         </button>
-                        <button 
+                        <button
                           type="button"
                           className="modal-form-file-btn modal-form-file-btn-delete"
                           title="Excluir imagem"
@@ -567,17 +565,13 @@ const ImagensPage = () => {
                         <span className="modal-form-file-title">
                           Clique para selecionar ou arraste uma imagem
                         </span>
-                        <span className="modal-form-file-subtitle">
-                          PNG, JPG, GIF até 5MB
-                        </span>
+                        <span className="modal-form-file-subtitle">PNG, JPG, GIF até 5MB</span>
                       </div>
                     </>
                   )}
                 </label>
               </div>
-              {errosForm.valor && (
-                <span className="modal-form-error">{errosForm.valor}</span>
-              )}
+              {errosForm.valor && <span className="modal-form-error">{errosForm.valor}</span>}
             </div>
           </div>
         </form>

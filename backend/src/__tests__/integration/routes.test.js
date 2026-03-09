@@ -12,9 +12,12 @@ describe('Rotas HTTP - Integration Tests (Mock)', () => {
 
   beforeAll(() => {
     // Simular tokens JWT (não são tokens reais, apenas para estrutura de testes)
-    mockTokenAdmin = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0NzkiLCJ1c3VfdHlwbyI6ImFkbWluIn0.test_admin';
-    mockTokenGestor = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0ODAiLCJ1c3VfdHlwbyI6Imdlc3RvciJ9.test_gestor';
-    mockTokenUsuario = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0ODEiLCJ1c3VfdHlwbyI6InVzdWFyaW8ifQ.test_usuario';
+    mockTokenAdmin =
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0NzkiLCJ1c3VfdHlwbyI6ImFkbWluIn0.test_admin';
+    mockTokenGestor =
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0ODAiLCJ1c3VfdHlwbyI6Imdlc3RvciJ9.test_gestor';
+    mockTokenUsuario =
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VfaWQiOiJmNDdhYzEwYi01OGNjLTQzNzItYTU2Ny0wZTAyYjJjM2Q0ODEiLCJ1c3VfdHlwbyI6InVzdWFyaW8ifQ.test_usuario';
   });
 
   describe('Rotas Públicas', () => {
@@ -63,12 +66,23 @@ describe('Rotas HTTP - Integration Tests (Mock)', () => {
 
   describe('Verificação de Permissões por Endpoint', () => {
     it('POST /temas (tema_criar) - Admin deve ter permissão', () => {
-      const admin_temaPerm = ['tema_listar', 'tema_visualizar', 'tema_criar', 'tema_editar', 'tema_deletar'];
+      const admin_temaPerm = [
+        'tema_listar',
+        'tema_visualizar',
+        'tema_criar',
+        'tema_editar',
+        'tema_deletar',
+      ];
       expect(admin_temaPerm).toContain('tema_criar');
     });
 
     it('POST /temas (tema_criar) - Gestor deve ter permissão', () => {
-      const gestor_temaPerm = ['tema_listar', 'tema_visualizar', 'tema_criar', 'tema_editar'];
+      const gestor_temaPerm = [
+        'tema_listar',
+        'tema_visualizar',
+        'tema_criar',
+        'tema_editar',
+      ];
       expect(gestor_temaPerm).toContain('tema_criar');
     });
 
@@ -177,7 +191,7 @@ describe('Rotas HTTP - Integration Tests (Mock)', () => {
     it('Gestor deve acessar apenas dados do seu parceiro', () => {
       const gestorParceiroId = '550e8400-e29b-41d4-a716-446655440001';
       const dataParceiroId = '550e8400-e29b-41d4-a716-446655440001';
-      
+
       const podeAcessar = gestorParceiroId === dataParceiroId;
       expect(podeAcessar).toBe(true);
     });
@@ -185,7 +199,7 @@ describe('Rotas HTTP - Integration Tests (Mock)', () => {
     it('Gestor NÃO deve acessar dados de outro parceiro', () => {
       const gestorParceiroId = '550e8400-e29b-41d4-a716-446655440001';
       const outroParceiroId = '550e8400-e29b-41d4-a716-446655440002';
-      
+
       const podeAcessar = gestorParceiroId === outroParceiroId;
       expect(podeAcessar).toBe(false);
     });

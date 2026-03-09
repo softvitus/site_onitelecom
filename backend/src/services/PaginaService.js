@@ -25,7 +25,7 @@ export class PaginaService extends BaseService {
       filters.pag_par_id = filters.parceiroId;
       delete filters.parceiroId;
     }
-    
+
     return super.findAll(filters, pagination, options);
   }
 

@@ -7,7 +7,11 @@ export class ResponseFormatter {
   /**
    * Resposta de sucesso
    */
-  static success(data = null, message = 'Operação realizada com sucesso', pagination = null) {
+  static success(
+    data = null,
+    message = 'Operação realizada com sucesso',
+    pagination = null,
+  ) {
     const response = {
       success: true,
       message,
@@ -119,7 +123,9 @@ export class ResponseFormatter {
       };
 
       res.error = (message, statusCode = 400, details) => {
-        res.status(statusCode).json(ResponseFormatter.error(message, statusCode, details));
+        res
+          .status(statusCode)
+          .json(ResponseFormatter.error(message, statusCode, details));
       };
 
       res.paginated = (data, total, page, limit) => {

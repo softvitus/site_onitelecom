@@ -163,12 +163,7 @@ const PorQueEscolher = () => {
   // ─────────────────────────────────────────────────────────────────────────────────
 
   return (
-    <section
-      id={SECTION_ID}
-      className={styles['secao']}
-     
-      aria-labelledby="por-que-escolher-title"
-    >
+    <section id={SECTION_ID} className={styles['secao']} aria-labelledby="por-que-escolher-title">
       <div className="container">
         {/* Título da seção */}
         <SectionHeader />
@@ -181,4 +176,3 @@ const PorQueEscolher = () => {
 };
 
 export default PorQueEscolher;
-

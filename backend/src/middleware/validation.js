@@ -17,7 +17,10 @@ export const validate = (schema) => {
         const value = req.body[field];
 
         // Verificar se é obrigatório
-        if (rules.required && (value === undefined || value === null || value === '')) {
+        if (
+          rules.required &&
+          (value === undefined || value === null || value === '')
+        ) {
           errors.push({
             field,
             message: `Campo obrigatório: ${field}`,
@@ -64,7 +67,11 @@ export const validate = (schema) => {
         }
 
         // Verificar min length
-        if (rules.minLength && typeof value === 'string' && value.length < rules.minLength) {
+        if (
+          rules.minLength &&
+          typeof value === 'string' &&
+          value.length < rules.minLength
+        ) {
           errors.push({
             field,
             message: `${field} deve ter no mínimo ${rules.minLength} caracteres`,
@@ -73,7 +80,11 @@ export const validate = (schema) => {
         }
 
         // Verificar max length
-        if (rules.maxLength && typeof value === 'string' && value.length > rules.maxLength) {
+        if (
+          rules.maxLength &&
+          typeof value === 'string' &&
+          value.length > rules.maxLength
+        ) {
           errors.push({
             field,
             message: `${field} deve ter no máximo ${rules.maxLength} caracteres`,
@@ -82,7 +93,11 @@ export const validate = (schema) => {
         }
 
         // Verificar min value
-        if (rules.min !== undefined && typeof value === 'number' && value < rules.min) {
+        if (
+          rules.min !== undefined &&
+          typeof value === 'number' &&
+          value < rules.min
+        ) {
           errors.push({
             field,
             message: `${field} deve ser maior ou igual a ${rules.min}`,
@@ -91,7 +106,11 @@ export const validate = (schema) => {
         }
 
         // Verificar max value
-        if (rules.max !== undefined && typeof value === 'number' && value > rules.max) {
+        if (
+          rules.max !== undefined &&
+          typeof value === 'number' &&
+          value > rules.max
+        ) {
           errors.push({
             field,
             message: `${field} deve ser menor ou igual a ${rules.max}`,
@@ -100,7 +119,11 @@ export const validate = (schema) => {
         }
 
         // Verificar padrão (regex)
-        if (rules.pattern && typeof value === 'string' && !rules.pattern.test(value)) {
+        if (
+          rules.pattern &&
+          typeof value === 'string' &&
+          !rules.pattern.test(value)
+        ) {
           errors.push({
             field,
             message: rules.patternMessage || `${field} tem formato inválido`,
@@ -155,22 +178,28 @@ export const schemas = {
   // Parceiro
   createParceiro: {
     par_nome: { type: 'string', required: true, minLength: 1, maxLength: 255 },
-    par_dominio: { 
-      type: 'string', 
+    par_dominio: {
+      type: 'string',
       required: true,
       minLength: 3,
       maxLength: 255,
       patternMessage: 'par_dominio deve ser um domínio válido',
     },
-    par_dominio_painel: { 
-      type: 'string', 
+    par_dominio_painel: {
+      type: 'string',
       required: false,
       pattern: /^https?:\/\/.+/,
-      patternMessage: 'par_dominio_painel deve ser uma URL válida (ex: https://admin.parceiro.com.br)',
+      patternMessage:
+        'par_dominio_painel deve ser uma URL válida (ex: https://admin.parceiro.com.br)',
       allowNull: true,
       allowEmpty: true,
     },
-    par_cidade: { type: 'string', required: true, minLength: 1, maxLength: 255 },
+    par_cidade: {
+      type: 'string',
+      required: true,
+      minLength: 1,
+      maxLength: 255,
+    },
     par_endereco: { type: 'string', required: false, maxLength: 500 },
     par_cep: { type: 'string', required: false, maxLength: 10 },
     par_latitude: { type: 'number', required: false },
@@ -190,8 +219,18 @@ export const schemas = {
     pag_par_id: { type: 'string', required: true },
     pag_tem_id: { type: 'string', required: true },
     pag_nome: { type: 'string', required: true, minLength: 1, maxLength: 255 },
-    pag_caminho: { type: 'string', required: true, minLength: 1, maxLength: 255 },
-    pag_titulo: { type: 'string', required: true, minLength: 1, maxLength: 255 },
+    pag_caminho: {
+      type: 'string',
+      required: true,
+      minLength: 1,
+      maxLength: 255,
+    },
+    pag_titulo: {
+      type: 'string',
+      required: true,
+      minLength: 1,
+      maxLength: 255,
+    },
   },
 
   // Componente

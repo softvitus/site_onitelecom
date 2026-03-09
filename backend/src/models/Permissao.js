@@ -42,7 +42,16 @@ export default function (sequelize) {
         allowNull: false,
       },
       perm_acao: {
-        type: DataTypes.ENUM('criar', 'listar', 'editar', 'deletar', 'visualizar', 'exportar', 'estatisticas', 'filtrar'),
+        type: DataTypes.ENUM(
+          'criar',
+          'listar',
+          'editar',
+          'deletar',
+          'visualizar',
+          'exportar',
+          'estatisticas',
+          'filtrar',
+        ),
         allowNull: false,
       },
     },

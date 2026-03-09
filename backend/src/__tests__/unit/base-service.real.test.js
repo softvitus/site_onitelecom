@@ -4,7 +4,7 @@ const fakeModel = {
   name: 'Item', // Adicionar nome do modelo para mensagens de erro
   findAll: async () => [{ id: '1', nome: 'Item 1' }],
   findOne: async () => ({ id: '1', nome: 'Item 1' }),
-  findByPk: async (id) => id === '1' ? { id: '1', nome: 'Item 1' } : null,
+  findByPk: async (id) => (id === '1' ? { id: '1', nome: 'Item 1' } : null),
   create: async (data) => ({ id: '2', ...data }),
   update: async () => [1],
   destroy: async () => 1,

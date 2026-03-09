@@ -1,30 +1,34 @@
 import { DataTypes } from 'sequelize';
 
 export default function (sequelize) {
-  const Tema = sequelize.define('Tema', {
-    tem_id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-      allowNull: false,
-    },
-    tem_par_id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      references: {
-        model: '0001_Parceiro',
-        key: 'par_id',
+  const Tema = sequelize.define(
+    'Tema',
+    {
+      tem_id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
+      tem_par_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: '0001_Parceiro',
+          key: 'par_id',
+        },
+      },
+      tem_nome: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
       },
     },
-    tem_nome: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
+    {
+      tableName: '0002_Tema',
+      timestamps: true,
+      underscored: false,
     },
-  }, {
-    tableName: '0002_Tema',
-    timestamps: true,
-    underscored: false,
-  });
+  );
 
   Tema.associate = (models) => {
     Tema.belongsTo(models.Parceiro, {

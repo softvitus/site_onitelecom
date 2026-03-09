@@ -6,39 +6,44 @@ const fakeParceiroModel = {
   sequelize: {
     Op: Sequelize.Op,
   },
-  findAll: async () => [{ par_id: '1', par_nome: 'Telecom Plus', par_dominio: 'telecomplus.com' }],
+  findAll: async () => [
+    { par_id: '1', par_nome: 'Telecom Plus', par_dominio: 'telecomplus.com' },
+  ],
   findOne: async ({ where }) => {
     // Suportar busca por domínio ou nome
     if (where.par_dominio === 'telecomplus.com') {
-      return { 
-        par_id: '1', 
-        par_nome: 'Telecom Plus', 
+      return {
+        par_id: '1',
+        par_nome: 'Telecom Plus',
         par_dominio: 'telecomplus.com',
         destroy: async () => {
-          return 1; 
+          return 1;
         },
       };
     }
     if (where.par_nome === 'Telecom Plus') {
-      return { 
-        par_id: '1', 
-        par_nome: 'Telecom Plus', 
+      return {
+        par_id: '1',
+        par_nome: 'Telecom Plus',
         par_dominio: 'telecomplus.com',
         destroy: async () => {
-          return 1; 
+          return 1;
         },
       };
     }
     return null;
   },
-  findByPk: async (id) => id === '1' ? { 
-    par_id: '1', 
-    par_nome: 'Telecom Plus', 
-    par_dominio: 'telecomplus.com',
-    destroy: async () => {
-      return 1; 
-    },
-  } : null,
+  findByPk: async (id) =>
+    id === '1'
+      ? {
+          par_id: '1',
+          par_nome: 'Telecom Plus',
+          par_dominio: 'telecomplus.com',
+          destroy: async () => {
+            return 1;
+          },
+        }
+      : null,
   create: async (data) => ({ par_id: '2', ...data }),
   update: async () => [1],
   destroy: async () => 1,
@@ -74,13 +79,23 @@ describe('ParceiroService - Real Coverage', () => {
 
   it('calculateDistance deve calcular distância Haversine corretamente', () => {
     // João Pessoa para Campina Grande (~111 km)
-    const distance = service.calculateDistance(-7.115556, -34.878056, -7.229444, -35.881111);
+    const distance = service.calculateDistance(
+      -7.115556,
+      -34.878056,
+      -7.229444,
+      -35.881111,
+    );
     expect(distance).toBeGreaterThan(100);
     expect(distance).toBeLessThan(120);
   });
 
   it('calculateDistance deve retornar 0 para mesma coordenada', () => {
-    const distance = service.calculateDistance(-7.115556, -34.878056, -7.115556, -34.878056);
+    const distance = service.calculateDistance(
+      -7.115556,
+      -34.878056,
+      -7.115556,
+      -34.878056,
+    );
     expect(distance).toBe(0);
   });
 
@@ -98,11 +113,15 @@ describe('ParceiroService - Real Coverage', () => {
   });
 
   it('validateLocationData deve rejeitar longitude inválida', () => {
-    expect(() => service.validateLocationData({ par_longitude: 181 })).toThrow();
+    expect(() =>
+      service.validateLocationData({ par_longitude: 181 }),
+    ).toThrow();
   });
 
   it('validateLocationData deve rejeitar raio negativo', () => {
-    expect(() => service.validateLocationData({ par_raio_cobertura: -5 })).toThrow();
+    expect(() =>
+      service.validateLocationData({ par_raio_cobertura: -5 }),
+    ).toThrow();
   });
 
   it('findNearby deve rejeitar latitude ausente', async () => {

@@ -28,7 +28,12 @@ body {
 }
 
 /* Tipografia */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: var(--fw-semibold);
   margin-bottom: var(--spacing-md);
   line-height: var(--lh-snug);
@@ -88,16 +93,19 @@ a:active {
 }
 
 /* Ênfase */
-strong, b {
+strong,
+b {
   font-weight: var(--fw-bold);
 }
 
-em, i {
+em,
+i {
   font-style: italic;
 }
 
 /* Códigos */
-code, pre {
+code,
+pre {
   font-family: var(--font-mono);
   background-color: var(--bg-tertiary);
   border-radius: var(--radius-sm);
@@ -115,7 +123,9 @@ pre {
 .form-control,
 .form-select {
   border-color: var(--border-color);
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .form-control:focus,
@@ -369,7 +379,7 @@ input::placeholder {
     background: white;
     color: black;
   }
-  
+
   a {
     text-decoration: underline;
   }

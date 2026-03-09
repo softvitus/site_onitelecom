@@ -99,7 +99,7 @@ const getHelpCards = () => {
   return filtered.map((c) => {
     // Se valor é string, fazer parse
     const cardData = c.valor || c.dados; // Suporta ambos valor e dados para compatibilidade
-    
+
     if (typeof cardData === 'string') {
       try {
         return JSON.parse(cardData);
@@ -125,11 +125,9 @@ const SectionTitle = ({ caminhoPagina }) => {
   return (
     <h1 className={`text-white ${styles['custom-text']}`}>
       {getTexto('helpSection', 'titulo')}{' '}
-      <span className={styles['accent-text']}>{getTexto('helpSection', 'tituloDestaque')}</span>
-      {' '}{getTexto('helpSection', 'subtitulo')}{' '}
-      <span className={styles['accent-text']}>
-        {getTexto('helpSection', 'subtituloDestaque')}
-      </span>
+      <span className={styles['accent-text']}>{getTexto('helpSection', 'tituloDestaque')}</span>{' '}
+      {getTexto('helpSection', 'subtitulo')}{' '}
+      <span className={styles['accent-text']}>{getTexto('helpSection', 'subtituloDestaque')}</span>
     </h1>
   );
 };
@@ -143,9 +141,7 @@ const SectionTitle = ({ caminhoPagina }) => {
 const SectionDescription = ({ caminhoPagina }) => {
   if (!isElementoHabilitado(caminhoPagina, 'helpSection', 'description')) return null;
 
-  return (
-    <p className={styles['description-text']}>{getTexto('helpSection', 'descricao')}</p>
-  );
+  return <p className={styles['description-text']}>{getTexto('helpSection', 'descricao')}</p>;
 };
 
 /**
@@ -197,7 +193,11 @@ const HelpCard = ({ card }) => {
           <HelpCardIcon src={cardImage} alt={card.title} />
 
           {/* Título */}
-          <h3 id={`help-card-${card.id}`} className="fw-bold mb-2" style={{ color: '#1a1a2e', fontSize: '1.1em' }}>
+          <h3
+            id={`help-card-${card.id}`}
+            className="fw-bold mb-2"
+            style={{ color: '#1a1a2e', fontSize: '1.1em' }}
+          >
             {card.title}
           </h3>
 
@@ -275,4 +275,3 @@ const HelpSection = ({ caminhoPagina = '/inicio' }) => {
 };
 
 export default HelpSection;
-

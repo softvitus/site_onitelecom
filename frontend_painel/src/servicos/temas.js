@@ -3,7 +3,7 @@
  * @description Serviço especializado para gerenciar temas.
  * Estende o serviço genérico com mapeamento de campos entre
  * frontend e backend (tem_nome → nome, etc).
- * 
+ *
  * @module servicos/temas
  */
 
@@ -22,7 +22,7 @@ const ENDPOINT_TEMAS = '/temas';
 /**
  * Mapeia dados do backend (tem_nome, tem_par_id, etc)
  * para formato do frontend (nome, parceiroId, etc)
- * 
+ *
  * @param {Object|Array} data - Dados retornados do backend
  * @returns {Object|Array} Dados mapeados para frontend
  */
@@ -42,7 +42,7 @@ const mapearTema = (data) => {
 
 /**
  * Mapeia dados do frontend para formato esperado pelo backend
- * 
+ *
  * @param {Object} dados - Dados do frontend
  * @returns {Object} Dados formatados para backend
  */
@@ -61,7 +61,7 @@ const TemasServiceBase = criarServicoGenerico(ENDPOINT_TEMAS);
 
 /**
  * Serviço para Gerenciar Temas
- * 
+ *
  * Estende o serviço genérico com mapeamento automático de campos
  * entre o formato do frontend e do backend.
  */
@@ -75,14 +75,14 @@ const TemasService = {
    */
   listar: async (page = 1, limit = 10, filtros = {}) => {
     const resultado = await TemasServiceBase.listar(page, limit, filtros);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearTema(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 
@@ -93,14 +93,14 @@ const TemasService = {
    */
   obter: async (id) => {
     const resultado = await TemasServiceBase.obter(id);
-    
+
     if (resultado.sucesso) {
       return {
         ...resultado,
         dados: mapearTema(resultado.dados),
       };
     }
-    
+
     return resultado;
   },
 

@@ -137,7 +137,10 @@ describe('RolePermissoesController - Unit Tests', () => {
 
       await controller.atribuirPermissao(mockReq, mockRes, mockNext);
 
-      expect(mockService.atribuirPermissao).toHaveBeenCalledWith('admin', '123');
+      expect(mockService.atribuirPermissao).toHaveBeenCalledWith(
+        'admin',
+        '123',
+      );
       expect(mockRes.status).toHaveBeenCalledWith(201);
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
@@ -147,8 +150,10 @@ describe('RolePermissoesController - Unit Tests', () => {
     });
 
     it('deve chamar AuditoriaService ao atribuir', async () => {
-      const { AuditoriaService } = require('../../services/AuditoriaService.js');
-      
+      const {
+        AuditoriaService,
+      } = require('../../services/AuditoriaService.js');
+
       mockService.atribuirPermissao.mockResolvedValue({
         rol_perm_id: '999',
         rol_tipo: 'admin',
@@ -208,8 +213,10 @@ describe('RolePermissoesController - Unit Tests', () => {
     });
 
     it('deve chamar AuditoriaService ao remover', async () => {
-      const { AuditoriaService } = require('../../services/AuditoriaService.js');
-      
+      const {
+        AuditoriaService,
+      } = require('../../services/AuditoriaService.js');
+
       mockService.removerPermissao.mockResolvedValue(true);
       mockReq.params = { tipo: 'admin', permissaoId: '123' };
 
@@ -256,7 +263,10 @@ describe('RolePermissoesController - Unit Tests', () => {
 
       await controller.replacePermissoes(mockReq, mockRes, mockNext);
 
-      expect(mockService.replacePermissoes).toHaveBeenCalledWith('admin', ['1', '2']);
+      expect(mockService.replacePermissoes).toHaveBeenCalledWith('admin', [
+        '1',
+        '2',
+      ]);
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
         message: 'Permissões atualizadas para o role admin',
@@ -301,8 +311,10 @@ describe('RolePermissoesController - Unit Tests', () => {
     });
 
     it('deve chamar AuditoriaService ao substituir permissões', async () => {
-      const { AuditoriaService } = require('../../services/AuditoriaService.js');
-      
+      const {
+        AuditoriaService,
+      } = require('../../services/AuditoriaService.js');
+
       mockService.findByTipo.mockResolvedValueOnce([{ perm_id: '5' }]);
       mockService.replacePermissoes.mockResolvedValue(true);
       mockService.findByTipo.mockResolvedValueOnce([]);
@@ -341,7 +353,10 @@ describe('RolePermissoesController - Unit Tests', () => {
 
       await controller.temPermissao(mockReq, mockRes, mockNext);
 
-      expect(mockService.temPermissao).toHaveBeenCalledWith('admin', 'tema_editar');
+      expect(mockService.temPermissao).toHaveBeenCalledWith(
+        'admin',
+        'tema_editar',
+      );
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
         tipo: 'admin',
@@ -356,7 +371,10 @@ describe('RolePermissoesController - Unit Tests', () => {
 
       await controller.temPermissao(mockReq, mockRes, mockNext);
 
-      expect(mockService.temPermissao).toHaveBeenCalledWith('usuario', 'usuario_deletar');
+      expect(mockService.temPermissao).toHaveBeenCalledWith(
+        'usuario',
+        'usuario_deletar',
+      );
       expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
         tipo: 'usuario',

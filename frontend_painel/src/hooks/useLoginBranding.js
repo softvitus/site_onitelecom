@@ -1,7 +1,7 @@
 /**
  * @file Hook para carregamento de branding na página de login
  * @description Busca dados de tema e logo via API pública
- * 
+ *
  * @module hooks/useLoginBranding
  */
 
@@ -52,7 +52,7 @@ const converterBase64ToDataUrl = (base64) => {
  * Hook para carregar branding da página de login
  * @param {string} parceiroId - ID do parceiro (pode estar em query param ou ser padrão)
  * @returns {Object} { logo, nomeParceiro, carregando, erro, carregarBreanding }
- * 
+ *
  * @example
  * const { logo, nomeParceiro, carregando } = useLoginBranding(parceiroId);
  */

@@ -26,7 +26,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'company',
         txt_chave: 'description',
-        txt_valor: 'A Oni Telecom é uma empresa de telecomunicações inscrita no CNPJ 000.111.333/000 com licença SCM da Anatel.',
+        txt_valor:
+          'A Oni Telecom é uma empresa de telecomunicações inscrita no CNPJ 000.111.333/000 com licença SCM da Anatel.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -80,7 +81,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'banner',
         txt_chave: 'subtitle',
-        txt_valor: 'Conectividade completa e segurança para impulsionar o seu negócio com tecnologia de ponta',
+        txt_valor:
+          'Conectividade completa e segurança para impulsionar o seu negócio com tecnologia de ponta',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -136,7 +138,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'helpSection',
         txt_chave: 'descricao',
-        txt_valor: 'Encontre respostas rápidas e resolva seus problemas com facilidade',
+        txt_valor:
+          'Encontre respostas rápidas e resolva seus problemas com facilidade',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -194,7 +197,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'footer',
         txt_chave: 'companyInfo_description',
-        txt_valor: 'A Oni Telecom é uma empresa de telecomunicações que oferece internet de alta velocidade, telefonia e entretenimento com qualidade e inovação.',
+        txt_valor:
+          'A Oni Telecom é uma empresa de telecomunicações que oferece internet de alta velocidade, telefonia e entretenimento com qualidade e inovação.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -371,7 +375,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'footer',
         txt_chave: 'companyInfo_description',
-        txt_valor: 'A Oni Telecom é uma empresa de telecomunicações que oferece internet de alta velocidade, telefonia e entretenimento com qualidade e inovação.',
+        txt_valor:
+          'A Oni Telecom é uma empresa de telecomunicações que oferece internet de alta velocidade, telefonia e entretenimento com qualidade e inovação.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -444,7 +449,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'introducao',
         txt_chave: 'description',
-        txt_valor: 'Oferecemos soluções completas de telecomunicações com a melhor tecnologia do mercado.',
+        txt_valor:
+          'Oferecemos soluções completas de telecomunicações com a melhor tecnologia do mercado.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -511,7 +517,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'telefoniaBanner',
         txt_chave: 'card1_descricao',
-        txt_valor: 'Mantenha-se conectado com recargas instantâneas. Recarregue seu número Oni ou surpreenda alguém especial com créditos extras!',
+        txt_valor:
+          'Mantenha-se conectado com recargas instantâneas. Recarregue seu número Oni ou surpreenda alguém especial com créditos extras!',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -538,7 +545,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'telefoniaBanner',
         txt_chave: 'card2_descricao',
-        txt_valor: 'Descubra planos flexíveis e uma cobertura excepcional. Junte-se à rede que entende suas necessidades.',
+        txt_valor:
+          'Descubra planos flexíveis e uma cobertura excepcional. Junte-se à rede que entende suas necessidades.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -566,7 +574,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'home',
         txt_chave: 'banner_subtitle',
-        txt_valor: 'Conectividade completa e segurança para impulsionar o seu negócio com tecnologia de ponta',
+        txt_valor:
+          'Conectividade completa e segurança para impulsionar o seu negócio com tecnologia de ponta',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -602,7 +611,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'home',
         txt_chave: 'ofertas_subtitle',
-        txt_valor: 'Planos de internet ultrarrápida com benefícios exclusivos para sua empresa!',
+        txt_valor:
+          'Planos de internet ultrarrápida com benefícios exclusivos para sua empresa!',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -852,7 +862,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'appExclusivo',
         txt_chave: 'titulo',
-        txt_valor: 'O melhor da TV pra você curtir a qualquer hora e em qualquer lugar.',
+        txt_valor:
+          'O melhor da TV pra você curtir a qualquer hora e em qualquer lugar.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -871,7 +882,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'divisorSecao',
         txt_chave: 'titulo',
-        txt_valor: 'Transforme sua infraestrutura de comunicação com a Oni Telecom',
+        txt_valor:
+          'Transforme sua infraestrutura de comunicação com a Oni Telecom',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -925,7 +937,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'infinitePossibilities',
         txt_chave: 'titulo',
-        txt_valor: 'Possibilidades infinitas de soluções e entretenimento para sua vida.',
+        txt_valor:
+          'Possibilidades infinitas de soluções e entretenimento para sua vida.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -979,7 +992,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'quemSomos',
         txt_chave: 'paragrafo1',
-        txt_valor: 'Uma empresa paraibana com mais de 10 anos de excelência no mercado de telecomunicações. Atuamos com redes ópticas e digitais, conectando mais de 20.000 usuários nos estados da Paraíba, Pernambuco e Rio Grande do Norte.',
+        txt_valor:
+          'Uma empresa paraibana com mais de 10 anos de excelência no mercado de telecomunicações. Atuamos com redes ópticas e digitais, conectando mais de 20.000 usuários nos estados da Paraíba, Pernambuco e Rio Grande do Norte.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -988,7 +1002,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'quemSomos',
         txt_chave: 'paragrafo2',
-        txt_valor: 'Oferecemos soluções tecnológicas modernas que conectam pessoas e empresas a um universo de infinitas possibilidades em todo lugar e o tempo todo.',
+        txt_valor:
+          'Oferecemos soluções tecnológicas modernas que conectam pessoas e empresas a um universo de infinitas possibilidades em todo lugar e o tempo todo.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1006,7 +1021,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'quemSomos',
         txt_chave: 'oferecemosItems',
-        txt_valor: '["Internet de alta velocidade com fibra óptica.","Atendimento personalizado e suporte técnico 24/7.","Soluções corporativas sob medida.","Rede confiável e estável para home office e negócios."]',
+        txt_valor:
+          '["Internet de alta velocidade com fibra óptica.","Atendimento personalizado e suporte técnico 24/7.","Soluções corporativas sob medida.","Rede confiável e estável para home office e negócios."]',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1024,7 +1040,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'quemSomos',
         txt_chave: 'diferenciaisItems',
-        txt_valor: '["Equipamentos de última geração.","Mais de 20.000 clientes satisfeitos.","Presença consolidada em 3 estados.","Compromisso com inovação e conectividade."]',
+        txt_valor:
+          '["Equipamentos de última geração.","Mais de 20.000 clientes satisfeitos.","Presença consolidada em 3 estados.","Compromisso com inovação e conectividade."]',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1216,7 +1233,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'planoControle.secaoInfo',
         txt_chave: 'descricao',
-        txt_valor: 'Com o Plano Controle da Oni Telecom, você tem ligações ilimitadas para qualquer operadora do Brasil, internet de alta velocidade e o melhor: sem surpresas na sua fatura. Gerencie seu plano pelo app e tenha total controle dos seus gastos.',
+        txt_valor:
+          'Com o Plano Controle da Oni Telecom, você tem ligações ilimitadas para qualquer operadora do Brasil, internet de alta velocidade e o melhor: sem surpresas na sua fatura. Gerencie seu plano pelo app e tenha total controle dos seus gastos.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1246,7 +1264,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450001',
         txt_categoria: 'meta',
         txt_chave: 'pageDescription',
-        txt_valor: 'Oni Telecom - Internet de alta velocidade e telefonia para sua casa e empresa. Conectando você ao futuro.',
+        txt_valor:
+          'Oni Telecom - Internet de alta velocidade e telefonia para sua casa e empresa. Conectando você ao futuro.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1265,7 +1284,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450002',
         txt_categoria: 'meta',
         txt_chave: 'pageDescription',
-        txt_valor: 'Internet Mais - A internet que você merece. Planos de fibra óptica com a melhor velocidade.',
+        txt_valor:
+          'Internet Mais - A internet que você merece. Planos de fibra óptica com a melhor velocidade.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1284,7 +1304,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450003',
         txt_categoria: 'meta',
         txt_chave: 'pageDescription',
-        txt_valor: 'Oline Net - Tecnologia e inovação em internet banda larga. Sua conexão, nossa prioridade.',
+        txt_valor:
+          'Oline Net - Tecnologia e inovação em internet banda larga. Sua conexão, nossa prioridade.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1303,7 +1324,8 @@ export default {
         txt_tem_id: '550e8400-e29b-41d4-a716-446655450004',
         txt_categoria: 'meta',
         txt_chave: 'pageDescription',
-        txt_valor: 'Wil Telecom - Inovação em conectividade. Internet rápida e estável para sua região.',
+        txt_valor:
+          'Wil Telecom - Inovação em conectividade. Internet rápida e estável para sua região.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
