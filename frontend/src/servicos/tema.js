@@ -569,13 +569,8 @@ export const applyTemaCoresCSS = (temaOuCores = null) => {
     }
 
     if (!cores || cores.length === 0) {
-      // eslint-disable-next-line no-console
-      console.warn('[Tema] Nenhuma cor encontrada para aplicar', { temaOuCores });
       return false;
     }
-
-    // eslint-disable-next-line no-console
-    console.log(`[Tema] Aplicando ${cores.length} cores como CSS variables`);
 
     const root = document.documentElement;
 
