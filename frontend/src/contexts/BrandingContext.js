@@ -110,68 +110,43 @@ export const BrandingProvider = ({ children }) => {
         setLoading(true);
         setError(null);
 
-        // eslint-disable-next-line no-console
-        console.log('[BrandingContext] 🚀 Iniciando branding...');
-
         // PRIMEIRO: Verificar se a API está acessível
         try {
-          // eslint-disable-next-line no-console
-          console.log('[BrandingContext] Verificando saúde da API...');
           await checkApiHealth(8000); // 8 segundos de timeout
-          // eslint-disable-next-line no-console
-          console.log('[BrandingContext] ✓ API acessível');
         } catch (healthError) {
           // eslint-disable-next-line no-console
-          console.error('[BrandingContext] ✗ API não está acessível:', healthError.message);
+          console.error('[BrandingContext] API não está acessível:', healthError.message);
           redirectToErrorPage();
           return;
         }
 
         // Detectar tenant
-        // eslint-disable-next-line no-console
-        console.log('[BrandingContext] Detectando tenant...');
         const tenant = await detectTenant();
-        // eslint-disable-next-line no-console
-        console.log('[BrandingContext] ✓ Tenant detectado:', tenant);
         setParceiroId(tenant);
 
         // Pré-carregar tema + garantir tempo mínimo de loading
-        // eslint-disable-next-line no-console
-        console.log('[BrandingContext] Carregando tema...');
         await Promise.all([
           buscarOuCachearTemaParceiro(tenant),
           new Promise((resolve) => setTimeout(resolve, MIN_LOADING_TIME)),
         ]);
-        // eslint-disable-next-line no-console
-        console.log('[BrandingContext] ✓ Tema carregado');
 
         // Aplicar cores do tema da API como variáveis CSS
-        // eslint-disable-next-line no-console
-        console.log('[BrandingContext] Aplicando cores CSS...');
-        const coresAplicadas = applyTemaCoresCSS();
-        // eslint-disable-next-line no-console
-        console.log('[BrandingContext] Cores CSS:', coresAplicadas ? '✓ Aplicadas' : '✗ Falha');
+        applyTemaCoresCSS();
 
         // Carregar configuração do backend
-        // eslint-disable-next-line no-console
-        console.log('[BrandingContext] Carregando configuração...');
         const result = await initializeConfig();
 
         if (result.success) {
-          // eslint-disable-next-line no-console
-          console.log('[BrandingContext] ✓ Configuração carregada');
           setConfig(result.config);
         } else {
           // Fallback para config vazio - tema vem da API via tema.js
           // eslint-disable-next-line no-console
-          console.warn('[BrandingContext] ⚠️ initializeConfig falhou, usando config vazio');
+          console.warn('[BrandingContext] initializeConfig falhou, usando config vazio');
           setConfig({});
         }
-        // eslint-disable-next-line no-console
-        console.log('[BrandingContext] ✅ Branding inicializado com sucesso!');
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.error('[BrandingContext] ❌ Erro ao inicializar branding:', err);
+        console.error('[BrandingContext] Erro ao inicializar branding:', err);
 
         // Se for erro de conexão com API, redireciona para página de erro
         if (isConnectionError(err)) {

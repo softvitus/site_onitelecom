@@ -584,11 +584,11 @@ jobs:
             fi
             echo "✅ All .env.production files found"
 
-            # Pull latest Docker images
-            echo "🐳 Pulling Docker images..."
-            docker compose pull || true
+            # Build Docker images without cache
+            echo "🔨 Building Docker images..."
+            docker compose build --no-cache
 
-            # Build and start containers
+            # Start containers
             echo "🔄 Starting containers..."
             docker compose -f docker-compose.yml up -d
 
