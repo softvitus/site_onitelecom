@@ -95,6 +95,8 @@ export const detectTenant = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const tenantParam = urlParams.get('tenant');
   if (tenantParam) {
+    // eslint-disable-next-line no-console
+    console.log('[Tema] Tenant encontrado via URL param:', tenantParam);
     return tenantParam;
   }
 
@@ -103,23 +105,33 @@ export const detectTenant = async () => {
   const port = window.location.port;
   const currentUrl = port ? `http://${hostname}:${port}` : `https://${hostname}`;
 
+  // eslint-disable-next-line no-console
+  console.log('[Tema] Detectando tenant - hostname:', hostname, '| port:', port, '| currentUrl:', currentUrl);
+
   // Busca na API qual parceiro tem este domínio
   const allParceiros = await getAllParceirosFromAPI();
 
+  // eslint-disable-next-line no-console
+  console.log('[Tema] Parceiros disponíveis:', allParceiros.map((p) => ({ id: p.id, nome: p.par_nome, dominio: p.dominio })));
+
   for (const parceiro of allParceiros) {
     if (parceiro.dominio === currentUrl || parceiro.dominio === currentUrl + '/') {
+      // eslint-disable-next-line no-console
+      console.log('[Tema] ✓ Parceiro encontrado por match exato:', parceiro.id, parceiro.par_nome);
       return parceiro.id;
     }
   }
 
   for (const parceiro of allParceiros) {
     if (parceiro.dominio && parceiro.dominio.includes(hostname)) {
+      // eslint-disable-next-line no-console
+      console.log('[Tema] ✓ Parceiro encontrado por hostname:', parceiro.id, parceiro.par_nome);
       return parceiro.id;
     }
   }
 
   // eslint-disable-next-line no-console
-  console.warn(`[Tema] Nenhum parceiro encontrado para ${currentUrl}, usando fallback: onitelecom`);
+  console.warn(`[Tema] ✗ Nenhum parceiro encontrado para ${currentUrl}, usando fallback: onitelecom`);
   return 'onitelecom';
 };
 
@@ -314,25 +326,41 @@ export const buscarTemaParceiro = async (parceiroId) => {
 export const buscarOuCachearTemaParceiro = async (parceiroId) => {
   try {
     if (!parceiroId) {
+      // eslint-disable-next-line no-console
+      console.error('[Tema] parceiroId não fornecido em buscarOuCachearTemaParceiro');
       return { success: false, data: null };
     }
+
+    // eslint-disable-next-line no-console
+    console.log('[Tema] Buscando tema para parceiro:', parceiroId);
 
     // Tenta recuperar do cache primeiro
     const cached = getTemaCached(parceiroId);
     if (cached) {
+      // eslint-disable-next-line no-console
+      console.log('[Tema] ✓ Tema encontrado no cache');
       return { success: true, data: cached };
     }
+
+    // eslint-disable-next-line no-console
+    console.log('[Tema] ⚡ Buscando tema da API');
 
     // Busca da API
     const response = await buscarTemaParceiro(parceiroId);
 
     if (response.success && response.data) {
+      // eslint-disable-next-line no-console
+      console.log('[Tema] ✓ Tema recebido da API, cores:', response.data.cores?.length || 0);
       cacheTemaParceiro(parceiroId, response.data);
       return { success: true, data: response.data };
     }
 
+    // eslint-disable-next-line no-console
+    console.error('[Tema] ✗ Erro ao buscar tema:', response.error);
     return response;
   } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[Tema] Exceção em buscarOuCachearTemaParceiro:', error);
     return { success: false, data: null, error: error.message };
   }
 };
@@ -348,13 +376,18 @@ export const buscarOuCachearTemaParceiro = async (parceiroId) => {
  */
 export const cacheTemaParceiro = (parceiroId, tema) => {
   try {
+    // eslint-disable-next-line no-console
+    console.log('[Tema] Cacheando tema:', parceiroId, '| cores:', tema.cores?.length || 0);
+    
     CACHE_TEMAS.set(parceiroId, {
       tema,
       timestamp: Date.now(),
     });
     setTemaAtivoMemoria(tema);
     // ✅ Aplicar cores do tema como variáveis CSS globais (passando tema direto)
-    applyTemaCoresCSS(tema);
+    const aplicouCores = applyTemaCoresCSS(tema);
+    // eslint-disable-next-line no-console
+    console.log('[Tema] Cores aplicadas ao CSS:', aplicouCores ? '✓ Sucesso' : '✗ Falha');
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn('[Tema] Erro ao cachear tema:', error);
@@ -570,14 +603,15 @@ export const applyTemaCoresCSS = (temaOuCores = null) => {
 
     if (!cores || cores.length === 0) {
       // eslint-disable-next-line no-console
-      console.warn('[Tema] Nenhuma cor encontrada para aplicar', { temaOuCores });
+      console.warn('[Tema] ✗ Nenhuma cor encontrada para aplicar', { temaOuCores });
       return false;
     }
 
     // eslint-disable-next-line no-console
-    console.log(`[Tema] Aplicando ${cores.length} cores como CSS variables`);
+    console.log(`[Tema] ✓ Aplicando ${cores.length} cores como CSS variables`);
 
     const root = document.documentElement;
+    let coresAplicadas = 0;
 
     // Aplicar cada cor como variável CSS
     cores.forEach((cor) => {
@@ -591,6 +625,7 @@ export const applyTemaCoresCSS = (temaOuCores = null) => {
           // Usar apenas o que vem da API
           const varName = `--color-${toKebabCase(cor.categoria)}-${toKebabCase(cor.nome)}`;
           root.style.setProperty(varName, cor.valor);
+          coresAplicadas++;
         } catch (err) {
           // eslint-disable-next-line no-console
           console.warn(`[Tema] Erro ao aplicar cor ${cor.categoria}/${cor.nome}:`, err);
@@ -598,8 +633,12 @@ export const applyTemaCoresCSS = (temaOuCores = null) => {
       }
     });
 
+    // eslint-disable-next-line no-console
+    console.log(`[Tema] ✓ ${coresAplicadas} cores aplicadas com sucesso`);
+
     // Aplicar cores de componentes específicos - DINÂMICO
     // Buscar todas as cores com categoria 'componente' automaticamente
+    let componentesAplicados = 0;
     cores.forEach((cor) => {
       // Pular cores inativas
       if (cor.ativo === false) {
@@ -609,8 +648,14 @@ export const applyTemaCoresCSS = (temaOuCores = null) => {
       if (cor.categoria === 'componente' && cor.nome && cor.valor) {
         const varName = `--${cor.nome.replace(/_/g, '-')}`;
         root.style.setProperty(varName, cor.valor);
+        componentesAplicados++;
       }
     });
+
+    if (componentesAplicados > 0) {
+      // eslint-disable-next-line no-console
+      console.log(`[Tema] ✓ ${componentesAplicados} cores de componentes aplicadas`);
+    }
 
     // 5. Aplicar configurações (radius, transitions) da API
     let configs = [];
@@ -630,10 +675,12 @@ export const applyTemaCoresCSS = (temaOuCores = null) => {
       });
     }
 
+    // eslint-disable-next-line no-console
+    console.log('[Tema] ✅ CSS variables aplicadas com sucesso!');
     return true;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[Tema] Erro ao aplicar cores CSS:', error);
+    console.error('[Tema] ❌ Erro ao aplicar cores CSS:', error);
     return false;
   }
 };
