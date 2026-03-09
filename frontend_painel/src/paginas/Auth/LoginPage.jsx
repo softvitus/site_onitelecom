@@ -139,9 +139,8 @@ function LoginPage() {
   const { login, carregando, erro, temPermissao, usuario } = useAuth();
   const { logo, nomeParceiro, carregarBreanding } = useBreanding();
 
-  // Obter parceiroId da URL ou usar padrão
-  const parceiroIdFromUrl =
-    searchParams.get('parceiroId') || '550e8400-e29b-41d4-a716-446655440001'; // Oni Telecom como padrão
+  // Obter parceiroId da URL (sem default hardcodeado)
+  const parceiroIdFromUrl = searchParams.get('parceiroId') || null;
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');

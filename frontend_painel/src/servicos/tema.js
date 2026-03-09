@@ -7,8 +7,8 @@
  */
 
 /**
- * Obtém o parceiroId (da URL, localStorage ou default)
- * @returns {string} ID do parceiro
+ * Obtém o parceiroId (da URL, localStorage ou null)
+ * @returns {string|null} ID do parceiro ou null se não encontrado
  */
 const getParceiroId = () => {
   // 1. Tentar from URL query params
@@ -20,8 +20,8 @@ const getParceiroId = () => {
   const parceiroFromStorage = localStorage.getItem('parceiroId');
   if (parceiroFromStorage) return parceiroFromStorage;
 
-  // 3. Default
-  return '550e8400-e29b-41d4-a716-446655440001'; // Oni Telecom
+  // 3. Sem padrão - retorna null para forçar seleção
+  return null;
 };
 
 /**

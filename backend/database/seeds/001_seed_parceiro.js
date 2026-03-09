@@ -5,7 +5,7 @@ export default {
       {
         par_id: '550e8400-e29b-41d4-a716-446655440001',
         par_nome: 'Oni Telecom',
-        par_dominio: 'http://localhost:3000',
+        par_dominio: 'https://site.onitelecom.com.br',
         par_dominio_painel: 'https://admin.oni.com.br',
         par_cidade: 'João Pessoa',
         par_estado: 'PB',
