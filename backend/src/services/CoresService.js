@@ -148,12 +148,17 @@ export class CoresService extends BaseService {
    * @returns {boolean} True se válido
    */
   validateColorValue(valor) {
-    if (!valor) return false;
+    if (!valor) {
+      return false;
+    }
 
     // Aceita HEX, RGB, gradient, transparent ou white/blue/etc
-    if (valor === 'transparent') return true;
-    if (/^(white|black|blue|red|green|yellow|transparent)$/i.test(valor))
+    if (valor === 'transparent') {
       return true;
+    }
+    if (/^(white|black|blue|red|green|yellow|transparent)$/i.test(valor)) {
+      return true;
+    }
 
     return (
       this.validateHexColor(valor) ||

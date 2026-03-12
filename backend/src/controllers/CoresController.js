@@ -517,7 +517,7 @@ export class CoresController {
         if (!nome || !valor || !categoria) {
           return res.status(400).json({
             success: false,
-            error: `Cor inválida: campos nome, valor e categoria são obrigatórios`,
+            error: 'Cor inválida: campos nome, valor e categoria são obrigatórios',
           });
         }
 

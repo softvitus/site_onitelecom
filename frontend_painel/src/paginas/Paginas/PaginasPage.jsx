@@ -323,7 +323,7 @@ const PaginasPage = () => {
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao atualizar componente'));
       }
-    } catch (err) {
+    } catch {
       setAlerta(criarAlerta('erro', 'Erro ao atualizar componente'));
     } finally {
       setSalvandoComponente(null);
@@ -354,7 +354,7 @@ const PaginasPage = () => {
 
       setAlerta(criarAlerta('sucesso', 'Ordem atualizada com sucesso'));
       setTimeout(() => setAlerta(null), DURACAO_ALERTA);
-    } catch (err) {
+    } catch {
       setAlerta(criarAlerta('erro', 'Erro ao reordenar componente'));
     } finally {
       setSalvandoComponente(null);
@@ -382,7 +382,7 @@ const PaginasPage = () => {
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao adicionar componente'));
       }
-    } catch (err) {
+    } catch {
       setAlerta(criarAlerta('erro', 'Erro ao adicionar componente'));
     } finally {
       setSalvandoComponente(null);
@@ -400,7 +400,7 @@ const PaginasPage = () => {
       } else {
         setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao remover componente'));
       }
-    } catch (err) {
+    } catch {
       setAlerta(criarAlerta('erro', 'Erro ao remover componente'));
     } finally {
       setSalvandoComponente(null);

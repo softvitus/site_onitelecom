@@ -25,8 +25,12 @@ export class PagComRelController {
       const { page = 1, limit = 10, pcr_pag_id, pcr_com_id } = req.query;
 
       const filters = {};
-      if (pcr_pag_id) filters.pcr_pag_id = pcr_pag_id;
-      if (pcr_com_id) filters.pcr_com_id = pcr_com_id;
+      if (pcr_pag_id) {
+        filters.pcr_pag_id = pcr_pag_id;
+      }
+      if (pcr_com_id) {
+        filters.pcr_com_id = pcr_com_id;
+      }
 
       const result = await this.service.findAll(
         filters,
