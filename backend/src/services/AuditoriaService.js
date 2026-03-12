@@ -255,10 +255,10 @@ export class AuditoriaService {
               total: item.total,
               usuario: usuario
                 ? {
-                    usu_id: usuario.usu_id,
-                    usu_nome: usuario.usu_nome,
-                    usu_email: usuario.usu_email,
-                  }
+                  usu_id: usuario.usu_id,
+                  usu_nome: usuario.usu_nome,
+                  usu_email: usuario.usu_email,
+                }
                 : null,
             };
           } catch (err) {

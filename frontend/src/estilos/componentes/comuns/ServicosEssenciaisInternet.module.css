@@ -2,11 +2,7 @@
 
 :root {
   /* CONTAINER */
-  --servicosEssenciaisInternet-container16Background: linear-gradient(
-    135deg,
-    #8a1ce8 0%,
-    #4a00e0 100%
-  );
+  --servicosEssenciaisInternet-container16Background: var(--color-primary-main);
 
   /* BACKGROUNDS */
   --servicosEssencialisInternet-containerBackground: transparent;

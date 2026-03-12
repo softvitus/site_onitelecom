@@ -49,10 +49,10 @@ describe('ErrorCodes - Real Coverage', () => {
     const json = error.toJSON
       ? error.toJSON()
       : JSON.stringify({
-          code: error.code,
-          message: error.message,
-          statusCode: error.statusCode,
-        });
+        code: error.code,
+        message: error.message,
+        statusCode: error.statusCode,
+      });
     expect(json).toBeDefined();
   });
 });

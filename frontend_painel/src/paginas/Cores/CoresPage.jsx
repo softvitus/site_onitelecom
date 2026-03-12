@@ -37,6 +37,64 @@ const FORM_INICIAL = {
   ativo: true,
 };
 
+// ============================================================================
+// FUNÇÕES DE GRADIENTE
+// ============================================================================
+
+/**
+ * Verifica se um valor é um gradiente CSS
+ * @param {string} valor - Valor CSS
+ * @returns {boolean}
+ */
+const isGradiente = (valor) => typeof valor === 'string' && valor.includes('linear-gradient');
+
+/**
+ * Extrai as cores de um gradiente linear
+ * @param {string} valor - Valor do gradiente (ex: "linear-gradient(135deg, #8a1ce5 0%, #4a00e0 100%)")
+ * @returns {{ angulo: string, cor1: string, cor2: string }}
+ */
+const parseGradiente = (valor) => {
+  const resultado = { angulo: '135deg', cor1: '#000000', cor2: '#000000' };
+  if (!isGradiente(valor)) return resultado;
+
+  // Extrair o conteúdo dentro de linear-gradient(...)
+  const match = valor.match(/linear-gradient\(([^)]+)\)/);
+  if (!match) return resultado;
+
+  const partes = match[1].split(',').map((p) => p.trim());
+  if (partes.length < 2) return resultado;
+
+  // Primeira parte pode ser o ângulo
+  const primeiraParteAngulo = partes[0].match(/^\d+deg$/);
+  if (primeiraParteAngulo) {
+    resultado.angulo = partes[0];
+    // Extrair cor1 da segunda parte (ex: "#8a1ce5 0%" ou "#8a1ce5")
+    const cor1Match = partes[1]?.match(/(#[0-9a-fA-F]{3,8})/);
+    if (cor1Match) resultado.cor1 = cor1Match[1];
+    // Extrair cor2 da terceira parte
+    const cor2Match = partes[2]?.match(/(#[0-9a-fA-F]{3,8})/);
+    if (cor2Match) resultado.cor2 = cor2Match[1];
+  } else {
+    // Sem ângulo, as partes são as cores direto
+    const cor1Match = partes[0]?.match(/(#[0-9a-fA-F]{3,8})/);
+    if (cor1Match) resultado.cor1 = cor1Match[1];
+    const cor2Match = partes[1]?.match(/(#[0-9a-fA-F]{3,8})/);
+    if (cor2Match) resultado.cor2 = cor2Match[1];
+  }
+
+  return resultado;
+};
+
+/**
+ * Monta o valor CSS de um gradiente a partir das partes
+ * @param {string} angulo - Ângulo (ex: "135deg")
+ * @param {string} cor1 - Primeira cor hex
+ * @param {string} cor2 - Segunda cor hex
+ * @returns {string}
+ */
+const montarGradiente = (angulo, cor1, cor2) =>
+  `linear-gradient(${angulo}, ${cor1} 0%, ${cor2} 100%)`;
+
 const COLUNAS_GRID = [
   { chave: 'nome', titulo: 'Nome', largura: '15%' },
   {
@@ -49,12 +107,14 @@ const COLUNAS_GRID = [
           style={{
             width: '25px',
             height: '25px',
-            backgroundColor: valor,
+            background: valor,
             border: '1px solid #ddd',
             borderRadius: '3px',
           }}
         />
-        <span style={{ fontSize: '0.75rem', color: '#666' }}>{valor}</span>
+        <span style={{ fontSize: '0.75rem', color: '#666' }}>
+          {isGradiente(valor) ? 'Gradiente' : valor}
+        </span>
       </div>
     ),
   },
@@ -162,6 +222,8 @@ const CoresPage = () => {
 
   const [formData, setFormData] = useState(FORM_INICIAL);
   const [errosForm, setErrosForm] = useState({});
+  const [modoGradiente, setModoGradiente] = useState(false);
+  const [gradienteData, setGradienteData] = useState({ angulo: '135deg', cor1: '#000000', cor2: '#000000' });
   const [confirmarDialog, setConfirmarDialog] = useState({
     aberto: false,
     cor: null,
@@ -237,12 +299,14 @@ const CoresPage = () => {
     setEditando(null);
     setFormData(FORM_INICIAL);
     setErrosForm({});
+    setModoGradiente(false);
+    setGradienteData({ angulo: '135deg', cor1: '#000000', cor2: '#000000' });
     setModalAberto(true);
   };
 
   const abrirModalEditar = (cor) => {
     setEditando(cor.id);
-    setFormData({
+    const dados = {
       temaId: cor.temaId || '',
       nome: cor.nome || '',
       valor: cor.valor || '#000000',
@@ -251,7 +315,18 @@ const CoresPage = () => {
       variavelRef: cor.variavelRef || '',
       descricao: cor.descricao || '',
       ativo: cor.ativo !== undefined ? cor.ativo : true,
-    });
+    };
+    setFormData(dados);
+
+    // Detectar se é gradiente e inicializar dados
+    if (isGradiente(dados.valor)) {
+      setModoGradiente(true);
+      setGradienteData(parseGradiente(dados.valor));
+    } else {
+      setModoGradiente(false);
+      setGradienteData({ angulo: '135deg', cor1: '#000000', cor2: '#000000' });
+    }
+
     setErrosForm({});
     setModalAberto(true);
   };
@@ -480,21 +555,151 @@ const CoresPage = () => {
               <label className="modal-form-label">
                 Cor <span className="required">*</span>
               </label>
-              <div className="modal-form-color-wrapper">
-                <input
-                  type="color"
-                  className="modal-form-color-input"
-                  value={formData.valor}
-                  onChange={(e) => setFormData({ ...formData, valor: e.target.value })}
-                />
-                <input
-                  type="text"
-                  className="modal-form-input modal-form-color-text"
-                  value={formData.valor}
-                  onChange={(e) => setFormData({ ...formData, valor: e.target.value })}
-                  placeholder="#000000"
-                />
+
+              {/* Toggle Gradiente */}
+              <div className="cor-tipo-toggle">
+                <label className="cor-tipo-label">
+                  <input
+                    type="checkbox"
+                    checked={modoGradiente}
+                    onChange={(e) => {
+                      const ativar = e.target.checked;
+                      setModoGradiente(ativar);
+                      if (ativar) {
+                        // Converter cor sólida para gradiente
+                        const corAtual = formData.valor || '#000000';
+                        const novoGradiente = { angulo: '135deg', cor1: corAtual, cor2: corAtual };
+                        setGradienteData(novoGradiente);
+                        setFormData({ ...formData, valor: montarGradiente(novoGradiente.angulo, novoGradiente.cor1, novoGradiente.cor2) });
+                      } else {
+                        // Converter gradiente para cor sólida (usa cor1)
+                        setFormData({ ...formData, valor: gradienteData.cor1 || '#000000' });
+                      }
+                    }}
+                  />
+                  <span>Gradiente</span>
+                </label>
               </div>
+
+              {modoGradiente ? (
+                /* Modo Gradiente: preview + dois pickers + ângulo */
+                <div className="cor-gradiente-editor">
+                  {/* Preview do gradiente */}
+                  <div
+                    className="cor-gradiente-preview"
+                    style={{ background: formData.valor }}
+                  />
+
+                  {/* Ângulo */}
+                  <div className="cor-gradiente-angulo">
+                    <label className="modal-form-label-sm">Ângulo</label>
+                    <select
+                      className="modal-form-select-sm"
+                      value={gradienteData.angulo}
+                      onChange={(e) => {
+                        const novoAngulo = e.target.value;
+                        const novo = { ...gradienteData, angulo: novoAngulo };
+                        setGradienteData(novo);
+                        setFormData({ ...formData, valor: montarGradiente(novoAngulo, novo.cor1, novo.cor2) });
+                      }}
+                    >
+                      <option value="0deg">0° (↑)</option>
+                      <option value="45deg">45° (↗)</option>
+                      <option value="90deg">90° (→)</option>
+                      <option value="135deg">135° (↘)</option>
+                      <option value="180deg">180° (↓)</option>
+                      <option value="225deg">225° (↙)</option>
+                      <option value="270deg">270° (←)</option>
+                      <option value="315deg">315° (↖)</option>
+                    </select>
+                  </div>
+
+                  {/* Cor 1 */}
+                  <div className="cor-gradiente-cor">
+                    <label className="modal-form-label-sm">Cor 1</label>
+                    <div className="modal-form-color-wrapper">
+                      <input
+                        type="color"
+                        className="modal-form-color-input"
+                        value={gradienteData.cor1}
+                        onChange={(e) => {
+                          const novo = { ...gradienteData, cor1: e.target.value };
+                          setGradienteData(novo);
+                          setFormData({ ...formData, valor: montarGradiente(novo.angulo, novo.cor1, novo.cor2) });
+                        }}
+                      />
+                      <input
+                        type="text"
+                        className="modal-form-input modal-form-color-text"
+                        value={gradienteData.cor1}
+                        onChange={(e) => {
+                          const novo = { ...gradienteData, cor1: e.target.value };
+                          setGradienteData(novo);
+                          setFormData({ ...formData, valor: montarGradiente(novo.angulo, novo.cor1, novo.cor2) });
+                        }}
+                        placeholder="#000000"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Cor 2 */}
+                  <div className="cor-gradiente-cor">
+                    <label className="modal-form-label-sm">Cor 2</label>
+                    <div className="modal-form-color-wrapper">
+                      <input
+                        type="color"
+                        className="modal-form-color-input"
+                        value={gradienteData.cor2}
+                        onChange={(e) => {
+                          const novo = { ...gradienteData, cor2: e.target.value };
+                          setGradienteData(novo);
+                          setFormData({ ...formData, valor: montarGradiente(novo.angulo, novo.cor1, novo.cor2) });
+                        }}
+                      />
+                      <input
+                        type="text"
+                        className="modal-form-input modal-form-color-text"
+                        value={gradienteData.cor2}
+                        onChange={(e) => {
+                          const novo = { ...gradienteData, cor2: e.target.value };
+                          setGradienteData(novo);
+                          setFormData({ ...formData, valor: montarGradiente(novo.angulo, novo.cor1, novo.cor2) });
+                        }}
+                        placeholder="#000000"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Valor gerado (readonly) */}
+                  <div className="cor-gradiente-valor">
+                    <label className="modal-form-label-sm">Valor CSS</label>
+                    <input
+                      type="text"
+                      className="modal-form-input"
+                      value={formData.valor}
+                      readOnly
+                      style={{ fontSize: '0.75rem', color: '#666' }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                /* Modo Cor Sólida */
+                <div className="modal-form-color-wrapper">
+                  <input
+                    type="color"
+                    className="modal-form-color-input"
+                    value={formData.valor}
+                    onChange={(e) => setFormData({ ...formData, valor: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    className="modal-form-input modal-form-color-text"
+                    value={formData.valor}
+                    onChange={(e) => setFormData({ ...formData, valor: e.target.value })}
+                    placeholder="#000000"
+                  />
+                </div>
+              )}
               {errosForm.valor && <span className="modal-form-error">{errosForm.valor}</span>}
             </div>
           </div>

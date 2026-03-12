@@ -36,13 +36,13 @@ const fakeParceiroModel = {
   findByPk: async (id) =>
     id === '1'
       ? {
-          par_id: '1',
-          par_nome: 'Telecom Plus',
-          par_dominio: 'telecomplus.com',
-          destroy: async () => {
-            return 1;
-          },
-        }
+        par_id: '1',
+        par_nome: 'Telecom Plus',
+        par_dominio: 'telecomplus.com',
+        destroy: async () => {
+          return 1;
+        },
+      }
       : null,
   create: async (data) => ({ par_id: '2', ...data }),
   update: async () => [1],

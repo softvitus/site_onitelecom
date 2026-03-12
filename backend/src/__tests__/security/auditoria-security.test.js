@@ -77,7 +77,7 @@ describe('Auditoria - Security Tests (Mocked)', () => {
       const uuids = {
         válido: '550e8400-e29b-41d4-a716-446655440000',
         inválido: 'não-é-uuid',
-        injetado: "'; DROP TABLE--",
+        injetado: '\'; DROP TABLE--',
       };
 
       const padrãoUUID =
