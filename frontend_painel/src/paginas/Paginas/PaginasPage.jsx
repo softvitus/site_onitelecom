@@ -6,11 +6,13 @@
  */
 
 import { useState, useEffect } from 'react';
-import { FaPlus, FaEdit, FaTrash, FaBook } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaBook, FaPuzzlePiece, FaArrowUp, FaArrowDown, FaToggleOn, FaToggleOff } from 'react-icons/fa';
 import { useAuth } from '../../hooks/useAuth';
 import PaginasService from '../../servicos/paginas';
 import ParceirosService from '../../servicos/parceiros';
 import TemasService from '../../servicos/temas';
+import PagComRelsService from '../../servicos/pagComRels';
+import ComponentesService from '../../servicos/componentes';
 import Grid from '../../componentes/Comum/Grid';
 import Modal from '../../componentes/Comum/Modal';
 import ConfirmDialog, { TIPOS_CONFIRMACAO } from '../../componentes/Comum/ConfirmDialog';
@@ -158,6 +160,15 @@ const PaginasPage = () => {
     carregando: false,
   });
 
+  // Estado para gerenciamento de componentes da página
+  const [modalComponentesAberto, setModalComponentesAberto] = useState(false);
+  const [paginaSelecionada, setPaginaSelecionada] = useState(null);
+  const [componentesPagina, setComponentesPagina] = useState([]);
+  const [todosComponentes, setTodosComponentes] = useState([]);
+  const [carregandoComponentes, setCarregandoComponentes] = useState(false);
+  const [salvandoComponente, setSalvandoComponente] = useState(null);
+  const [componenteParaAdicionar, setComponenteParaAdicionar] = useState('');
+
   // Carregar páginas e relacionamentos ao montar o componente
   useEffect(() => {
     // Só carrega parceiros se tiver permissão
@@ -249,6 +260,162 @@ const PaginasPage = () => {
     } finally {
       setCarregando(false);
     }
+  };
+
+  // =========================================================================
+  // GERENCIAMENTO DE COMPONENTES DA PÁGINA
+  // =========================================================================
+
+  const abrirModalComponentes = async (pagina) => {
+    setPaginaSelecionada(pagina);
+    setModalComponentesAberto(true);
+    setComponenteParaAdicionar('');
+    await carregarComponentesPagina(pagina.id);
+    await carregarTodosComponentes();
+  };
+
+  const fecharModalComponentes = () => {
+    setModalComponentesAberto(false);
+    setPaginaSelecionada(null);
+    setComponentesPagina([]);
+    setComponenteParaAdicionar('');
+  };
+
+  const carregarComponentesPagina = async (paginaId) => {
+    setCarregandoComponentes(true);
+    try {
+      const resultado = await PagComRelsService.listarPorPagina(paginaId);
+      if (resultado.sucesso) {
+        const ordenados = resultado.dados.sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
+        setComponentesPagina(ordenados);
+      }
+    } catch (err) {
+      console.error('[ERRO] Erro ao carregar componentes da página:', err);
+      setAlerta(criarAlerta('erro', 'Erro ao carregar componentes da página'));
+    } finally {
+      setCarregandoComponentes(false);
+    }
+  };
+
+  const carregarTodosComponentes = async () => {
+    try {
+      const resultado = await ComponentesService.listar(1, 100);
+      if (resultado.sucesso) {
+        setTodosComponentes(resultado.dados);
+      }
+    } catch (err) {
+      console.error('[ERRO] Erro ao carregar componentes:', err);
+    }
+  };
+
+  const toggleHabilitado = async (relacao) => {
+    setSalvandoComponente(relacao.id);
+    try {
+      const resultado = await PagComRelsService.atualizar(relacao.id, {
+        habilitado: !relacao.habilitado,
+      });
+      if (resultado.sucesso) {
+        setComponentesPagina((prev) =>
+          prev.map((c) => (c.id === relacao.id ? { ...c, habilitado: !c.habilitado } : c)),
+        );
+        setAlerta(criarAlerta('sucesso', `Componente ${relacao.habilitado ? 'desabilitado' : 'habilitado'} com sucesso`));
+        setTimeout(() => setAlerta(null), DURACAO_ALERTA);
+      } else {
+        setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao atualizar componente'));
+      }
+    } catch (err) {
+      setAlerta(criarAlerta('erro', 'Erro ao atualizar componente'));
+    } finally {
+      setSalvandoComponente(null);
+    }
+  };
+
+  const moverComponente = async (index, direcao) => {
+    const novaLista = [...componentesPagina];
+    const novoIndex = index + direcao;
+    if (novoIndex < 0 || novoIndex >= novaLista.length) return;
+
+    // Trocar posições
+    const itemA = novaLista[index];
+    const itemB = novaLista[novoIndex];
+    const ordemA = itemA.ordem;
+    const ordemB = itemB.ordem;
+
+    setSalvandoComponente(itemA.id);
+    try {
+      await PagComRelsService.atualizar(itemA.id, { ordem: ordemB });
+      await PagComRelsService.atualizar(itemB.id, { ordem: ordemA });
+
+      // Atualizar lista local
+      novaLista[index] = { ...itemB, ordem: ordemA };
+      novaLista[novoIndex] = { ...itemA, ordem: ordemB };
+      novaLista.sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
+      setComponentesPagina(novaLista);
+
+      setAlerta(criarAlerta('sucesso', 'Ordem atualizada com sucesso'));
+      setTimeout(() => setAlerta(null), DURACAO_ALERTA);
+    } catch (err) {
+      setAlerta(criarAlerta('erro', 'Erro ao reordenar componente'));
+    } finally {
+      setSalvandoComponente(null);
+    }
+  };
+
+  const adicionarComponente = async () => {
+    if (!componenteParaAdicionar || !paginaSelecionada) return;
+
+    setSalvandoComponente('novo');
+    try {
+      const maiorOrdem = componentesPagina.reduce((max, c) => Math.max(max, c.ordem || 0), 0);
+      const resultado = await PagComRelsService.criar({
+        paginaId: paginaSelecionada.id,
+        componenteId: componenteParaAdicionar,
+        ordem: maiorOrdem + 1,
+        habilitado: true,
+      });
+
+      if (resultado.sucesso) {
+        setAlerta(criarAlerta('sucesso', 'Componente adicionado com sucesso'));
+        setTimeout(() => setAlerta(null), DURACAO_ALERTA);
+        setComponenteParaAdicionar('');
+        await carregarComponentesPagina(paginaSelecionada.id);
+      } else {
+        setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao adicionar componente'));
+      }
+    } catch (err) {
+      setAlerta(criarAlerta('erro', 'Erro ao adicionar componente'));
+    } finally {
+      setSalvandoComponente(null);
+    }
+  };
+
+  const removerComponente = async (relacaoId) => {
+    setSalvandoComponente(relacaoId);
+    try {
+      const resultado = await PagComRelsService.deletar(relacaoId);
+      if (resultado.sucesso) {
+        setComponentesPagina((prev) => prev.filter((c) => c.id !== relacaoId));
+        setAlerta(criarAlerta('sucesso', 'Componente removido da página'));
+        setTimeout(() => setAlerta(null), DURACAO_ALERTA);
+      } else {
+        setAlerta(criarAlerta('erro', resultado.erro || 'Erro ao remover componente'));
+      }
+    } catch (err) {
+      setAlerta(criarAlerta('erro', 'Erro ao remover componente'));
+    } finally {
+      setSalvandoComponente(null);
+    }
+  };
+
+  // Componentes disponíveis para adicionar (que ainda não estão na página)
+  const componentesDisponiveis = todosComponentes.filter(
+    (comp) => !componentesPagina.some((rel) => rel.componenteId === comp.id),
+  );
+
+  // Obter nome do componente pelo ID
+  const getNomeComponente = (componenteId) => {
+    const comp = todosComponentes.find((c) => c.id === componenteId);
+    return comp?.nome || componenteId;
   };
 
   // =========================================================================
@@ -417,6 +584,15 @@ const PaginasPage = () => {
         itensPorPaginaInicial={PAGINACAO.ITENS_POR_PAGINA}
         renderAcoes={(pagina) => (
           <div className="grid-actions-group">
+            {temPermissao('pagina_editar') && (
+              <button
+                onClick={() => abrirModalComponentes(pagina)}
+                className="grid-btn-action grid-btn-action-components"
+                title="Gerenciar Componentes"
+              >
+                <FaPuzzlePiece />
+              </button>
+            )}
             {temPermissao('pagina_editar') && (
               <button
                 onClick={() => abrirModalEditar(pagina)}
@@ -614,6 +790,114 @@ const PaginasPage = () => {
             </div>
           </div>
         </form>
+      </Modal>
+
+      {/* Modal de Componentes da Página */}
+      <Modal
+        aberto={modalComponentesAberto}
+        onClose={fecharModalComponentes}
+        titulo={`Componentes - ${paginaSelecionada?.nome || ''}`}
+        tamanho="lg"
+      >
+        <div className="paginas-componentes-container">
+          {/* Adicionar componente */}
+          {temPermissao('pagina_editar') && (
+            <div className="paginas-componentes-adicionar">
+              <select
+                className="modal-form-select"
+                value={componenteParaAdicionar}
+                onChange={(e) => setComponenteParaAdicionar(e.target.value)}
+              >
+                <option value="">Selecione um componente para adicionar...</option>
+                {componentesDisponiveis.map((comp) => (
+                  <option key={comp.id} value={comp.id}>
+                    {comp.nome} - {comp.descricao}
+                  </option>
+                ))}
+              </select>
+              <button
+                className="paginas-btn-adicionar-comp"
+                onClick={adicionarComponente}
+                disabled={!componenteParaAdicionar || salvandoComponente === 'novo'}
+              >
+                <FaPlus /> {salvandoComponente === 'novo' ? 'Adicionando...' : 'Adicionar'}
+              </button>
+            </div>
+          )}
+
+          {/* Lista de componentes */}
+          {carregandoComponentes ? (
+            <div className="paginas-componentes-loading">Carregando componentes...</div>
+          ) : componentesPagina.length === 0 ? (
+            <div className="paginas-componentes-vazio">
+              <FaPuzzlePiece />
+              <p>Nenhum componente associado a esta página</p>
+            </div>
+          ) : (
+            <div className="paginas-componentes-lista">
+              <div className="paginas-componentes-header-row">
+                <span className="pcr-col-ordem">Ordem</span>
+                <span className="pcr-col-nome">Componente</span>
+                <span className="pcr-col-status">Status</span>
+                <span className="pcr-col-acoes">Ações</span>
+              </div>
+              {componentesPagina.map((rel, index) => (
+                <div
+                  key={rel.id}
+                  className={`paginas-componente-item ${!rel.habilitado ? 'desabilitado' : ''}`}
+                >
+                  <span className="pcr-col-ordem">{rel.ordem}</span>
+                  <span className="pcr-col-nome">
+                    <strong>{getNomeComponente(rel.componenteId)}</strong>
+                  </span>
+                  <span className="pcr-col-status">
+                    <span className={`paginas-comp-badge ${rel.habilitado ? 'ativo' : 'inativo'}`}>
+                      {rel.habilitado ? 'Ativo' : 'Inativo'}
+                    </span>
+                  </span>
+                  <span className="pcr-col-acoes">
+                    {temPermissao('pagina_editar') && (
+                      <>
+                        <button
+                          className="pcr-btn pcr-btn-mover"
+                          onClick={() => moverComponente(index, -1)}
+                          disabled={index === 0 || salvandoComponente !== null}
+                          title="Mover para cima"
+                        >
+                          <FaArrowUp />
+                        </button>
+                        <button
+                          className="pcr-btn pcr-btn-mover"
+                          onClick={() => moverComponente(index, 1)}
+                          disabled={index === componentesPagina.length - 1 || salvandoComponente !== null}
+                          title="Mover para baixo"
+                        >
+                          <FaArrowDown />
+                        </button>
+                        <button
+                          className={`pcr-btn ${rel.habilitado ? 'pcr-btn-desabilitar' : 'pcr-btn-habilitar'}`}
+                          onClick={() => toggleHabilitado(rel)}
+                          disabled={salvandoComponente === rel.id}
+                          title={rel.habilitado ? 'Desabilitar' : 'Habilitar'}
+                        >
+                          {rel.habilitado ? <FaToggleOn /> : <FaToggleOff />}
+                        </button>
+                        <button
+                          className="pcr-btn pcr-btn-remover"
+                          onClick={() => removerComponente(rel.id)}
+                          disabled={salvandoComponente === rel.id}
+                          title="Remover da página"
+                        >
+                          <FaTrash />
+                        </button>
+                      </>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </Modal>
 
       {/* Confirm Dialog */}

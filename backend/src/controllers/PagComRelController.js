@@ -22,11 +22,15 @@ export class PagComRelController {
    */
   async getAll(req, res, next) {
     try {
-      const { page = 1, limit = 10 } = req.query;
+      const { page = 1, limit = 10, pcr_pag_id, pcr_com_id } = req.query;
+
+      const filters = {};
+      if (pcr_pag_id) filters.pcr_pag_id = pcr_pag_id;
+      if (pcr_com_id) filters.pcr_com_id = pcr_com_id;
 
       const result = await this.service.findAll(
-        {},
-        { page: parseInt(page), limit: parseInt(limit) },
+        filters,
+        { page: parseInt(page), limit: parseInt(limit), sort: 'pcr_ordem' },
       );
 
       return res.json({
