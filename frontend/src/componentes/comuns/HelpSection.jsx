@@ -123,7 +123,7 @@ const SectionTitle = ({ caminhoPagina }) => {
   if (!isElementoHabilitado(caminhoPagina, 'helpSection', 'title')) return null;
 
   return (
-    <h1 className={`text-white ${styles['custom-text']}`}>
+    <h1 className={styles['custom-text']}>
       {getTexto('helpSection', 'titulo')}{' '}
       <span className={styles['accent-text']}>{getTexto('helpSection', 'tituloDestaque')}</span>{' '}
       {getTexto('helpSection', 'subtitulo')}{' '}
@@ -177,16 +177,6 @@ const HelpCard = ({ card }) => {
         className={`${styles['custom-card']} h-100`}
         role="article"
         aria-labelledby={`help-card-${card.id}`}
-        style={{
-          background: 'white',
-          borderRadius: '12px',
-          boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-          display: 'block',
-          visibility: 'visible',
-          opacity: 1,
-          textDecoration: 'none',
-          cursor: 'pointer',
-        }}
       >
         <div className="card-body text-center p-3">
           {/* Ícone */}
@@ -195,14 +185,13 @@ const HelpCard = ({ card }) => {
           {/* Título */}
           <h3
             id={`help-card-${card.id}`}
-            className="fw-bold mb-2"
-            style={{ color: '#1a1a2e', fontSize: '1.1em' }}
+            className={`fw-bold mb-2 ${styles['card-title']}`}
           >
             {card.title}
           </h3>
 
           {/* Descrição */}
-          <p className="mb-2" style={{ color: '#4a4a4a', fontSize: '0.9em' }}>
+          <p className={`mb-2 ${styles['card-description']}`}>
             {card.description}
           </p>
 

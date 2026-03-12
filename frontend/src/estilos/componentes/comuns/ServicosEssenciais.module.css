@@ -41,7 +41,7 @@
 .card-custom {
   background-color: var(--servicosEssenciais-card);
   border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--servicosEssenciais-icon) 30%, transparent);
   padding: 2rem;
   width: 250px;
   height: 250px;
@@ -58,7 +58,7 @@
 
 .card-custom:hover {
   transform: translateY(-8px);
-  box-shadow: var(--box-shadow-lg);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--servicosEssenciais-icon) 40%, transparent);
 }
 
 .icon {

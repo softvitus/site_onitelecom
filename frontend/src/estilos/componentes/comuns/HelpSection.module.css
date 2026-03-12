@@ -40,10 +40,11 @@
   line-height: 1.3;
   margin-bottom: 0;
   display: inline;
+  color: var(--helpSection-cardTitle);
 }
 
 .description-text {
-  color: var(--color-neutral-white);
+  color: var(--helpSection-cardTitle);
   font-size: 1.1em;
   line-height: 1.5;
   margin: 0;
@@ -55,13 +56,16 @@
 }
 
 .custom-card {
-  background: var(--color-neutral-white);
-  border-radius: var(--radius-xl);
+  background: #ffffff;
+  border-radius: 12px;
   overflow: hidden;
   transition: var(--transition-normal);
   border: none;
-  box-shadow: var(--box-shadow-lg);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   color: var(--helpSection-cardText);
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .custom-card :global(.card-title) {
@@ -70,6 +74,16 @@
 
 .custom-card :global(.card-text) {
   color: var(--helpSection-cardDescription) !important;
+}
+
+.card-title {
+  color: var(--helpSection-cardTitle);
+  font-size: 1.1em;
+}
+
+.card-description {
+  color: var(--helpSection-cardDescription);
+  font-size: 0.9em;
 }
 
 .custom-card:hover {

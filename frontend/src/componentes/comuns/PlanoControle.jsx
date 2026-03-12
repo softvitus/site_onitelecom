@@ -148,7 +148,7 @@ const DeviceIcons = () => (
 );
 
 /**
- * HeroSection - Seção principal do banner
+ * HeroSection - Seção principal do banner com benefícios integrados
  * @returns {React.ReactElement}
  */
 const HeroSection = () => (
@@ -158,6 +158,7 @@ const HeroSection = () => (
 
     <div className="container-fluid">
       <div className={`row ${styles['right-section7']}`}>
+        {/* Coluna esquerda - Texto e ícones */}
         <div className={`col-md-6 ${styles['left-section7']}`}>
           {/* Títulos */}
           <h1>{getTexto('planoControle', 'titulo', 'Plano Controle')}</h1>
@@ -175,52 +176,45 @@ const HeroSection = () => (
           {/* Ícones de dispositivos */}
           <DeviceIcons />
         </div>
-      </div>
-    </div>
-  </div>
-);
 
-/**
- * InfoSection - Seção informativa com imagem e texto
- * @returns {React.ReactElement}
- */
-const InfoSection = () => (
-  <div
-    className={styles['info-section7']}
-    role="complementary"
-    aria-labelledby="info-section-title"
-  >
-    <div className="container">
-      <div className="row align-items-center">
-        {/* Imagem */}
-        <div className="col-md-6">
-          <img
-            src={getImagem('planoControle', 'figurafeminina', '')}
-            alt="Pessoa usando o celular"
-            className={`${styles['person-image7']} img-fluid`}
-            loading="lazy"
-          />
-        </div>
+        {/* Coluna direita - Caixas de benefícios */}
+        <div className={`col-md-6 ${styles['benefits-column']}`}>
+          <div className={styles['benefits-boxes']}>
+            {/* Primeira caixa */}
+            <div className={styles['benefit-box']}>
+              <p>
+                {getTexto(
+                  'planoControle.beneficios',
+                  'acumular_dados',
+                  'Aqui você acumula todos os dados que não usar.'
+                )}
+              </p>
+            </div>
 
-        {/* Texto informativo */}
-        <div className={`col-md-6 ${styles['info-text7']}`}>
-          <h2 id="info-section-title">
-            {getTexto('planoControle.secaoInfo', 'titulo', 'Controle total na palma da mão')}
-          </h2>
-          <p className={styles['main-paragraph7']}>
-            {getTexto(
-              'planoControle.secaoInfo',
-              'descricao',
-              'Com o Plano Controle, você tem ligações ilimitadas para qualquer operadora do Brasil, internet de alta velocidade e o melhor: sem surpresas na sua fatura.'
-            )}
-          </p>
-          <p className={styles['footnote7']}>
-            {getTexto(
-              'planoControle.secaoInfo',
-              'rodape',
-              '*Consulte disponibilidade em sua região.'
-            )}
-          </p>
+            {/* Divisor */}
+            <div className={styles['benefit-divider']}>
+              <span>+</span>
+            </div>
+
+            {/* Segunda caixa */}
+            <div className={styles['benefit-box']}>
+              <p>
+                {getTexto('planoControle.beneficios', 'ligacoes', 'Ligações ilimitadas.')}
+              </p>
+            </div>
+
+            {/* Divisor */}
+            <div className={styles['benefit-divider']}>
+              <span>+</span>
+            </div>
+
+            {/* Terceira caixa */}
+            <div className={styles['benefit-box']}>
+              <p>
+                {getTexto('planoControle.beneficios', 'whatsapp', 'Whatsapp sem franquia.')}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -242,11 +236,8 @@ const PlanoControle = () => {
 
   return (
     <section id={SECTION_ID} aria-label="Plano Controle">
-      {/* Seção Hero com banner principal */}
+      {/* Seção Hero com banner principal e benefícios integrados */}
       <HeroSection />
-
-      {/* Seção informativa */}
-      <InfoSection />
     </section>
   );
 };

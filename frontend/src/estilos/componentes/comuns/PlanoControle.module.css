@@ -21,9 +21,14 @@
 .container7 {
   position: relative;
   color: var(--planoControle-textPrimary);
-  overflow: hidden;
-  min-height: auto;
+  overflow: visible;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: var(--planoControle-containerBackground);
+  margin-top: -150px;
+  margin-bottom: -240px;
 }
 
 .main-image7 {
@@ -32,7 +37,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   z-index: 0;
   background-color: var(--planoControle-backgroundImage);
 }
@@ -40,46 +46,53 @@
 .right-section7 {
   position: relative;
   z-index: 1;
-  padding: 40px;
-  min-height: 500px;
+  padding: 80px 40px;
+  width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 600px;
 }
 
 .left-section7 {
-  max-width: 450px;
+  max-width: 500px;
+  padding-left: 40px;
+  margin-top: 180px;
 }
 
 .left-section7 h1 {
-  font-size: 4rem;
+  font-size: 2.5rem;
   font-weight: bold;
-  line-height: 1;
-  margin-bottom: 0;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .left-section7 h2 {
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: 400;
-  line-height: 1;
-  margin-bottom: 10px;
+  line-height: 1.2;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .subtext7 h3 {
-  font-size: 2.3rem;
+  font-size: 1.5rem;
   color: var(--planoControle-benefitColor);
-  line-height: 1;
-  margin-bottom: 2px;
+  line-height: 1.2;
+  margin-bottom: 3px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .subtext7 h3 .span27 {
   color: white;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .icons7 {
   position: relative;
-  right: -10rem;
-  top: -18rem;
+  right: -8rem;
+  top: -12rem;
   transform: translateY(-50%);
 }
 
@@ -109,27 +122,31 @@
   display: flex;
   align-items: flex-start;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .price-symbol7 {
-  font-size: 2rem;
-  margin-right: 5px;
-  margin-top: 30px;
+  font-size: 1.2rem;
+  margin-right: 3px;
+  margin-top: 20px;
   color: var(--planoControle-priceColor);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .price-big7 {
-  font-size: 6rem;
+  font-size: 3.5rem;
   font-weight: bold;
   line-height: 1;
   color: var(--planoControle-priceColor);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .price-small7 {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   align-self: flex-start;
-  margin-left: 5px;
+  margin-left: 3px;
   color: var(--planoControle-priceColor);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .cta-button7 {
@@ -138,17 +155,19 @@
   padding: 10px 30px;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   border-radius: 25px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0, 88, 229, 0.2);
-  margin-top: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 88, 229, 0.3);
+  margin-top: 10px;
 }
 
 .cta-button7:hover {
   background-color: var(--planoControle-buttonBackground);
   filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 88, 229, 0.4);
 }
 
 .cta-button7 .cta-link {
@@ -161,11 +180,68 @@
 }
 
 .info-section7 {
-  background-color: var(--planoControle-infoSectionBackground);
-  padding: 0;
-  margin-top: -150px;
+  background-color: transparent;
   position: relative;
   z-index: 2;
+  padding: 0;
+}
+
+.benefits-column {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: -30px;
+}
+
+.benefits-boxes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 250px;
+  width: 100%;
+}
+
+.benefit-box {
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 15px 20px;
+  width: 100%;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.benefit-box p {
+  font-size: 0.95rem;
+  color: var(--color-neutral-white);
+  margin: 0;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.4;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.benefit-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background-color: var(--color-primary-green);
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.benefit-divider span {
+  font-size: 1.3rem;
+  color: var(--color-neutral-white);
+  font-weight: bold;
+  line-height: 1;
 }
 
 .person-image7 {
@@ -205,10 +281,14 @@
 @media (max-width: 768px) {
   .container7 {
     background: linear-gradient(
-      62deg,
-      var(--color-neutral-900) 17%,
-      var(--color-secondary-blue) 160%
+      135deg,
+      #001a4d 0%,
+      #0058e5 50%,
+      #001a4d 100%
     );
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 40px 0;
   }
 
   .main-image7 {
@@ -217,70 +297,62 @@
 
   .right-section7 {
     height: auto;
-    padding-bottom: 60px;
+    padding: 40px 20px;
+    flex-direction: column;
   }
 
   .left-section7 {
     max-width: 100%;
+    margin-top: 0;
   }
 
   .left-section7 h1 {
-    font-size: 3rem;
-  }
-
-  .left-section7 h2 {
-    font-size: 2.5rem;
-  }
-
-  .subtext7 h3 {
     font-size: 2rem;
   }
 
+  .left-section7 h2 {
+    font-size: 1.3rem;
+  }
+
+  .subtext7 h3 {
+    font-size: 1.3rem;
+  }
+
   .price-big7 {
-    font-size: 5rem;
+    font-size: 3rem;
   }
 
   .icons7 {
-    position: relative;
-    right: auto;
-    top: auto;
+    position: absolute;
+    right: 20px;
+    bottom: 40px;
     transform: none;
-    margin-top: 30px;
+    margin-top: 0;
   }
 
   .icon-smartphone7 img {
-    width: 200px;
+    width: 160px;
     position: relative;
-    top: -24rem;
-    right: -3rem;
+    top: 320px;
+    right: 20px;
   }
 
   .icon-sim7 img {
+    right: 25px;
+    top: 30px;
     width: 60px;
   }
 
-  .info-section7 {
-    margin-top: 0;
-    margin-top: -200px;
+  .benefits-column {
+    display: flex;
+    margin-top: 40px;
+    width: 100%;
+    margin-left: 0;
   }
 
-  .person-image7 {
-    top: -80px;
-    margin-bottom: -80px;
-    left: 15px;
-  }
-
-  .info-text7 {
-    margin-top: 0;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .info-text7 h2 {
-    font-size: 2.3rem;
-  }
-
-  .main-paragraph7 {
-    font-size: 1.2rem;
+  .benefits-boxes {
+    gap: 12px;
+    max-width: 100%;
+    padding: 0 20px;
   }
 }
